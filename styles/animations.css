@@ -1,0 +1,718 @@
+/* ==========================================================================
+   ModeInfinity — Motion & Animation System
+   File: styles/animations.css
+
+   Scope:
+   - Transitions
+   - Keyframes
+   - Scroll/reveal animations
+   - Hover motion
+   - Image motion
+   - Staggered entrances
+   - Accordion motion
+   - Drawer/modal/lightbox motion
+   - Toast motion
+   - Loading indicators
+   - Reduced-motion behavior
+
+   Ownership:
+   - variables.css  → motion tokens
+   - global.css     → document foundations
+   - layout.css     → structural layout
+   - components.css → component appearance/structure
+   - responsive.css → responsive behavior
+   - animations.css → motion only
+   ========================================================================== */
+/* ==========================================================================
+   1. MOTION ROOT
+   ========================================================================== */
+:root {
+	--motion-scale: 1;
+}
+/* ==========================================================================
+   2. BASE TRANSITIONS
+   ========================================================================== */
+.motion-transition {
+	transition:
+		color var(--duration-fast) var(--ease-standard),
+		background-color var(--duration-fast) var(--ease-standard),
+		border-color var(--duration-fast) var(--ease-standard),
+		opacity var(--duration-fast) var(--ease-standard),
+		box-shadow var(--duration-fast) var(--ease-standard),
+		transform var(--duration-fast) var(--ease-standard);
+}
+.motion-none {
+	transition: none !important;
+	animation: none !important;
+}
+/* ==========================================================================
+   3. KEYFRAMES — BASIC
+   ========================================================================== */
+@keyframes modeinfinity-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes modeinfinity-fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@keyframes modeinfinity-fade-up {
+	from {
+		opacity: 0;
+		transform: translate3d(0,
+				var(--motion-distance, 1.25rem),
+				0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-fade-down {
+	from {
+		opacity: 0;
+		transform: translate3d(0,
+				calc(var(--motion-distance, 1.25rem) * -1),
+				0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-slide-left {
+	from {
+		opacity: 0;
+		transform: translate3d(var(--motion-distance, 1.5rem),
+				0,
+				0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-slide-right {
+	from {
+		opacity: 0;
+		transform: translate3d(calc(var(--motion-distance, 1.5rem) * -1),
+				0,
+				0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-scale-in {
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+/* ==========================================================================
+   4. HERO ENTRANCE
+   ========================================================================== */
+@keyframes modeinfinity-hero-enter {
+	from {
+		opacity: 0;
+		transform:
+			translate3d(0, var(--motion-distance-large, 2rem), 0) scale(0.985);
+	}
+	to {
+		opacity: 1;
+		transform:
+			translate3d(0, 0, 0) scale(1);
+	}
+}
+.hero-enter {
+	animation:
+		modeinfinity-hero-enter calc(var(--duration-slow) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+/* ==========================================================================
+   5. REVEAL SYSTEM
+   ========================================================================== */
+/*
+ * JavaScript adds the `js` class to <html>.
+ *
+ * Without JavaScript, content remains visible.
+ * This prevents an accessibility failure where disabled JavaScript could
+ * otherwise leave important page content hidden.
+ */
+html.js .reveal {
+	opacity: 0;
+}
+html.js .reveal.is-visible {
+	opacity: 1;
+}
+html.js .reveal-up {
+	opacity: 0;
+	transform: translate3d(0,
+			var(--motion-distance, 1.25rem),
+			0);
+}
+html.js .reveal-up.is-visible {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+html.js .reveal-down {
+	opacity: 0;
+	transform: translate3d(0,
+			calc(var(--motion-distance, 1.25rem) * -1),
+			0);
+}
+html.js .reveal-down.is-visible {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+html.js .reveal-left {
+	opacity: 0;
+	transform: translate3d(var(--motion-distance, 1.5rem),
+			0,
+			0);
+}
+html.js .reveal-left.is-visible {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+html.js .reveal-right {
+	opacity: 0;
+	transform: translate3d(calc(var(--motion-distance, 1.5rem) * -1),
+			0,
+			0);
+}
+html.js .reveal-right.is-visible {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
+}
+/* ==========================================================================
+   6. REVEAL TRANSITION
+   ========================================================================== */
+html.js .reveal,
+html.js .reveal-up,
+html.js .reveal-down,
+html.js .reveal-left,
+html.js .reveal-right {
+	transition:
+		opacity var(--duration-slow) var(--ease-emphasized),
+		transform var(--duration-slow) var(--ease-emphasized);
+}
+/* ==========================================================================
+   7. REVEAL / ANIMATION ALIASES
+   ========================================================================== */
+.fade-in {
+	animation:
+		modeinfinity-fade-in calc(var(--duration-base) * var(--motion-scale)) var(--ease-standard) both;
+}
+.fade-out {
+	animation:
+		modeinfinity-fade-out calc(var(--duration-base) * var(--motion-scale)) var(--ease-standard) both;
+}
+.fade-up {
+	animation:
+		modeinfinity-fade-up calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.fade-down {
+	animation:
+		modeinfinity-fade-down calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.fade-left {
+	animation:
+		modeinfinity-slide-left calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.fade-right {
+	animation:
+		modeinfinity-slide-right calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.scale-in {
+	animation:
+		modeinfinity-scale-in calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+/* ==========================================================================
+   8. ANIMATION DELAYS
+   ========================================================================== */
+.delay-1 {
+	animation-delay: calc(var(--stagger-step) * 1);
+}
+.delay-2 {
+	animation-delay: calc(var(--stagger-step) * 2);
+}
+.delay-3 {
+	animation-delay: calc(var(--stagger-step) * 3);
+}
+.delay-4 {
+	animation-delay: calc(var(--stagger-step) * 4);
+}
+.delay-5 {
+	animation-delay: calc(var(--stagger-step) * 5);
+}
+.delay-6 {
+	animation-delay: calc(var(--stagger-step) * 6);
+}
+/* ==========================================================================
+   9. STAGGERED REVEALS
+   ========================================================================== */
+/*
+ * Delay is applied only while the child is waiting to reveal.
+ * Once `.is-visible` is applied, the delay is reset so the element does not
+ * retain a permanent transition delay during later interactions.
+ */
+html.js .stagger > * {
+	--stagger-index: 0;
+	transition-delay: 0ms;
+}
+html.js .stagger > :nth-child(1) {
+	--stagger-index: 1;
+}
+html.js .stagger > :nth-child(2) {
+	--stagger-index: 2;
+}
+html.js .stagger > :nth-child(3) {
+	--stagger-index: 3;
+}
+html.js .stagger > :nth-child(4) {
+	--stagger-index: 4;
+}
+html.js .stagger > :nth-child(5) {
+	--stagger-index: 5;
+}
+html.js .stagger > :nth-child(6) {
+	--stagger-index: 6;
+}
+html.js .stagger > :nth-child(7) {
+	--stagger-index: 7;
+}
+html.js .stagger > :nth-child(8) {
+	--stagger-index: 8;
+}
+html.js .stagger > :nth-child(9) {
+	--stagger-index: 9;
+}
+html.js .stagger > :nth-child(10) {
+	--stagger-index: 10;
+}
+html.js .stagger > .reveal:not(.is-visible),
+html.js .stagger > .reveal-up:not(.is-visible),
+html.js .stagger > .reveal-down:not(.is-visible),
+html.js .stagger > .reveal-left:not(.is-visible),
+html.js .stagger > .reveal-right:not(.is-visible) {
+	transition-delay:
+		calc(var(--stagger-index) * var(--stagger-step));
+}
+html.js .stagger > .is-visible {
+	transition-delay: 0ms;
+}
+/* ==========================================================================
+   10. IMAGE REVEAL
+   ========================================================================== */
+.image-reveal {
+	position: relative;
+	overflow: hidden;
+}
+.image-reveal img {
+	transform: scale(1.04);
+	transition:
+		transform var(--duration-slow) var(--ease-emphasized);
+}
+.image-reveal.is-visible img {
+	transform: scale(1);
+}
+/* ==========================================================================
+   11. HOVER IMAGE MOTION
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+	.hover-image img,
+	.image-hover img {
+		transition:
+			transform var(--duration-slow) var(--ease-emphasized);
+	}
+	.hover-image:hover img,
+	.hover-image:focus-within img,
+	.image-hover:hover img,
+	.image-hover:focus-within img {
+		transform: scale(1.025);
+	}
+	.hover-lift {
+		transition:
+			transform var(--duration-base) var(--ease-standard),
+			box-shadow var(--duration-base) var(--ease-standard);
+	}
+	.hover-lift:hover,
+	.hover-lift:focus-within {
+		transform: translateY(-0.2rem);
+	}
+	.hover-scale {
+		transition:
+			transform var(--duration-base) var(--ease-standard);
+	}
+	.hover-scale:hover,
+	.hover-scale:focus-within {
+		transform: scale(1.015);
+	}
+}
+/* ==========================================================================
+   12. MOTION UNDERLINE
+   ========================================================================== */
+.motion-underline {
+	position: relative;
+	text-decoration: none;
+}
+.motion-underline::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: -0.2em;
+	left: 0;
+	height: 1px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: right center;
+	transition:
+		transform var(--duration-base) var(--ease-standard);
+}
+.motion-underline:hover::after,
+.motion-underline:focus-visible::after,
+.motion-underline[aria-current="page"]::after {
+	transform: scaleX(1);
+	transform-origin: left center;
+}
+/* ==========================================================================
+   13. ACCORDION MOTION
+   ========================================================================== */
+/*
+ * Recommended structure:
+
+   .accordion-content
+     .accordion-content__inner
+
+ * The inner element prevents the classic max-height animation problem.
+ */
+.accordion-content {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition:
+		grid-template-rows var(--duration-base) var(--ease-emphasized);
+}
+.accordion-content__inner {
+	min-height: 0;
+	overflow: hidden;
+}
+.accordion-item.is-open .accordion-content,
+.accordion-item[open] .accordion-content {
+	grid-template-rows: 1fr;
+}
+/* ==========================================================================
+   14. HEADER SURFACE MOTION
+   ========================================================================== */
+.header-surface {
+	transition:
+		background-color var(--duration-base) var(--ease-standard),
+		border-color var(--duration-base) var(--ease-standard),
+		box-shadow var(--duration-base) var(--ease-standard),
+		backdrop-filter var(--duration-base) var(--ease-standard);
+}
+.site-header.is-scrolled,
+.site-header[data-scrolled="true"] {
+	box-shadow: var(--shadow-sm);
+}
+/* ==========================================================================
+   15. DRAWER MOTION
+   ========================================================================== */
+.drawer-panel {
+	transform: translate3d(100%, 0, 0);
+	transition:
+		transform var(--duration-slow) var(--ease-emphasized);
+}
+.drawer[data-open="true"] .drawer-panel,
+.drawer.is-open .drawer-panel {
+	transform: translate3d(0, 0, 0);
+}
+.drawer--left .drawer-panel {
+	transform: translate3d(-100%, 0, 0);
+}
+.drawer--left[data-open="true"] .drawer-panel,
+.drawer--left.is-open .drawer-panel {
+	transform: translate3d(0, 0, 0);
+}
+.drawer-backdrop {
+	opacity: 0;
+	transition:
+		opacity var(--duration-base) var(--ease-standard);
+}
+.drawer[data-open="true"] .drawer-backdrop,
+.drawer.is-open .drawer-backdrop {
+	opacity: 1;
+}
+/* ==========================================================================
+   16. MODAL MOTION
+   ========================================================================== */
+.modal-panel {
+	opacity: 0;
+	transform: translate3d(0, 1rem, 0) scale(0.985);
+	transition:
+		opacity var(--duration-base) var(--ease-standard),
+		transform var(--duration-slow) var(--ease-emphasized);
+}
+.modal[data-open="true"] .modal-panel,
+.modal.is-open .modal-panel {
+	opacity: 1;
+	transform: translate3d(0, 0, 0) scale(1);
+}
+.modal-backdrop {
+	opacity: 0;
+	transition:
+		opacity var(--duration-base) var(--ease-standard);
+}
+.modal[data-open="true"] .modal-backdrop,
+.modal.is-open .modal-backdrop {
+	opacity: 1;
+}
+/* ==========================================================================
+   17. LIGHTBOX MOTION
+   ========================================================================== */
+.lightbox-media {
+	opacity: 0;
+	transform: scale(0.975);
+	transition:
+		opacity var(--duration-base) var(--ease-standard),
+		transform var(--duration-slow) var(--ease-emphasized);
+}
+.lightbox[data-open="true"] .lightbox-media,
+.lightbox.is-open .lightbox-media {
+	opacity: 1;
+	transform: scale(1);
+}
+.lightbox-backdrop {
+	opacity: 0;
+	transition:
+		opacity var(--duration-base) var(--ease-standard);
+}
+.lightbox[data-open="true"] .lightbox-backdrop,
+.lightbox.is-open .lightbox-backdrop {
+	opacity: 1;
+}
+/* ==========================================================================
+   18. TOAST MOTION
+   ========================================================================== */
+@keyframes modeinfinity-toast-in {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 0.75rem, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-toast-out {
+	from {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		opacity: 0;
+		transform: translate3d(0, 0.75rem, 0);
+	}
+}
+.toast.is-entering,
+.toast[data-state="entering"] {
+	animation:
+		modeinfinity-toast-in calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.toast.is-leaving,
+.toast[data-state="leaving"] {
+	animation:
+		modeinfinity-toast-out calc(var(--duration-fast) * var(--motion-scale)) var(--ease-standard) both;
+}
+/* ==========================================================================
+   19. CART COUNT MOTION
+   ========================================================================== */
+@keyframes modeinfinity-cart-bump {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	45% {
+		transform: scale(1.12);
+	}
+}
+.cart-count.is-updated,
+.cart-count[data-bump="true"] {
+	animation:
+		modeinfinity-cart-bump calc(var(--duration-fast) * var(--motion-scale)) var(--ease-emphasized);
+}
+/* ==========================================================================
+   20. LOADING / STATUS MOTION
+   ========================================================================== */
+@keyframes modeinfinity-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+@keyframes modeinfinity-pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+@keyframes modeinfinity-shimmer {
+	from {
+		background-position: 200% 0;
+	}
+	to {
+		background-position: -200% 0;
+	}
+}
+.spinner {
+	animation:
+		modeinfinity-spin 0.8s linear infinite;
+}
+.pulse {
+	animation:
+		modeinfinity-pulse 1.5s var(--ease-standard) infinite;
+}
+.shimmer {
+	background:
+		linear-gradient(90deg,
+			transparent 0%,
+			var(--color-surface-muted) 50%,
+			transparent 100%);
+	background-size: 200% 100%;
+	animation:
+		modeinfinity-shimmer 1.5s linear infinite;
+}
+/* ==========================================================================
+   21. FOCUS MOTION
+   ========================================================================== */
+.motion-focus {
+	transition:
+		outline-offset var(--duration-fast) var(--ease-standard),
+		box-shadow var(--duration-fast) var(--ease-standard);
+}
+.motion-focus:focus-visible {
+	outline-offset: calc(var(--focus-ring-offset) + 1px);
+}
+/* ==========================================================================
+   22. SLIDE MOTION UTILITY
+   ========================================================================== */
+.slide-motion {
+	transition:
+		transform var(--duration-base) var(--ease-emphasized);
+}
+/* ==========================================================================
+   23. REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--motion-scale: 0;
+	}
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+	}
+	.motion-transition,
+	.slide-motion,
+	.motion-focus,
+	.hover-lift,
+	.hover-scale,
+	.hover-image img,
+	.image-hover img,
+	.image-reveal img,
+	.motion-underline::after,
+	.accordion-content,
+	.header-surface,
+	.drawer-panel,
+	.drawer-backdrop,
+	.modal-panel,
+	.modal-backdrop,
+	.lightbox-media,
+	.lightbox-backdrop {
+		transition-duration: 0.01ms !important;
+	}
+	.fade-in,
+	.fade-out,
+	.fade-up,
+	.fade-down,
+	.fade-left,
+	.fade-right,
+	.scale-in,
+	.hero-enter,
+	.spinner,
+	.pulse,
+	.shimmer,
+	.toast.is-entering,
+	.toast.is-leaving,
+	.cart-count.is-updated {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+	html.js .reveal,
+	html.js .reveal-up,
+	html.js .reveal-down,
+	html.js .reveal-left,
+	html.js .reveal-right {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+	}
+	html.js .stagger > .reveal,
+	html.js .stagger > .reveal-up,
+	html.js .stagger > .reveal-down,
+	html.js .stagger > .reveal-left,
+	html.js .stagger > .reveal-right {
+		transition-delay: 0ms !important;
+	}
+	.drawer-panel,
+	.drawer--left .drawer-panel,
+	.modal-panel,
+	.lightbox-media {
+		transform: none;
+	}
+	.drawer-backdrop,
+	.modal-backdrop,
+	.lightbox-backdrop {
+		opacity: 1;
+	}
+}
+/* ==========================================================================
+   24. FORCED COLORS
+   ========================================================================== */
+@media (forced-colors: active) {
+	.motion-underline::after {
+		background: CanvasText;
+	}
+	.shimmer {
+		animation: none;
+		background: Canvas;
+	}
+}
+/* ==========================================================================
+   25. PRINT
+   ========================================================================== */
+@media print {
+	*,
+	*::before,
+	*::after {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+/* ==========================================================================
+   End of animations.css
+   ========================================================================== */

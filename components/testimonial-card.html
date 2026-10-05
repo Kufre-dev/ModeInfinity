@@ -1,0 +1,65 @@
+<!-- ============================================================
+     MODEINFINITY — TESTIMONIAL CARD
+     ============================================================
+
+     Reusable testimonial card component.
+
+     Features:
+     - Responsive testimonial structure
+     - AVIF → WebP → JPEG/PNG fallback
+     - Accessible testimonial author information
+     - Optional rating display
+     - Semantic quotation markup
+     - No decorative content exposed unnecessarily to
+       assistive technologies
+
+     CSS:
+     - styles/components.css
+     - styles/animations.css
+     - styles/responsive.css
+
+     Data:
+     - data/testimonials.json
+
+     Usage:
+     - This file is a component reference/template.
+     - Individual testimonial content should be populated
+       from the testimonials data source when the page is
+       implemented.
+     ============================================================ -->
+<article class="testimonial-card">
+  <!-- ==========================================================
+       TESTIMONIAL CONTENT
+       ========================================================== -->
+  <div class="testimonial-card__content">
+    <!-- Optional rating -->
+    <div class="testimonial-card__rating" role="img" aria-label="5 out of 5 stars">
+      <span aria-hidden="true">★★★★★</span>
+    </div>
+    <!-- Testimonial quotation -->
+    <blockquote class="testimonial-card__quote">
+      <p> ModeInfinity gave me the practical skills, confidence, and understanding I needed to take my shoemaking work seriously. </p>
+    </blockquote>
+  </div>
+  <!-- ==========================================================
+       TESTIMONIAL AUTHOR
+       ========================================================== -->
+  <footer class="testimonial-card__author">
+    <!-- Author image -->
+    <div class="testimonial-card__avatar">
+      <picture class="testimonial-card__picture">
+        <!-- Preferred modern format -->
+        <source srcset="assets/images/academy photos/testimonial/testimonial_1.avif" type="image/avif">
+        <!-- Modern fallback -->
+        <source srcset="assets/images/academy photos/testimonial/testimonial_1.webp" type="image/webp">
+        <!-- Original fallback -->
+        <img class="testimonial-card__image" src="assets/images/academy photos/testimonial/testimonial_1.jpg" alt="ModeInfinity student testimonial author" width="64" height="64" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <!-- Author information -->
+    <div class="testimonial-card__author-info">
+      <cite class="testimonial-card__name"> Student Name </cite>
+      <span class="testimonial-card__role"> ModeInfinity Academy Student </span>
+    </div>
+  </footer>
+</article>

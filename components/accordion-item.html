@@ -1,0 +1,114 @@
+<!-- ============================================================
+     MODEINFINITY — ACCORDION ITEM
+     ============================================================
+
+     Reusable accessible accordion component.
+
+     Typical uses:
+     - Academy FAQs
+     - Course information
+     - Training requirements
+     - Programme details
+     - General expandable content
+
+     Features:
+     - Semantic button control
+     - aria-expanded state
+     - aria-controls relationship
+     - Keyboard accessible
+     - Expand/collapse support
+     - No JavaScript dependency for the HTML structure itself
+
+     JavaScript:
+     - scripts/main.js
+
+     CSS:
+     - styles/variables.css
+     - styles/global.css
+     - styles/components.css
+     - styles/animations.css
+     - styles/responsive.css
+
+     Notes:
+     - JavaScript controls the expanded/collapsed state.
+     - Each item must have a unique ID for its trigger and panel.
+     - Do not place interactive controls inside the answer panel
+       unless they are intentionally supported by the component.
+     ============================================================ -->
+
+
+<!-- ============================================================
+     ACCORDION ITEM
+     ============================================================ -->
+
+<div class="accordion-item">
+
+  <!-- ==========================================================
+       ACCORDION HEADER
+       ========================================================== -->
+
+  <h3 class="accordion-item__heading">
+
+    <button
+      class="accordion-item__trigger"
+      type="button"
+      id="accordion-trigger-1"
+      aria-expanded="false"
+      aria-controls="accordion-panel-1"
+    >
+
+      <span class="accordion-item__question">
+        What does ModeInfinity Academy offer?
+      </span>
+
+      <span
+        class="accordion-item__icon"
+        aria-hidden="true"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          focusable="false"
+        >
+          <path d="M12 5v14"></path>
+          <path d="M5 12h14"></path>
+        </svg>
+      </span>
+
+    </button>
+
+  </h3>
+
+
+  <!-- ==========================================================
+       ACCORDION PANEL
+       ========================================================== -->
+
+  <div
+    class="accordion-item__panel"
+    id="accordion-panel-1"
+    role="region"
+    aria-labelledby="accordion-trigger-1"
+    hidden
+  >
+
+    <div class="accordion-item__content">
+
+      <p>
+        ModeInfinity Academy provides practical shoemaking
+        education focused on craftsmanship, technical skills,
+        design, production, and the development of real-world
+        footwear-making capabilities.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

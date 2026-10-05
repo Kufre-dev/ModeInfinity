@@ -1,0 +1,9 @@
+﻿{
+    "name": "ModeInfinity",
+    "short_name": "ModeInfinity",
+    "description": "ModeInfinity — Learn. Create. Build.",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#111111",
+    "background_color": "#ffffff"
+}

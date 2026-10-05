@@ -1,0 +1,697 @@
+<!-- <!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+		<meta name="description" content="ModeInfinity CSS component, accessibility, animation and responsive architecture test page.">
+		<meta name="theme-color" content="#111111">
+		<title>ModeInfinity | Component Test</title>
+		 ==========================================================================
+     MODEINFINITY STYLES
+     ========================================================================== 
+		<link rel="stylesheet" href="../styles/variables.css">
+		<link rel="stylesheet" href="../styles/global.css">
+		<link rel="stylesheet" href="../styles/layout.css">
+		<link rel="stylesheet" href="../styles/components.css">
+		<link rel="stylesheet" href="../styles/gallery.css">
+		<link rel="stylesheet" href="../styles/shop.css">
+		<link rel="stylesheet" href="../styles/swiper.css">
+		<link rel="stylesheet" href="../styles/animations.css">
+		<link rel="stylesheet" href="../styles/responsive.css">
+	</head>
+
+	<body>
+		 ==========================================================================
+     SKIP NAVIGATION
+     ========================================================================== 
+		<a class="skip-link" href="#main-content"> Skip to main content </a>
+		 ==========================================================================
+     HEADER COMPONENT
+     ========================================================================== 
+		<div data-component="header"></div>
+		 ==========================================================================
+     MAIN CONTENT
+     ========================================================================== 
+		<main id="main-content" class="site-main">
+			 ======================================================================
+         00 — HERO
+         ====================================================================== 
+			<section class="section" aria-labelledby="test-hero-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> ModeInfinity </span>
+						<h1 id="test-hero-title"> Component &amp; Responsive Test </h1>
+						<p> This page is designed to test the complete ModeInfinity design system across components, accessibility states, animations, layouts and responsive viewport sizes. </p>
+						<div class="form-actions">
+							<a class="btn btn-primary" href="#components"> Test Components </a>
+							<a class="btn btn-secondary" href="#responsive"> Test Responsive </a>
+						</div>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         01 — TYPOGRAPHY
+         ====================================================================== 
+			<section id="typography" class="section section--surface" aria-labelledby="typography-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 01 </span>
+						<h2 id="typography-title"> Typography System </h2>
+						<p> Fluid typography should scale naturally from compact mobile screens through ultrawide displays. </p>
+					</div>
+					<div class="stack-lg">
+						<div>
+							<h1> Heading One </h1>
+							<p> Testing the primary display heading. </p>
+						</div>
+						<div>
+							<h2> Heading Two </h2>
+							<p> Testing the secondary section heading. </p>
+						</div>
+						<div>
+							<h3> Heading Three </h3>
+							<p> Testing supporting content hierarchy. </p>
+						</div>
+						<div>
+							<h4> Heading Four </h4>
+							<p> Testing smaller heading levels. </p>
+						</div>
+						<div>
+							<h5> Heading Five </h5>
+							<p> Supporting heading text. </p>
+						</div>
+						<div>
+							<h6> Heading Six </h6>
+							<p> Smallest heading level. </p>
+						</div>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         02 — BUTTONS
+         ====================================================================== 
+			<section id="components" class="section" aria-labelledby="buttons-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 02 </span>
+						<h2 id="buttons-title"> Buttons &amp; Controls </h2>
+						<p> Test hover, focus, active, disabled and touch interaction states. </p>
+					</div>
+					<div class="form-actions">
+						<button class="btn btn-primary" type="button"> Primary Button </button>
+						<button class="btn btn-secondary" type="button"> Secondary Button </button>
+						<button class="btn btn-dark" type="button"> Dark Button </button>
+						<button class="btn btn-ghost" type="button"> Ghost Button </button>
+						<button class="btn btn-primary" type="button" disabled> Disabled Button </button>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         03 — BADGES
+         ====================================================================== 
+			<section class="section section--surface" aria-labelledby="badges-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 03 </span>
+						<h2 id="badges-title"> Badges </h2>
+					</div>
+					<div class="flex flex-wrap gap-4">
+						<span class="badge"> Academy </span>
+						<span class="badge"> Handmade </span>
+						<span class="badge"> Premium </span>
+						<span class="badge"> New Collection </span>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         04 — CARD SYSTEM
+         ====================================================================== 
+			<section class="section" aria-labelledby="cards-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 04 </span>
+						<h2 id="cards-title"> Card System </h2>
+						<p> The grid should automatically adapt between mobile, tablet, desktop and ultrawide screens. </p>
+					</div>
+					<div class="grid-4" data-reveal-stagger>
+						<article class="card reveal-up">
+							<div class="card__body">
+								<span class="badge"> Academy </span>
+								<h3> Foundation Mastery </h3>
+								<p> Build a strong foundation in professional shoemaking techniques. </p>
+								<a class="btn btn-secondary" href="#"> View Program </a>
+							</div>
+						</article>
+						<article class="card reveal-up">
+							<div class="card__body">
+								<span class="badge"> Advanced </span>
+								<h3> Artisan Excellence </h3>
+								<p> Develop advanced craftsmanship and professional production skills. </p>
+								<a class="btn btn-secondary" href="#"> View Program </a>
+							</div>
+						</article>
+						<article class="card reveal-up">
+							<div class="card__body">
+								<span class="badge"> Collection </span>
+								<h3> Handmade Footwear </h3>
+								<p> Explore premium handcrafted footwear produced by ModeInfinity. </p>
+								<a class="btn btn-secondary" href="#"> Explore Shoes </a>
+							</div>
+						</article>
+						<article class="card reveal-up">
+							<div class="card__body">
+								<span class="badge"> Studio </span>
+								<h3> Creative Workshop </h3>
+								<p> See the environment where craftsmanship and design come together. </p>
+								<a class="btn btn-secondary" href="#"> View Gallery </a>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         05 — AUTO-FIT GRID
+         ====================================================================== 
+			<section class="section section--surface" aria-labelledby="autogrid-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 05 </span>
+						<h2 id="autogrid-title"> Auto-Fit Grid </h2>
+						<p> These cards use intrinsic grid sizing rather than manufacturer-specific breakpoints. </p>
+					</div>
+					<div class="grid-auto" data-reveal-stagger>
+						<article class="card reveal-scale">
+							<div class="card__body">
+								<h3> Materials </h3>
+								<p> Leather, soles, threads and supporting shoemaking materials. </p>
+							</div>
+						</article>
+						<article class="card reveal-scale">
+							<div class="card__body">
+								<h3> Pattern Making </h3>
+								<p> Professional pattern development and footwear construction. </p>
+							</div>
+						</article>
+						<article class="card reveal-scale">
+							<div class="card__body">
+								<h3> Stitching </h3>
+								<p> Hand stitching, lasting and finishing. </p>
+							</div>
+						</article>
+						<article class="card reveal-scale">
+							<div class="card__body">
+								<h3> Business </h3>
+								<p> Building practical shoemaking businesses around craftsmanship. </p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         06 — SPLIT LAYOUT
+         ====================================================================== 
+			<section class="section" aria-labelledby="split-title">
+				<div class="container">
+					<div class="split split--wide">
+						<div class="stack-lg reveal-right">
+							<span class="section-label"> 06 </span>
+							<h2 id="split-title"> Split Content Layout </h2>
+							<p> This layout tests two-column behavior on larger screens and controlled stacking on smaller screens. </p>
+							<p> It should remain balanced at tablet, desktop and ultrawide viewport widths. </p>
+							<div class="form-actions">
+								<a class="btn btn-primary" href="#"> Learn More </a>
+								<a class="btn btn-secondary" href="#"> Contact Us </a>
+							</div>
+						</div>
+						<div class="media-frame aspect-landscape image-reveal reveal-left">
+							<picture>
+								<source srcset="../assets/images/about picture - copy (2).avif" type="image/avif">
+								<source srcset="../assets/images/about picture.webp" type="image/webp">
+								<img src="../assets/images/about picture.jpg" alt="ModeInfinity shoemaking workspace" width="1200" height="750" loading="lazy" decoding="async">
+							</picture>
+						</div>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         07 — MEDIA
+         ====================================================================== 
+			<section class="section section--surface" aria-labelledby="media-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 07 </span>
+						<h2 id="media-title"> Media &amp; Image System </h2>
+					</div>
+					<div class="grid-3">
+						<figure class="media-frame aspect-portrait image-hover">
+							<picture>
+								<source srcset="../assets/images/shoe1.avif" type="image/avif">
+								<source srcset="../assets/images/shoe1.webp" type="image/webp">
+								<img src="../assets/images/shoe1.jpg" alt="Handcrafted ModeInfinity shoe" width="800" height="1000" loading="lazy" decoding="async">
+							</picture>
+						</figure>
+						<figure class="media-frame aspect-portrait image-hover">
+							<picture>
+								<source srcset="../assets/images/shoe2.avif" type="image/avif">
+								<source srcset="../assets/images/shoe2.webp" type="image/webp">
+								<img src="../assets/images/shoe2.jpg" alt="ModeInfinity footwear design" width="800" height="1000" loading="lazy" decoding="async">
+							</picture>
+						</figure>
+						<figure class="media-frame aspect-portrait image-hover">
+							<picture>
+								<source srcset="../assets/images/shoe3.avif" type="image/avif">
+								<source srcset="../assets/images/shoe3.webp" type="image/webp">
+								<img src="../assets/images/shoe3.jpg" alt="ModeInfinity handcrafted footwear" width="800" height="1000" loading="lazy" decoding="async">
+							</picture>
+						</figure>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         08 — FORM SYSTEM
+         ====================================================================== 
+			<section class="section" aria-labelledby="form-title">
+				<div class="container">
+					<div class="content-medium">
+						<div class="section-header">
+							<span class="section-label"> 08 </span>
+							<h2 id="form-title"> Form System </h2>
+							<p> Test labels, controls, validation styling, focus states and responsive form layout. </p>
+						</div>
+						<form class="form-grid" data-validate novalidate>
+							<div class="grid-2">
+								<div class="form-field">
+									<label for="test-name"> Full Name </label>
+									<input id="test-name" name="name" type="text" autocomplete="name" placeholder="Enter your name" required>
+								</div>
+								<div class="form-field">
+									<label for="test-email"> Email Address </label>
+									<input id="test-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+								</div>
+							</div>
+							<div class="form-field">
+								<label for="test-service"> Service </label>
+								<select id="test-service" name="service" required>
+									<option value=""> Select a service </option>
+									<option value="academy"> Academy </option>
+									<option value="custom-shoes"> Custom Shoes </option>
+									<option value="consultation"> Consultation </option>
+								</select>
+							</div>
+							<div class="form-field">
+								<label for="test-message"> Message </label>
+								<textarea id="test-message" name="message" rows="6" placeholder="Write your message..." required></textarea>
+							</div>
+							<div class="form-field">
+								<label>
+									<input type="checkbox" name="consent" required> I agree to the test form submission. </label>
+							</div>
+							<div class="form-status" aria-live="polite"></div>
+							<div class="form-actions">
+								<button class="btn btn-primary" type="submit"> Submit Test Form </button>
+								<button class="btn btn-secondary" type="reset"> Reset </button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         09 — TESTIMONIALS
+         ====================================================================== 
+			<section class="section section--surface" aria-labelledby="testimonial-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 09 </span>
+						<h2 id="testimonial-title"> Testimonial Component </h2>
+					</div>
+					<div class="grid-3">
+						 Testimonial 1 
+						<article class="testimonial-card">
+							<div class="testimonial-card__rating" aria-label="5 out of 5 stars">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05 1.11-6.45-4.69-4.57 6.48-.94L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05-4.69-.94L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05-4.69-.94L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05-4.69-.94L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05-4.69-.94L12 2.8z" />
+								</svg>
+							</div>
+							<blockquote>
+								<p> ModeInfinity provides a practical environment for developing real shoemaking skills. </p>
+							</blockquote>
+							<div class="testimonial-card__author">
+								<div class="testimonial-card__avatar" aria-hidden="true"></div>
+								<div class="testimonial-card__author-info">
+									<span class="testimonial-card__name"> Test Student </span>
+									<span class="testimonial-card__role"> Academy Student </span>
+								</div>
+							</div>
+						</article>
+						 Testimonial 2 
+						<article class="testimonial-card">
+							<div class="testimonial-card__rating" aria-label="5 out of 5 stars">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05-4.69-.94 6.48-.94L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69-.94L12 2.8z" />
+								</svg>
+							</div>
+							<blockquote>
+								<p> The test component should remain readable and balanced at every supported viewport. </p>
+							</blockquote>
+							<div class="testimonial-card__author">
+								<div class="testimonial-card__avatar" aria-hidden="true"></div>
+								<div class="testimonial-card__author-info">
+									<span class="testimonial-card__name"> Test Client </span>
+									<span class="testimonial-card__role"> Custom Footwear Client </span>
+								</div>
+							</div>
+						</article>
+						 Testimonial 3 
+						<article class="testimonial-card">
+							<div class="testimonial-card__rating" aria-label="5 out of 5 stars">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 17.58l-5.8 3.05-4.69-.94 6.48-.94L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path fill="currentColor" d="M12 2.8l2.9 5.87 6.48.94-4.69 4.57 1.11 6.45L12 2.8z" />
+								</svg>
+							</div>
+							<blockquote>
+								<p> The component system provides a consistent foundation for the ModeInfinity website. </p>
+							</blockquote>
+							<div class="testimonial-card__author">
+								<div class="testimonial-card__avatar" aria-hidden="true"></div>
+								<div class="testimonial-card__author-info">
+									<span class="testimonial-card__name"> Test User </span>
+									<span class="testimonial-card__role"> Website Visitor </span>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         10 — ACCORDION
+         ====================================================================== 
+			<section class="section" aria-labelledby="accordion-title">
+				<div class="container">
+					<div class="content-medium">
+						<div class="section-header">
+							<span class="section-label"> 10 </span>
+							<h2 id="accordion-title"> Accordion </h2>
+						</div>
+						<div class="accordion">
+							<div class="accordion-item">
+								<h3>
+									<button class="accordion-item__trigger" type="button" aria-expanded="false" aria-controls="test-panel-1">
+										<span> What does ModeInfinity teach? </span>
+										<span class="accordion-item__icon" aria-hidden="true"> + </span>
+									</button>
+								</h3>
+								<div id="test-panel-1" class="accordion-item__panel" hidden>
+									<div class="accordion-item__content">
+										<p> ModeInfinity focuses on practical shoemaking and craftsmanship skills. </p>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h3>
+									<button class="accordion-item__trigger" type="button" aria-expanded="false" aria-controls="test-panel-2">
+										<span> Is the website responsive? </span>
+										<span class="accordion-item__icon" aria-hidden="true"> + </span>
+									</button>
+								</h3>
+								<div id="test-panel-2" class="accordion-item__panel" hidden>
+									<div class="accordion-item__content">
+										<p> The test page is designed to verify responsive behavior from compact phones through ultrawide displays. </p>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h3>
+									<button class="accordion-item__trigger" type="button" aria-expanded="false" aria-controls="test-panel-3">
+										<span> Does it support reduced motion? </span>
+										<span class="accordion-item__icon" aria-hidden="true"> + </span>
+									</button>
+								</h3>
+								<div id="test-panel-3" class="accordion-item__panel" hidden>
+									<div class="accordion-item__content">
+										<p> Motion is reduced automatically when the operating system requests reduced motion. </p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         11 — ANIMATION SYSTEM
+         ====================================================================== 
+			<section class="section section--surface" aria-labelledby="animation-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 11 </span>
+						<h2 id="animation-title"> Animation System </h2>
+						<p> Scroll through this section to test reveal animations and stagger timing. </p>
+					</div>
+					<div class="grid-3">
+						<article class="card reveal-up">
+							<div class="card__body">
+								<h3> Reveal Up </h3>
+								<p> Element enters from below. </p>
+							</div>
+						</article>
+						<article class="card reveal-down">
+							<div class="card__body">
+								<h3> Reveal Down </h3>
+								<p> Element enters from above. </p>
+							</div>
+						</article>
+						<article class="card reveal-scale">
+							<div class="card__body">
+								<h3> Reveal Scale </h3>
+								<p> Element enters with subtle scaling. </p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         12 — FOLD AWARE
+         ====================================================================== 
+			<section id="responsive" class="section" aria-labelledby="fold-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 12 </span>
+						<h2 id="fold-title"> Fold-Aware Layout </h2>
+						<p> This area tests the responsive architecture used for segmented and foldable viewport environments. </p>
+					</div>
+					<div class="fold-aware">
+						<article class="card">
+							<div class="card__body">
+								<span class="badge"> Segment One </span>
+								<h3> Creative Studio </h3>
+								<p> Content should remain readable and avoid being positioned awkwardly across a hinge. </p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<span class="badge"> Segment Two </span>
+								<h3> Academy </h3>
+								<p> The second segment provides an independent content region when supported. </p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         13 — RESPONSIVE STRESS TEST
+         ====================================================================== 
+			<section class="section section--surface" aria-labelledby="stress-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 13 </span>
+						<h2 id="stress-title"> Responsive Stress Test </h2>
+						<p> Resize the browser continuously rather than only testing at fixed device sizes. </p>
+					</div>
+					<div class="grid-auto">
+						<article class="card">
+							<div class="card__body">
+								<h3>320px</h3>
+								<p>Compact phone baseline.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>375–430px</h3>
+								<p>Common modern phone widths.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>600–767px</h3>
+								<p>Large phones and small tablets.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>768–1023px</h3>
+								<p>Tablet range.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>1024–1439px</h3>
+								<p>Desktop and laptop range.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>1440–1919px</h3>
+								<p>Large desktop range.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>1920–2559px</h3>
+								<p>Full HD and larger desktop displays.</p>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<h3>2560px+</h3>
+								<p>QHD, 4K and ultrawide displays.</p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         14 — ACCESSIBILITY
+         ====================================================================== 
+			<section class="section" aria-labelledby="accessibility-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 14 </span>
+						<h2 id="accessibility-title"> Accessibility Test </h2>
+						<p> Use only the keyboard to move through these controls. </p>
+					</div>
+					<div class="form-actions">
+						<button class="btn btn-primary" type="button"> Keyboard Focus 1 </button>
+						<button class="btn btn-secondary" type="button"> Keyboard Focus 2 </button>
+						<a class="btn btn-dark" href="#"> Keyboard Focus 3 </a>
+					</div>
+					<div class="card" style="margin-top: 2rem;">
+						<div class="card__body">
+							<h3> Accessibility Checklist </h3>
+							<ul>
+								<li> Visible keyboard focus </li>
+								<li> Touch-friendly controls </li>
+								<li> Reduced motion </li>
+								<li> Forced colors </li>
+								<li> Screen-reader-friendly labels </li>
+								<li> Logical heading structure </li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         15 — DARK SURFACE
+         ====================================================================== 
+			<section class="section section--dark" aria-labelledby="dark-title">
+				<div class="container">
+					<div class="section-header">
+						<span class="section-label"> 15 </span>
+						<h2 id="dark-title"> Dark Surface </h2>
+						<p> This section checks contrast and component behavior against the ModeInfinity black surface. </p>
+					</div>
+					<div class="grid-3">
+						<article class="card">
+							<div class="card__body">
+								<span class="badge"> Premium </span>
+								<h3> Luxury Craft </h3>
+								<p> ModeInfinity combines craftsmanship, creativity and practical learning. </p>
+								<button class="btn btn-primary" type="button"> Test Button </button>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<span class="badge"> Academy </span>
+								<h3> Learn </h3>
+								<p> Build professional shoemaking knowledge. </p>
+								<button class="btn btn-secondary" type="button"> Test Button </button>
+							</div>
+						</article>
+						<article class="card">
+							<div class="card__body">
+								<span class="badge"> Studio </span>
+								<h3> Create </h3>
+								<p> Turn skills into finished footwear. </p>
+								<button class="btn btn-primary" type="button"> Test Button </button>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			 ======================================================================
+         TEST COMPLETE
+         ====================================================================== 
+			<section class="section-small" aria-label="Test completion">
+				<div class="container">
+					<div class="section-header section-header--center">
+						<span class="section-label"> Test Complete </span>
+						<h2> Learn. Create. Build. </h2>
+						<p> If this page remains visually stable while resizing from 320px to ultrawide desktop dimensions, the responsive foundation is behaving correctly. </p>
+					</div>
+				</div>
+			</section>
+		</main>
+		 ==========================================================================
+     FOOTER COMPONENT
+     ========================================================================== 
+		<div data-component="footer"></div>
+		 ==========================================================================
+     OTHER SHARED COMPONENTS
+     ========================================================================== 
+		<div data-component="cart-drawer"></div>
+		<div data-component="lightbox"></div>
+		<div data-component="toast"></div>
+		<div data-component="scroll-to-top"></div>
+		 ==========================================================================
+     MODEINFINITY JAVASCRIPT
+     ========================================================================== 
+		<script type="module" src="../scripts/components.js"></script>
+		<script type="module" src="../scripts/main.js"></script>
+	</body>
+
+</html> -->

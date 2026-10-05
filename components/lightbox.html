@@ -1,0 +1,110 @@
+<!-- ============================================================
+     MODEINFINITY — GLOBAL LIGHTBOX
+     ============================================================
+
+     Shared image viewer for:
+     - Showcase gallery
+     - Academy gallery
+     - Footwear gallery
+     - Product image previews
+
+     Features:
+     - Accessible dialog
+     - Backdrop
+     - Close control
+     - Previous / next navigation
+     - Image title and description
+     - Keyboard-friendly controls
+     - Screen-reader status
+     - Responsive structure
+     - No dependency on an external gallery library
+
+     JavaScript:
+     - scripts/gallery.js
+
+     CSS:
+     - styles/variables.css
+     - styles/global.css
+     - styles/components.css
+     - styles/animations.css
+     - styles/responsive.css
+
+     Notes:
+     - The displayed image is populated dynamically by gallery.js.
+     - Source images should use AVIF → WebP → PNG/JPEG fallback.
+     - Images must have meaningful alternative text when they
+       communicate information.
+     ============================================================ -->
+<!-- ============================================================
+     LIGHTBOX
+     ============================================================ -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <!-- ==========================================================
+       LIGHTBOX BACKDROP
+       ========================================================== -->
+  <button class="lightbox__backdrop" id="lightbox-backdrop" type="button" tabindex="-1" aria-label="Close image viewer"></button>
+  <!-- ==========================================================
+       LIGHTBOX DIALOG
+       ========================================================== -->
+  <section class="lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" aria-describedby="lightbox-description" tabindex="-1">
+    <!-- ========================================================
+         LIGHTBOX HEADER
+         ======================================================== -->
+    <header class="lightbox__header">
+      <div class="lightbox__heading">
+        <p class="lightbox__eyebrow" id="lightbox-counter" aria-live="polite" aria-atomic="true"> Image 1 of 1 </p>
+        <h2 class="lightbox__title" id="lightbox-title"> Image Viewer </h2>
+      </div>
+      <!-- Close button -->
+      <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Close image viewer">
+        <svg class="lightbox__close-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path d="M5 5l14 14"></path>
+          <path d="M19 5L5 19"></path>
+        </svg>
+      </button>
+    </header>
+    <!-- ========================================================
+         LIGHTBOX CONTENT
+         ======================================================== -->
+    <div class="lightbox__content">
+      <!-- Previous image -->
+      <button class="lightbox__control lightbox__control--previous" id="lightbox-previous" type="button" aria-label="View previous image">
+        <svg class="lightbox__control-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </button>
+      <!-- ======================================================
+           IMAGE FRAME
+           ====================================================== -->
+      <figure class="lightbox__figure">
+        <picture class="lightbox__picture" id="lightbox-picture">
+          <!--
+            Sources are replaced dynamically by gallery.js.
+
+            Expected order:
+            1. AVIF
+            2. WebP
+            3. PNG/JPEG fallback
+          -->
+          <source id="lightbox-source-avif" type="image/avif">
+          <source id="lightbox-source-webp" type="image/webp">
+          <img class="lightbox__image" id="lightbox-image" src="" alt="" width="1600" height="1000" decoding="async">
+        </picture>
+        <figcaption class="lightbox__caption">
+          <p class="lightbox__image-title" id="lightbox-image-title"></p>
+          <p class="lightbox__description" id="lightbox-description"></p>
+        </figcaption>
+      </figure>
+      <!-- Next image -->
+      <button class="lightbox__control lightbox__control--next" id="lightbox-next" type="button" aria-label="View next image">
+        <svg class="lightbox__control-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M9 18l6-6-6-6"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- ========================================================
+         LIGHTBOX STATUS
+         ======================================================== -->
+    <p class="sr-only" id="lightbox-status" aria-live="polite" aria-atomic="true"> Image viewer opened. </p>
+  </section>
+</div>

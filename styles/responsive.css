@@ -1,0 +1,486 @@
+/* ==========================================================================
+   ModeInfinity — Responsive System
+   File: styles/responsive.css
+
+   Scope:
+   - Responsive breakpoints
+   - Device/orientation adaptations
+   - Large-screen scaling
+   - Responsive typography adjustments
+   - Responsive forms/actions
+   - Responsive embeds/tables
+   - Mobile/desktop component sizing
+
+   Ownership:
+   - variables.css  → tokens and themes
+   - global.css     → document and element foundations
+   - layout.css     → structural layout
+   - components.css → component styling
+   - responsive.css → breakpoint behavior
+   - animations.css → motion
+   ========================================================================== */
+/* ==========================================================================
+   1. BASELINE — 320PX+
+   ========================================================================== */
+:root {
+	--responsive-scale: 1;
+}
+html {
+	min-width: 20rem;
+}
+body {
+	min-width: 20rem;
+}
+/* ==========================================================================
+   2. SMALL PHONES — UP TO 29.999REM
+   ========================================================================== */
+@media (max-width: 29.999rem) {
+	:root {
+		--container-inline-padding: clamp(1rem,
+				5vw,
+				1.25rem);
+	}
+	.container,
+	.container--wide,
+	.container--readable {
+		width: min(100% - (var(--container-inline-padding) * 2),
+				var(--container-max));
+	}
+	.section-header {
+		margin-bottom: var(--space-8);
+	}
+	.section-header__intro {
+		max-width: 100%;
+	}
+	.flex-mobile-column {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.button-group,
+	.form-actions {
+		width: 100%;
+	}
+	.button-group > *,
+	.form-actions > * {
+		min-width: 0;
+	}
+	.button-group--full-mobile > *,
+	.form-actions--full-mobile > * {
+		width: 100%;
+	}
+	table {
+		min-width: 42rem;
+	}
+	.table-responsive {
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		overscroll-behavior-inline: contain;
+	}
+	.embed-responsive {
+		width: 100%;
+		overflow: hidden;
+	}
+}
+/* ==========================================================================
+   3. LARGE PHONES — 30REM / 480PX+
+   ========================================================================== */
+@media (min-width: 30rem) {
+	.button-group,
+	.form-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-3);
+	}
+	.button-group--center,
+	.form-actions--center {
+		justify-content: center;
+	}
+	.button-group--end,
+	.form-actions--end {
+		justify-content: flex-end;
+	}
+	.button-group--between,
+	.form-actions--between {
+		justify-content: space-between;
+	}
+}
+/* ==========================================================================
+   4. TABLETS — 48REM / 768PX+
+   ========================================================================== */
+@media (min-width: 48rem) {
+	:root {
+		--responsive-scale: 1;
+	}
+	.container,
+	.container--wide,
+	.container--readable {
+		width: min(100% - (var(--container-inline-padding) * 2),
+				var(--container-max));
+	}
+	.section-header {
+		gap: var(--space-5);
+	}
+	.section-header--split {
+		display: grid;
+		grid-template-columns:
+			minmax(0, 1fr) minmax(16rem, 0.65fr);
+		align-items: end;
+		column-gap: var(--space-12);
+	}
+	.section-header--split .section-header__intro {
+		justify-self: end;
+	}
+	.form-actions {
+		justify-content: flex-start;
+	}
+	.embed-responsive {
+		aspect-ratio: 16 / 9;
+	}
+	.embed-responsive iframe,
+	.embed-responsive video {
+		width: 100%;
+		height: 100%;
+	}
+}
+/* ==========================================================================
+   5. DESKTOP — 64REM / 1024PX+
+   ========================================================================== */
+@media (min-width: 64rem) {
+	:root {
+		--responsive-scale: 1;
+	}
+	.container,
+	.container--wide,
+	.container--readable {
+		width: min(100% - (var(--container-inline-padding) * 2),
+				var(--container-max));
+	}
+	.section-header {
+		margin-bottom: var(--space-12);
+	}
+	.section-header--split {
+		column-gap: var(--space-16);
+	}
+	.form-actions {
+		gap: var(--space-4);
+	}
+}
+/* ==========================================================================
+   6. LARGE DESKTOP — 80REM / 1280PX+
+   ========================================================================== */
+@media (min-width: 80rem) {
+	:root {
+		--responsive-scale: 1;
+	}
+	.container--wide {
+		width: min(100% - (var(--container-inline-padding) * 2),
+				var(--container-wide));
+	}
+	.section-header--split {
+		grid-template-columns:
+			minmax(0, 1fr) minmax(20rem, 0.55fr);
+		column-gap: var(--space-20);
+	}
+}
+/* ==========================================================================
+   7. LARGE DESKTOP — 120REM / 1920PX+
+   ========================================================================== */
+@media (min-width: 120rem) {
+	:root {
+		--responsive-scale: 1;
+	}
+	.container,
+	.container--wide {
+		width: min(100% - (var(--container-inline-padding) * 2),
+				var(--container-wide));
+	}
+}
+/* ==========================================================================
+   8. ULTRAWIDE / 2K — 160REM / 2560PX+
+   ========================================================================== */
+@media (min-width: 160rem) {
+	:root {
+		/*
+     * The root-size increase is intentionally modest.
+     * rem-based tokens then scale the entire design proportionally.
+     */
+		font-size: 20px;
+		--responsive-scale: 1.25;
+	}
+	.container {
+		width: min(90%,
+				var(--container-max));
+	}
+	.container--wide {
+		width: min(90%,
+				var(--container-wide));
+	}
+	.section-header--split {
+		column-gap: var(--space-24);
+	}
+}
+/* ==========================================================================
+   9. ULTRAWIDE / 4K — 240REM / 3840PX+
+   ========================================================================== */
+@media (min-width: 240rem) {
+	:root {
+		/*
+     * 30px root size keeps a 4K presentation from becoming visually tiny
+     * when the viewport is significantly wider than the content container.
+     */
+		font-size: 30px;
+		--responsive-scale: 1.875;
+	}
+	.container,
+	.container--wide {
+		width: min(86%,
+				var(--container-wide));
+	}
+}
+/* ==========================================================================
+   10. LANDSCAPE PHONES
+   ========================================================================== */
+@media (max-width: 48rem) and (orientation: landscape) {
+	.viewport-section,
+	.viewport-section--screen {
+		min-height: auto;
+	}
+}
+/* ==========================================================================
+   11. SHORT VIEWPORTS
+   ========================================================================== */
+@media (max-height: 42rem) {
+	.viewport-section,
+	.viewport-section--screen {
+		min-height: auto;
+	}
+}
+/* ==========================================================================
+   12. VERY SHORT LANDSCAPE VIEWPORTS
+   ========================================================================== */
+@media (max-height: 32rem) and (orientation: landscape) {
+	.section {
+		padding-block: var(--space-12);
+	}
+	.section--large {
+		padding-block: var(--space-16);
+	}
+}
+/* ==========================================================================
+   13. TOUCH / COARSE POINTER
+   ========================================================================== */
+@media (pointer: coarse) {
+	/*
+   * Keep native horizontal scrolling available for scroll-snap components.
+   * Do not globally force pan-y, because that can interfere with deliberate
+   * horizontal product/content rails.
+   */
+	input,
+	select,
+	textarea,
+	button {
+		min-height: var(--control-height-md);
+	}
+}
+/* ==========================================================================
+   14. FINE POINTER / MOUSE
+   ========================================================================== */
+@media (pointer: fine) {
+	/*
+   * Hover-specific enhancements belong to components.css and animations.css.
+   * This layer only establishes the responsive input context.
+   */
+}
+/* ==========================================================================
+   15. HOVER CAPABILITY
+   ========================================================================== */
+@media (hover: hover) {
+	.hover-device-only {
+		display: block;
+	}
+}
+@media (hover: none) {
+	.hover-device-only {
+		display: none !important;
+	}
+}
+/* ==========================================================================
+   16. REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+/* ==========================================================================
+   17. HIGH CONTRAST
+   ========================================================================== */
+@media (prefers-contrast: more) {
+	.section-header__eyebrow,
+	.eyebrow,
+	.section-label {
+		letter-spacing: var(--letter-spacing-wide);
+	}
+}
+/* ==========================================================================
+   18. FORCED COLORS
+   ========================================================================== */
+@media (forced-colors: active) {
+	.container,
+	.section,
+	.grid,
+	.split {
+		forced-color-adjust: auto;
+	}
+}
+/* ==========================================================================
+   19. PRINT
+   ========================================================================== */
+/*
+ * Print styles are owned by global.css.
+ * Keeping print behavior out of this file prevents conflicting declarations.
+ */
+/* ==========================================================================
+   20. RESPONSIVE HELPERS
+   ========================================================================== */
+.show-mobile {
+	display: block;
+}
+.show-tablet,
+.show-desktop,
+.show-large-desktop {
+	display: none;
+}
+@media (min-width: 48rem) {
+	.show-mobile {
+		display: none;
+	}
+	.show-tablet {
+		display: block;
+	}
+}
+@media (min-width: 64rem) {
+	.show-tablet {
+		display: none;
+	}
+	.show-desktop {
+		display: block;
+	}
+}
+@media (min-width: 120rem) {
+	.show-desktop {
+		display: none;
+	}
+	.show-large-desktop {
+		display: block;
+	}
+}
+/* ==========================================================================
+   21. RESPONSIVE TEXT HELPERS
+   ========================================================================== */
+.hide-mobile {
+	display: none !important;
+}
+@media (min-width: 48rem) {
+	.hide-mobile {
+		display: initial !important;
+	}
+}
+.hide-tablet-up {
+	display: initial;
+}
+@media (min-width: 48rem) {
+	.hide-tablet-up {
+		display: none !important;
+	}
+}
+.hide-desktop-up {
+	display: initial;
+}
+@media (min-width: 64rem) {
+	.hide-desktop-up {
+		display: none !important;
+	}
+}
+/* ==========================================================================
+   22. RESPONSIVE ACTION GROUPS
+   ========================================================================== */
+@media (max-width: 47.999rem) {
+	.header-actions,
+	.nav-actions {
+		flex-wrap: wrap;
+	}
+}
+@media (min-width: 48rem) {
+	.header-actions,
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+	}
+}
+/* ==========================================================================
+   23. RESPONSIVE TABLES
+   ========================================================================== */
+.table-responsive {
+	width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior-inline: contain;
+}
+.table-responsive > table {
+	min-width: 42rem;
+}
+/* ==========================================================================
+   24. RESPONSIVE EMBEDS
+   ========================================================================== */
+.embed-responsive {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+.embed-responsive iframe,
+.embed-responsive embed,
+.embed-responsive object,
+.embed-responsive video {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+}
+/* ==========================================================================
+   25. FOLDABLE / SEGMENTED VIEWPORT SUPPORT
+   ========================================================================== */
+@media (horizontal-viewport-segments: 2) {
+	.fold-aware {
+		display: grid;
+		grid-template-columns:
+			1fr env(viewport-segment-width 1 0);
+		gap: env(viewport-segment-left 1 0);
+	}
+}
+@media (vertical-viewport-segments: 2) {
+	.fold-aware {
+		display: grid;
+		grid-template-rows:
+			1fr env(viewport-segment-height 0 1);
+		gap: env(viewport-segment-top 0 1);
+	}
+}
+/* ==========================================================================
+   26. SAFE AREA
+   ========================================================================== */
+@media (max-width: 64rem) {
+	.mobile-safe-area {
+		padding-inline-start: max(var(--container-inline-padding),
+				env(safe-area-inset-left));
+		padding-inline-end: max(var(--container-inline-padding),
+				env(safe-area-inset-right));
+		padding-bottom: max(var(--space-4),
+				env(safe-area-inset-bottom));
+	}
+}
+/* ==========================================================================
+   End of responsive.css
+   ========================================================================== */

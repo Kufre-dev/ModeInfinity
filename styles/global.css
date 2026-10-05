@@ -1,0 +1,620 @@
+/* ==========================================================================
+   ModeInfinity — Global Foundation
+   File: styles/global.css
+   Scope:
+   - Global reset
+   - Base typography
+   - Semantic HTML elements
+   - Forms and controls
+   - Media defaults
+   - Accessibility utilities
+   - Print styles
+
+   Ownership:
+   - variables.css  → tokens, themes, design values
+   - global.css     → document-wide defaults and element foundations
+   - layout.css     → containers, sections, grids, stacks, layout utilities
+   - components.css → reusable UI components
+   - responsive.css → breakpoint-specific behavior
+   - animations.css → motion and transitions
+   ========================================================================== */
+/* ==========================================================================
+   1. DOCUMENT RESET
+   ========================================================================== */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+html {
+	min-width: 20rem;
+	scroll-behavior: smooth;
+	scroll-padding-top: var(--scroll-offset);
+	scrollbar-gutter: stable;
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+body {
+	min-width: 20rem;
+	min-height: 100vh;
+	margin: 0;
+	background: var(--color-background);
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-size: var(--font-size-body);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--line-height-body);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overflow-wrap: break-word;
+}
+main {
+	display: block;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+	display: block;
+}
+/* ==========================================================================
+   2. MARGINS & TYPOGRAPHY
+   ========================================================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure,
+pre,
+dl,
+dd {
+	margin-block: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+	color: var(--color-heading);
+	font-family: var(--font-display);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--line-height-tight);
+	letter-spacing: var(--letter-spacing-tight);
+	text-wrap: balance;
+}
+h5,
+h6 {
+	color: var(--color-heading);
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--line-height-tight);
+	letter-spacing: var(--letter-spacing-tight);
+	text-wrap: balance;
+}
+h1 {
+	font-size: var(--font-size-h1);
+}
+h2 {
+	font-size: var(--font-size-h2);
+}
+h3 {
+	font-size: var(--font-size-h3);
+}
+h4 {
+	font-size: var(--font-size-h4);
+}
+h5 {
+	font-size: var(--font-size-h5);
+}
+h6 {
+	font-size: var(--font-size-h6);
+}
+p {
+	max-width: var(--content-readable);
+}
+strong,
+b {
+	font-weight: var(--font-weight-semibold);
+}
+small {
+	font-size: var(--font-size-small);
+}
+sub,
+sup {
+	position: relative;
+	font-size: 0.75em;
+	line-height: 0;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.45em;
+}
+sub {
+	bottom: -0.2em;
+}
+abbr[title] {
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-underline-offset: 0.15em;
+	cursor: help;
+}
+mark {
+	padding-inline: 0.15em;
+	background: var(--color-accent);
+	color: var(--color-black);
+}
+hr {
+	height: 0;
+	margin-block: var(--space-8);
+	border: 0;
+	border-top: var(--border-thin) solid var(--color-border);
+}
+/* ==========================================================================
+   3. LINKS
+   ========================================================================== */
+a {
+	color: var(--color-link);
+	text-decoration-line: underline;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.18em;
+	text-decoration-color: currentColor;
+	transition:
+		color var(--duration-fast) var(--ease-standard),
+		text-decoration-color var(--duration-fast) var(--ease-standard);
+}
+a:hover {
+	color: var(--color-link-hover);
+}
+a:active {
+	color: var(--color-link-active);
+}
+/* a:visited {
+	color: var(--color-link);
+} */
+/* ==========================================================================
+   4. ACCESSIBLE FOCUS
+   ========================================================================== */
+:where(a,
+	button,
+	input,
+	select,
+	textarea,
+	summary,
+	[tabindex]:not([tabindex="-1"])):focus-visible {
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: var(--focus-ring-offset);
+}
+/* ==========================================================================
+   5. BUTTONS & FORM CONTROLS
+   ========================================================================== */
+button,
+input,
+select,
+textarea {
+	margin: 0;
+	color: inherit;
+	font: inherit;
+}
+button {
+	border: 0;
+	background: none;
+}
+button:not(:disabled),
+input[type="button"]:not(:disabled),
+input[type="submit"]:not(:disabled),
+input[type="reset"]:not(:disabled) {
+	cursor: pointer;
+}
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+	cursor: not-allowed;
+}
+input,
+select,
+textarea {
+	max-width: 100%;
+}
+input,
+select,
+textarea,
+button {
+	font-size: 1rem;
+}
+textarea {
+	min-height: 8rem;
+	resize: vertical;
+}
+fieldset {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+legend {
+	padding: 0;
+}
+label {
+	display: inline-block;
+	color: var(--color-text);
+	font-weight: var(--font-weight-medium);
+}
+::placeholder {
+	color: var(--color-text-muted);
+	opacity: 1;
+}
+input,
+select,
+textarea {
+	accent-color: var(--color-accent);
+	caret-color: var(--color-interactive);
+}
+/* ==========================================================================
+   6. DISABLED & AUTOFILL STATES
+   ========================================================================== */
+:disabled {
+	opacity: 0.55;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	-webkit-text-fill-color: var(--color-text);
+	caret-color: var(--color-interactive);
+	-webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset;
+}
+/* ==========================================================================
+   7. LISTS
+   ========================================================================== */
+ul,
+ol {
+	margin-block: 0;
+	padding-inline-start: 1.5em;
+}
+nav ul,
+nav ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+/* ==========================================================================
+   8. QUOTES
+   ========================================================================== */
+blockquote {
+	margin-inline: 0;
+	padding-inline-start: var(--space-5);
+	border-inline-start: var(--border-medium) solid var(--color-accent);
+	color: var(--color-text-secondary);
+}
+cite {
+	font-style: normal;
+}
+/* ==========================================================================
+   9. FIGURES
+   ========================================================================== */
+figure {
+	margin-inline: 0;
+}
+figcaption {
+	color: var(--color-text-muted);
+	font-size: var(--font-size-small);
+}
+/* ==========================================================================
+   10. MEDIA
+   ========================================================================== */
+img,
+picture,
+svg,
+video,
+canvas,
+iframe {
+	display: block;
+}
+img,
+video,
+canvas,
+iframe {
+	max-width: 100%;
+}
+img,
+video {
+	height: auto;
+}
+img {
+	border-style: none;
+}
+svg {
+	max-width: 100%;
+	overflow: visible;
+}
+iframe {
+	border: 0;
+}
+audio {
+	display: block;
+	max-width: 100%;
+}
+/* ==========================================================================
+   11. TABLES
+   ========================================================================== */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+th,
+td {
+	padding: var(--space-3) var(--space-4);
+	border-bottom: var(--border-thin) solid var(--color-border);
+	text-align: start;
+	vertical-align: top;
+}
+th {
+	color: var(--color-heading);
+	font-weight: var(--font-weight-semibold);
+}
+/* ==========================================================================
+   12. CODE & PREFORMATTED CONTENT
+   ========================================================================== */
+code,
+kbd,
+samp,
+pre {
+	font-family: var(--font-mono);
+}
+code,
+kbd,
+samp {
+	font-size: 0.9em;
+}
+code {
+	padding: 0.1em 0.3em;
+	border-radius: var(--radius-sm);
+	background: var(--color-surface-muted);
+}
+kbd {
+	padding: 0.15em 0.4em;
+	border: var(--border-thin) solid var(--color-border-strong);
+	border-radius: var(--radius-sm);
+	background: var(--color-surface);
+	box-shadow: var(--shadow-xs);
+}
+pre {
+	max-width: 100%;
+	overflow-x: auto;
+	padding: var(--space-4);
+	border: var(--border-thin) solid var(--color-border);
+	border-radius: var(--radius-md);
+	background: var(--color-surface-muted);
+	color: var(--color-text);
+	white-space: pre;
+	-webkit-overflow-scrolling: touch;
+}
+pre code {
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+/* ==========================================================================
+   13. DETAILS / SUMMARY
+   ========================================================================== */
+summary {
+	cursor: pointer;
+}
+summary::marker {
+	color: var(--color-accent-text);
+}
+/* ==========================================================================
+   14. SELECTION
+   ========================================================================== */
+::selection {
+	background: var(--color-accent);
+	color: var(--color-black);
+}
+/* ==========================================================================
+   15. ACCESSIBILITY UTILITIES
+   ========================================================================== */
+.sr-only {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	-webkit-clip-path: inset(50%) !important;
+	clip-path: inset(50%) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+.skip-link {
+	position: fixed;
+	top: var(--space-3);
+	left: var(--space-3);
+	z-index: var(--skip-link-z-index);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: var(--control-height-md);
+	padding: var(--space-2) var(--space-4);
+	border: var(--border-thin) solid var(--color-border-strong);
+	border-radius: var(--radius-sm);
+	background: var(--color-surface);
+	color: var(--color-heading);
+	font-weight: var(--font-weight-semibold);
+	text-decoration: none;
+	transform: translateY(-200%);
+	transition:
+		transform var(--duration-fast) var(--ease-emphasized),
+		background-color var(--duration-fast) var(--ease-standard),
+		color var(--duration-fast) var(--ease-standard);
+}
+.skip-link:focus-visible {
+	transform: translateY(0);
+}
+/* ==========================================================================
+   16. TEXT UTILITIES
+   ========================================================================== */
+.text-wrap {
+	text-wrap: wrap;
+}
+.text-pretty {
+	text-wrap: pretty;
+}
+.text-balance {
+	text-wrap: balance;
+}
+.text-nowrap {
+	white-space: nowrap;
+}
+.break-word {
+	overflow-wrap: break-word;
+	word-break: normal;
+}
+.break-all {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+/* ==========================================================================
+   17. HIDDEN / INERT STATES
+   ========================================================================== */
+[hidden] {
+	display: none !important;
+}
+[inert] {
+	pointer-events: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+/* ==========================================================================
+   18. ACCESSIBILITY — HIGH CONTRAST / FORCED COLORS
+   ========================================================================== */
+@media (prefers-contrast: more) {
+	:where(a,
+		button,
+		input,
+		select,
+		textarea,
+		summary):focus-visible {
+		outline-width: 4px;
+	}
+	th,
+	td {
+		border-bottom-width: 2px;
+	}
+}
+@media (forced-colors: active) {
+	:root {
+		forced-color-adjust: auto;
+	}
+	a {
+		color: LinkText;
+	}
+	button,
+	input,
+	select,
+	textarea {
+		border-color: ButtonText;
+	}
+	:where(a,
+		button,
+		input,
+		select,
+		textarea,
+		summary,
+		[tabindex]:not([tabindex="-1"])):focus-visible {
+		outline: 2px solid Highlight;
+		outline-offset: 3px;
+	}
+	mark {
+		background: Highlight;
+		color: HighlightText;
+	}
+	.skip-link {
+		border-color: ButtonText;
+		background: Canvas;
+		color: CanvasText;
+	}
+}
+/* ==========================================================================
+   19. PRINT
+   ========================================================================== */
+@media print {
+	*,
+	*::before,
+	*::after {
+		box-shadow: none !important;
+		text-shadow: none !important;
+	}
+	html {
+		scroll-behavior: auto;
+	}
+	body {
+		min-width: 0;
+		background: #fff;
+		color: #000;
+	}
+	a {
+		color: #000;
+		text-decoration: underline;
+	}
+	a[href^="http"]::after {
+		content: " (" attr(href) ")";
+		font-size: 0.8em;
+		overflow-wrap: anywhere;
+	}
+	abbr[title]::after {
+		content: " (" attr(title) ")";
+	}
+	pre,
+	blockquote {
+		break-inside: avoid;
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		break-after: avoid;
+	}
+	img,
+	figure,
+	table {
+		break-inside: avoid;
+	}
+	thead {
+		display: table-header-group;
+	}
+	tr,
+	img {
+		break-inside: avoid;
+	}
+	p,
+	h2,
+	h3 {
+		orphans: 3;
+		widows: 3;
+	}
+	nav,
+	.skip-link {
+		display: none !important;
+	}
+}

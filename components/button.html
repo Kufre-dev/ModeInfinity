@@ -1,0 +1,85 @@
+<!-- ============================================================
+     MODEINFINITY — BUTTON COMPONENTS
+     ============================================================
+
+     Reusable button and link patterns.
+
+     Supported variants:
+     - Primary
+     - Secondary
+     - Dark
+     - Ghost
+     - Block
+     - Icon
+     - Text link
+
+     Usage:
+     - Use <a> for navigation.
+     - Use <button> for actions.
+     - Never use href="#" as a placeholder action.
+     - Add an accessible aria-label when an icon-only control
+       does not have visible text.
+
+     CSS:
+     - styles/components.css
+     - styles/animations.css
+
+     JavaScript:
+     - Only required when a button performs a JavaScript action.
+     ============================================================ -->
+<!-- ============================================================
+     PRIMARY BUTTON
+     ============================================================ -->
+<a class="btn btn-primary" href="academy.html"> Join the Academy </a>
+<!-- ============================================================
+     SECONDARY BUTTON
+     ============================================================ -->
+<a class="btn btn-secondary" href="shop.html"> Explore The Collection </a>
+<!-- ============================================================
+     DARK BUTTON
+     ============================================================ -->
+<a class="btn btn-dark" href="contact.html"> Contact ModeInfinity </a>
+<!-- ============================================================
+     GHOST BUTTON
+     ============================================================ -->
+<a class="btn btn-ghost" href="portfolio.html"> View Showcase </a>
+<!-- ============================================================
+     FULL-WIDTH / BLOCK BUTTON
+     ============================================================ -->
+<a class="btn btn-primary btn-block" href="academy.html"> Start Your Journey </a>
+<!-- ============================================================
+     ACTION BUTTON
+     ============================================================
+
+     Use <button> when the control performs an action rather than
+     navigating to another page.
+     ============================================================ -->
+<button class="btn btn-primary" type="button" id="example-action-button"> Add to Cart </button>
+<!-- ============================================================
+     ICON BUTTON
+     ============================================================
+
+     Icon-only controls must have an accessible aria-label.
+     The icon itself is hidden from assistive technology.
+     ============================================================ -->
+<button class="header-action" type="button" aria-label="Open shopping cart" aria-controls="cart-drawer" aria-expanded="false">
+  <svg class="header-action__icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <circle cx="9" cy="20" r="1"></circle>
+    <circle cx="19" cy="20" r="1"></circle>
+    <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 1.9-1.4L22 8H6"></path>
+  </svg>
+</button>
+<!-- ============================================================
+     TEXT LINK
+     ============================================================ -->
+<a class="text-link" href="about.html"> Learn more about ModeInfinity </a>
+<!-- ============================================================
+     DISABLED ACTION BUTTON
+     ============================================================
+
+     Use only when an action genuinely cannot currently be
+     performed.
+
+     Do not use disabled controls merely as decoration.
+     ============================================================ -->
+<button class="btn btn-primary" type="button" disabled> Currently Unavailable </button>

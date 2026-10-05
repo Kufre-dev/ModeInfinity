@@ -1,0 +1,203 @@
+<aside
+    class="cart-drawer"
+    id="cart-drawer"
+    aria-hidden="true"
+    aria-labelledby="cart-drawer-title"
+    aria-modal="true"
+    role="dialog"
+>
+    <button
+        class="cart-drawer__backdrop"
+        id="cart-drawer-backdrop"
+        type="button"
+        tabindex="-1"
+        aria-label="Close shopping cart"
+    ></button>
+
+    <div class="cart-drawer__panel">
+
+        <header class="cart-drawer__header">
+
+            <div class="cart-drawer__heading-group">
+                <p class="cart-drawer__eyebrow">
+                    Your selection
+                </p>
+
+                <h2
+                    class="cart-drawer__title"
+                    id="cart-drawer-title"
+                >
+                    Shopping Cart
+                </h2>
+            </div>
+
+            <button
+                class="cart-drawer__close"
+                id="cart-drawer-close"
+                type="button"
+                aria-label="Close shopping cart"
+            >
+                <svg
+                    class="cart-drawer__close-icon"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <path d="M5 5l14 14"></path>
+                    <path d="M19 5L5 19"></path>
+                </svg>
+            </button>
+
+        </header>
+
+
+        <p
+            class="sr-only"
+            id="cart-status"
+            aria-live="polite"
+            aria-atomic="true"
+        >
+            Your shopping cart is empty.
+        </p>
+
+
+        <div class="cart-drawer__body">
+
+            <section
+                class="cart-drawer__empty"
+                id="cart-empty-state"
+                aria-labelledby="cart-empty-title"
+            >
+                <div
+                    class="cart-drawer__empty-icon"
+                    aria-hidden="true"
+                >
+                    <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+                        <circle
+                            cx="9"
+                            cy="20"
+                            r="1"
+                        ></circle>
+
+                        <circle
+                            cx="19"
+                            cy="20"
+                            r="1"
+                        ></circle>
+
+                        <path
+                            d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 1.9-1.4L22 8H6"
+                        ></path>
+                    </svg>
+                </div>
+
+                <h3
+                    class="cart-drawer__empty-title"
+                    id="cart-empty-title"
+                >
+                    Your cart is empty
+                </h3>
+
+                <p class="cart-drawer__empty-text">
+                    Explore the ModeInfinity collection and add
+                    footwear to your selection.
+                </p>
+
+                <a
+                    class="btn btn-block btn-primary"
+                    href="shop.html"
+                >
+                    Explore The Collection
+                </a>
+            </section>
+
+
+            <section
+                class="cart-drawer__items-section"
+                id="cart-items-section"
+                aria-labelledby="cart-items-title"
+                hidden
+            >
+                <h3
+                    class="sr-only"
+                    id="cart-items-title"
+                >
+                    Items in your shopping cart
+                </h3>
+
+                <div
+                    class="cart-drawer__items"
+                    id="cart-items"
+                ></div>
+            </section>
+
+        </div>
+
+
+        <footer
+            class="cart-drawer__footer"
+            id="cart-drawer-footer"
+            hidden
+        >
+            <div class="cart-drawer__summary">
+
+                <div class="cart-drawer__summary-row">
+                    <span class="cart-drawer__summary-label">
+                        Subtotal
+                    </span>
+
+                    <strong
+                        class="cart-drawer__summary-value"
+                        id="cart-subtotal"
+                    >
+                        ₦0
+                    </strong>
+                </div>
+
+                <p class="cart-drawer__summary-note">
+                    Delivery charges and applicable fees are
+                    calculated during order processing.
+                </p>
+
+            </div>
+
+
+            <div class="cart-drawer__actions">
+
+                <a
+                    class="btn btn-block btn-primary"
+                    id="cart-checkout"
+                    href="shop.html"
+                >
+                    Continue to Checkout
+                </a>
+
+                <a
+                    class="btn btn-block btn-secondary"
+                    href="shop.html"
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+        </footer>
+
+    </div>
+</aside>

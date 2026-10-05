@@ -1,0 +1,916 @@
+/* ==========================================================================
+   MODEINFINITY
+   Design System — Global Variables
+   File: styles/variables.css
+
+   PURPOSE
+   -------
+   Global design tokens for the entire ModeInfinity website.
+
+   DESIGN PRINCIPLES
+   -----------------
+   - Mobile-first
+   - Fluid rather than device-specific
+   - rem-based sizing
+   - clamp() for controlled fluid scaling
+   - Safe-area aware
+   - Orientation agnostic
+   - Foldable-friendly
+   - Large-screen / ultrawide aware
+   - Accessible colour contrast
+   - System colour preference by default
+   - Manual Light / Dark override supported
+   - Premium editorial visual language
+   - Gold used as an accent, never as a dominant UI colour
+
+   THEME STATES
+   ------------
+   No data-theme attribute
+       = System preference
+
+   data-theme="light"
+       = Force Light
+
+   data-theme="dark"
+       = Force Dark
+
+   IMPORTANT
+   ---------
+   This file contains design tokens only.
+   Component styling belongs in components.css.
+   Layout styling belongs in layout.css.
+   Breakpoint/layout adjustments belong in responsive.css.
+   Motion belongs in animations.css.
+   ========================================================================== */
+/* ==========================================================================
+   01. ROOT DESIGN TOKENS
+   ========================================================================== */
+:root {
+	/* =========================================================================
+     01A. CORE BRAND PALETTE
+     ========================================================================= */
+	/* -------------------------------------------------------------------------
+     Gold
+     ------------------------------------------------------------------------- */
+	--color-gold-50: #fffdf5;
+	--color-gold-100: #fff8dc;
+	--color-gold-200: #f9e9a8;
+	--color-gold-300: #edc84f;
+	--color-gold-400: #d9ad2b;
+	--color-gold-500: #c59a18;
+	--color-gold-600: #a77d0d;
+	--color-gold-700: #85620b;
+	--color-gold-800: #624808;
+	--color-gold-900: #423006;
+	/* -------------------------------------------------------------------------
+     Neutral scale
+     ------------------------------------------------------------------------- */
+	--color-neutral-50: #fafafa;
+	--color-neutral-100: #f5f5f5;
+	--color-neutral-200: #e5e5e5;
+	--color-neutral-300: #d4d4d4;
+	--color-neutral-400: #a3a3a3;
+	--color-neutral-500: #737373;
+	--color-neutral-600: #525252;
+	--color-neutral-700: #404040;
+	--color-neutral-800: #262626;
+	--color-neutral-900: #171717;
+	--color-neutral-950: #0a0a0a;
+	/* -------------------------------------------------------------------------
+     Absolute brand neutrals
+     ------------------------------------------------------------------------- */
+	--color-black: #000000;
+	--color-white: #ffffff;
+	--color-black-soft: #111111;
+	--color-black-deep: #080808;
+	--color-cream: #faf9f6;
+	--color-cream-dark: #f3f0e9;
+	/* =========================================================================
+     01B. LIGHT THEME SEMANTIC TOKENS
+     ========================================================================= */
+	/*
+   * These are the default semantic values.
+   *
+   * They represent both:
+   *
+   * 1. Light mode
+   * 2. The fallback used before a system preference is resolved.
+   *
+   * Dark-mode overrides appear later in this file.
+   */
+	/* -------------------------------------------------------------------------
+     Backgrounds
+     ------------------------------------------------------------------------- */
+	--color-background: var(--color-white);
+	--color-background-muted: var(--color-neutral-100);
+	--color-background-soft: var(--color-cream);
+	--color-background-dark: var(--color-black-soft);
+	--color-background-dark-deep: var(--color-black-deep);
+	/* -------------------------------------------------------------------------
+     Surfaces
+     ------------------------------------------------------------------------- */
+	--color-surface: var(--color-white);
+	--color-surface-raised: var(--color-white);
+	--color-surface-muted: var(--color-neutral-100);
+	--color-surface-soft: var(--color-cream);
+	--color-surface-dark: var(--color-black-soft);
+	--color-surface-dark-deep: var(--color-black-deep);
+	/* -------------------------------------------------------------------------
+     Text
+     ------------------------------------------------------------------------- */
+	--color-text: var(--color-neutral-900);
+	--color-text-strong: var(--color-neutral-950);
+	--color-text-muted: var(--color-neutral-600);
+	--color-text-subtle: var(--color-neutral-500);
+	--color-text-inverse: var(--color-white);
+	/* -------------------------------------------------------------------------
+     Borders
+     ------------------------------------------------------------------------- */
+	--color-border: var(--color-neutral-200);
+	--color-border-strong: var(--color-neutral-300);
+	--color-border-subtle: var(--color-neutral-100);
+	--color-border-dark: var(--color-neutral-700);
+	--color-border-dark-subtle: var(--color-neutral-800);
+	/* =========================================================================
+     01C. INTERACTION / ACCENT COLOURS
+     ========================================================================= */
+	/*
+   * Gold-600 is retained in the palette but is not used as the default
+   * accessible text colour on light surfaces.
+   *
+   * Gold-700 is the primary accessible gold for text.
+   */
+	--color-link: var(--color-gold-700);
+	--color-link-hover: var(--color-gold-800);
+	--color-link-active: var(--color-gold-900);
+	--color-interactive: var(--color-gold-700);
+	--color-interactive-hover: var(--color-gold-800);
+	--color-interactive-active: var(--color-gold-900);
+	/*
+   * Decorative gold.
+   * Do not use for normal body text on light surfaces.
+   */
+	--color-accent: var(--color-gold-500);
+	/*
+   * Accessible accent text.
+   */
+	--color-accent-text: var(--color-gold-700);
+	/*
+   * Gold for dark backgrounds.
+   */
+	--color-accent-on-dark: var(--color-gold-300);
+	/* =========================================================================
+     01D. STATUS COLOURS
+     ========================================================================= */
+	--color-success: #166534;
+	--color-success-soft: #f0fdf4;
+	--color-warning: #8a5600;
+	--color-warning-soft: #fff8e1;
+	--color-error: #b42318;
+	--color-error-soft: #fef3f2;
+	--color-info: #155eef;
+	--color-info-soft: #eff8ff;
+	/* =========================================================================
+     02. TYPOGRAPHY
+     ========================================================================= */
+	/* -------------------------------------------------------------------------
+     Font families
+     ------------------------------------------------------------------------- */
+	/*
+   * Actual @font-face declarations belong in global.css after the final
+   * self-hosted font files and licences are confirmed.
+   */
+:root {
+  --font-sans:
+    "Plus Jakarta Sans",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  --font-display:
+    "Bodoni Moda",
+    "Didot",
+    "Bodoni 72",
+    "Times New Roman",
+    serif;
+
+  --font-mono:
+    "IBM Plex Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  /* keep all your other existing tokens exactly as they are */
+}
+	/* -------------------------------------------------------------------------
+     Fluid type scale
+     ------------------------------------------------------------------------- */
+	/*
+   * The scale deliberately avoids device-specific font sizes.
+   *
+   * clamp(min, fluid, max)
+   *
+   * This allows typography to scale smoothly between small phones,
+   * tablets, laptops, desktop displays and large/ultrawide screens.
+   */
+	--text-xs: clamp(0.75rem,
+			0.72rem + 0.08vw,
+			0.8125rem);
+	--text-sm: clamp(0.875rem,
+			0.84rem + 0.1vw,
+			0.9375rem);
+	--text-base: clamp(1rem,
+			0.96rem + 0.15vw,
+			1.125rem);
+	--text-lg: clamp(1.125rem,
+			1.04rem + 0.3vw,
+			1.375rem);
+	--text-xl: clamp(1.25rem,
+			1.12rem + 0.45vw,
+			1.625rem);
+	--text-2xl: clamp(1.5rem,
+			1.28rem + 0.7vw,
+			2rem);
+	--text-3xl: clamp(1.875rem,
+			1.55rem + 1vw,
+			2.75rem);
+	--text-4xl: clamp(2.25rem,
+			1.8rem + 1.4vw,
+			3.5rem);
+	--text-5xl: clamp(2.75rem,
+			2.1rem + 2vw,
+			4.75rem);
+	--text-6xl: clamp(3.25rem,
+			2.4rem + 2.7vw,
+			6rem);
+	/* -------------------------------------------------------------------------
+     Font weights
+     ------------------------------------------------------------------------- */
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+	/* -------------------------------------------------------------------------
+     Line heights
+     ------------------------------------------------------------------------- */
+--leading-none: 1;
+--leading-tight: 1.1;
+--leading-snug: 1.25;
+--leading-normal: 1.5;
+--leading-relaxed: 1.7;
+--leading-loose: 1.85;
+	/* -------------------------------------------------------------------------
+     Letter spacing
+     ------------------------------------------------------------------------- */
+	--tracking-tighter: -0.03em;
+	--tracking-tight: -0.015em;
+	--tracking-normal: 0;
+	--tracking-wide: 0.04em;
+	--tracking-wider: 0.08em;
+	--tracking-widest: 0.14em;
+
+	/* -------------------------------------------------------------------------
+   Text rhythm
+   ------------------------------------------------------------------------- */
+--text-space-xs: 0.375rem;
+--text-space-sm: 0.625rem;
+--text-space-md: 1rem;
+--text-space-lg: 1.5rem;
+--text-space-xl: 2rem;
+--text-space-2xl: 3rem;
+
+	/* =========================================================================
+     03. TYPOGRAPHY ROLES
+     ========================================================================= */
+	/* -------------------------------------------------------------------------
+     Display
+     ------------------------------------------------------------------------- */
+	--type-display-size: var(--text-6xl);
+	--type-display-family: var(--font-display);
+	--type-display-weight: var(--font-weight-medium);
+	--type-display-leading: var(--leading-tight);
+	--type-display-tracking: var(--tracking-tighter);
+	/* -------------------------------------------------------------------------
+     H1
+     ------------------------------------------------------------------------- */
+	--type-h1-size: var(--text-5xl);
+	--type-h1-family: var(--font-display);
+	--type-h1-weight: var(--font-weight-medium);
+	--type-h1-leading: var(--leading-tight);
+	--type-h1-tracking: var(--tracking-tight);
+	/* -------------------------------------------------------------------------
+     H2
+     ------------------------------------------------------------------------- */
+	--type-h2-size: var(--text-4xl);
+	--type-h2-family: var(--font-display);
+	--type-h2-weight: var(--font-weight-medium);
+	--type-h2-leading: var(--leading-tight);
+	--type-h2-tracking: var(--tracking-tight);
+	/* -------------------------------------------------------------------------
+     H3
+     ------------------------------------------------------------------------- */
+	--type-h3-size: var(--text-3xl);
+	--type-h3-family: var(--font-display);
+	--type-h3-weight: var(--font-weight-medium);
+	--type-h3-leading: var(--leading-tight);
+	--type-h3-tracking: var(--tracking-tight);
+	/* -------------------------------------------------------------------------
+     H4
+     ------------------------------------------------------------------------- */
+	--type-h4-size: var(--text-2xl);
+	--type-h4-family: var(--font-display);
+	--type-h4-weight: var(--font-weight-medium);
+	--type-h4-leading: var(--leading-snug);
+	--type-h4-tracking: var(--tracking-normal);
+	/* -------------------------------------------------------------------------
+     H5
+     ------------------------------------------------------------------------- */
+	--type-h5-size: var(--text-lg);
+	--type-h5-family: var(--font-sans);
+	--type-h5-weight: var(--font-weight-semibold);
+	--type-h5-leading: var(--leading-snug);
+	--type-h5-tracking: var(--tracking-normal);
+	/* -------------------------------------------------------------------------
+     H6
+     ------------------------------------------------------------------------- */
+	--type-h6-size: var(--text-base);
+	--type-h6-family: var(--font-sans);
+	--type-h6-weight: var(--font-weight-semibold);
+	--type-h6-leading: var(--leading-snug);
+	--type-h6-tracking: var(--tracking-normal);
+	/* -------------------------------------------------------------------------
+     Body
+     ------------------------------------------------------------------------- */
+	--type-body-size: var(--text-base);
+	--type-body-family: var(--font-sans);
+	--type-body-weight: var(--font-weight-regular);
+	--type-body-leading: var(--leading-relaxed);
+	/* -------------------------------------------------------------------------
+     Small text
+     ------------------------------------------------------------------------- */
+	--type-small-size: var(--text-sm);
+	--type-small-family: var(--font-sans);
+	--type-small-weight: var(--font-weight-regular);
+	--type-small-leading: var(--leading-normal);
+	/* -------------------------------------------------------------------------
+     Labels
+     ------------------------------------------------------------------------- */
+	--type-label-size: var(--text-xs);
+	--type-label-family: var(--font-sans);
+	--type-label-weight: var(--font-weight-semibold);
+	--type-label-leading: var(--leading-normal);
+	--type-label-tracking: var(--tracking-wider);
+	/* -------------------------------------------------------------------------
+     Buttons
+     ------------------------------------------------------------------------- */
+	--type-button-size: var(--text-sm);
+	--type-button-family: var(--font-sans);
+	--type-button-weight: var(--font-weight-semibold);
+	--type-button-leading: 1;
+	--type-button-tracking: var(--tracking-wide);
+	/* =========================================================================
+     04. FLUID SPACING
+     ========================================================================= */
+	/*
+   * Base spacing tokens remain rem-based.
+   *
+   * Higher-level layout systems can use these with clamp(), min(), max()
+   * and container-aware calculations.
+   */
+	--space-0: 0;
+	--space-px: 1px;
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: 1.5rem;
+	--space-7: 1.75rem;
+	--space-8: 2rem;
+	--space-10: 2.5rem;
+	--space-12: 3rem;
+	--space-14: 3.5rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+	--space-24: 6rem;
+	--space-28: 7rem;
+	--space-32: 8rem;
+	--space-40: 10rem;
+	--space-48: 12rem;
+	/* -------------------------------------------------------------------------
+     Fluid layout spacing
+     ------------------------------------------------------------------------- */
+	--space-fluid-1: clamp(0.75rem,
+			1vw,
+			1rem);
+	--space-fluid-2: clamp(1rem,
+			1.5vw,
+			1.5rem);
+	--space-fluid-3: clamp(1.5rem,
+			2.5vw,
+			2.5rem);
+	--space-fluid-4: clamp(2rem,
+			4vw,
+			4rem);
+	--space-fluid-5: clamp(3rem,
+			6vw,
+			6rem);
+	--space-fluid-6: clamp(4rem,
+			8vw,
+			8rem);
+	/* =========================================================================
+     05. SECTION SPACING
+     ========================================================================= */
+	--section-space-sm: clamp(3rem,
+			6vw,
+			5rem);
+	--section-space-md: clamp(4.5rem,
+			8vw,
+			8rem);
+	--section-space-lg: clamp(6rem,
+			11vw,
+			12rem);
+	/* =========================================================================
+     06. CONTAINERS / CONTENT
+     ========================================================================= */
+	/*
+   * These are maximum content widths rather than fixed viewport widths.
+   *
+   * This prevents content from becoming excessively wide on 1440px,
+   * 1920px, 2560px and ultrawide displays.
+   */
+	--container-max: 90rem;
+	--container-wide: 105rem;
+	--content-readable: 70ch;
+	--content-narrow: 50ch;
+	--content-wide: 90ch;
+	/* -------------------------------------------------------------------------
+     Fluid inline page padding
+     ------------------------------------------------------------------------- */
+	--container-padding-inline: clamp(1rem,
+			3vw,
+			3rem);
+	/* -------------------------------------------------------------------------
+     Ultra-wide breathing room
+     ------------------------------------------------------------------------- */
+	--viewport-gutter: clamp(1rem,
+			4vw,
+			6rem);
+	/* =========================================================================
+     07. HEADER / NAVIGATION
+     ========================================================================= */
+	/*
+   * Header dimensions remain compact enough for mobile while allowing the
+   * responsive layer to scale or modify them where appropriate.
+   */
+	--header-height: clamp(4rem,
+			4vw,
+			5rem);
+	--header-height-scrolled: clamp(3.75rem,
+			3.5vw,
+			4.5rem);
+	/*
+   * Compatibility token.
+   * New code should prefer --header-height.
+   */
+	--header-height-mobile: 4.25rem;
+	/* =========================================================================
+     08. CONTROLS / FORM DIMENSIONS
+     ========================================================================= */
+	/*
+   * Minimum interactive target remains suitable for touch interfaces.
+   * Later component CSS should enforce the final 44–48px physical target.
+   */
+	--control-height-sm: 2.75rem;
+	--control-height-md: 3rem;
+	--control-height-lg: 3.25rem;
+	--input-height: 3rem;
+	--button-padding-inline-sm: 1rem;
+	--button-padding-inline-md: 1.5rem;
+	--button-padding-inline-lg: 2rem;
+	/* =========================================================================
+     09. LOGO
+     ========================================================================= */
+	--logo-width: clamp(7rem,
+			10vw,
+			10rem);
+	--logo-width-mobile: 7.5rem;
+	/*
+   * Compatibility aliases.
+   */
+	--logo-max-width: var(--logo-width);
+	--logo-max-width-mobile: var(--logo-width-mobile);
+	/* =========================================================================
+     10. BORDER RADIUS
+     ========================================================================= */
+	--radius-none: 0;
+	--radius-xs: 0.125rem;
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 0.75rem;
+	--radius-xl: 1rem;
+	--radius-full: 9999px;
+	/* =========================================================================
+     11. BORDERS
+     ========================================================================= */
+	--border-width-thin: 1px;
+	--border-width-medium: 2px;
+	/* =========================================================================
+     12. SHADOWS
+     ========================================================================= */
+	/*
+   * ModeInfinity should rely primarily on borders, whitespace and tonal
+   * contrast rather than excessive shadows.
+   */
+	--shadow-xs:
+		0 1px 2px rgb(0 0 0 / 0.04);
+	--shadow-sm:
+		0 2px 8px rgb(0 0 0 / 0.06);
+	--shadow-md:
+		0 8px 24px rgb(0 0 0 / 0.08);
+	--shadow-lg:
+		0 16px 40px rgb(0 0 0 / 0.1);
+	--shadow-xl:
+		0 24px 64px rgb(0 0 0 / 0.16);
+	/* =========================================================================
+     13. MOTION — EASING
+     ========================================================================= */
+	--ease-standard:
+		cubic-bezier(0.2, 0, 0, 1);
+	/*
+   * No overshoot.
+   *
+   * Important for drawers, modals and viewport-bound UI.
+   */
+	--ease-emphasized:
+		cubic-bezier(0.16, 1, 0.3, 1);
+	/* =========================================================================
+     14. MOTION — DURATIONS
+     ========================================================================= */
+	--duration-instant: 100ms;
+	--duration-fast: 160ms;
+	--duration-normal: 240ms;
+	--duration-slow: 400ms;
+	--duration-slower: 600ms;
+	/* Compatibility token. */
+	--duration-base: var(--duration-normal);
+	/* =========================================================================
+     15. MOTION — TRANSITIONS
+     ========================================================================= */
+	--transition-fast:
+		var(--duration-fast) var(--ease-standard);
+	--transition-normal:
+		var(--duration-normal) var(--ease-standard);
+	--transition-slow:
+		var(--duration-slow) var(--ease-standard);
+	/* Compatibility token. */
+	--transition-base: var(--transition-normal);
+	/* =========================================================================
+     16. MOTION — STAGGER
+     ========================================================================= */
+	--stagger-step: 80ms;
+	/* =========================================================================
+     17. FOCUS / KEYBOARD ACCESS
+     ========================================================================= */
+	--focus-ring-width: 3px;
+	--focus-ring-offset: 3px;
+	/*
+   * Gold-700 provides the required contrast on light surfaces.
+   */
+	--focus-ring-color: var(--color-gold-700);
+	/* Compatibility alias. */
+	--color-focus: var(--focus-ring-color);
+	/* =========================================================================
+     18. SCROLL / ANCHOR POSITIONING
+     ========================================================================= */
+	/*
+   * Used by global.css.
+   *
+   * Ensures anchored sections do not disappear beneath the sticky header.
+   */
+	--scroll-offset: calc(var(--header-height) + var(--space-4));
+	/* =========================================================================
+     19. SAFE AREA
+     ========================================================================= */
+	/*
+   * Supports:
+   *
+   * - iPhone/iPad notches
+   * - Dynamic Island
+   * - Android cutouts
+   * - tablets
+   * - landscape safe areas
+   * - foldable devices
+   */
+	--safe-area-top:
+		env(safe-area-inset-top, 0px);
+	--safe-area-right:
+		env(safe-area-inset-right, 0px);
+	--safe-area-bottom:
+		env(safe-area-inset-bottom, 0px);
+	--safe-area-left:
+		env(safe-area-inset-left, 0px);
+	/* =========================================================================
+     20. VIEWPORT / FOLDABLE SUPPORT TOKENS
+     ========================================================================= */
+	/*
+   * These environment variables resolve safely to zero on devices that do
+   * not expose viewport-segment information.
+   *
+   * Actual foldable layout behavior belongs in responsive.css/layout.css.
+   */
+	--viewport-segment-top:
+		env(viewport-segment-top 0 0, 0px);
+	--viewport-segment-right:
+		env(viewport-segment-right 0 0, 0px);
+	--viewport-segment-bottom:
+		env(viewport-segment-bottom 0 0, 0px);
+	--viewport-segment-left:
+		env(viewport-segment-left 0 0, 0px);
+	/* =========================================================================
+     21. Z-INDEX SYSTEM
+     ========================================================================= */
+	/*
+   * Layer order:
+   *
+   * content
+   * decorative
+   * header
+   * overlay
+   * drawer
+   * modal
+   * toast
+   * skip link
+   */
+	--z-content: 1;
+	--z-decorative: 0;
+	--z-header: 1000;
+	--z-overlay: 1100;
+	--z-drawer: 1200;
+	--z-modal: 1300;
+	--z-toast: 1400;
+	/*
+   * Skip link must remain accessible above every interface layer.
+   */
+	--skip-link-z-index: 1500;
+	/* =========================================================================
+     22. THEME BEHAVIOUR
+     ========================================================================= */
+	/*
+   * Default:
+   * Follow the operating system.
+   *
+   * The actual dark semantic overrides are defined below.
+   *
+   * Manual theme switching will later set:
+   *
+   * data-theme="light"
+   * data-theme="dark"
+   */
+	color-scheme: light dark;
+}
+/* ==========================================================================
+   SYSTEM DARK THEME
+   ========================================================================== */
+/*
+ * No data-theme attribute:
+ * Follow the user's operating-system preference.
+ *
+ * The :not() condition ensures that a manual light override wins over the
+ * system's dark preference.
+ */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		/* -----------------------------------------------------------------------
+       Backgrounds
+       ----------------------------------------------------------------------- */
+		--color-background: var(--color-black-deep);
+		--color-background-muted: var(--color-neutral-950);
+		--color-background-soft: #15130f;
+		--color-background-dark: #000000;
+		--color-background-dark-deep: #000000;
+		/* -----------------------------------------------------------------------
+       Surfaces
+       ----------------------------------------------------------------------- */
+		--color-surface: var(--color-black-soft);
+		--color-surface-raised: var(--color-neutral-900);
+		--color-surface-muted: var(--color-neutral-900);
+		--color-surface-soft: #181610;
+		--color-surface-dark: #000000;
+		--color-surface-dark-deep: #000000;
+		/* -----------------------------------------------------------------------
+       Text
+       ----------------------------------------------------------------------- */
+		--color-text: #f5f5f5;
+		--color-text-strong: #ffffff;
+		--color-text-muted: #d4d4d4;
+		--color-text-subtle: #a3a3a3;
+		--color-text-inverse: #0a0a0a;
+		/* -----------------------------------------------------------------------
+       Borders
+       ----------------------------------------------------------------------- */
+		--color-border: #3a3a3a;
+		--color-border-strong: #525252;
+		--color-border-subtle: #262626;
+		--color-border-dark: #737373;
+		--color-border-dark-subtle: #404040;
+		/* -----------------------------------------------------------------------
+       Links / interaction
+       ----------------------------------------------------------------------- */
+		--color-link: var(--color-gold-300);
+		--color-link-hover: var(--color-gold-200);
+		--color-link-active: var(--color-gold-100);
+		--color-interactive: var(--color-gold-300);
+		--color-interactive-hover: var(--color-gold-200);
+		--color-interactive-active: var(--color-gold-100);
+		--color-accent: var(--color-gold-400);
+		--color-accent-text: var(--color-gold-300);
+		--color-accent-on-dark: var(--color-gold-300);
+		/* -----------------------------------------------------------------------
+       Status colours
+       ----------------------------------------------------------------------- */
+		--color-success: #86efac;
+		--color-success-soft: #0b2415;
+		--color-warning: #f5c451;
+		--color-warning-soft: #2a2008;
+		--color-error: #fca5a5;
+		--color-error-soft: #2b1111;
+		--color-info: #93c5fd;
+		--color-info-soft: #0b1d35;
+		/* -----------------------------------------------------------------------
+       Focus
+       ----------------------------------------------------------------------- */
+		--focus-ring-color: var(--color-gold-300);
+		--color-focus: var(--focus-ring-color);
+		/* -----------------------------------------------------------------------
+       Browser colour rendering
+       ----------------------------------------------------------------------- */
+		color-scheme: dark;
+	}
+}
+/* ==========================================================================
+   MANUAL LIGHT THEME
+   ========================================================================== */
+/*
+ * Explicit light selection always wins over the operating-system preference.
+ *
+ * This block intentionally re-establishes the semantic light tokens so the
+ * theme switcher can override a dark OS preference.
+ */
+:root[data-theme="light"] {
+	--color-background: var(--color-white);
+	--color-background-muted: var(--color-neutral-100);
+	--color-background-soft: var(--color-cream);
+	--color-background-dark: var(--color-black-soft);
+	--color-background-dark-deep: var(--color-black-deep);
+	--color-surface: var(--color-white);
+	--color-surface-raised: var(--color-white);
+	--color-surface-muted: var(--color-neutral-100);
+	--color-surface-soft: var(--color-cream);
+	--color-surface-dark: var(--color-black-soft);
+	--color-surface-dark-deep: var(--color-black-deep);
+	--color-text: var(--color-neutral-900);
+	--color-text-strong: var(--color-neutral-950);
+	--color-text-muted: var(--color-neutral-600);
+	--color-text-subtle: var(--color-neutral-500);
+	--color-text-inverse: var(--color-white);
+	--color-border: var(--color-neutral-200);
+	--color-border-strong: var(--color-neutral-300);
+	--color-border-subtle: var(--color-neutral-100);
+	--color-border-dark: var(--color-neutral-700);
+	--color-border-dark-subtle: var(--color-neutral-800);
+	--color-link: var(--color-gold-700);
+	--color-link-hover: var(--color-gold-800);
+	--color-link-active: var(--color-gold-900);
+	--color-interactive: var(--color-gold-700);
+	--color-interactive-hover: var(--color-gold-800);
+	--color-interactive-active: var(--color-gold-900);
+	--color-accent: var(--color-gold-500);
+	--color-accent-text: var(--color-gold-700);
+	--color-accent-on-dark: var(--color-gold-300);
+	--color-success: #166534;
+	--color-success-soft: #f0fdf4;
+	--color-warning: #8a5600;
+	--color-warning-soft: #fff8e1;
+	--color-error: #b42318;
+	--color-error-soft: #fef3f2;
+	--color-info: #155eef;
+	--color-info-soft: #eff8ff;
+	--focus-ring-color: var(--color-gold-700);
+	--color-focus: var(--focus-ring-color);
+	color-scheme: light;
+}
+/* ==========================================================================
+   MANUAL DARK THEME
+   ========================================================================== */
+/*
+ * Explicit dark selection always wins over the operating-system preference.
+ */
+:root[data-theme="dark"] {
+	--color-background: var(--color-black-deep);
+	--color-background-muted: var(--color-neutral-950);
+	--color-background-soft: #15130f;
+	--color-background-dark: #000000;
+	--color-background-dark-deep: #000000;
+	--color-surface: var(--color-black-soft);
+	--color-surface-raised: var(--color-neutral-900);
+	--color-surface-muted: var(--color-neutral-900);
+	--color-surface-soft: #181610;
+	--color-surface-dark: #000000;
+	--color-surface-dark-deep: #000000;
+	--color-text: #f5f5f5;
+	--color-text-strong: #ffffff;
+	--color-text-muted: #d4d4d4;
+	--color-text-subtle: #a3a3a3;
+	--color-text-inverse: #0a0a0a;
+	--color-border: #3a3a3a;
+	--color-border-strong: #525252;
+	--color-border-subtle: #262626;
+	--color-border-dark: #737373;
+	--color-border-dark-subtle: #404040;
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-link-active: var(--color-gold-100);
+	--color-interactive: var(--color-gold-300);
+	--color-interactive-hover: var(--color-gold-200);
+	--color-interactive-active: var(--color-gold-100);
+	--color-accent: var(--color-gold-400);
+	--color-accent-text: var(--color-gold-300);
+	--color-accent-on-dark: var(--color-gold-300);
+	--color-success: #86efac;
+	--color-success-soft: #0b2415;
+	--color-warning: #f5c451;
+	--color-warning-soft: #2a2008;
+	--color-error: #fca5a5;
+	--color-error-soft: #2b1111;
+	--color-info: #93c5fd;
+	--color-info-soft: #0b1d35;
+	--focus-ring-color: var(--color-gold-300);
+	--color-focus: var(--focus-ring-color);
+	color-scheme: dark;
+}
+/* ==========================================================================
+   23. REDUCED MOTION PREFERENCE TOKEN
+   ========================================================================== */
+/*
+ * Animation disabling itself belongs in animations.css.
+ *
+ * This token gives the motion layer a consistent way to detect/express
+ * reduced-motion behavior without putting animation rules in variables.css.
+ */
+:root {
+	--motion-scale: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--motion-scale: 0;
+	}
+}
+/* ==========================================================================
+   24. FORCED COLORS / HIGH CONTRAST
+   ========================================================================== */
+/*
+ * Windows High Contrast / forced-colors environments should use the browser's
+ * semantic system colours rather than relying on the brand palette.
+ */
+@media (forced-colors: active) {
+	:root {
+		--color-background: Canvas;
+		--color-background-muted: Canvas;
+		--color-background-soft: Canvas;
+		--color-background-dark: Canvas;
+		--color-background-dark-deep: Canvas;
+		--color-surface: Canvas;
+		--color-surface-raised: Canvas;
+		--color-surface-muted: Canvas;
+		--color-surface-soft: Canvas;
+		--color-surface-dark: Canvas;
+		--color-surface-dark-deep: Canvas;
+		--color-text: CanvasText;
+		--color-text-strong: CanvasText;
+		--color-text-muted: CanvasText;
+		--color-text-subtle: GrayText;
+		--color-text-inverse: Canvas;
+		--color-border: ButtonText;
+		--color-border-strong: ButtonText;
+		--color-border-subtle: ButtonText;
+		--color-border-dark: ButtonText;
+		--color-border-dark-subtle: ButtonText;
+		--color-link: LinkText;
+		--color-link-hover: LinkText;
+		--color-link-active: LinkText;
+		--color-interactive: Highlight;
+		--color-interactive-hover: Highlight;
+		--color-interactive-active: Highlight;
+		--color-accent-text: LinkText;
+		--color-accent-on-dark: Highlight;
+		--focus-ring-color: Highlight;
+		--color-focus: Highlight;
+		color-scheme: light dark;
+	}
+}
+/* ==========================================================================
+   END OF VARIABLES
+   ========================================================================== */

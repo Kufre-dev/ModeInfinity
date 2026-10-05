@@ -1,0 +1,40 @@
+<!-- ============================================================
+     MODEINFINITY — SCROLL TO TOP
+     ============================================================
+
+     Global scroll-to-top control.
+
+     Features:
+     - Accessible button
+     - Keyboard-friendly interaction
+     - Screen-reader label
+     - Smooth visual transition handled by CSS/JavaScript
+     - Automatically shown after the configured scroll threshold
+
+     JavaScript:
+     - scripts/main.js
+
+     CSS:
+     - styles/variables.css
+     - styles/global.css
+     - styles/components.css
+     - styles/animations.css
+     - styles/responsive.css
+
+     Notes:
+     - The button remains hidden until JavaScript determines
+       that it should become visible.
+     - The control returns the user to the top of the page.
+     ============================================================ -->
+<!-- ============================================================
+     SCROLL TO TOP BUTTON
+     ============================================================ -->
+<button class="scroll-to-top" id="scroll-to-top" type="button" aria-label="Scroll to top" title="Scroll to top" hidden>
+  <!-- ==========================================================
+       ICON
+       ========================================================== -->
+  <svg class="scroll-to-top__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M12 19V5"></path>
+    <path d="M6 11l6-6 6 6"></path>
+  </svg>
+</button>

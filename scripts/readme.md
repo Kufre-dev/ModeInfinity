@@ -1,0 +1,3 @@
+﻿# Scripts
+
+Modular JavaScript architecture.
