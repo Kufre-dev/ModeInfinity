@@ -1636,7 +1636,7 @@
 	width: 100%;
 	height: 100%;
 
-	background-image: url("/assets/images/golden_hour_atelier.jpg");
+background-image: url("../assets/images/golden_hour_atelier.jpg");
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
