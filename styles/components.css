@@ -1,3 +1,297 @@
+/* =========================================================
+   BUTTON SYSTEM
+   ========================================================= */
+
+/*
+ * Premium tactile button system
+ *
+ * Shared API:
+ * .btn
+ * .btn-primary
+ * .btn-secondary
+ * .btn-dark
+ * .btn-ghost
+ * .btn--large
+ * .btn-block
+ *
+ * Design direction:
+ * - restrained premium styling
+ * - tactile depth
+ * - subtle movement
+ * - strong focus visibility
+ * - accessible states
+ * - no decorative markup required
+ */
+
+
+/* ---------------------------------------------------------
+   BASE
+   --------------------------------------------------------- */
+
+.btn {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: var(--control-height-md);
+    padding-inline: var(--button-padding-inline-md);
+
+    border: var(--border-width-thin) solid transparent;
+    border-radius: var(--radius-sm);
+
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transform: translateY(0);
+
+    transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+/* ---------------------------------------------------------
+   LINK RESET
+   --------------------------------------------------------- */
+
+a.btn {
+    text-decoration: none;
+}
+
+
+/* ---------------------------------------------------------
+   HOVER RESET
+   --------------------------------------------------------- */
+
+.btn:hover {
+    text-decoration: none;
+}
+
+
+/* ---------------------------------------------------------
+   FOCUS
+   --------------------------------------------------------- */
+
+.btn:focus-visible {
+    outline:
+        var(--focus-ring-width)
+        solid
+        var(--focus-ring-color);
+
+    outline-offset: var(--focus-ring-offset);
+}
+
+
+/* ---------------------------------------------------------
+   ACTIVE
+   --------------------------------------------------------- */
+
+.btn:active {
+    transform: translateY(2px);
+}
+
+
+/* ---------------------------------------------------------
+   DISABLED
+   --------------------------------------------------------- */
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   PRIMARY
+   ========================================================= */
+
+.btn-primary {
+    color: var(--color-black);
+    background: var(--color-gold-500);
+    border-color: var(--color-gold-500);
+
+    box-shadow:
+        0 3px 0 var(--color-gold-700);
+}
+
+.btn-primary:hover {
+    color: var(--color-black);
+    background: var(--color-gold-400);
+    border-color: var(--color-gold-400);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 0 var(--color-gold-700);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+
+    box-shadow:
+        0 1px 0 var(--color-gold-700);
+}
+
+
+/* =========================================================
+   SECONDARY
+   ========================================================= */
+
+.btn-secondary {
+    color: var(--color-white);
+    background: transparent;
+    border-color: rgb(255 255 255 / 60%);
+
+    box-shadow:
+        0 3px 0 rgb(255 255 255 / 18%);
+}
+
+.btn-secondary:hover {
+    color: var(--color-black);
+    background: var(--color-white);
+    border-color: var(--color-white);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 0 rgb(255 255 255 / 25%);
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+
+    box-shadow:
+        0 1px 0 rgb(255 255 255 / 18%);
+}
+
+
+/* =========================================================
+   DARK
+   ========================================================= */
+
+.btn-dark {
+    color: var(--color-white);
+    background: var(--color-black);
+    border-color: var(--color-black);
+
+    box-shadow:
+        0 3px 0 rgb(0 0 0 / 35%);
+}
+
+.btn-dark:hover {
+    color: var(--color-black);
+    background: var(--color-white);
+    border-color: var(--color-white);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 0 rgb(0 0 0 / 25%);
+}
+
+.btn-dark:active {
+    transform: translateY(1px);
+
+    box-shadow:
+        0 1px 0 rgb(0 0 0 / 35%);
+}
+
+
+/* =========================================================
+   GHOST
+   ========================================================= */
+
+.btn-ghost {
+    color: var(--color-text);
+    background: transparent;
+    border-color: var(--color-border);
+
+    box-shadow: none;
+}
+
+.btn-ghost:hover {
+    color: var(--color-gold-600);
+    background: transparent;
+    border-color: var(--color-gold-500);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 3px 0 rgb(197 155 75 / 18%);
+}
+
+.btn-ghost:active {
+    transform: translateY(1px);
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   LARGE
+   ========================================================= */
+
+.btn--large {
+    min-height: var(--control-height-lg);
+    padding-inline: var(--button-padding-inline-lg);
+}
+
+
+/* =========================================================
+   BLOCK
+   ========================================================= */
+
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+
+    .btn:hover,
+    .btn:active {
+        transform: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ==========================================================================
    MODEINFINITY — HEADER / NAVIGATION
    Premium commercial footwear brand + shoemaking academy
@@ -155,10 +449,16 @@
   margin: 0;
   padding: 0;
 
+	color: blue;
+
   object-fit: contain;
   object-position: left center;
 
   z-index: 21;
+}
+
+.site-brand__logo {
+  color: #C59B4B;
 }
 
 
@@ -1555,54 +1855,61 @@
 
 
 
+/* ==========================================================================
+   MODEINFINITY HOME HERO
+   ========================================================================== */
 
 
 /* ==========================================================================
-   HOME HERO
-   ModeInfinity — Responsive Hero
+   HERO FOUNDATION
    ========================================================================== */
 
 .home-hero,
 .home-hero__inner {
-	position: relative;
-	display: flex;
+    position: relative;
+    display: flex;
 }
 
 .home-hero {
-	--hero-gold: var(--color-gold-300, #edc84f);
-	--hero-gold-soft: rgb(237 200 79 / 72%);
-	--hero-white: var(--color-white, #fff);
-	--hero-black: var(--color-black, #080808);
-	--hero-copy-width: 60ch;
-	--hero-on-dark: var(--hero-white);
-	--hero-on-dark-secondary: rgb(255 255 255 / 88%);
-	--hero-on-dark-muted: rgb(255 255 255 / 72%);
-	--hero-on-dark-faint: rgb(255 255 255 / 50%);
-	--hero-hairline: rgb(255 255 255 / 32%);
-	--hero-hairline-soft: rgb(255 255 255 / 25%);
-	--hero-visual-size: clamp(190px, 46vmin, 260px);
+    --hero-gold: var(--color-gold-300, #edc84f);
+    --hero-gold-soft: rgb(237 200 79 / 72%);
+    --hero-white: var(--color-white, #fff);
+    --hero-black: var(--color-black, #080808);
 
-	position: relative;
-	isolation: isolate;
-	container-type: inline-size;
-	container-name: hero;
+    --hero-copy-width: 60ch;
 
-	flex-direction: column;
-	align-items: stretch;
-	justify-content: center;
+    --hero-on-dark: var(--hero-white);
+    --hero-on-dark-secondary: rgb(255 255 255 / 88%);
+    --hero-on-dark-muted: rgb(255 255 255 / 72%);
+    --hero-on-dark-faint: rgb(255 255 255 / 50%);
 
-	min-height: 100vh;
-	min-height: 100svh;
-	min-height: 100dvh;
+    --hero-hairline: rgb(255 255 255 / 32%);
+    --hero-hairline-soft: rgb(255 255 255 / 25%);
 
-	padding-block:
-		calc(var(--header-height-compact) + var(--space-4))
-		var(--space-12);
+    --hero-visual-size: clamp(190px, 46vmin, 260px);
 
-	overflow: hidden;
+    position: relative;
+    isolation: isolate;
 
-	background: var(--hero-black);
-	color: var(--hero-white);
+    container-type: inline-size;
+    container-name: hero;
+
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+
+    padding-block:
+        calc(var(--header-height-compact) + var(--space-4))
+        var(--space-12);
+
+    overflow: hidden;
+
+    background: var(--hero-black);
+    color: var(--hero-white);
 }
 
 
@@ -1611,16 +1918,22 @@
    ========================================================================== */
 
 .home-hero__inner {
-	width: 100%;
-	max-width: var(--container-max);
-	margin-inline: auto;
-	padding-inline: var(--container-padding);
+    width: 100%;
+    max-width: var(--container-max);
 
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+    margin-inline: auto;
 
-	gap: var(--space-8);
+    /*
+     * Use the actual design-system token.
+     * This prevents mobile content from touching the viewport edges.
+     */
+    padding-inline: var(--container-padding-inline);
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--space-8);
 }
 
 
@@ -1629,19 +1942,21 @@
    ========================================================================== */
 
 .home-hero__background {
-	position: absolute;
-	inset: 0;
-	z-index: -5;
+    position: absolute;
+    inset: 0;
+    z-index: -5;
 
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 
-background-image: url("../assets/images/golden_hour_atelier.jpg");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: cover;
+    background-image:
+        url(../assets/images/golden_hour_atelier.jpeg);
 
-	transform: scale(1.025);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    transform: scale(1.025);
 }
 
 
@@ -1650,27 +1965,27 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__overlay {
-	position: absolute;
-	inset: 0;
-	z-index: -3;
+    position: absolute;
+    inset: 0;
+    z-index: -3;
 
-	pointer-events: none;
+    pointer-events: none;
 
-	background:
-		linear-gradient(
-			90deg,
-			rgb(5 5 5 / 82%) 0,
-			rgb(5 5 5 / 66%) 38%,
-			rgb(5 5 5 / 48%) 65%,
-			rgb(5 5 5 / 62%) 100%
-		),
-		linear-gradient(
-			180deg,
-			rgb(5 5 5 / 78%) 0,
-			rgb(5 5 5 / 52%) 38%,
-			rgb(5 5 5 / 72%) 76%,
-			rgb(5 5 5 / 94%) 100%
-		);
+    background:
+        linear-gradient(
+            90deg,
+            rgb(5 5 5 / 82%) 0%,
+            rgb(5 5 5 / 66%) 38%,
+            rgb(5 5 5 / 48%) 65%,
+            rgb(5 5 5 / 62%) 100%
+        ),
+        linear-gradient(
+            180deg,
+            rgb(5 5 5 / 78%) 0%,
+            rgb(5 5 5 / 52%) 38%,
+            rgb(5 5 5 / 72%) 76%,
+            rgb(5 5 5 / 94%) 100%
+        );
 }
 
 
@@ -1679,21 +1994,21 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__grain {
-	position: absolute;
-	inset: 0;
-	z-index: 1;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
 
-	pointer-events: none;
+    pointer-events: none;
 
-	opacity: 0.025;
+    opacity: 0.025;
 
-	background-image:
-		url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 
-	background-repeat: repeat;
-	background-size: 180px 180px;
+    background-repeat: repeat;
+    background-size: 180px 180px;
 
-	mix-blend-mode: soft-light;
+    mix-blend-mode: soft-light;
 }
 
 
@@ -1702,131 +2017,135 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__visual {
-	position: relative;
-	z-index: 2;
+    position: relative;
+    z-index: 2;
 
-	flex: 0 0 auto;
+    flex: 0 0 auto;
 
-	width: 100%;
+    width: 100%;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-	pointer-events: none;
+    pointer-events: none;
 
-	animation:
-		modeinfinity-scale-in
-		var(--duration-slow)
-		var(--ease-emphasized)
-		both;
+    animation:
+        modeinfinity-scale-in
+        var(--duration-slow)
+        var(--ease-emphasized)
+        both;
 
-	animation-delay: 0s;
+    animation-delay: 0s;
 }
+
 
 .home-hero__visual-frame {
-	position: relative;
+    position: relative;
 
-	width: var(--hero-visual-size);
+    width: var(--hero-visual-size);
 
-	aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 5;
 
-	overflow: visible;
+    overflow: visible;
 }
+
 
 .home-hero__portrait {
-	position: relative;
+    position: relative;
 
-	display: block;
+    display: block;
 
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 
-	overflow: hidden;
+    overflow: hidden;
 
-	border-radius: var(--radius-none);
+    border-radius: var(--radius-none);
 
-	box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-xl);
 }
+
 
 .home-hero__portrait img {
-	display: block;
+    display: block;
 
-	width: 100%;
-	height: 100%;
-	max-width: none;
+    width: 100%;
+    height: 100%;
+    max-width: none;
 
-	object-fit: cover;
-	object-position: center center;
+    object-fit: cover;
+    object-position: center center;
 
-	filter:
-		saturate(0.9)
-		contrast(1.03)
-		brightness(0.98);
+    filter:
+        saturate(0.9)
+        contrast(1.03)
+        brightness(0.98);
 
-	transform: scale(1.01);
+    transform: scale(1.01);
 
-	transition:
-		transform 0.8s var(--ease-emphasized),
-		filter 0.5s ease;
+    transition:
+        transform 0.8s var(--ease-emphasized),
+        filter 0.5s ease;
 }
 
-
-/* ==========================================================================
-   HERO VISUAL HOVER
-   ========================================================================== */
 
 @media (hover: hover) and (pointer: fine) {
-	.home-hero__visual:hover .home-hero__portrait img {
-		transform: scale(1.025);
 
-		filter:
-			saturate(0.94)
-			contrast(1.04)
-			brightness(1);
-	}
+    .home-hero__visual:hover
+    .home-hero__portrait img {
+        transform: scale(1.025);
+
+        filter:
+            saturate(0.94)
+            contrast(1.04)
+            brightness(1);
+    }
 }
+
 
 .home-hero__visual-frame::after {
-	position: absolute;
-	inset: 0;
+    position: absolute;
+    inset: 0;
 
-	content: "";
+    content: "";
 
-	pointer-events: none;
+    pointer-events: none;
 
-	background:
-		linear-gradient(
-			180deg,
-			rgb(17 17 17 / 0%) 52%,
-			rgb(17 17 17 / 24%) 100%
-		);
+    background:
+        linear-gradient(
+            180deg,
+            rgb(17 17 17 / 0%) 52%,
+            rgb(17 17 17 / 24%) 100%
+        );
 }
+
 
 .home-hero__visual-line {
-	position: absolute;
+    position: absolute;
 
-	right: -0.75rem;
-	bottom: 8%;
+    right: -0.75rem;
+    bottom: 8%;
 
-	width: 1px;
-	height: 26%;
+    width: 1px;
+    height: 26%;
 
-	background: rgb(212 175 55 / 72%);
+    background: rgb(212 175 55 / 72%);
 }
 
+
 .home-hero__visual-line::before {
-	position: absolute;
+    position: absolute;
 
-	right: var(--space-6);
-	top: 0;
+    right: var(--space-6);
+    top: 0;
 
-	width: 2rem;
-	height: 1px;
+    width: 2rem;
+    height: 1px;
 
-	content: "";
+    content: "";
 
-	background: var(--hero-hairline);
+    background: var(--hero-hairline);
 }
 
 
@@ -1835,29 +2154,30 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__content {
-	position: relative;
-	z-index: 5;
+    position: relative;
+    z-index: 5;
 
-	flex: 0 0 auto;
+    flex: 0 0 auto;
 
-	width: 100%;
-	min-width: 0;
+    width: 100%;
+    min-width: 0;
 
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-	text-align: center;
+    text-align: center;
 }
 
-.home-hero__copy {
-	width: 100%;
-	max-width: var(--hero-copy-width);
 
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+.home-hero__copy {
+    width: 100%;
+    max-width: var(--hero-copy-width);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -1866,44 +2186,45 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__eyebrow {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-	gap: var(--space-3);
+    gap: var(--space-3);
 
-	margin: 0 0 var(--space-4);
+    margin: 0 0 var(--space-4);
 
-	color: var(--hero-gold);
+    color: var(--hero-gold);
 
-	font-size: var(--font-size-xs);
-	font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
 
-	letter-spacing: var(--letter-spacing-caps);
-	line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-caps);
+    line-height: var(--line-height-tight);
 
-	text-transform: uppercase;
+    text-transform: uppercase;
 
-	animation:
-		modeinfinity-fade-up
-		var(--duration-slow)
-		var(--ease-emphasized)
-		both;
+    animation:
+        modeinfinity-fade-up
+        var(--duration-slow)
+        var(--ease-emphasized)
+        both;
 
-	animation-delay: 120ms;
+    animation-delay: 120ms;
 }
 
+
 .home-hero__eyebrow::before {
-	display: block;
+    display: block;
 
-	width: 2rem;
-	height: 1px;
+    width: 2rem;
+    height: 1px;
 
-	flex: 0 0 auto;
+    flex: 0 0 auto;
 
-	content: "";
+    content: "";
 
-	background: currentColor;
+    background: currentColor;
 }
 
 
@@ -1913,51 +2234,60 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
 
 .home-hero__description,
 .home-hero__title {
-	animation:
-		modeinfinity-fade-up
-		var(--duration-slow)
-		var(--ease-emphasized)
-		both;
+    animation:
+        modeinfinity-fade-up
+        var(--duration-slow)
+        var(--ease-emphasized)
+        both;
 }
+
 
 .home-hero__title {
-	display: flex;
-	align-items: baseline;
-	justify-content: center;
+    display: flex;
 
-	flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
 
-	width: 100%;
-	max-width: 100%;
+    flex-wrap: wrap;
 
-	gap: 0 0.3ch;
+    width: 100%;
+    max-width: 100%;
 
-	margin: 0;
+    gap: 0 0.3ch;
 
-	color: var(--hero-white);
+    margin: 0;
 
-	font-family: var(--font-family-display);
+    color: var(--hero-white);
 
-	font-size: clamp(
-		2.1rem,
-		7vw + 0.5rem,
-		3.5rem
-	);
+    font-family: var(--font-family-display);
 
-	font-weight: var(--font-weight-medium);
+    /*
+     * Deliberately restrained.
+     * The title should lead the hero without swallowing
+     * the commercial proposition below it.
+     */
+    font-size: clamp(
+        2rem,
+        8vw,
+        3.5rem
+    );
 
-	letter-spacing: var(--letter-spacing-tight);
-	line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-medium);
 
-	animation-delay: 240ms;
+    letter-spacing: var(--letter-spacing-tight);
+    line-height: 0.98;
+
+    animation-delay: 240ms;
 }
+
 
 .home-hero__title > span {
-	display: inline;
+    display: inline;
 }
 
+
 .home-hero__title-accent {
-	color: var(--hero-gold);
+    color: var(--hero-gold);
 }
 
 
@@ -1966,28 +2296,35 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__description {
-	width: 100%;
-	max-width: var(--hero-copy-width);
+    width: 100%;
 
-	margin: var(--space-5) 0 0;
+    /*
+     * Keep the readable measure independent from
+     * the viewport width.
+     */
+    max-width: 60ch;
 
-	color: var(--hero-on-dark-secondary);
+    margin: var(--space-5) 0 0;
 
-	font-family: var(--font-family-sans);
-	font-size: var(--font-size-md);
-	font-weight: var(--font-weight-regular);
-	line-height: 1.65;
+    color: var(--hero-on-dark-secondary);
 
-	text-align: inherit;
-	text-wrap: wrap;
+    font-family: var(--font-family-sans);
 
-	overflow-wrap: normal;
-	word-break: normal;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
 
-	-webkit-hyphens: none;
-	hyphens: none;
+    line-height: 1.65;
 
-	animation-delay: 360ms;
+    text-align: inherit;
+    text-wrap: wrap;
+
+    overflow-wrap: normal;
+    word-break: normal;
+
+    -webkit-hyphens: none;
+    hyphens: none;
+
+    animation-delay: 360ms;
 }
 
 
@@ -1996,330 +2333,279 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 .home-hero__actions {
-	width: 100%;
+    width: 100%;
 
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 
-	gap: var(--space-3);
+    gap: var(--space-3);
 
-	margin-top: var(--space-6);
+    margin-top: var(--space-6);
 
-	animation:
-		modeinfinity-fade-up
-		var(--duration-slow)
-		var(--ease-emphasized)
-		both;
+    animation:
+        modeinfinity-fade-up
+        var(--duration-slow)
+        var(--ease-emphasized)
+        both;
 
-	animation-delay: 480ms;
+    animation-delay: 480ms;
 }
+
 
 .home-hero__actions .btn {
-	width: 100%;
+    width: 100%;
 }
+
 
 .home-hero__secondary-btn {
-	background: rgb(255 255 255 / 4%);
-	border-color: var(--hero-on-dark-faint);
-	color: var(--hero-white);
+    background: rgb(255 255 255 / 4%);
+    border-color: var(--hero-on-dark-faint);
+    color: var(--hero-white);
 }
 
+
 .home-hero__secondary-btn:hover {
-	background: var(--hero-white);
-	border-color: var(--hero-white);
-	color: var(--color-black);
+    background: var(--hero-white);
+    border-color: var(--hero-white);
+    color: var(--color-black);
 }
 
 
 /* ==========================================================================
-   HERO META / SIDE LABEL
+   DESKTOP META / SIDE LABEL / SCROLL
    ========================================================================== */
 
 .home-hero__meta,
 .home-hero__side-label {
-	display: none;
+    display: none;
 }
 
 
 /* ==========================================================================
-   SCROLL INDICATOR
-   ========================================================================== */
-
-.home-hero__scroll {
-	position: absolute;
-
-	left: 50%;
-	bottom: var(--space-5);
-
-	z-index: 7;
-
-	display: inline-flex;
-	align-items: center;
-
-	gap: var(--space-3);
-
-	color: var(--hero-on-dark-muted);
-
-	text-decoration: none;
-
-	transform: translateX(-50%);
-
-	transition:
-		color var(--transition-fast),
-		transform var(--transition-fast);
-}
-
-.home-hero__scroll:focus-visible {
-	color: var(--hero-gold);
-}
-
-.home-hero__scroll:hover {
-	color: var(--hero-gold);
-
-	transform:
-		translateX(-50%)
-		translateY(-2px);
-}
-
-.home-hero__scroll-label {
-	font-size: var(--font-size-2xs);
-
-	font-weight: var(--font-weight-semibold);
-
-	letter-spacing: var(--letter-spacing-wider);
-	line-height: var(--line-height-normal);
-
-	text-transform: uppercase;
-}
-
-.home-hero__scroll-line {
-	position: relative;
-
-	display: block;
-
-	width: 2.75rem;
-	height: 1px;
-
-	overflow: hidden;
-
-	background: var(--hero-hairline-soft);
-}
-
-.home-hero__scroll-line::after {
-	position: absolute;
-	inset: 0;
-
-	width: 42%;
-
-	content: "";
-
-	background: var(--hero-gold);
-
-	animation:
-		homeHeroScrollLine
-		2.8s
-		cubic-bezier(.65, 0, .35, 1)
-		infinite;
-
-	-webkit-animation:
-		homeHeroScrollLine
-		2.8s
-		cubic-bezier(.65, 0, .35, 1)
-		infinite;
-}
-
-@keyframes homeHeroScrollLine {
-	0% {
-		transform: translateX(-130%);
-	}
-
-	45%,
-	100% {
-		transform: translateX(250%);
-	}
-}
-
-
-/* ==========================================================================
-   TABLET / DESKTOP
+   TABLET + DESKTOP
    ========================================================================== */
 
 @media (min-width: 48rem) {
-	.home-hero {
-		padding-block: var(--space-10);
 
-		padding-top:
-			calc(
-				var(--header-height)
-				+ var(--space-6)
-			);
-	}
+    .home-hero {
+        padding-block:
+            var(--space-10);
 
-	.home-hero__inner {
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
+        padding-top:
+            calc(
+                var(--header-height) +
+                var(--space-6)
+            );
+    }
 
-		gap: clamp(
-			var(--space-6),
-			4vw,
-			var(--space-12)
-		);
-	}
 
-	.home-hero__visual {
-		order: 2;
+    .home-hero__inner {
+        flex-direction: row;
 
-		flex: 0 0 auto;
-		align-self: center;
+        align-items: center;
+        justify-content: center;
 
-		width: auto;
-	}
+        gap: clamp(
+            var(--space-6),
+            4vw,
+            var(--space-12)
+        );
+    }
 
-	.home-hero__visual-frame {
-		--hero-visual-size: clamp(
-			210px,
-			32vmin,
-			330px
-		);
 
-		width: var(--hero-visual-size);
-		max-height: 76%;
-	}
+    .home-hero__visual {
+        order: 2;
 
-	.home-hero__content {
-		order: 1;
+        flex: 0 0 auto;
 
-		flex: 0 1 auto;
+        align-self: center;
 
-		width: auto;
-		max-width: var(--hero-copy-width);
+        width: auto;
+    }
 
-		min-width: 0;
 
-		align-items: flex-start;
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            clamp(
+                210px,
+                32vmin,
+                330px
+            );
 
-		justify-content: center;
+        width: var(--hero-visual-size);
 
-		text-align: left;
-	}
+        max-height: 76%;
+    }
 
-	.home-hero__copy {
-		align-items: flex-start;
 
-		max-width: var(--hero-copy-width);
-	}
+    .home-hero__content {
+        order: 1;
 
-	.home-hero__eyebrow {
-		justify-content: flex-start;
-	}
+        flex: 1 1 auto;
 
-	.home-hero__title {
-		justify-content: flex-start;
+        width: auto;
 
-		flex-wrap: wrap;
+        max-width: var(--hero-copy-width);
 
-		font-size: clamp(
-			2.4rem,
-			4.6vw,
-			4.5rem
-		);
-	}
+        min-width: 0;
 
-	.home-hero__description {
-		width: min(100%, var(--hero-copy-width));
-		max-width: 60ch;
+        align-items: flex-start;
 
-		margin-top: var(--space-5);
+        justify-content: center;
 
-		text-align: left;
-		text-wrap: wrap;
-	}
+        text-align: left;
+    }
 
-	.home-hero__actions {
-		width: auto;
 
-		flex-direction: row;
-		align-items: center;
-		flex-wrap: wrap;
-	}
+    .home-hero__copy {
+        align-items: flex-start;
 
-	.home-hero__actions .btn {
-		width: auto;
-	}
+        max-width: var(--hero-copy-width);
+    }
 
-	.home-hero__meta {
-		position: absolute;
 
-		left: 50%;
-		bottom: var(--space-6);
+    .home-hero__eyebrow {
+        justify-content: flex-start;
+    }
 
-		z-index: 6;
 
-		display: flex;
-		align-items: center;
+    .home-hero__title {
+        justify-content: flex-start;
 
-		gap: var(--space-3);
+        flex-wrap: wrap;
 
-		color: var(--hero-on-dark-muted);
+        /*
+         * Tablet title.
+         */
+        font-size: clamp(
+            2.75rem,
+            5vw,
+            4rem
+        );
 
-		font-size: var(--font-size-2xs);
-		font-weight: var(--font-weight-semibold);
+        line-height: 0.98;
+    }
 
-		letter-spacing: var(--letter-spacing-wider);
-		line-height: 1;
 
-		text-transform: uppercase;
+    .home-hero__description {
+        width: min(100%, 60ch);
 
-		transform: translateX(-50%);
-	}
+        max-width: 60ch;
 
-	.home-hero__meta-divider {
-		display: block;
+        margin-top: var(--space-5);
 
-		width: 2.5rem;
-		height: 1px;
+        text-align: left;
+    }
 
-		background: var(--hero-hairline);
-	}
 
-	.home-hero__scroll {
-		left: max(
-			var(--container-padding),
-			calc(
-				(100vw - var(--container-max)) / 2
-			)
-		);
+    .home-hero__actions {
+        width: auto;
 
-		bottom: var(--space-6);
+        flex-direction: row;
 
-		transform: none;
-	}
+        align-items: center;
 
-	.home-hero__scroll:hover {
-		transform: translateY(-2px);
-	}
+        flex-wrap: wrap;
+    }
+
+
+    .home-hero__actions .btn {
+        width: auto;
+    }
+
+
+    /*
+     * META:
+     * Move to the right side instead of center.
+     */
+
+    .home-hero__meta {
+        position: absolute;
+
+        right:
+            max(
+                var(--container-padding-inline),
+                calc(
+                    (100vw - var(--container-max)) / 2
+                )
+            );
+
+        bottom: var(--space-6);
+
+        z-index: 6;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: var(--space-3);
+
+        color: var(--hero-on-dark-muted);
+
+        font-size: var(--font-size-2xs);
+        font-weight: var(--font-weight-semibold);
+
+        letter-spacing: var(--letter-spacing-wider);
+        line-height: 1;
+
+        text-transform: uppercase;
+    }
+
+
+    .home-hero__meta-divider {
+        display: block;
+
+        width: 2.5rem;
+        height: 1px;
+
+        background: var(--hero-hairline);
+    }
+
+
+    /*
+     * SCROLL:
+     * Center horizontally.
+     */
+
+    .home-hero__scroll {
+        left: 50%;
+
+        bottom: var(--space-6);
+
+        transform: translateX(-50%);
+    }
+
+
+    .home-hero__scroll:hover {
+        transform:
+            translateX(-50%)
+            translateY(-2px);
+    }
 }
 
 
 /* ==========================================================================
-   TABLET VISUAL TUNING
+   TABLET-SPECIFIC
    ========================================================================== */
 
 @media (min-width: 48rem) and (max-width: 63.9375rem) {
-	.home-hero__description {
-		max-width: 54ch;
-		font-size: var(--font-size-base);
-	}
 
-	.home-hero__visual-frame {
-		--hero-visual-size: clamp(
-			210px,
-			30vmin,
-			300px
-		);
-	}
+    .home-hero__description {
+        max-width: 54ch;
+
+        font-size: var(--font-size-base);
+    }
+
+
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            clamp(
+                210px,
+                30vmin,
+                300px
+            );
+    }
 }
 
 
@@ -2328,312 +2614,390 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 @media (min-width: 64rem) {
-	.home-hero {
-		min-height: 100vh;
-		min-height: 100dvh;
-	}
 
-	.home-hero__content,
-	.home-hero__inner {
-		min-height:
-			calc(
-				100dvh - var(--header-height)
-			);
-	}
+    .home-hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
 
-	.home-hero__visual-frame {
-		--hero-visual-size: clamp(
-			300px,
-			30vw,
-			400px
-		);
-	}
 
-	.home-hero__title {
-		flex-wrap: nowrap;
+    .home-hero__content,
+    .home-hero__inner {
+        min-height:
+            calc(
+                100dvh -
+                var(--header-height)
+            );
+    }
 
-		/*
-		 * Kept only at the desktop composition stage,
-		 * where the original design intentionally presents
-		 * the title as one visual line.
-		 */
-		white-space: nowrap;
 
-		font-size: clamp(
-			4.5rem,
-			6.8vw,
-			7.5rem
-		);
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            clamp(
+                300px,
+                27vw,
+                390px
+            );
+    }
 
-		line-height: var(--line-height-tight);
-	}
 
-	.home-hero__description {
-		max-width: 60ch;
+    /*
+     * DESKTOP TITLE
+     *
+     * Reduced from the previous 4.5rem–7.5rem range.
+     * This keeps the title premium without overpowering
+     * the description.
+     */
 
-		margin-top: var(--space-6);
+    .home-hero__title {
+        flex-wrap: nowrap;
 
-		font-size: clamp(
-			1rem,
-			1.2vw,
-			1.15rem
-		);
+        white-space: nowrap;
 
-		line-height: 1.65;
+        font-size: clamp(
+            3.75rem,
+            4.6vw,
+            5.25rem
+        );
 
-		text-align: left;
-		text-wrap: wrap;
-	}
+        line-height: 0.96;
+    }
 
-	.home-hero__actions {
-		margin-top: var(--space-7);
-	}
 
-	.home-hero__visual-line {
-		right: -1.1rem;
-	}
+    /*
+     * DESKTOP DESCRIPTION
+     */
 
-	.home-hero__side-label {
-		position: absolute;
+    .home-hero__description {
+        width: min(100%, 42rem);
 
-		top: 50%;
-		right: var(--space-5);
+        max-width: 42rem;
 
-		z-index: 6;
+        margin-top: var(--space-5);
 
-		display: flex;
-		align-items: center;
+        font-size: clamp(
+            1rem,
+            1.15vw,
+            1.125rem
+        );
 
-		gap: var(--space-4);
+        line-height: 1.7;
 
-		color: var(--hero-on-dark-faint);
+        text-align: left;
 
-		font-size: var(--font-size-2xs);
-		font-weight: var(--font-weight-semibold);
+        text-wrap: wrap;
+    }
 
-		letter-spacing: var(--letter-spacing-caps);
-		line-height: 1;
 
-		text-transform: uppercase;
-		white-space: nowrap;
+    .home-hero__actions {
+        margin-top: var(--space-7);
+    }
 
-		transform:
-			translateY(-50%)
-			rotate(90deg)
-			translateX(50%);
 
-		transform-origin: right center;
-	}
+    .home-hero__visual-line {
+        right: -1.1rem;
+    }
 
-	.home-hero__side-label span:first-child {
-		color: var(--hero-gold-soft);
-	}
 
-	.home-hero__side-label span + span::before {
-		display: inline-block;
+    .home-hero__side-label {
+        position: absolute;
 
-		width: 2rem;
-		height: 1px;
+        top: 50%;
+        right: var(--space-5);
 
-		margin-right: var(--space-4);
+        z-index: 6;
 
-		content: "";
+        display: flex;
 
-		vertical-align: middle;
+        align-items: center;
 
-		background: var(--hero-hairline-soft);
-	}
+        gap: var(--space-4);
+
+        color: var(--hero-on-dark-faint);
+
+        font-size: var(--font-size-2xs);
+        font-weight: var(--font-weight-semibold);
+
+        letter-spacing: var(--letter-spacing-caps);
+        line-height: 1;
+
+        text-transform: uppercase;
+
+        white-space: nowrap;
+
+        transform:
+            translateY(-50%)
+            rotate(90deg)
+            translateX(50%);
+
+        transform-origin: right center;
+    }
+
+
+    .home-hero__side-label span:first-child {
+        color: var(--hero-gold-soft);
+    }
+
+
+    .home-hero__side-label span + span::before {
+        display: inline-block;
+
+        width: 2rem;
+        height: 1px;
+
+        margin-right: var(--space-4);
+
+        content: "";
+
+        vertical-align: middle;
+
+        background: var(--hero-hairline-soft);
+    }
 }
 
 
 /* ==========================================================================
-   SHORT LARGE DESKTOP
+   LARGE DESKTOP — SHORT VIEWPORT
    ========================================================================== */
 
 @media (min-width: 64rem) and (max-height: 60rem) {
-	.home-hero {
-		padding-block: var(--space-6);
 
-		padding-top:
-			calc(
-				var(--header-height)
-				+ var(--space-3)
-			);
-	}
+    .home-hero {
+        padding-block: var(--space-6);
 
-	.home-hero__inner {
-		min-height:
-			calc(
-				100dvh - var(--header-height)
-			);
+        padding-top:
+            calc(
+                var(--header-height) +
+                var(--space-3)
+            );
+    }
 
-		gap: clamp(
-			3rem,
-			4vw,
-			5rem
-		);
-	}
 
-	.home-hero__visual-frame {
-		--hero-visual-size: clamp(
-			300px,
-			57vh,
-			520px
-		);
+    .home-hero__inner {
+        min-height:
+            calc(
+                100dvh -
+                var(--header-height)
+            );
 
-		max-height: none;
-	}
+        gap: clamp(
+            3rem,
+            4vw,
+            5rem
+        );
+    }
 
-	.home-hero__visual-line {
-		right: -1rem;
-		bottom: 8%;
-		height: 24%;
-	}
 
-	.home-hero__content {
-		min-height: auto;
-		padding-block: 0;
-	}
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            clamp(
+                300px,
+                52vh,
+                390px
+            );
 
-	.home-hero__eyebrow {
-		margin-bottom: var(--space-3);
-	}
+        max-height: none;
+    }
 
-	.home-hero__title {
-		font-size: clamp(
-			4.25rem,
-			5.6vw,
-			6.25rem
-		);
 
-		line-height: 0.88;
-	}
+    .home-hero__visual-line {
+        right: -1rem;
 
-	.home-hero__description {
-		width: min(100%, 62ch);
-		max-width: 62ch;
+        bottom: 8%;
 
-		margin-top: var(--space-5);
+        height: 24%;
+    }
 
-		font-size: clamp(
-			0.98rem,
-			1vw,
-			1.08rem
-		);
 
-		line-height: 1.58;
+    .home-hero__content {
+        min-height: auto;
 
-		text-wrap: wrap;
-	}
+        padding-block: 0;
+    }
 
-	.home-hero__actions {
-		margin-top: var(--space-6);
-	}
 
-	.home-hero__meta,
-	.home-hero__scroll {
-		bottom: var(--space-4);
-	}
+    .home-hero__eyebrow {
+        margin-bottom: var(--space-3);
+    }
 
-	.home-hero__side-label {
-		right: var(--space-4);
-	}
+
+    /*
+     * Do NOT return to the old 6.25rem title.
+     * Keep the hierarchy consistent on short screens.
+     */
+
+    .home-hero__title {
+        font-size: clamp(
+            3.5rem,
+            4.8vw,
+            4.75rem
+        );
+
+        line-height: 0.96;
+    }
+
+
+    .home-hero__description {
+        width: min(100%, 42rem);
+
+        max-width: 42rem;
+
+        margin-top: var(--space-5);
+
+        font-size: clamp(
+            0.98rem,
+            1vw,
+            1.08rem
+        );
+
+        line-height: 1.65;
+    }
+
+
+    .home-hero__actions {
+        margin-top: var(--space-6);
+    }
+
+
+    .home-hero__meta,
+    .home-hero__scroll {
+        bottom: var(--space-4);
+    }
+
+
+    .home-hero__side-label {
+        right: var(--space-4);
+    }
 }
 
 
 /* ==========================================================================
-   VERY WIDE VIEWPORTS
+   ULTRA-WIDE DESKTOP
    ========================================================================== */
 
 @media (min-width: 112.5rem) {
-	.home-hero__inner {
-		max-width: var(--container-wide);
 
-		justify-content: space-between;
-	}
+    .home-hero__inner {
+        max-width: var(--container-wide);
 
-	.home-hero__visual-frame {
-		--hero-visual-size: clamp(
-			430px,
-			36vw,
-			600px
-		);
-	}
+        justify-content: space-between;
+    }
 
-	.home-hero__side-label {
-		right: max(
-			var(--space-6),
-			calc(
-				(100vw - var(--container-wide)) / 2
-			)
-		);
-	}
 
-	.home-hero__scroll {
-		left: max(
-			var(--container-padding),
-			calc(
-				(100vw - var(--container-wide)) / 2
-			)
-		);
-	}
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            clamp(
+                400px,
+                30vw,
+                520px
+            );
+    }
+
+
+    .home-hero__side-label {
+        right:
+            max(
+                var(--space-6),
+                calc(
+                    (100vw - var(--container-wide)) / 2
+                )
+            );
+    }
+
+
+    .home-hero__meta {
+        right:
+            max(
+                var(--container-padding-inline),
+                calc(
+                    (100vw - var(--container-wide)) / 2
+                )
+            );
+    }
 }
 
 
 /* ==========================================================================
-   SMALL MOBILE
+   VERY SMALL MOBILE
    ========================================================================== */
 
 @media (max-width: 23.375rem) {
-	.home-hero {
-		padding-block:
-			calc(
-				var(--header-height-compact)
-				+ var(--space-3)
-			)
-			var(--space-8);
-	}
 
-	.home-hero__inner {
-		gap: var(--space-6);
-	}
+    .home-hero {
+        padding-block:
+            calc(
+                var(--header-height-compact) +
+                var(--space-3)
+            )
+            var(--space-8);
+    }
 
-	.home-hero__title {
-		font-size: clamp(
-			1.8rem,
-			8.8vw,
-			2.4rem
-		);
-	}
 
-	.home-hero__description {
-		font-size: var(--font-size-sm);
-		line-height: 1.65;
-	}
+    .home-hero__inner {
+        gap: var(--space-6);
 
-	.home-hero__scroll {
-		display: none;
-	}
+        /*
+         * Extra protection against edge-touching
+         * on very narrow devices.
+         */
+        padding-inline:
+            max(
+                var(--space-4),
+                var(--container-padding-inline)
+            );
+    }
+
+
+    .home-hero__title {
+        font-size: clamp(
+            1.8rem,
+            8.8vw,
+            2.4rem
+        );
+    }
+
+
+    .home-hero__description {
+        font-size: var(--font-size-sm);
+
+        line-height: 1.65;
+    }
+
+
+    .home-hero__scroll {
+        display: none;
+    }
 }
 
 
 /* ==========================================================================
-   MOBILE
+   STANDARD MOBILE
    ========================================================================== */
 
 @media (min-width: 23.4375rem) and (max-width: 47.9375rem) {
-	.home-hero__title {
-		font-size: clamp(
-			2.15rem,
-			9.2vw,
-			3.6rem
-		);
-	}
 
-	.home-hero__description {
-		max-width: 52ch;
-		text-wrap: wrap;
-	}
+    .home-hero__title {
+        font-size: clamp(
+            2.15rem,
+            9vw,
+            3.25rem
+        );
+
+        line-height: 0.98;
+    }
+
+
+    .home-hero__description {
+        width: 100%;
+
+        max-width: 52ch;
+
+        font-size: var(--font-size-md);
+
+        line-height: 1.65;
+
+        text-wrap: wrap;
+    }
 }
 
 
@@ -2642,120 +3006,141 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 @media (max-width: 47.9375rem) and (orientation: landscape) {
-	.home-hero {
-		padding-block: var(--space-4);
 
-		padding-top:
-			calc(
-				var(--header-height-compact)
-				+ var(--space-3)
-			);
-	}
+    .home-hero {
+        padding-block: var(--space-4);
 
-	.home-hero__inner {
-		flex-direction: row;
+        padding-top:
+            calc(
+                var(--header-height-compact) +
+                var(--space-3)
+            );
+    }
 
-		gap: var(--space-6);
-	}
 
-	.home-hero__visual {
-		order: 2;
+    .home-hero__inner {
+        flex-direction: row;
 
-		width: auto;
-	}
+        gap: var(--space-6);
+    }
 
-	.home-hero__visual-frame {
-		--hero-visual-size: clamp(
-			150px,
-			30vmin,
-			210px
-		);
-	}
 
-	.home-hero__content {
-		order: 1;
+    .home-hero__visual {
+        order: 2;
 
-		align-items: flex-start;
-		justify-content: center;
+        width: auto;
+    }
 
-		text-align: left;
-	}
 
-	.home-hero__copy {
-		align-items: flex-start;
-	}
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            clamp(
+                150px,
+                30vmin,
+                210px
+            );
+    }
 
-	.home-hero__eyebrow,
-	.home-hero__title {
-		justify-content: flex-start;
-	}
 
-	.home-hero__title {
-		font-size: clamp(
-			2.5rem,
-			7vw,
-			4rem
-		);
+    .home-hero__content {
+        order: 1;
 
-		white-space: normal;
-	}
+        align-items: flex-start;
 
-	.home-hero__description {
-		max-width: 50ch;
-		text-align: left;
-	}
+        justify-content: center;
 
-	.home-hero__actions {
-		width: auto;
+        text-align: left;
+    }
 
-		flex-direction: row;
-	}
 
-	.home-hero__actions .btn {
-		width: auto;
-	}
+    .home-hero__copy {
+        align-items: flex-start;
+    }
 
-	.home-hero__scroll {
-		display: none;
-	}
+
+    .home-hero__eyebrow,
+    .home-hero__title {
+        justify-content: flex-start;
+    }
+
+
+    .home-hero__title {
+        font-size: clamp(
+            2.5rem,
+            7vw,
+            4rem
+        );
+
+        white-space: normal;
+    }
+
+
+    .home-hero__description {
+        max-width: 50ch;
+
+        text-align: left;
+    }
+
+
+    .home-hero__actions {
+        width: auto;
+
+        flex-direction: row;
+    }
+
+
+    .home-hero__actions .btn {
+        width: auto;
+    }
+
+
+    .home-hero__scroll {
+        display: none;
+    }
 }
 
 
 /* ==========================================================================
-   SHORT VIEWPORT
+   SHORT MOBILE / TABLET HEIGHT
    ========================================================================== */
 
 @media (max-width: 63.9375rem) and (max-height: 37.5rem) {
-	.home-hero {
-		padding-top:
-			calc(
-				var(--header-height-compact)
-				+ var(--space-3)
-			);
 
-		padding-bottom: var(--space-8);
-	}
+    .home-hero {
+        padding-top:
+            calc(
+                var(--header-height-compact) +
+                var(--space-3)
+            );
 
-	.home-hero__inner {
-		padding-block:
-			var(--space-4)
-			var(--space-6);
-	}
+        padding-bottom: var(--space-8);
+    }
 
-	.home-hero__visual-frame {
-		--hero-visual-size: min(
-			52vh,
-			260px
-		);
-	}
 
-	.home-hero__description {
-		margin-top: var(--space-4);
-	}
+    .home-hero__inner {
+        padding-block:
+            var(--space-4)
+            var(--space-6);
+    }
 
-	.home-hero__actions {
-		margin-top: var(--space-5);
-	}
+
+    .home-hero__visual-frame {
+        --hero-visual-size:
+            min(
+                52vh,
+                260px
+            );
+    }
+
+
+    .home-hero__description {
+        margin-top: var(--space-4);
+    }
+
+
+    .home-hero__actions {
+        margin-top: var(--space-5);
+    }
 }
 
 
@@ -2764,37 +3149,42 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-	.home-hero__background,
-	.home-hero__portrait img {
-		transform: none;
-	}
 
-	.home-hero__actions,
-	.home-hero__description,
-	.home-hero__eyebrow,
-	.home-hero__portrait img,
-	.home-hero__scroll,
-	.home-hero__scroll-line::after,
-	.home-hero__title,
-	.home-hero__visual {
-		animation: none;
-		transition: none;
-	}
+    .home-hero__background,
+    .home-hero__portrait img {
+        transform: none;
+    }
+
+
+    .home-hero__actions,
+    .home-hero__description,
+    .home-hero__eyebrow,
+    .home-hero__portrait img,
+    .home-hero__scroll,
+    .home-hero__scroll-line::after,
+    .home-hero__title,
+    .home-hero__visual {
+        animation: none;
+        transition: none;
+    }
 }
 
 
 /* ==========================================================================
-   TOUCH / NO HOVER
+   TOUCH DEVICES
    ========================================================================== */
 
 @media (hover: none) {
-	.home-hero__visual:hover .home-hero__portrait img {
-		transform: scale(1.01);
-	}
 
-	.home-hero__scroll:hover {
-		color: var(--hero-on-dark-muted);
-	}
+    .home-hero__visual:hover
+    .home-hero__portrait img {
+        transform: scale(1.01);
+    }
+
+
+    .home-hero__scroll:hover {
+        color: var(--hero-on-dark-muted);
+    }
 }
 
 
@@ -2803,35 +3193,37 @@ background-image: url("../assets/images/golden_hour_atelier.jpg");
    ========================================================================== */
 
 @media (forced-colors: active) {
-	.home-hero,
-	.home-hero__description,
-	.home-hero__title {
-		color: CanvasText;
-	}
 
-	.home-hero {
-		background: Canvas;
-	}
+    .home-hero,
+    .home-hero__description,
+    .home-hero__title {
+        color: CanvasText;
+    }
 
-	.home-hero__background,
-	.home-hero__grain,
-	.home-hero__overlay {
-		display: none;
-	}
 
-	.home-hero__eyebrow,
-	.home-hero__scroll,
-	.home-hero__title-accent {
-		color: LinkText;
-	}
+    .home-hero {
+        background: Canvas;
+    }
 
-	.home-hero__visual-frame {
-		border: 1px solid CanvasText;
-	}
+
+    .home-hero__background,
+    .home-hero__grain,
+    .home-hero__overlay {
+        display: none;
+    }
+
+
+    .home-hero__eyebrow,
+    .home-hero__scroll,
+    .home-hero__title-accent {
+        color: LinkText;
+    }
+
+
+    .home-hero__visual-frame {
+        border: 1px solid CanvasText;
+    }
 }
-
-
-
 
 
 
