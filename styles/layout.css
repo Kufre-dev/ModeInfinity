@@ -14,6 +14,7 @@
    - Content-width utilities
    - Alignment utilities
    - Media frames
+   - Aspect ratios
    - Positioning utilities
    - Visibility utilities
 
@@ -24,6 +25,28 @@
    - components.css → reusable UI components
    - responsive.css → breakpoint-specific behavior
    - animations.css → motion
+
+   CHANGES (merge from legacy system + token migration)
+   ----------------------------------------------------
+   1. Migrated undefined tokens to canonical names:
+        --font-size-label        → --type-label-size
+        --line-height-label      → --leading-normal
+        --line-height-tight      → --leading-tight
+        --letter-spacing-wide    → --tracking-wide
+        --color-text-secondary   → --color-text-muted
+        --color-text-on-dark     → rgb(255 255 255 / 0.82)
+        --color-heading-on-dark  → #ffffff
+        --section-space          → --section-space-md
+        --section-space-compact  → --section-space-sm
+        --section-space-large    → --section-space-lg
+   2. Added BEM section tier modifiers:
+        .section--primary, .section--secondary, .section--tertiary
+   3. Added .section--divider (opt-in gold gradient hairline at bottom)
+   4. Added container compat aliases:
+        .container-wide, .container-narrow, .container-fluid
+   5. Added aspect-ratio utilities:
+        .aspect-video, .aspect-square, .aspect-portrait,
+        .aspect-landscape, .aspect-auto
    ========================================================================== */
 /* ==========================================================================
    1. BASE LAYOUT SAFETY
@@ -57,19 +80,39 @@ body {
 			var(--content-readable));
 	margin-inline: auto;
 }
+/* --------------------------------------------------------------------------
+   Container compat aliases
+   --------------------------------------------------------------------------
+   Older markup may use these non-BEM names. Aliased here so those pages
+   don't need editing.
+   -------------------------------------------------------------------------- */
+.container-wide {
+	width: min(100% - (var(--container-inline-padding) * 2),
+			var(--container-wide));
+	margin-inline: auto;
+}
+.container-narrow {
+	width: min(100% - (var(--container-inline-padding) * 2),
+			var(--content-narrow));
+	margin-inline: auto;
+}
+.container-fluid {
+	width: 100%;
+	margin-inline: auto;
+}
 /* ==========================================================================
    3. SECTIONS
    ========================================================================== */
 .section {
 	position: relative;
 	isolation: isolate;
-	padding-block: var(--section-space);
+	padding-block: var(--section-space-md);
 }
 .section--compact {
-	padding-block: var(--section-space-compact);
+	padding-block: var(--section-space-sm);
 }
 .section--large {
-	padding-block: var(--section-space-large);
+	padding-block: var(--section-space-lg);
 }
 .section--flush {
 	padding-block: 0;
@@ -88,7 +131,7 @@ body {
 }
 .section--dark {
 	background: var(--color-background-dark);
-	color: var(--color-text-on-dark);
+	color: var(--color-white);
 }
 .section--dark :where(h1,
 	h2,
@@ -96,15 +139,49 @@ body {
 	h4,
 	h5,
 	h6) {
-	color: var(--color-heading-on-dark);
+	color: #ffffff;
 }
 .section--dark :where(p,
 	li,
 	figcaption) {
-	color: var(--color-text-on-dark);
+	color: rgb(255 255 255 / 0.82);
 }
 .section--dark a {
 	color: var(--color-accent-on-dark);
+}
+/* --------------------------------------------------------------------------
+   Section background tier modifiers
+   --------------------------------------------------------------------------
+   Explicit modifiers so markup controls the rhythm, not position.
+   Uses the --section-* tokens.
+   -------------------------------------------------------------------------- */
+.section--primary {
+	background: var(--section-primary);
+}
+.section--secondary {
+	background: var(--section-secondary);
+}
+.section--tertiary {
+	background: var(--section-tertiary);
+}
+/* --------------------------------------------------------------------------
+   Section gold divider
+   --------------------------------------------------------------------------
+   Adds a subtle gold gradient hairline at the bottom of the section.
+   Opt-in so it doesn't compete with section-specific top hairlines
+   (e.g. .home-academy::before, .home-introduction__rule).
+
+   Usage: <section class="section section--divider">
+   -------------------------------------------------------------------------- */
+.section--divider {
+	border-bottom: 2px solid;
+	border-image: linear-gradient(
+		90deg,
+		transparent 0%,
+		var(--color-gold-500) 20%,
+		var(--color-gold-500) 80%,
+		transparent 100%
+	) 1;
 }
 /* ==========================================================================
    4. SECTION HEADERS
@@ -120,10 +197,10 @@ body {
 	margin: 0;
 	color: var(--color-accent-text);
 	font-family: var(--font-sans);
-	font-size: var(--font-size-label);
+	font-size: var(--type-label-size);
 	font-weight: var(--font-weight-semibold);
-	line-height: var(--line-height-label);
-	letter-spacing: var(--letter-spacing-wide);
+	line-height: var(--leading-normal);
+	letter-spacing: var(--tracking-wide);
 	text-transform: uppercase;
 }
 .section--dark :where(.section-header__eyebrow,
@@ -138,10 +215,10 @@ body {
 .section-header__intro {
 	max-width: var(--content-readable);
 	margin: 0;
-	color: var(--color-text-secondary);
+	color: var(--color-text-muted);
 }
 .section--dark .section-header__intro {
-	color: var(--color-text-on-dark);
+	color: rgb(255 255 255 / 0.82);
 }
 .section-header--center {
 	justify-items: center;
@@ -427,7 +504,28 @@ body {
 	aspect-ratio: 3 / 4;
 }
 /* ==========================================================================
-   15. POSITIONING
+   15. ASPECT RATIO UTILITIES
+   ==========================================================================
+   Lightweight aspect helpers for when you don't need the full
+   .media-frame wrapper.
+   ========================================================================== */
+.aspect-video {
+	aspect-ratio: 16 / 9;
+}
+.aspect-square {
+	aspect-ratio: 1 / 1;
+}
+.aspect-portrait {
+	aspect-ratio: 4 / 5;
+}
+.aspect-landscape {
+	aspect-ratio: 4 / 3;
+}
+.aspect-auto {
+	aspect-ratio: auto;
+}
+/* ==========================================================================
+   16. POSITIONING
    ========================================================================== */
 .relative {
 	position: relative;
@@ -457,7 +555,7 @@ body {
 	left: 0;
 }
 /* ==========================================================================
-   16. Z-INDEX
+   17. Z-INDEX
    ========================================================================== */
 .z-content {
 	z-index: var(--z-content);
@@ -466,7 +564,7 @@ body {
 	z-index: var(--z-decorative);
 }
 /* ==========================================================================
-   17. OVERFLOW
+   18. OVERFLOW
    ========================================================================== */
 .overflow-hidden {
 	overflow: hidden;
@@ -486,7 +584,7 @@ body {
 	-webkit-overflow-scrolling: touch;
 }
 /* ==========================================================================
-   18. VISIBILITY
+   19. VISIBILITY
    ========================================================================== */
 .hidden {
 	display: none !important;
@@ -498,13 +596,13 @@ body {
 	visibility: visible !important;
 }
 /* ==========================================================================
-   19. SECTION ISOLATION
+   20. SECTION ISOLATION
    ========================================================================== */
 .section-isolate {
 	isolation: isolate;
 }
 /* ==========================================================================
-   20. DECORATIVE LAYERS
+   21. DECORATIVE LAYERS
    ========================================================================== */
 .decorative-layer {
 	position: absolute;
@@ -516,7 +614,7 @@ body {
 	z-index: var(--z-content);
 }
 /* ==========================================================================
-   21. VIEWPORT SECTIONS
+   22. VIEWPORT SECTIONS
    ========================================================================== */
 .viewport-section {
 	min-height: 100svh;
@@ -528,7 +626,7 @@ body {
 	min-height: 100dvh;
 }
 /* ==========================================================================
-   22. SAFE-AREA SUPPORT
+   23. SAFE-AREA SUPPORT
    ========================================================================== */
 .safe-area {
 	padding-top: max(var(--space-4),
@@ -541,7 +639,7 @@ body {
 			env(safe-area-inset-left));
 }
 /* ==========================================================================
-   23. FLOW / CONTENT CONTAINMENT
+   24. FLOW / CONTENT CONTAINMENT
    ========================================================================== */
 .content-visibility-auto {
 	content-visibility: auto;
@@ -557,7 +655,7 @@ body {
 	contain: content;
 }
 /* ==========================================================================
-   24. MOBILE-FIRST GRID ENHANCEMENTS
+   25. MOBILE-FIRST GRID ENHANCEMENTS
    ========================================================================== */
 @media (min-width: 30rem) {
 	.grid-2 {
@@ -593,7 +691,7 @@ body {
 	}
 }
 /* ==========================================================================
-   25. REDUCED CONTENT MOTION / ACCESSIBILITY
+   26. REDUCED CONTENT MOTION / ACCESSIBILITY
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
 	.content-visibility-auto {
