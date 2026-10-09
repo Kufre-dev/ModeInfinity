@@ -1797,7 +1797,7 @@ a.btn {
    ========================================================================== */
 @media (min-width: 112.5rem) {
 	.home-hero__inner {
-		max-width: var(--container-wide);
+		/* max-width: var(--container-wide); */
 		justify-content: space-between;
 	}
 	.home-hero__visual-frame {
@@ -2344,7 +2344,6 @@ a.btn {
 
 
 
-
 /* ==========================================================================
    MODEINFINITY — HOME ACADEMY
    File: styles/home-academy.css
@@ -2359,6 +2358,7 @@ a.btn {
              .home-academy__title (with em)
            .home-academy__intro
              .home-academy__description
+           .home-academy__rule
          section.home-academy__programmes       (sr-only h3 label)
            .home-academy__pillars
              article.home-academy__pillar × 3
@@ -2366,7 +2366,6 @@ a.btn {
            ul.home-academy__benefits.stagger
              li.home-academy__benefit × 4
          p.home-academy__intake
-         footer.home-academy__footer
          .home-academy__cta
 
    Load order:
@@ -2436,6 +2435,7 @@ a.btn {
 	width: 100%;
 	max-width: 60rem;
 	margin-inline: auto;
+	margin-bottom: clamp(2.5rem, 5vw, 4rem);
 
 	text-align: center;
 }
@@ -2497,6 +2497,20 @@ a.btn {
 }
 
 
+/* --------------------------------------------------------------------------
+   Centered hairline — small editorial beat between header and programmes
+   -------------------------------------------------------------------------- */
+
+.home-academy__rule {
+	flex: 0 0 auto;
+
+	width: min(100%, 6rem);
+	height: var(--border-width-thin);
+
+	background: var(--color-border-strong);
+}
+
+
 /* ==========================================================================
    3. PROGRAMMES WRAPPER
    ==========================================================================
@@ -2520,7 +2534,7 @@ a.btn {
 	gap: clamp(0.75rem, 1.5vw, 1.5rem);
 
 	width: 100%;
-	margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+	margin: 0;
 	padding: 0;
 	list-style: none;
 }
@@ -2840,8 +2854,8 @@ a.btn {
 	gap: clamp(1rem, 2vw, 1.5rem);
 
 	width: 100%;
-    margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
-			padding: 0;
+	margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+	padding: 0;
 	list-style: none;
 
 	text-align: center;
@@ -2858,7 +2872,8 @@ a.btn {
 	align-items: center;
 
 	min-width: 0;
-padding: clamp(0.625rem, 1.25vw, 0.75rem);
+	padding: clamp(0.625rem, 1.25vw, 0.75rem);
+
 	background: var(--color-surface);
 	border: var(--border-width-thin) solid var(--color-border);
 	border-radius: var(--radius-card);
@@ -2872,10 +2887,6 @@ padding: clamp(0.625rem, 1.25vw, 0.75rem);
 
 /* --------------------------------------------------------------------------
    Benefit icon — solid gold gradient circle
-   --------------------------------------------------------------------------
-   Stronger treatment than a tinted circle: the icons become visual
-   anchors that break up the section between the pillar cards and the
-   closing statement.
    -------------------------------------------------------------------------- */
 
 .home-academy__benefit-icon {
@@ -2912,9 +2923,6 @@ padding: clamp(0.625rem, 1.25vw, 0.75rem);
 
 /* --------------------------------------------------------------------------
    Benefit title
-   --------------------------------------------------------------------------
-   Sans-serif, semibold, small. Keeps benefit titles visually subordinate
-   to the pillar titles (which use the display font).
    -------------------------------------------------------------------------- */
 
 .home-academy__benefit-title {
@@ -2984,6 +2992,9 @@ padding: clamp(0.625rem, 1.25vw, 0.75rem);
 
 /* ==========================================================================
    8. CLOSING STATEMENT (footer)
+   ==========================================================================
+   Retained in CSS even though the markup currently omits the footer.
+   Restore the markup and these rules apply again automatically.
    ========================================================================== */
 
 .home-academy__footer {
@@ -3195,6 +3206,7 @@ padding: clamp(0.625rem, 1.25vw, 0.75rem);
 	/* Wider header so everything has room */
 	.home-academy__header {
 		max-width: 72rem;
+		margin-bottom: clamp(3rem, 5vw, 4.5rem);
 	}
 
 	/* Title: one straight line, smaller */
@@ -3569,6 +3581,10 @@ padding: clamp(0.625rem, 1.25vw, 0.75rem);
 		background: CanvasText;
 	}
 
+	.home-academy__rule {
+		background: CanvasText;
+	}
+
 	.home-academy__header,
 	.home-academy__intake,
 	.home-academy__footer {
@@ -3647,6 +3663,10 @@ padding: clamp(0.625rem, 1.25vw, 0.75rem);
 	.home-academy__pillar-overlay,
 	.home-academy__pillar::before {
 		display: none;
+	}
+
+	.home-academy__rule {
+		background: #000;
 	}
 
 	.home-academy__header,
