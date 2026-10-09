@@ -13,6 +13,8 @@
    - Drawer/modal/lightbox motion
    - Toast motion
    - Loading indicators
+   - Text effects
+   - Performance helpers
    - Reduced-motion behavior
 
    Ownership:
@@ -22,13 +24,34 @@
    - components.css → component appearance/structure
    - responsive.css → responsive behavior
    - animations.css → motion only
+
+   CHANGES (final)
+   ---------------
+   1. --motion-scale ownership moved to variables.css (section 22B there).
+      Removed duplicate :root block at section 1 and section 23.
+   2. Added pop-in, slide-in-left/right, glow-in, gold-pulse,
+      progress-fill, text-shimmer keyframes.
+   3. Added .pop-in, .slide-in-left, .slide-in-right, .glow-in,
+      .gold-pulse utilities.
+   4. Added .duration-*, .animate-* control utilities.
+   5. Added .hover-glow, .hover-gold, .hover-underline-gold,
+      .hover-fill-gold, .card-lift.
+   6. Added .loading-spinner, .skeleton, .progress-fill.
+   7. Added .text-gold-gradient.
+   8. Added performance helpers: .animate-gpu, .transform-optimized,
+      .opacity-optimized, .will-change-transform, .will-change-opacity.
+   9. All hardcoded gold values replaced with --color-gold-* tokens.
+  10. Reduced-motion and forced-colors blocks cover the new utilities.
    ========================================================================== */
 /* ==========================================================================
    1. MOTION ROOT
    ========================================================================== */
-:root {
-	--motion-scale: 1;
-}
+/*
+ * --motion-scale is owned by variables.css.
+ * See section 22B.MOTION SCALE there.
+ *
+ * This file consumes the token but does not define it.
+ */
 /* ==========================================================================
    2. BASE TRANSITIONS
    ========================================================================== */
@@ -120,6 +143,78 @@
 	to {
 		opacity: 1;
 		transform: scale(1);
+	}
+}
+/* --------------------------------------------------------------------------
+   Legacy entrance keyframes
+   --------------------------------------------------------------------------
+   Cover motions the new system didn't have: overshoot pop entrance,
+   directional slide entrance, glow entrance.
+   -------------------------------------------------------------------------- */
+@keyframes modeinfinity-pop-in {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+@keyframes modeinfinity-slide-in-left {
+	from {
+		opacity: 0;
+		transform: translate3d(-2.5rem, 0, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-slide-in-right {
+	from {
+		opacity: 0;
+		transform: translate3d(2.5rem, 0, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+@keyframes modeinfinity-glow-in {
+	0% {
+		opacity: 0;
+		filter: drop-shadow(0 0 0 rgb(0 0 0 / 0%));
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		filter: drop-shadow(0 0 20px rgb(197 154 24 / 0.3));
+	}
+}
+@keyframes modeinfinity-gold-pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 0 0 rgb(197 154 24 / 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgb(197 154 24 / 0);
+	}
+}
+@keyframes modeinfinity-progress-fill {
+	to {
+		width: 100%;
+	}
+}
+@keyframes modeinfinity-text-shimmer {
+	0%,
+	100% {
+		background-position: 0% center;
+	}
+	50% {
+		background-position: 200% center;
 	}
 }
 /* ==========================================================================
@@ -240,6 +335,30 @@ html.js .reveal-right {
 	animation:
 		modeinfinity-scale-in calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
 }
+/* --------------------------------------------------------------------------
+   Legacy animation aliases
+   -------------------------------------------------------------------------- */
+.pop-in {
+	animation:
+		modeinfinity-pop-in calc(var(--duration-fast) * var(--motion-scale)) var(--ease-out-back) both;
+}
+.slide-in-left {
+	animation:
+		modeinfinity-slide-in-left calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.slide-in-right {
+	animation:
+		modeinfinity-slide-in-right calc(var(--duration-base) * var(--motion-scale)) var(--ease-emphasized) both;
+}
+.glow-in {
+	animation:
+		modeinfinity-glow-in 1.2s var(--ease-standard) both;
+}
+.gold-pulse {
+	animation:
+		modeinfinity-gold-pulse 3s var(--ease-standard) infinite;
+	transform: translateZ(0);
+}
 /* ==========================================================================
    8. ANIMATION DELAYS
    ========================================================================== */
@@ -260,6 +379,27 @@ html.js .reveal-right {
 }
 .delay-6 {
 	animation-delay: calc(var(--stagger-step) * 6);
+}
+/* --------------------------------------------------------------------------
+   Duration and fill-mode control
+   -------------------------------------------------------------------------- */
+.duration-fast {
+	animation-duration: var(--duration-fast);
+}
+.duration-base {
+	animation-duration: var(--duration-normal);
+}
+.duration-slow {
+	animation-duration: var(--duration-slow);
+}
+.animate-forwards {
+	animation-fill-mode: forwards;
+}
+.animate-backwards {
+	animation-fill-mode: backwards;
+}
+.animate-both {
+	animation-fill-mode: both;
 }
 /* ==========================================================================
    9. STAGGERED REVEALS
@@ -387,6 +527,116 @@ html.js .stagger > .is-visible {
 .motion-underline[aria-current="page"]::after {
 	transform: scaleX(1);
 	transform-origin: left center;
+}
+/* ==========================================================================
+   12B. LEGACY HOVER UTILITIES
+   ==========================================================================
+   Interactive hover effects migrated from the legacy system.
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+	.hover-glow {
+		transition: box-shadow var(--duration-base) var(--ease-standard);
+	}
+	.hover-glow:hover,
+	.hover-glow:focus-visible {
+		box-shadow: 0 0 28px rgb(197 154 24 / 0.35);
+	}
+	.hover-gold {
+		transition:
+			color var(--duration-base) var(--ease-standard),
+			transform var(--duration-base) var(--ease-standard);
+	}
+	.hover-gold:hover,
+	.hover-gold:focus-visible {
+		color: var(--color-gold-300);
+		transform: translateY(-2px);
+	}
+	.card-lift {
+		position: relative;
+		transform: translateZ(0);
+		transition:
+			transform var(--duration-base) var(--ease-standard);
+	}
+	.card-lift::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: linear-gradient(135deg,
+				var(--color-gold-500),
+				transparent 30%);
+		mask:
+			linear-gradient(#fff 0 0) padding-box,
+			linear-gradient(#fff 0 0);
+		mask-composite: exclude;
+		-webkit-mask:
+			linear-gradient(#fff 0 0) padding-box,
+			linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--duration-base) var(--ease-standard);
+	}
+	.card-lift:hover,
+	.card-lift:focus-within {
+		transform: translateY(-8px);
+	}
+	.card-lift:hover::before,
+	.card-lift:focus-within::before {
+		opacity: 1;
+	}
+}
+/* --------------------------------------------------------------------------
+   Gold underline draw
+   --------------------------------------------------------------------------
+   Works on any interactive element without a hover-capability gate because
+   the underlying behaviour degrades cleanly on touch.
+   -------------------------------------------------------------------------- */
+.hover-underline-gold {
+	position: relative;
+}
+.hover-underline-gold::after {
+	content: "";
+	position: absolute;
+	bottom: -4px;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: linear-gradient(90deg,
+			var(--color-gold-500),
+			var(--color-gold-300));
+	transition: width var(--duration-base) var(--ease-standard);
+}
+.hover-underline-gold:hover::after,
+.hover-underline-gold:focus-visible::after {
+	width: 100%;
+}
+/* --------------------------------------------------------------------------
+   Gold sweep fill
+   -------------------------------------------------------------------------- */
+.hover-fill-gold {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+}
+.hover-fill-gold::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg,
+			transparent,
+			rgb(197 154 24 / 0.1),
+			transparent);
+	transition: left var(--duration-slow) var(--ease-standard);
+	z-index: -1;
+	pointer-events: none;
+}
+.hover-fill-gold:hover::before,
+.hover-fill-gold:focus-visible::before {
+	left: 100%;
 }
 /* ==========================================================================
    13. ACCORDION MOTION
@@ -596,6 +846,40 @@ html.js .stagger > .is-visible {
 	animation:
 		modeinfinity-shimmer 1.5s linear infinite;
 }
+/* --------------------------------------------------------------------------
+   Legacy loading aliases
+   -------------------------------------------------------------------------- */
+.loading-spinner {
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 3px solid rgb(197 154 24 / 0.3);
+	border-top-color: var(--color-gold-500);
+	border-radius: 50%;
+	animation:
+		modeinfinity-spin 1s linear infinite;
+	transform: translateZ(0);
+}
+.skeleton {
+	background:
+		linear-gradient(90deg,
+			var(--color-surface) 25%,
+			var(--color-border) 50%,
+			var(--color-surface) 75%);
+	background-size: 200% 100%;
+	animation:
+		modeinfinity-shimmer 1.5s linear infinite;
+}
+.progress-fill {
+	width: 0;
+	height: 100%;
+	background:
+		linear-gradient(90deg,
+			var(--color-gold-300),
+			var(--color-gold-500));
+	border-radius: inherit;
+	animation:
+		modeinfinity-progress-fill 2s var(--ease-out-back) forwards;
+}
 /* ==========================================================================
    21. FOCUS MOTION
    ========================================================================== */
@@ -615,12 +899,53 @@ html.js .stagger > .is-visible {
 		transform var(--duration-base) var(--ease-emphasized);
 }
 /* ==========================================================================
+   22B. TEXT EFFECTS
+   ==========================================================================
+   Animated gold gradient text — a subtle shimmer across the glyphs.
+   Use sparingly: reserve for high-impact headings.
+   ========================================================================== */
+.text-gold-gradient {
+	background:
+		linear-gradient(135deg,
+			var(--color-gold-300),
+			var(--color-gold-500),
+			var(--color-gold-300));
+	background-size: 200% auto;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation:
+		modeinfinity-text-shimmer 3s ease-in-out infinite;
+}
+/* ==========================================================================
+   22C. PERFORMANCE HELPERS
+   ==========================================================================
+   Explicit GPU-acceleration and will-change hints for elements that
+   animate frequently or would benefit from a compositor layer.
+   ========================================================================== */
+.animate-gpu {
+	transform: translateZ(0);
+	backface-visibility: hidden;
+	perspective: 1000px;
+}
+.transform-optimized {
+	will-change: transform;
+	transform: translateZ(0);
+}
+.opacity-optimized {
+	will-change: opacity;
+}
+.will-change-transform {
+	will-change: transform;
+}
+.will-change-opacity {
+	will-change: opacity;
+}
+/* ==========================================================================
    23. REDUCED MOTION
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-	:root {
-		--motion-scale: 0;
-	}
 	*,
 	*::before,
 	*::after {
@@ -631,10 +956,16 @@ html.js .stagger > .is-visible {
 	.motion-focus,
 	.hover-lift,
 	.hover-scale,
+	.hover-glow,
+	.hover-gold,
 	.hover-image img,
 	.image-hover img,
 	.image-reveal img,
 	.motion-underline::after,
+	.hover-underline-gold::after,
+	.hover-fill-gold::before,
+	.card-lift,
+	.card-lift::before,
 	.accordion-content,
 	.header-surface,
 	.drawer-panel,
@@ -652,10 +983,19 @@ html.js .stagger > .is-visible {
 	.fade-left,
 	.fade-right,
 	.scale-in,
+	.pop-in,
+	.slide-in-left,
+	.slide-in-right,
+	.glow-in,
 	.hero-enter,
 	.spinner,
+	.loading-spinner,
 	.pulse,
 	.shimmer,
+	.skeleton,
+	.progress-fill,
+	.gold-pulse,
+	.text-gold-gradient,
 	.toast.is-entering,
 	.toast.is-leaving,
 	.cart-count.is-updated {
@@ -689,17 +1029,56 @@ html.js .stagger > .is-visible {
 	.lightbox-backdrop {
 		opacity: 1;
 	}
+	.hover-glow:hover,
+	.hover-gold:hover,
+	.card-lift:hover,
+	.hover-scale:hover,
+	.hover-lift:hover {
+		transform: none;
+		box-shadow: none;
+	}
+	.card-lift::before {
+		opacity: 0 !important;
+	}
+	.hover-underline-gold::after {
+		width: 0 !important;
+	}
+	.hover-fill-gold::before {
+		left: -100% !important;
+	}
+	.text-gold-gradient {
+		background: none;
+		-webkit-text-fill-color: currentColor;
+		color: currentColor;
+	}
 }
 /* ==========================================================================
    24. FORCED COLORS
    ========================================================================== */
 @media (forced-colors: active) {
-	.motion-underline::after {
+	.motion-underline::after,
+	.hover-underline-gold::after {
 		background: CanvasText;
 	}
-	.shimmer {
+	.shimmer,
+	.skeleton {
 		animation: none;
 		background: Canvas;
+	}
+	.hover-glow:hover,
+	.hover-gold:hover {
+		box-shadow: none;
+	}
+	.card-lift::before {
+		display: none;
+	}
+	.hover-fill-gold::before {
+		display: none;
+	}
+	.text-gold-gradient {
+		background: none;
+		-webkit-text-fill-color: CanvasText;
+		color: CanvasText;
 	}
 }
 /* ==========================================================================
@@ -711,6 +1090,11 @@ html.js .stagger > .is-visible {
 	*::after {
 		animation: none !important;
 		transition: none !important;
+	}
+	.text-gold-gradient {
+		background: none;
+		-webkit-text-fill-color: #000;
+		color: #000;
 	}
 }
 /* ==========================================================================

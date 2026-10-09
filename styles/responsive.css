@@ -9,6 +9,10 @@
    - Responsive typography adjustments
    - Responsive forms/actions
    - Responsive embeds/tables
+   - Responsive media helpers
+   - Responsive text alignment
+   - Print utilities
+   - Reduced-data optimization
    - Mobile/desktop component sizing
 
    Ownership:
@@ -18,6 +22,20 @@
    - components.css → component styling
    - responsive.css → breakpoint behavior
    - animations.css → motion
+
+   CHANGES (merge from legacy system + token migration)
+   ----------------------------------------------------
+   1. Token migration:
+        --letter-spacing-wide → --tracking-wide (§17)
+   2. Added §27 — Responsive media helpers
+        .responsive-img, .responsive-video,
+        .bg-image-responsive, .bg-image-mobile,
+        .aspect-ratio-16-9, .aspect-ratio-1-1, .aspect-ratio-4-3
+   3. Added §28 — Responsive text alignment
+        .text-{center|left|right}-{mobile|tablet|desktop}
+   4. Added §29 — Print utilities
+        .no-print, .print-only
+   5. Added §30 — Reduced-data optimization
    ========================================================================== */
 /* ==========================================================================
    1. BASELINE — 320PX+
@@ -321,7 +339,7 @@ body {
 	.section-header__eyebrow,
 	.eyebrow,
 	.section-label {
-		letter-spacing: var(--letter-spacing-wide);
+		letter-spacing: var(--tracking-wide);
 	}
 }
 /* ==========================================================================
@@ -339,8 +357,8 @@ body {
    19. PRINT
    ========================================================================== */
 /*
- * Print styles are owned by global.css.
- * Keeping print behavior out of this file prevents conflicting declarations.
+ * Base print rules are owned by global.css.
+ * Additional print utilities appear in §29 below.
  */
 /* ==========================================================================
    20. RESPONSIVE HELPERS
@@ -479,6 +497,134 @@ body {
 				env(safe-area-inset-right));
 		padding-bottom: max(var(--space-4),
 				env(safe-area-inset-bottom));
+	}
+}
+/* ==========================================================================
+   27. RESPONSIVE MEDIA HELPERS
+   ==========================================================================
+   Utilities for when an image, video, or background image needs to
+   respond to its container without the full .media-frame wrapper.
+
+   Migrated from the legacy responsive system.
+   ========================================================================== */
+.responsive-img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+.responsive-video {
+	width: 100%;
+	height: auto;
+	border-radius: var(--radius-card);
+}
+/* --------------------------------------------------------------------------
+   Responsive background images
+   --------------------------------------------------------------------------
+   `background-attachment: fixed` is disabled on mobile because iOS Safari
+   does not support it and Android has known jank with it.
+   -------------------------------------------------------------------------- */
+.bg-image-responsive {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+@media (max-width: 48rem) {
+	.bg-image-mobile {
+		background-attachment: scroll;
+	}
+}
+/* --------------------------------------------------------------------------
+   Aspect ratio shorthand aliases
+   --------------------------------------------------------------------------
+   Legacy names. The canonical BEM versions live in layout.css
+   (.aspect-video, .aspect-square, .aspect-landscape).
+   -------------------------------------------------------------------------- */
+.aspect-ratio-16-9 {
+	aspect-ratio: 16 / 9;
+}
+.aspect-ratio-1-1 {
+	aspect-ratio: 1 / 1;
+}
+.aspect-ratio-4-3 {
+	aspect-ratio: 4 / 3;
+}
+/* ==========================================================================
+   28. RESPONSIVE TEXT ALIGNMENT
+   ==========================================================================
+   Scoped alignment helpers so a block can be centered on mobile but
+   left-aligned on desktop without a bespoke media query in the component.
+
+   Migrated from the legacy responsive system.
+   ========================================================================== */
+.text-center-mobile {
+	text-align: center;
+}
+.text-left-mobile {
+	text-align: left;
+}
+.text-right-mobile {
+	text-align: right;
+}
+@media (min-width: 48rem) {
+	.text-center-tablet {
+		text-align: center;
+	}
+	.text-left-tablet {
+		text-align: left;
+	}
+	.text-right-tablet {
+		text-align: right;
+	}
+}
+@media (min-width: 64rem) {
+	.text-center-desktop {
+		text-align: center;
+	}
+	.text-left-desktop {
+		text-align: left;
+	}
+	.text-right-desktop {
+		text-align: right;
+	}
+}
+/* ==========================================================================
+   29. PRINT UTILITIES
+   ==========================================================================
+   Lightweight classes for elements that should behave differently when
+   the page is printed or saved as PDF.
+
+   Base print rules live in global.css.
+   Migrated from the legacy responsive system.
+   ========================================================================== */
+.print-only {
+	display: none;
+}
+@media print {
+	.no-print {
+		display: none !important;
+	}
+	.print-only {
+		display: block !important;
+	}
+}
+/* ==========================================================================
+   30. REDUCED-DATA OPTIMIZATION
+   ==========================================================================
+   When a user has requested reduced data usage (common on metered mobile
+   connections), disable heavy decorative backgrounds and animations.
+
+   Browser support: Chromium-based browsers on Android. Silently ignored
+   elsewhere.
+
+   Migrated from the legacy responsive system.
+   ========================================================================== */
+@media (prefers-reduced-data: reduce) {
+	.data-optimized {
+		background-image: none !important;
+		animation: none !important;
+	}
+	[data-heavy-bg] {
+		background-image: none !important;
 	}
 }
 /* ==========================================================================

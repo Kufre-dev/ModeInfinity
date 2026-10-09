@@ -171,6 +171,36 @@
 	--color-info: #155eef;
 	--color-info-soft: #eff8ff;
 	/* =========================================================================
+     01E. SECTION BACKGROUND TIERS
+     =========================================================================
+     Used to alternate backgrounds between adjacent sections so adjacent
+     content blocks read as distinct without borders or extra spacing.
+
+     Light values mirror: white → near-white → subtle gray
+     Dark values mirror: deep black → soft black → raised black
+     ========================================================================= */
+	--section-primary: var(--color-white);
+	--section-secondary: var(--color-neutral-50);
+	--section-tertiary: var(--color-neutral-100);
+	/* =========================================================================
+     01F. NAVIGATION TOKENS
+     =========================================================================
+     Header-specific colours so the header can be themed independently of
+     body surfaces. Also allows the mobile drawer to differ from the
+     desktop header.
+
+     Consumed by: components.css (.site-header, .site-header.is-scrolled,
+     .mobile-navigation, .mobile-navigation__backdrop).
+     ========================================================================= */
+	--nav-bg: rgb(255 255 255 / 0.85);
+	--nav-bg-scrolled: rgb(255 255 255 / 0.98);
+	--nav-border: rgb(0 0 0 / 0.08);
+	--nav-text: var(--color-text);
+	--nav-text-hover: var(--color-gold-700);
+	--nav-text-active: var(--color-gold-600);
+	--mobile-nav-bg: rgb(255 255 255 / 0.985);
+	--mobile-nav-backdrop: rgb(0 0 0 / 0.72);
+	/* =========================================================================
      02. TYPOGRAPHY
      ========================================================================= */
 	/* -------------------------------------------------------------------------
@@ -180,30 +210,26 @@
    * Actual @font-face declarations belong in global.css after the final
    * self-hosted font files and licences are confirmed.
    */
-:root {
-  --font-sans:
-    "Plus Jakarta Sans",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    sans-serif;
+	--font-sans:
+		"Plus Jakarta Sans",
+		"Helvetica Neue",
+		Helvetica,
+		Arial,
+		sans-serif;
 
-  --font-display:
-    "Bodoni Moda",
-    "Didot",
-    "Bodoni 72",
-    "Times New Roman",
-    serif;
+	--font-display:
+		"Bodoni Moda",
+		"Didot",
+		"Bodoni 72",
+		"Times New Roman",
+		serif;
 
-  --font-mono:
-    "IBM Plex Mono",
-    "SFMono-Regular",
-    Consolas,
-    "Liberation Mono",
-    monospace;
-
-  /* keep all your other existing tokens exactly as they are */
-}
+	--font-mono:
+		"IBM Plex Mono",
+		"SFMono-Regular",
+		Consolas,
+		"Liberation Mono",
+		monospace;
 	/* -------------------------------------------------------------------------
      Fluid type scale
      ------------------------------------------------------------------------- */
@@ -255,12 +281,12 @@
 	/* -------------------------------------------------------------------------
      Line heights
      ------------------------------------------------------------------------- */
---leading-none: 1;
---leading-tight: 1.1;
---leading-snug: 1.25;
---leading-normal: 1.5;
---leading-relaxed: 1.7;
---leading-loose: 1.85;
+	--leading-none: 1;
+	--leading-tight: 1.1;
+	--leading-snug: 1.25;
+	--leading-normal: 1.5;
+	--leading-relaxed: 1.7;
+	--leading-loose: 1.85;
 	/* -------------------------------------------------------------------------
      Letter spacing
      ------------------------------------------------------------------------- */
@@ -270,17 +296,15 @@
 	--tracking-wide: 0.04em;
 	--tracking-wider: 0.08em;
 	--tracking-widest: 0.14em;
-
 	/* -------------------------------------------------------------------------
-   Text rhythm
-   ------------------------------------------------------------------------- */
---text-space-xs: 0.375rem;
---text-space-sm: 0.625rem;
---text-space-md: 1rem;
---text-space-lg: 1.5rem;
---text-space-xl: 2rem;
---text-space-2xl: 3rem;
-
+     Text rhythm
+     ------------------------------------------------------------------------- */
+	--text-space-xs: 0.375rem;
+	--text-space-sm: 0.625rem;
+	--text-space-md: 1rem;
+	--text-space-lg: 1.5rem;
+	--text-space-xl: 2rem;
+	--text-space-2xl: 3rem;
 	/* =========================================================================
      03. TYPOGRAPHY ROLES
      ========================================================================= */
@@ -421,6 +445,26 @@
 			8vw,
 			8rem);
 	/* =========================================================================
+     04B. SEMANTIC PADDING & MARGIN
+     =========================================================================
+     Intent-named aliases so components don't have to decide which
+     primitive spacing value to use for common cases.
+
+     Migrated from the legacy design system.
+     ========================================================================= */
+	/* Padding */
+	--padding-card: var(--space-6);
+	--padding-card-lg: var(--space-8);
+	--padding-button: var(--space-3) var(--space-5);
+	--padding-input: var(--space-3) var(--space-4);
+	--padding-section: var(--section-space-md);
+	--padding-container: var(--container-padding-inline);
+	/* Margin rhythm */
+	--margin-block-gap: var(--space-4);
+	--margin-inline-gap: var(--space-3);
+	--margin-section: var(--section-space-md);
+	--margin-element-gap: var(--space-4);
+	/* =========================================================================
      05. SECTION SPACING
      ========================================================================= */
 	--section-space-sm: clamp(3rem,
@@ -491,6 +535,19 @@
 	--button-padding-inline-md: 1.5rem;
 	--button-padding-inline-lg: 2rem;
 	/* =========================================================================
+     08B. TOUCH OPTIMIZATION
+     =========================================================================
+     Named tokens for touch behaviour. `--touch-target` is the WCAG-recommended
+     minimum interactive size and applies to non-form controls (nav toggles,
+     icon buttons) as well as form inputs.
+
+     Migrated from the legacy design system.
+     ========================================================================= */
+	--touch-target: 3rem;
+	--touch-gap: 0.75rem;
+	--tap-highlight: transparent;
+	--touch-action-default: manipulation;
+	/* =========================================================================
      09. LOGO
      ========================================================================= */
 	--logo-width: clamp(7rem,
@@ -512,6 +569,21 @@
 	--radius-lg: 0.75rem;
 	--radius-xl: 1rem;
 	--radius-full: 9999px;
+	/* =========================================================================
+     10B. SEMANTIC RADII
+     =========================================================================
+     Intent-named radii so a card, button, or input has a defined shape
+     even if the primitive scale changes.
+
+     Migrated from the legacy design system.
+     ========================================================================= */
+	--radius-pill: var(--radius-full);
+	--radius-button: var(--radius-md);
+	--radius-card: var(--radius-lg);
+	--radius-input: var(--radius-sm);
+	--radius-avatar: var(--radius-full);
+	--radius-form: var(--radius-sm);
+	--radius-panel: var(--radius-lg);
 	/* =========================================================================
      11. BORDERS
      ========================================================================= */
@@ -546,6 +618,17 @@
    */
 	--ease-emphasized:
 		cubic-bezier(0.16, 1, 0.3, 1);
+	/* =========================================================================
+     13B. MOTION — OVERSHOOT EASING
+     =========================================================================
+     Used for small micro-interactions where a slight overshoot feels
+     right: cart badge bump, button pop, toast entrance.
+
+     Not appropriate for drawers, modals, or any viewport-bound UI.
+
+     Migrated from the legacy design system.
+     ========================================================================= */
+	--ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 	/* =========================================================================
      14. MOTION — DURATIONS
      ========================================================================= */
@@ -582,6 +665,15 @@
 	--focus-ring-color: var(--color-gold-700);
 	/* Compatibility alias. */
 	--color-focus: var(--focus-ring-color);
+	/*
+   * Shorthand — equivalent to writing:
+   *   outline: var(--focus-ring-width) solid var(--focus-ring-color);
+   *
+   * Use the split tokens when you need to override just one part.
+   *
+   * Migrated from the legacy design system.
+   */
+	--focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
 	/* =========================================================================
      18. SCROLL / ANCHOR POSITIONING
      ========================================================================= */
@@ -591,6 +683,14 @@
    * Ensures anchored sections do not disappear beneath the sticky header.
    */
 	--scroll-offset: calc(var(--header-height) + var(--space-4));
+	/*
+   * Compatibility aliases — use these when a specific scroll-related
+   * property needs the offset value.
+   *
+   * Migrated from the legacy design system.
+   */
+	--scroll-padding-top: var(--scroll-offset);
+	--scroll-margin-top: var(--scroll-offset);
 	/* =========================================================================
      19. SAFE AREA
      ========================================================================= */
@@ -740,10 +840,28 @@
 		--color-info: #93c5fd;
 		--color-info-soft: #0b1d35;
 		/* -----------------------------------------------------------------------
+       Section tiers
+       ----------------------------------------------------------------------- */
+		--section-primary: var(--color-black-deep);
+		--section-secondary: var(--color-black-soft);
+		--section-tertiary: #1a1a1a;
+		/* -----------------------------------------------------------------------
+       Navigation
+       ----------------------------------------------------------------------- */
+		--nav-bg: rgb(8 8 8 / 0.85);
+		--nav-bg-scrolled: rgb(8 8 8 / 0.98);
+		--nav-border: rgb(255 255 255 / 0.08);
+		--nav-text: var(--color-text);
+		--nav-text-hover: var(--color-gold-300);
+		--nav-text-active: var(--color-gold-400);
+		--mobile-nav-bg: rgb(10 10 10 / 0.985);
+		--mobile-nav-backdrop: rgb(0 0 0 / 0.72);
+		/* -----------------------------------------------------------------------
        Focus
        ----------------------------------------------------------------------- */
 		--focus-ring-color: var(--color-gold-300);
 		--color-focus: var(--focus-ring-color);
+		--focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
 		/* -----------------------------------------------------------------------
        Browser colour rendering
        ----------------------------------------------------------------------- */
@@ -798,8 +916,20 @@
 	--color-error-soft: #fef3f2;
 	--color-info: #155eef;
 	--color-info-soft: #eff8ff;
+	--section-primary: var(--color-white);
+	--section-secondary: var(--color-neutral-50);
+	--section-tertiary: var(--color-neutral-100);
+	--nav-bg: rgb(255 255 255 / 0.85);
+	--nav-bg-scrolled: rgb(255 255 255 / 0.98);
+	--nav-border: rgb(0 0 0 / 0.08);
+	--nav-text: var(--color-text);
+	--nav-text-hover: var(--color-gold-700);
+	--nav-text-active: var(--color-gold-600);
+	--mobile-nav-bg: rgb(255 255 255 / 0.985);
+	--mobile-nav-backdrop: rgb(0 0 0 / 0.72);
 	--focus-ring-color: var(--color-gold-700);
 	--color-focus: var(--focus-ring-color);
+	--focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
 	color-scheme: light;
 }
 /* ==========================================================================
@@ -847,8 +977,20 @@
 	--color-error-soft: #2b1111;
 	--color-info: #93c5fd;
 	--color-info-soft: #0b1d35;
+	--section-primary: var(--color-black-deep);
+	--section-secondary: var(--color-black-soft);
+	--section-tertiary: #1a1a1a;
+	--nav-bg: rgb(8 8 8 / 0.85);
+	--nav-bg-scrolled: rgb(8 8 8 / 0.98);
+	--nav-border: rgb(255 255 255 / 0.08);
+	--nav-text: var(--color-text);
+	--nav-text-hover: var(--color-gold-300);
+	--nav-text-active: var(--color-gold-400);
+	--mobile-nav-bg: rgb(10 10 10 / 0.985);
+	--mobile-nav-backdrop: rgb(0 0 0 / 0.72);
 	--focus-ring-color: var(--color-gold-300);
 	--color-focus: var(--focus-ring-color);
+	--focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
 	color-scheme: dark;
 }
 /* ==========================================================================
@@ -908,6 +1050,18 @@
 		--color-accent-on-dark: Highlight;
 		--focus-ring-color: Highlight;
 		--color-focus: Highlight;
+		--focus-ring: var(--focus-ring-width) solid Highlight;
+		--section-primary: Canvas;
+		--section-secondary: Canvas;
+		--section-tertiary: Canvas;
+		--nav-bg: Canvas;
+		--nav-bg-scrolled: Canvas;
+		--nav-border: CanvasText;
+		--nav-text: CanvasText;
+		--nav-text-hover: Highlight;
+		--nav-text-active: Highlight;
+		--mobile-nav-bg: Canvas;
+		--mobile-nav-backdrop: Canvas;
 		color-scheme: light dark;
 	}
 }

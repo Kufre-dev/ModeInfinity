@@ -1,6 +1,7 @@
 /* ==========================================================================
    ModeInfinity — Global Foundation
    File: styles/global.css
+
    Scope:
    - Global reset
    - Base typography
@@ -17,6 +18,27 @@
    - components.css → reusable UI components
    - responsive.css → breakpoint-specific behavior
    - animations.css → motion and transitions
+
+   CHANGES (merge from legacy system + token migration)
+   ----------------------------------------------------
+   1. Added :focus:not(:focus-visible) — suppresses ring for pointer users
+   2. Added touch-action: manipulation on buttons — removes 300ms tap delay
+   3. Added -webkit-tap-highlight-color from --tap-highlight token
+   4. Added -webkit-overflow-scrolling: touch on body for iOS momentum
+   5. Added text-shadow: none on ::selection and ::-moz-selection
+   6. Added @media (prefers-contrast: high) block strengthening borders
+   7. Migrated undefined tokens to canonical names:
+        --font-size-body       → --type-body-size
+        --font-size-h1 … h6    → --type-h1-size … --type-h6-size
+        --font-size-small      → --type-small-size
+        --line-height-body     → --leading-relaxed
+        --line-height-tight    → --leading-tight
+        --letter-spacing-tight → --tracking-tight
+        --border-thin          → --border-width-thin
+        --border-medium        → --border-width-medium
+        --color-heading        → --color-text-strong
+        --color-heading-on-dark → #ffffff
+        --color-text-secondary → --color-text-muted
    ========================================================================== */
 /* ==========================================================================
    1. DOCUMENT RESET
@@ -41,12 +63,14 @@ body {
 	background: var(--color-background);
 	color: var(--color-text);
 	font-family: var(--font-sans);
-	font-size: var(--font-size-body);
+	font-size: var(--type-body-size);
 	font-weight: var(--font-weight-regular);
-	line-height: var(--line-height-body);
+	line-height: var(--leading-relaxed);
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	-webkit-overflow-scrolling: touch;
+	-webkit-tap-highlight-color: var(--tap-highlight);
 	overflow-wrap: break-word;
 }
 main {
@@ -64,6 +88,15 @@ main,
 nav,
 section {
 	display: block;
+}
+/* --------------------------------------------------------------------------
+   Focus suppression for pointer users
+   --------------------------------------------------------------------------
+   Migrated from legacy system.
+   Shows the focus ring only for keyboard navigation, not mouse/touch clicks.
+   -------------------------------------------------------------------------- */
+:focus:not(:focus-visible) {
+	outline: none;
 }
 /* ==========================================================================
    2. MARGINS & TYPOGRAPHY
@@ -86,39 +119,39 @@ h1,
 h2,
 h3,
 h4 {
-	color: var(--color-heading);
+	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-weight: var(--font-weight-semibold);
-	line-height: var(--line-height-tight);
-	letter-spacing: var(--letter-spacing-tight);
+	line-height: var(--leading-tight);
+	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
 }
 h5,
 h6 {
-	color: var(--color-heading);
+	color: var(--color-text-strong);
 	font-family: var(--font-sans);
 	font-weight: var(--font-weight-semibold);
-	line-height: var(--line-height-tight);
-	letter-spacing: var(--letter-spacing-tight);
+	line-height: var(--leading-tight);
+	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
 }
 h1 {
-	font-size: var(--font-size-h1);
+	font-size: var(--type-h1-size);
 }
 h2 {
-	font-size: var(--font-size-h2);
+	font-size: var(--type-h2-size);
 }
 h3 {
-	font-size: var(--font-size-h3);
+	font-size: var(--type-h3-size);
 }
 h4 {
-	font-size: var(--font-size-h4);
+	font-size: var(--type-h4-size);
 }
 h5 {
-	font-size: var(--font-size-h5);
+	font-size: var(--type-h5-size);
 }
 h6 {
-	font-size: var(--font-size-h6);
+	font-size: var(--type-h6-size);
 }
 p {
 	max-width: var(--content-readable);
@@ -128,7 +161,7 @@ b {
 	font-weight: var(--font-weight-semibold);
 }
 small {
-	font-size: var(--font-size-small);
+	font-size: var(--type-small-size);
 }
 sub,
 sup {
@@ -158,7 +191,7 @@ hr {
 	height: 0;
 	margin-block: var(--space-8);
 	border: 0;
-	border-top: var(--border-thin) solid var(--color-border);
+	border-top: var(--border-width-thin) solid var(--color-border);
 }
 /* ==========================================================================
    3. LINKS
@@ -221,6 +254,20 @@ input:disabled,
 select:disabled,
 textarea:disabled {
 	cursor: not-allowed;
+}
+/* --------------------------------------------------------------------------
+   Touch interaction defaults
+   --------------------------------------------------------------------------
+   Migrated from legacy system.
+   `touch-action: manipulation` removes the 300ms double-tap-to-zoom delay
+   on mobile. Applies to every element that can be tapped.
+   -------------------------------------------------------------------------- */
+button,
+[role="button"],
+[role="link"],
+[role="menuitem"],
+[role="tab"] {
+	touch-action: var(--touch-action-default);
 }
 input,
 select,
@@ -300,8 +347,8 @@ nav ol {
 blockquote {
 	margin-inline: 0;
 	padding-inline-start: var(--space-5);
-	border-inline-start: var(--border-medium) solid var(--color-accent);
-	color: var(--color-text-secondary);
+	border-inline-start: var(--border-width-medium) solid var(--color-accent);
+	color: var(--color-text-muted);
 }
 cite {
 	font-style: normal;
@@ -314,7 +361,7 @@ figure {
 }
 figcaption {
 	color: var(--color-text-muted);
-	font-size: var(--font-size-small);
+	font-size: var(--type-small-size);
 }
 /* ==========================================================================
    10. MEDIA
@@ -362,12 +409,12 @@ table {
 th,
 td {
 	padding: var(--space-3) var(--space-4);
-	border-bottom: var(--border-thin) solid var(--color-border);
+	border-bottom: var(--border-width-thin) solid var(--color-border);
 	text-align: start;
 	vertical-align: top;
 }
 th {
-	color: var(--color-heading);
+	color: var(--color-text-strong);
 	font-weight: var(--font-weight-semibold);
 }
 /* ==========================================================================
@@ -391,7 +438,7 @@ code {
 }
 kbd {
 	padding: 0.15em 0.4em;
-	border: var(--border-thin) solid var(--color-border-strong);
+	border: var(--border-width-thin) solid var(--color-border-strong);
 	border-radius: var(--radius-sm);
 	background: var(--color-surface);
 	box-shadow: var(--shadow-xs);
@@ -400,7 +447,7 @@ pre {
 	max-width: 100%;
 	overflow-x: auto;
 	padding: var(--space-4);
-	border: var(--border-thin) solid var(--color-border);
+	border: var(--border-width-thin) solid var(--color-border);
 	border-radius: var(--radius-md);
 	background: var(--color-surface-muted);
 	color: var(--color-text);
@@ -427,6 +474,12 @@ summary::marker {
 ::selection {
 	background: var(--color-accent);
 	color: var(--color-black);
+	text-shadow: none;
+}
+::-moz-selection {
+	background: var(--color-accent);
+	color: var(--color-black);
+	text-shadow: none;
 }
 /* ==========================================================================
    15. ACCESSIBILITY UTILITIES
@@ -454,10 +507,10 @@ summary::marker {
 	justify-content: center;
 	min-height: var(--control-height-md);
 	padding: var(--space-2) var(--space-4);
-	border: var(--border-thin) solid var(--color-border-strong);
+	border: var(--border-width-thin) solid var(--color-border-strong);
 	border-radius: var(--radius-sm);
 	background: var(--color-surface);
-	color: var(--color-heading);
+	color: var(--color-text-strong);
 	font-weight: var(--font-weight-semibold);
 	text-decoration: none;
 	transform: translateY(-200%);
@@ -518,6 +571,29 @@ summary::marker {
 	th,
 	td {
 		border-bottom-width: 2px;
+	}
+}
+/* --------------------------------------------------------------------------
+   High contrast — additional strengthening
+   --------------------------------------------------------------------------
+   Migrated from legacy system.
+   When the user requests the highest contrast, we strengthen borders and
+   add a subtle text shadow to help glyph edges stay crisp against
+   whatever surface the element sits on.
+   -------------------------------------------------------------------------- */
+@media (prefers-contrast: high) {
+	:root {
+		--color-border: var(--color-neutral-400);
+	}
+	* {
+		text-shadow: 0 0 0.5px currentColor;
+	}
+	button,
+	input,
+	select,
+	textarea,
+	.btn {
+		border: var(--border-width-medium) solid currentColor;
 	}
 }
 @media (forced-colors: active) {

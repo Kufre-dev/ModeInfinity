@@ -30,7 +30,7 @@
 	align-items: center;
 	justify-content: center;
 	min-height: var(--control-height-md);
-	/* padding-inline: var(--button-padding-inline-md); */
+	padding-inline: var(--button-padding-inline-md);
 	border: var(--border-width-thin) solid transparent;
 	border-radius: var(--radius-sm);
 	font-family: var(--font-sans);
@@ -181,7 +181,7 @@ a.btn {
    ========================================================= */
 .btn--large {
 	min-height: var(--control-height-lg);
-	/* padding-inline: var(--button-padding-inline-lg); */
+	padding-inline: var(--button-padding-inline-lg);
 }
 /* =========================================================
    BLOCK
@@ -1240,7 +1240,6 @@ a.btn {
 
 
 
-
 /* =====================================================================
    MODEINFINITY HOME HERO
    ================================================================== */
@@ -1276,7 +1275,7 @@ a.btn {
 	min-height: 100svh;
 	min-height: 100dvh;
 	padding-block:
-		calc(var(--header-height-compact) + var(--space-4)) var(--space-12);
+		calc(var(--header-height-compact, 3.5rem) + var(--space-4)) var(--space-12);
 	overflow: hidden;
 	background: var(--hero-black);
 	color: var(--hero-white);
@@ -1288,10 +1287,6 @@ a.btn {
 	width: 100%;
 	max-width: var(--container-max);
 	margin-inline: auto;
-	/*
-     * Use the actual design-system token.
-     * This prevents mobile content from touching the viewport edges.
-     */
 	padding-inline: var(--container-padding-inline);
 	flex-direction: column;
 	align-items: center;
@@ -1460,10 +1455,10 @@ a.btn {
 	gap: var(--space-3);
 	margin: 0 0 var(--space-4);
 	color: var(--hero-gold);
-	font-size: var(--font-size-xs);
+	font-size: var(--text-xs);
 	font-weight: var(--font-weight-bold);
-	letter-spacing: var(--letter-spacing-caps);
-	line-height: var(--line-height-tight);
+	letter-spacing: var(--tracking-widest);
+	line-height: var(--leading-tight);
 	text-transform: uppercase;
 	animation:
 		modeinfinity-fade-up var(--duration-slow) var(--ease-emphasized) both;
@@ -1495,17 +1490,12 @@ a.btn {
 	gap: 0 0.3ch;
 	margin: 0;
 	color: var(--hero-white);
-	font-family: var(--font-family-display);
-	/*
-     * Deliberately restrained.
-     * The title should lead the hero without swallowing
-     * the commercial proposition below it.
-     */
+	font-family: var(--font-display);
 	font-size: clamp(2rem,
 			8vw,
 			3.5rem);
 	font-weight: var(--font-weight-medium);
-	letter-spacing: var(--letter-spacing-tight);
+	letter-spacing: var(--tracking-tight);
 	line-height: 0.98;
 	animation-delay: 240ms;
 }
@@ -1520,15 +1510,11 @@ a.btn {
    ========================================================================== */
 .home-hero__description {
 	width: 100%;
-	/*
-     * Keep the readable measure independent from
-     * the viewport width.
-     */
 	max-width: 60ch;
 	margin: var(--space-5) 0 0;
 	color: var(--hero-on-dark-secondary);
-	font-family: var(--font-family-sans);
-	font-size: var(--font-size-md);
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
 	font-weight: var(--font-weight-regular);
 	line-height: 1.65;
 	text-align: inherit;
@@ -1545,7 +1531,7 @@ a.btn {
 .home-hero__actions {
 	width: 100%;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: stretch;
 	gap: var(--space-3);
 	margin-top: var(--space-6);
@@ -1569,7 +1555,6 @@ a.btn {
 /* ==========================================================================
    DESKTOP META / SIDE LABEL / SCROLL
    ========================================================================== */
-.home-hero__meta,
 .home-hero__side-label {
 	display: none;
 }
@@ -1625,9 +1610,6 @@ a.btn {
 	.home-hero__title {
 		justify-content: flex-start;
 		flex-wrap: wrap;
-		/*
-         * Tablet title.
-         */
 		font-size: clamp(2.75rem,
 				5vw,
 				4rem);
@@ -1648,46 +1630,8 @@ a.btn {
 	.home-hero__actions .btn {
 		width: auto;
 	}
-	/*
-     * META:
-     * Move to the right side instead of center.
-     */
-	.home-hero__meta {
-		position: absolute;
-		/* right:
-            max(
-                var(--container-padding-inline),
-                calc(
-                    (100vw - var(--container-max)) / 2
-                )
-            ); */
-		right:
-			0;
-		left:
-			0;
-		bottom: var(--space-6);
-		z-index: 6;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: var(--space-3);
-		color: var(--hero-on-dark-muted);
-		font-size: var(--font-size-2xs);
-		font-weight: var(--font-weight-semibold);
-		letter-spacing: var(--letter-spacing-wider);
-		line-height: 1;
-		text-transform: uppercase;
-	}
-	.home-hero__meta-divider {
-		display: block;
-		width: 2.5rem;
-		height: 1px;
-		background: var(--hero-hairline);
-	}
-	/*
-     * SCROLL:
-     * Center horizontally.
-     */
+
+
 	.home-hero__scroll {
 		left: 50%;
 		bottom: var(--space-6);
@@ -1704,7 +1648,7 @@ a.btn {
 @media (min-width: 48rem) and (max-width: 63.9375rem) {
 	.home-hero__description {
 		max-width: 54ch;
-		font-size: var(--font-size-base);
+		font-size: var(--text-base);
 	}
 	.home-hero__visual-frame {
 		--hero-visual-size:
@@ -1732,13 +1676,6 @@ a.btn {
 				27vw,
 				390px);
 	}
-	/*
-     * DESKTOP TITLE
-     *
-     * Reduced from the previous 4.5rem–7.5rem range.
-     * This keeps the title premium without overpowering
-     * the description.
-     */
 	.home-hero__title {
 		flex-wrap: nowrap;
 		white-space: nowrap;
@@ -1747,9 +1684,6 @@ a.btn {
 				5.25rem);
 		line-height: 0.96;
 	}
-	/*
-     * DESKTOP DESCRIPTION
-     */
 	.home-hero__description {
 		width: min(100%, 42rem);
 		max-width: 42rem;
@@ -1776,9 +1710,9 @@ a.btn {
 		align-items: center;
 		gap: var(--space-4);
 		color: var(--hero-on-dark-faint);
-		font-size: var(--font-size-2xs);
+		font-size: 0.6875rem;
 		font-weight: var(--font-weight-semibold);
-		letter-spacing: var(--letter-spacing-caps);
+		letter-spacing: var(--tracking-widest);
 		line-height: 1;
 		text-transform: uppercase;
 		white-space: nowrap;
@@ -1832,10 +1766,6 @@ a.btn {
 	.home-hero__eyebrow {
 		margin-bottom: var(--space-3);
 	}
-	/*
-     * Do NOT return to the old 6.25rem title.
-     * Keep the hierarchy consistent on short screens.
-     */
 	.home-hero__title {
 		font-size: clamp(3.5rem,
 				4.8vw,
@@ -1854,7 +1784,7 @@ a.btn {
 	.home-hero__actions {
 		margin-top: var(--space-6);
 	}
-	.home-hero__meta,
+
 	.home-hero__scroll {
 		bottom: var(--space-4);
 	}
@@ -1881,11 +1811,6 @@ a.btn {
 			max(var(--space-6),
 				calc((100vw - var(--container-wide)) / 2));
 	}
-	.home-hero__meta {
-		right:
-			max(var(--container-padding-inline),
-				calc((100vw - var(--container-wide)) / 2));
-	}
 }
 /* ==========================================================================
    VERY SMALL MOBILE
@@ -1893,14 +1818,10 @@ a.btn {
 @media (max-width: 23.375rem) {
 	.home-hero {
 		padding-block:
-			calc(var(--header-height-compact) + var(--space-3)) var(--space-8);
+			calc(var(--header-height-compact, 3.5rem) + var(--space-3)) var(--space-8);
 	}
 	.home-hero__inner {
 		gap: var(--space-6);
-		/*
-         * Extra protection against edge-touching
-         * on very narrow devices.
-         */
 		padding-inline:
 			max(var(--space-4),
 				var(--container-padding-inline));
@@ -1911,7 +1832,7 @@ a.btn {
 				2.4rem);
 	}
 	.home-hero__description {
-		font-size: var(--font-size-sm);
+		font-size: var(--text-sm);
 		line-height: 1.65;
 	}
 	.home-hero__scroll {
@@ -1931,7 +1852,7 @@ a.btn {
 	.home-hero__description {
 		width: 100%;
 		max-width: 52ch;
-		font-size: var(--font-size-md);
+		font-size: var(--text-base);
 		line-height: 1.65;
 		text-wrap: wrap;
 	}
@@ -1943,7 +1864,7 @@ a.btn {
 	.home-hero {
 		padding-block: var(--space-4);
 		padding-top:
-			calc(var(--header-height-compact) + var(--space-3));
+			calc(var(--header-height-compact, 3.5rem) + var(--space-3));
 	}
 	.home-hero__inner {
 		flex-direction: row;
@@ -1999,7 +1920,7 @@ a.btn {
 @media (max-width: 63.9375rem) and (max-height: 37.5rem) {
 	.home-hero {
 		padding-top:
-			calc(var(--header-height-compact) + var(--space-3));
+			calc(var(--header-height-compact, 3.5rem) + var(--space-3));
 		padding-bottom: var(--space-8);
 	}
 	.home-hero__inner {
@@ -2075,7 +1996,6 @@ a.btn {
 		border: 1px solid CanvasText;
 	}
 }
-
 
 
 
@@ -2425,641 +2345,1369 @@ a.btn {
 
 
 
+/* ==========================================================================
+   MODEINFINITY — HOME ACADEMY
+   File: styles/home-academy.css
+
+   Matches the current academy markup (semantic version):
+
+     section.section.section--surface.home-academy
+       .container
+         header.home-academy__header
+           .home-academy__heading
+             .eyebrow
+             .home-academy__title (with em)
+           .home-academy__intro
+             .home-academy__description
+         section.home-academy__programmes       (sr-only h3 label)
+           .home-academy__pillars
+             article.home-academy__pillar × 3
+         section.home-academy__benefits-wrap    (sr-only h3 label)
+           ul.home-academy__benefits.stagger
+             li.home-academy__benefit × 4
+         p.home-academy__intake
+         footer.home-academy__footer
+         .home-academy__cta
+
+   Load order:
+     variables.css → global.css → layout.css → components.css
+     → home-academy.css → animations.css → responsive.css
+
+   Uses only tokens that exist in variables.css.
+   Every selector is namespaced under .home-academy.
+   ========================================================================== */
 
 
+/* ==========================================================================
+   1. SECTION + CONTAINER
+   ========================================================================== */
 
-/* =========================================================
-   HOME ACADEMY
-   Responsive / Height-Aware Version
-   ========================================================= */
-.home-academy,
-.home-academy__pillar {
+.home-academy {
 	position: relative;
 	isolation: isolate;
-	overflow: hidden;
+	overflow: clip;
+	background: var(--color-background);
 }
-/* ---------------------------------------------------------
-   HEADER
-   --------------------------------------------------------- */
+
+.home-academy.section--surface {
+	background: var(--color-surface);
+}
+
+/* Thin gold hairline at the top of the section */
+.home-academy::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	z-index: 1;
+
+	width: clamp(4rem, 12vw, 8rem);
+	height: 1px;
+
+	background: linear-gradient(
+		90deg,
+		transparent 0,
+		var(--color-gold-400) 50%,
+		transparent 100%
+	);
+
+	opacity: 0.55;
+	pointer-events: none;
+	transform: translateX(-50%);
+}
+
+.home-academy > .container {
+	width: min(100% - (var(--container-padding-inline) * 2), var(--container-max));
+	margin-inline: auto;
+}
+
+
+/* ==========================================================================
+   2. HEADER (introduction)
+   ========================================================================== */
+
 .home-academy__header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: clamp(var(--space-6), 3vw, var(--space-8));
+
+	gap: clamp(1.5rem, 3vw, 2rem);
+
 	width: 100%;
-	max-width: var(--content-wide, 1200px);
+	max-width: 60rem;
 	margin-inline: auto;
-	padding-bottom: clamp(3rem, 6vw, 6rem);
-	border-bottom: var(--border-width-thin) solid var(--color-border);
+
 	text-align: center;
 }
+
 .home-academy__heading,
 .home-academy__intro {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
 	width: 100%;
 	min-width: 0;
 }
+
 .home-academy__heading .eyebrow {
 	margin: 0 0 var(--space-5);
 }
+
+
+/* --------------------------------------------------------------------------
+   Title
+   -------------------------------------------------------------------------- */
+
 .home-academy__title {
 	width: 100%;
-	max-width: none;
+	max-width: 22ch;
 	margin: 0;
+
 	color: var(--color-text);
 	font-family: var(--font-display);
-	font-size: clamp(2.75rem, 5vw, 4.5rem);
-	font-weight: var(--weight-medium);
-	line-height: 1.15;
+	font-size: clamp(2.2rem, 5vw, 4rem);
+	font-weight: var(--font-weight-medium);
+	line-height: 1.08;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
 }
+
+.home-academy__title em {
+	color: var(--color-accent-text);
+	font-style: italic;
+	letter-spacing: -0.01em;
+}
+
+
+/* --------------------------------------------------------------------------
+   Description
+   -------------------------------------------------------------------------- */
+
 .home-academy__description {
+	width: min(100%, 62ch);
 	margin: 0 auto;
-	color: var(--color-text-secondary);
-	font-size: var(--text-lg);
-	line-height: var(--line-relaxed);
+
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
+	line-height: var(--leading-relaxed);
 	text-align: center;
 	text-wrap: pretty;
 }
-.home-academy__cta {
-	display: inline-flex;
-	align-items: center;
-	align-self: center;
-	gap: var(--space-2);
-	margin-top: clamp(1.75rem, 3vw, 2.5rem);
-	color: var(--color-primary);
+
+
+/* ==========================================================================
+   3. PROGRAMMES WRAPPER
+   ==========================================================================
+   Semantic wrapper for the 3 pathways. Contains a visually-hidden h3
+   and the pillars grid.
+   ========================================================================== */
+
+.home-academy__programmes {
+	margin: 0;
+	padding: 0;
 }
-.home-academy__cta svg {
-	width: var(--icon-sm);
-	height: var(--icon-sm);
-	flex: 0 0 auto;
-	transition: transform var(--transition-fast);
-}
-.home-academy__cta:focus-visible svg,
-.home-academy__cta:hover svg {
-	transform: translateX(5px);
-}
-.home-academy__cta:focus-visible {
-	outline: 2px solid var(--color-primary);
-	outline-offset: 4px;
-	border-radius: var(--radius-sm);
-}
-/* ---------------------------------------------------------
-   PILLARS
-   --------------------------------------------------------- */
+
+
+/* ==========================================================================
+   4. PILLARS (programme cards)
+   ========================================================================== */
+
 .home-academy__pillars {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: clamp(.75rem, 1.5vw, 1.5rem);
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(0.75rem, 1.5vw, 1.5rem);
+
 	width: 100%;
-	max-width: 1440px;
-	margin-inline: auto;
+	margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+	padding: 0;
+	list-style: none;
 }
+
+
+/* --------------------------------------------------------------------------
+   Pillar card
+   -------------------------------------------------------------------------- */
+
 .home-academy__pillar {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+
 	display: flex;
 	flex-direction: column;
+
 	min-width: 0;
-	/*
-    Fluid height instead of a large fixed minimum.
-    This keeps the cards substantial without making them
-    unnecessarily tall on short desktop viewports.
-  */
-	min-height: clamp(480px, 39vw, 640px);
-	background: var(--color-surface-muted);
+	min-height: clamp(460px, 110vw, 580px);
+
+	background: var(--color-black-soft);
+	border-radius: var(--radius-md);
+
 	transition:
 		transform var(--transition-base),
 		box-shadow var(--transition-base);
 }
+
+/* Coloured bar that draws across the top on hover */
 .home-academy__pillar::before {
 	content: "";
 	position: absolute;
 	inset: 0 0 auto 0;
 	z-index: 3;
+
 	height: 3px;
-	background: var(--color-primary);
+	background: var(--color-gold-400);
+
 	transform: scaleX(0);
 	transform-origin: left center;
 	transition: transform var(--transition-base);
 }
-.home-academy__pillar:focus-within,
-.home-academy__pillar:hover {
-	transform: translateY(-4px);
-	box-shadow: var(--shadow-lg);
+
+.home-academy__pillar--professional::before {
+	background: var(--color-gold-300);
 }
-.home-academy__pillar:focus-within::before,
-.home-academy__pillar:hover::before {
-	transform: scaleX(1);
+
+.home-academy__pillar--advanced::before {
+	background: var(--color-gold-500);
 }
-/* ---------------------------------------------------------
-   PILLAR IMAGE
-   --------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------
+   Background image
+   -------------------------------------------------------------------------- */
+
 .home-academy__pillar-background {
 	position: absolute;
 	inset: 0;
 	z-index: -2;
 	overflow: hidden;
 }
+
 .home-academy__pillar-background picture {
 	display: block;
 	width: 100%;
 	height: 100%;
 }
+
 .home-academy__pillar-background img {
 	display: block;
 	width: 100%;
 	height: 100%;
+
 	object-fit: cover;
 	object-position: center;
+
 	transform: scale(1.015);
-	transition: transform var(--transition-slow);
+	transition:
+		transform var(--transition-slow),
+		filter var(--transition-slow);
 }
+
+
+/* --------------------------------------------------------------------------
+   Overlay
+   -------------------------------------------------------------------------- */
+
 .home-academy__pillar-overlay {
 	position: absolute;
 	inset: 0;
 	z-index: -1;
 	pointer-events: none;
-	background:
-		linear-gradient(180deg,
-			rgb(0 0 0 / 48%) 0%,
-			rgb(0 0 0 / 56%) 25%,
-			rgb(0 0 0 / 68%) 52%,
-			rgb(0 0 0 / 80%) 76%,
-			rgb(0 0 0 / 88%) 100%);
+
+	background: linear-gradient(
+		180deg,
+		rgb(0 0 0 / 42%) 0,
+		rgb(0 0 0 / 52%) 25%,
+		rgb(0 0 0 / 68%) 52%,
+		rgb(0 0 0 / 82%) 76%,
+		rgb(0 0 0 / 92%) 100%
+	);
+
 	transition: background var(--transition-base);
 }
-.home-academy__pillar:focus-within .home-academy__pillar-overlay,
-.home-academy__pillar:hover .home-academy__pillar-overlay {
-	background:
-		linear-gradient(180deg,
-			rgb(0 0 0 / 52%) 0%,
-			rgb(0 0 0 / 60%) 25%,
-			rgb(0 0 0 / 70%) 52%,
-			rgb(0 0 0 / 82%) 76%,
-			rgb(0 0 0 / 90%) 100%);
-}
-.home-academy__pillar:focus-within .home-academy__pillar-background img,
-.home-academy__pillar:hover .home-academy__pillar-background img {
-	transform: scale(1.055);
-}
-/* ---------------------------------------------------------
-   PILLAR CONTENT
-   --------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------
+   Content
+   -------------------------------------------------------------------------- */
+
 .home-academy__pillar-content {
 	display: flex;
 	flex-direction: column;
+
 	width: 100%;
 	height: 100%;
 	min-height: inherit;
-	padding: clamp(1.5rem, 2.5vw, 2.75rem);
-	color: #fff;
+
+	padding: clamp(1.5rem, 3vw, 2.25rem);
+	color: var(--color-white);
 }
+
 .home-academy__pillar-top {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+
+	gap: var(--space-4);
 	width: 100%;
 }
-.home-academy__pillar-duration,
+
 .home-academy__pillar-number {
-	color: rgb(255 255 255 / 92%);
+	color: var(--color-gold-300);
 	font-family: var(--font-mono);
-	font-size: var(--text-xs);
-	font-weight: var(--weight-semibold);
-	line-height: 1.2;
-	letter-spacing: var(--tracking-wider);
+	font-size: 0.7rem;
+	font-weight: var(--font-weight-semibold);
+	line-height: 1;
+	letter-spacing: var(--tracking-widest);
 	text-transform: uppercase;
 }
-.home-academy__pillar-number {
-	color: var(--color-primary);
+
+.home-academy__pillar-duration {
+	display: inline-flex;
+	align-items: center;
+
+	padding: 0.32rem 0.72rem;
+
+	background: rgb(0 0 0 / 42%);
+	border: 1px solid rgb(255 255 255 / 22%);
+	border-radius: 999px;
+
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+
+	color: rgb(255 255 255 / 94%);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	font-weight: var(--font-weight-semibold);
+	line-height: 1;
+	letter-spacing: var(--tracking-widest);
+	text-transform: uppercase;
+	white-space: nowrap;
 }
+
 .home-academy__pillar-main {
+	display: flex;
+	flex-direction: column;
+
 	max-width: 42ch;
 	margin-top: auto;
-	margin-bottom: clamp(1.75rem, 3vw, 3rem);
+	margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
+
 .home-academy__pillar-label {
-	margin: 0 0 var(--space-3);
-	color: rgb(255 255 255 / 78%);
+	display: inline-block;
+	align-self: flex-start;
+
+	margin: 0 0 var(--space-4);
+	padding: 0.3rem 0.68rem;
+
+	background: rgb(217 173 43 / 12%);
+	border: 1px solid rgb(217 173 43 / 35%);
+	border-radius: 4px;
+
+	color: var(--color-gold-300);
 	font-family: var(--font-mono);
-	font-size: var(--text-xs);
-	font-weight: var(--weight-bold);
-	line-height: 1.3;
-	letter-spacing: var(--tracking-wide);
+	font-size: 0.65rem;
+	font-weight: var(--font-weight-semibold);
+	line-height: 1.2;
+	letter-spacing: var(--tracking-widest);
 	text-transform: uppercase;
 }
+
 .home-academy__pillar-title {
-	max-width: 14ch;
+	max-width: 15ch;
 	margin: 0;
-	color: #fff;
+
+	color: var(--color-white);
 	font-family: var(--font-display);
-	font-size: clamp(2rem, 3vw, 3rem);
-	font-weight: var(--weight-medium);
-	line-height: .98;
+	font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+	font-weight: var(--font-weight-medium);
+	line-height: 1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
 }
+
 .home-academy__pillar-description {
 	max-width: 42ch;
-	margin: var(--space-5) 0 0;
-	color: rgb(255 255 255 / 90%);
+	margin: var(--space-4) 0 0;
+
+	color: rgb(255 255 255 / 88%);
+	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	line-height: var(--line-relaxed);
+	line-height: var(--leading-relaxed);
 	text-wrap: pretty;
 }
+
+
+/* --------------------------------------------------------------------------
+   "Explore programme" link
+   -------------------------------------------------------------------------- */
+
 .home-academy__pillar-link {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
 	align-self: flex-start;
-	gap: var(--space-3);
-	padding-top: var(--space-4);
-	border-top: var(--border-width-thin) solid rgb(255 255 255 / 38%);
-	color: #fff;
-	font-size: var(--text-sm);
-	font-weight: var(--weight-medium);
-	line-height: 1.4;
+	gap: var(--space-2);
+
+	padding-top: var(--space-3);
+	padding-bottom: var(--space-2);
+
+	border-top: var(--border-width-thin) solid rgb(255 255 255 / 35%);
+
+	color: var(--color-white);
+	font-family: var(--font-sans);
+	font-size: 0.72rem;
+	font-weight: var(--font-weight-semibold);
+	line-height: 1.2;
+	letter-spacing: var(--tracking-widest);
+	text-transform: uppercase;
 	text-decoration: none;
+
 	transition:
 		color var(--transition-fast),
 		border-color var(--transition-fast);
 }
+
+.home-academy__pillar-link::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	width: 0;
+	height: 1px;
+
+	background: var(--color-gold-300);
+	transition: width var(--transition-base);
+}
+
 .home-academy__pillar-link svg {
-	width: var(--icon-sm);
-	height: var(--icon-sm);
+	width: 1rem;
+	height: 1rem;
 	flex: 0 0 auto;
 	transition: transform var(--transition-fast);
 }
-.home-academy__pillar-link:focus-visible,
-.home-academy__pillar-link:hover {
-	color: var(--color-primary);
-	border-color: var(--color-primary);
-}
-.home-academy__pillar-link:focus-visible svg,
-.home-academy__pillar-link:hover svg {
-	transform: translateX(5px);
-}
+
+.home-academy__pillar-link:hover,
 .home-academy__pillar-link:focus-visible {
-	outline: 2px solid var(--color-primary);
-	outline-offset: 4px;
+	color: var(--color-gold-300);
+	border-color: var(--color-gold-400);
+}
+
+.home-academy__pillar-link:hover::after,
+.home-academy__pillar-link:focus-visible::after {
+	width: 100%;
+}
+
+.home-academy__pillar-link:hover svg,
+.home-academy__pillar-link:focus-visible svg {
+	transform: translateX(4px);
+}
+
+.home-academy__pillar-link:focus-visible {
+	outline: var(--focus-ring-width) solid var(--color-gold-300);
+	outline-offset: var(--focus-ring-offset);
 	border-radius: var(--radius-sm);
 }
-/* ---------------------------------------------------------
-   FOOTER
-   --------------------------------------------------------- */
+
+
+/* ==========================================================================
+   5. BENEFITS WRAPPER
+   ==========================================================================
+   Semantic wrapper for the 4 feature cards. Contains a visually-hidden
+   h3 and the benefits list.
+   ========================================================================== */
+
+.home-academy__benefits-wrap {
+	margin: 0;
+	padding: 0;
+}
+
+
+/* ==========================================================================
+   6. BENEFITS GRID
+   ==========================================================================
+   4 feature cards between the programme pillars and the intake note.
+   Card treatment gives the benefits row enough visual weight to balance
+   the pillar cards above.
+   ========================================================================== */
+
+.home-academy__benefits {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(1rem, 2vw, 1.5rem);
+
+	width: 100%;
+    margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+			padding: 0;
+	list-style: none;
+
+	text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------
+   Benefit card
+   -------------------------------------------------------------------------- */
+
+.home-academy__benefit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	min-width: 0;
+padding: clamp(0.625rem, 1.25vw, 0.75rem);
+	background: var(--color-surface);
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-card);
+
+	transition:
+		transform var(--duration-base) var(--ease-standard),
+		box-shadow var(--duration-base) var(--ease-standard),
+		border-color var(--duration-base) var(--ease-standard);
+}
+
+
+/* --------------------------------------------------------------------------
+   Benefit icon — solid gold gradient circle
+   --------------------------------------------------------------------------
+   Stronger treatment than a tinted circle: the icons become visual
+   anchors that break up the section between the pillar cards and the
+   closing statement.
+   -------------------------------------------------------------------------- */
+
+.home-academy__benefit-icon {
+	display: grid;
+	place-items: center;
+	flex: 0 0 auto;
+
+	width: 3rem;
+	height: 3rem;
+
+	margin: 0 auto var(--space-4);
+
+	color: var(--color-black-soft);
+
+	background: linear-gradient(
+		135deg,
+		var(--color-gold-500) 0%,
+		var(--color-gold-400) 100%
+	);
+
+	border-radius: 50%;
+
+	transition:
+		transform var(--duration-base) var(--ease-standard),
+		box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.home-academy__benefit-icon svg {
+	display: block;
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+
+/* --------------------------------------------------------------------------
+   Benefit title
+   --------------------------------------------------------------------------
+   Sans-serif, semibold, small. Keeps benefit titles visually subordinate
+   to the pillar titles (which use the display font).
+   -------------------------------------------------------------------------- */
+
+.home-academy__benefit-title {
+	margin: 0 0 var(--space-3);
+
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-tight);
+	text-wrap: balance;
+}
+
+
+/* --------------------------------------------------------------------------
+   Benefit text
+   -------------------------------------------------------------------------- */
+
+.home-academy__benefit-text {
+	width: min(100%, 26ch);
+	margin: 0 auto;
+
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+	text-wrap: pretty;
+}
+
+
+/* ==========================================================================
+   7. INTAKE NOTE
+   ========================================================================== */
+
+.home-academy__intake {
+	width: min(100%, 58ch);
+	margin: clamp(1.25rem, 2.5vw, 1.75rem) auto 0;
+
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+	text-align: center;
+	text-wrap: pretty;
+}
+
+.home-academy__intake .text-link {
+	color: var(--color-accent-text);
+	text-decoration-line: underline;
+	text-decoration-thickness: 0.06em;
+	text-underline-offset: 0.2em;
+	transition: color var(--transition-fast);
+}
+
+.home-academy__intake .text-link:hover,
+.home-academy__intake .text-link:focus-visible {
+	color: var(--color-interactive-hover);
+}
+
+.home-academy__intake .text-link:focus-visible {
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: var(--focus-ring-offset);
+	border-radius: var(--radius-sm);
+}
+
+
+/* ==========================================================================
+   8. CLOSING STATEMENT (footer)
+   ========================================================================== */
+
 .home-academy__footer {
 	display: grid;
-	grid-template-columns: minmax(180px, .45fr) minmax(0, 1fr);
-	gap: clamp(2rem, 5vw, 6rem);
-	align-items: start;
+	grid-template-columns: minmax(0, 1fr);
+	justify-items: center;
+	gap: var(--space-3);
+
 	width: 100%;
-	max-width: 1440px;
-	margin-inline: auto;
-	padding-top: clamp(2rem, 4vw, 3.5rem);
+	margin: clamp(1.25rem, 2vw, 1.75rem) auto 0;
+	padding-top: clamp(1rem, 1.5vw, 1.5rem);
+
+	border-top: var(--border-width-thin) solid var(--color-border);
+
+	text-align: center;
 }
+
 .home-academy__footer-note {
 	margin: 0;
-	color: var(--color-primary);
+
+	color: var(--color-accent-text);
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
-	font-weight: var(--weight-semibold);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.3;
-	letter-spacing: var(--tracking-wider);
+	letter-spacing: var(--tracking-widest);
 	text-transform: uppercase;
 }
-.home-academy__footer-description {
-	max-width: 48ch;
-	margin: 0;
-	color: var(--color-text-secondary);
-	font-size: var(--text-sm);
-	line-height: var(--line-relaxed);
-}
-/* =========================================================
-   LARGE DESKTOP
-   ========================================================= */
-/*
-   Spacious 1440+ treatment.
 
-   The important change:
-   We no longer force a 680px minimum merely because the
-   viewport happens to be 1440px or wider.
-*/
-@media (min-width:1440px) {
+.home-academy__footer-description {
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+	text-wrap: pretty;
+}
+
+
+/* ==========================================================================
+   9. CALL TO ACTION
+   ========================================================================== */
+
+.home-academy__cta {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-4);
+
+	width: 100%;
+	padding-block: clamp(1.75rem, 3vw, 2.5rem);
+
+	text-align: center;
+}
+
+.home-academy__cta .btn {
+	min-height: var(--control-height-lg);
+	padding-inline: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.home-academy__cta .btn--large,
+.home-academy__cta .btn-lg {
+	min-height: 3.25rem;
+	padding-block: 0.95rem;
+	padding-inline: clamp(1.75rem, 3vw, 2.5rem);
+	font-size: var(--text-sm);
+	letter-spacing: var(--tracking-wide);
+}
+
+.home-academy__link {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+
+	padding-bottom: 0.35rem;
+
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-semibold);
+	line-height: 1.2;
+	letter-spacing: var(--tracking-widest);
+	text-transform: uppercase;
+	text-decoration: none;
+
+	transition: color var(--transition-fast);
+}
+
+.home-academy__link::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	height: 1px;
+
+	background: currentColor;
+	opacity: 0.25;
+	transition: opacity var(--transition-base);
+}
+
+.home-academy__link:hover,
+.home-academy__link:focus-visible {
+	color: var(--color-accent-text);
+}
+
+.home-academy__link:hover::after,
+.home-academy__link:focus-visible::after {
+	opacity: 1;
+}
+
+.home-academy__link:focus-visible {
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: var(--focus-ring-offset);
+	border-radius: var(--radius-sm);
+}
+
+
+/* ==========================================================================
+   10. HOVER (pointer: fine only)
+   ========================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+
+	/* Pillar card */
+	.home-academy__pillar:hover,
+	.home-academy__pillar:focus-within {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.home-academy__pillar:hover::before,
+	.home-academy__pillar:focus-within::before {
+		transform: scaleX(1);
+	}
+
+	/* Photo blurs so the text reads clearly. The zoom hides the soft
+	   edges the blur creates. */
+	.home-academy__pillar:hover .home-academy__pillar-background img,
+	.home-academy__pillar:focus-within .home-academy__pillar-background img {
+		filter: blur(3px);
+		transform: scale(1.08);
+	}
+
+	.home-academy__pillar:hover .home-academy__pillar-overlay,
+	.home-academy__pillar:focus-within .home-academy__pillar-overlay {
+		background: linear-gradient(
+			180deg,
+			rgb(0 0 0 / 48%) 0,
+			rgb(0 0 0 / 58%) 25%,
+			rgb(0 0 0 / 74%) 52%,
+			rgb(0 0 0 / 88%) 76%,
+			rgb(0 0 0 / 96%) 100%
+		);
+	}
+
+	/* Benefit card lifts, icon glows */
+	.home-academy__benefit:hover,
+	.home-academy__benefit:focus-within {
+		transform: translateY(-4px);
+		border-color: var(--color-gold-400);
+		box-shadow: var(--shadow-md);
+	}
+
+	.home-academy__benefit:hover .home-academy__benefit-icon,
+	.home-academy__benefit:focus-within .home-academy__benefit-icon {
+		box-shadow: 0 6px 16px rgb(197 154 24 / 0.35);
+	}
+}
+
+
+/* ==========================================================================
+   11. BREAKPOINTS — TABLET, DESKTOP, LARGE
+   ========================================================================== */
+
+/* ---------- Tablet: 48rem+ ---------- */
+@media (min-width: 48rem) {
+
 	.home-academy__pillars {
-		max-width: 1440px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.home-academy__pillar {
+		min-height: clamp(440px, 65vw, 540px);
+	}
+
+	.home-academy__benefits {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.home-academy__cta {
+		flex-direction: row;
+		gap: var(--space-6);
+	}
+}
+
+/* ---------- Desktop: 64rem+ ---------- */
+@media (min-width: 64rem) {
+
+	.home-academy__pillars {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.home-academy__pillar {
+		min-height: clamp(480px, 40vw, 580px);
+	}
+
+	/* Wider header so everything has room */
+	.home-academy__header {
+		max-width: 72rem;
+	}
+
+	/* Title: one straight line, smaller */
+	.home-academy__title {
+		max-width: none;
+		font-size: clamp(1.9rem, 1rem + 1.8vw, 2.6rem);
+		white-space: nowrap;
+	}
+
+	/* Intro fills the header (about 3 lines) */
+	.home-academy__intro {
+		max-width: 64rem;
+		margin-inline: auto;
+	}
+
+	.home-academy__description {
+		width: 100%;
+		max-width: 64rem;
+	}
+
+	/* Intake: one straight line */
+	.home-academy__intake {
+		width: min(100%, 64rem);
+		white-space: nowrap;
+	}
+
+	/* Benefits: four columns, tighter measure */
+	.home-academy__benefits {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		column-gap: clamp(1.25rem, 2vw, 1.75rem);
+	}
+
+	.home-academy__benefit-text {
+		width: min(100%, 24ch);
+	}
+}
+
+/* ---------- Large desktop: 90rem+ ---------- */
+@media (min-width: 90rem) {
+
+	.home-academy__pillars {
 		gap: 1.5rem;
 	}
+
+	.home-academy__pillar {
+		min-height: clamp(520px, 36vw, 640px);
+	}
+
+	.home-academy__pillar-content {
+		padding: clamp(2rem, 2.4vw, 2.75rem);
+	}
+
+	.home-academy__pillar-title {
+		font-size: clamp(2rem, 2.4vw, 2.75rem);
+	}
+
+	.home-academy__benefits {
+		gap: clamp(1.25rem, 2vw, 1.75rem);
+	}
+}
+
+/* ---------- Wide but short screens (e.g. 1920×900) ---------- */
+@media (min-width: 90rem) and (max-height: 60rem) {
+
+	.home-academy__header {
+		padding-bottom: clamp(2rem, 3.5vw, 3rem);
+	}
+
+	.home-academy__pillar {
+		min-height: clamp(440px, 55vh, 520px);
+	}
+
+	.home-academy__pillar-content {
+		padding: clamp(1.5rem, 2vw, 2rem);
+	}
+
+	.home-academy__pillar-main {
+		margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+	}
+
+	.home-academy__pillar-title {
+		font-size: clamp(1.9rem, 2.2vw, 2.4rem);
+	}
+
+	.home-academy__footer {
+		margin-top: clamp(2rem, 3vw, 2.75rem);
+		padding-top: clamp(1.5rem, 2.5vw, 2rem);
+	}
+}
+
+/* ---------- Very wide + tall screens ---------- */
+@media (min-width: 120rem) and (min-height: 60.0625rem) {
+
 	.home-academy__pillar {
 		min-height: clamp(560px, 36vw, 660px);
 	}
-	.home-academy__pillar-content {
-		padding: clamp(2.25rem, 2.5vw, 2.75rem);
-	}
-	.home-academy__pillar-title {
-		font-size: clamp(2.75rem, 2.8vw, 3.15rem);
-	}
-	.home-academy__footer {
-		max-width: 1440px;
-	}
-}
-/* ---------------------------------------------------------
-   WIDE + SHORT DESKTOP
-   --------------------------------------------------------- */
-/*
-   This is the critical rule for the HP All-in-One:
 
-   1920 x 911 enters this rule.
+	.home-academy__pillar-content {
+		padding: clamp(2.25rem, 2.2vw, 2.75rem);
+	}
 
-   Wide viewport does NOT automatically mean there is enough
-   vertical space for a 680px card.
-*/
-@media (min-width:1440px) and (max-height:960px) {
-	.home-academy__header {
-		padding-bottom: clamp(2.5rem, 4vw, 4rem);
-	}
-	.home-academy__pillars {
-		gap: clamp(1rem, 1.4vw, 1.5rem);
-	}
-	.home-academy__pillar {
-		min-height: clamp(500px, 57vh, 570px);
-	}
-	.home-academy__pillar-content {
-		padding: clamp(1.75rem, 2vw, 2.5rem);
-	}
-	.home-academy__pillar-main {
-		margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
-	}
 	.home-academy__pillar-title {
-		font-size: clamp(2.4rem, 2.7vw, 3rem);
-	}
-	.home-academy__pillar-description {
-		margin-top: var(--space-4);
-	}
-	.home-academy__footer {
-		gap: clamp(2rem, 4vw, 5rem);
-		padding-top: clamp(1.75rem, 3vw, 2.75rem);
+		font-size: clamp(2.4rem, 2.3vw, 3rem);
 	}
 }
-/* ---------------------------------------------------------
-   SPACIOUS 1920+ DESKTOP
-   --------------------------------------------------------- */
-/*
-   Only give 1920+ the larger treatment when the viewport is
-   actually tall enough to support it.
-*/
-@media (min-width:1920px) and (min-height:961px) {
-	.home-academy__pillars {
-		max-width: 1520px;
-		gap: 1.5rem;
-	}
-	.home-academy__pillar {
-		min-height: clamp(600px, 38vw, 680px);
-	}
-	.home-academy__pillar-content {
-		padding: clamp(2.5rem, 2.2vw, 2.75rem);
-	}
-	.home-academy__pillar-title {
-		font-size: clamp(2.9rem, 2.5vw, 3.15rem);
-	}
-	.home-academy__footer {
-		max-width: 1520px;
+
+@media (min-width: 160rem) {
+
+	.home-academy > .container {
+		width: min(90%, var(--container-wide));
 	}
 }
-/* ---------------------------------------------------------
-   VERY LARGE / HIGH VIEWPORT
-   --------------------------------------------------------- */
-@media (min-width:2560px) and (min-height:1100px) {
+
+@media (min-width: 160rem) and (min-height: 68.75rem) {
+
 	.home-academy__pillars {
-		max-width: 1680px;
 		gap: clamp(1.5rem, 1.25vw, 2rem);
 	}
+
 	.home-academy__pillar {
-		min-height: clamp(620px, 32vw, 720px);
+		min-height: clamp(600px, 32vw, 720px);
 	}
+
 	.home-academy__pillar-content {
 		padding: clamp(2.5rem, 2vw, 3rem);
 	}
+
 	.home-academy__pillar-title {
-		font-size: clamp(3rem, 2.4vw, 3.4rem);
-	}
-	.home-academy__footer {
-		max-width: 1680px;
+		font-size: clamp(2.75rem, 2.2vw, 3.25rem);
 	}
 }
-/* ---------------------------------------------------------
-   TABLET / MEDIUM DESKTOP
-   --------------------------------------------------------- */
-@media (max-width:1199px) {
-	.home-academy__pillar {
-		min-height: 520px;
+
+
+/* ==========================================================================
+   12. SMALL SCREENS
+   ========================================================================== */
+
+/* ---------- Phones: under 30rem ---------- */
+@media (max-width: 29.999rem) {
+
+	.home-academy__header {
+		padding-bottom: var(--space-8);
 	}
-	.home-academy__pillar-content {
-		padding: 1.5rem;
+
+	.home-academy__title {
+		max-width: 18ch;
+		font-size: clamp(1.85rem, 8.5vw, 2.4rem);
 	}
-	.home-academy__pillar-title {
-		font-size: clamp(1.75rem, 3vw, 2.5rem);
-	}
-	.home-academy__pillar-description {
-		font-size: var(--text-xs);
-	}
-}
-/* ---------------------------------------------------------
-   TABLET
-   --------------------------------------------------------- */
-@media (max-width:899px) {
-	.home-academy__footer,
-	.home-academy__pillars {
-		grid-template-columns: 1fr;
-		gap: var(--space-4);
-	}
-	.home-academy__pillar {
-		min-height: clamp(420px, 65vw, 560px);
-	}
-	.home-academy__pillar-content {
-		padding: clamp(1.75rem, 4vw, 2.5rem);
-	}
-	.home-academy__pillar-title {
-		max-width: 14ch;
-		font-size: clamp(2rem, 5vw, 3rem);
-	}
-	.home-academy__pillar-description {
-		max-width: 55ch;
+
+	.home-academy__description {
 		font-size: var(--text-sm);
 	}
-}
-/* ---------------------------------------------------------
-   MOBILE
-   --------------------------------------------------------- */
-@media (max-width:767px) {
-	.home-academy__header {
-		padding-bottom: var(--space-10);
+
+	.home-academy__intake {
+		font-size: var(--text-xs);
 	}
-	.home-academy__description {
-		width: min(100%, 52ch);
-		font-size: var(--text-base);
-	}
-	.home-academy__pillars {
-		grid-template-columns: 1fr;
-		gap: var(--space-3);
-		padding-top: var(--space-10);
-	}
+
 	.home-academy__pillar {
-		min-height: clamp(440px, 115vw, 560px);
+		min-height: clamp(430px, 120vw, 520px);
 	}
-	.home-academy__pillar-content {
-		padding: var(--space-6);
-	}
-	.home-academy__pillar-main {
-		margin-bottom: var(--space-8);
-	}
-	.home-academy__pillar-title {
-		max-width: 14ch;
-		font-size: clamp(2rem, 9vw, 3rem);
-	}
-	.home-academy__pillar-description {
-		max-width: 48ch;
-		margin-top: var(--space-4);
-	}
-	.home-academy__footer {
-		grid-template-columns: 1fr;
-		gap: var(--space-4);
-		padding-top: var(--space-8);
-	}
-}
-/* ---------------------------------------------------------
-   SMALL MOBILE
-   --------------------------------------------------------- */
-@media (max-width:399px) {
-	.home-academy__pillar {
-		min-height: 430px;
-	}
+
 	.home-academy__pillar-content {
 		padding: var(--space-5);
 	}
+
 	.home-academy__pillar-title {
-		font-size: clamp(1.8rem, 9vw, 2.5rem);
+		font-size: clamp(1.55rem, 7vw, 2.1rem);
 	}
-	.home-academy__pillar-description,
-	.home-academy__pillar-link {
+
+	.home-academy__pillar-description {
 		font-size: var(--text-xs);
+		line-height: 1.55;
+	}
+
+	.home-academy__pillar-link {
+		font-size: 0.65rem;
+	}
+
+	.home-academy__pillar-duration {
+		padding: 0.28rem 0.6rem;
+		font-size: 0.62rem;
+	}
+
+	.home-academy__benefits {
+		gap: var(--space-4);
+	}
+
+	.home-academy__benefit {
+		padding: var(--space-5);
+	}
+
+	.home-academy__benefit-title {
+		font-size: var(--text-sm);
+	}
+
+	.home-academy__benefit-text {
+		font-size: var(--text-xs);
+		line-height: 1.55;
+	}
+
+	.home-academy__cta {
+		padding-block: var(--space-6);
+	}
+
+	.home-academy__cta .btn {
+		width: 100%;
+	}
+
+	.home-academy__footer {
+		padding-top: var(--space-6);
 	}
 }
-/* ---------------------------------------------------------
-   TOUCH DEVICES
-   --------------------------------------------------------- */
-@media (hover:none) and (pointer:coarse) {
-	.home-academy__pillar:hover {
-		transform: none;
-		box-shadow: none;
+
+/* ---------- Very small phones: under 22.5rem ---------- */
+@media (max-width: 22.499rem) {
+
+	.home-academy__title {
+		font-size: 1.7rem;
 	}
-	.home-academy__pillar:hover::before {
-		transform: scaleX(0);
+
+	.home-academy__pillar {
+		min-height: 410px;
 	}
-	.home-academy__pillar:hover .home-academy__pillar-background img {
-		transform: scale(1.015);
+
+	.home-academy__pillar-content {
+		padding: var(--space-4);
 	}
-	.home-academy__pillar:hover .home-academy__pillar-overlay {
-		background:
-			linear-gradient(180deg,
-				rgb(0 0 0 / 48%) 0%,
-				rgb(0 0 0 / 56%) 25%,
-				rgb(0 0 0 / 68%) 52%,
-				rgb(0 0 0 / 80%) 76%,
-				rgb(0 0 0 / 88%) 100%);
+
+	.home-academy__pillar-title {
+		font-size: 1.45rem;
+	}
+
+	.home-academy__pillar-duration {
+		padding: 0.24rem 0.5rem;
+		font-size: 0.58rem;
+	}
+
+	.home-academy__pillar-label {
+		padding: 0.24rem 0.55rem;
+		font-size: 0.6rem;
+	}
+
+	.home-academy__benefit {
+		padding: var(--space-4);
+	}
+
+	.home-academy__benefit-icon {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	.home-academy__benefit-icon svg {
+		width: 1.25rem;
+		height: 1.25rem;
 	}
 }
-/* ---------------------------------------------------------
-   REDUCED MOTION
-   --------------------------------------------------------- */
-@media (prefers-reduced-motion:reduce) {
-	.home-academy__cta svg,
+
+/* ---------- Phones in landscape ---------- */
+@media (max-width: 47.999rem) and (orientation: landscape) and (max-height: 32rem) {
+
+	.home-academy__header {
+		padding-bottom: var(--space-6);
+	}
+
+	.home-academy__pillar {
+		min-height: 340px;
+	}
+
+	.home-academy__pillar-content {
+		padding: var(--space-5);
+	}
+
+	.home-academy__pillar-main {
+		margin-bottom: var(--space-4);
+	}
+
+	.home-academy__pillar-title {
+		font-size: 1.75rem;
+	}
+}
+
+
+/* ==========================================================================
+   13. TOUCH, REDUCED MOTION, FORCED COLORS, PRINT
+   ========================================================================== */
+
+/* Touch screens: no hover effects */
+@media (hover: none) and (pointer: coarse) {
+
+	.home-academy__pillar {
+		transform: none !important;
+	}
+
+	.home-academy__pillar::before {
+		transform: scaleX(0) !important;
+	}
+
+	.home-academy__pillar-background img {
+		filter: none !important;
+		transform: scale(1.015) !important;
+	}
+
+	.home-academy__pillar-link::after {
+		width: 0 !important;
+	}
+
+	.home-academy__benefit {
+		transform: none !important;
+	}
+
+	.home-academy__benefit-icon {
+		box-shadow: none !important;
+	}
+}
+
+/* Reduced motion: no movement */
+@media (prefers-reduced-motion: reduce) {
+
+	.home-academy__intake .text-link,
+	.home-academy__link,
+	.home-academy__link::after,
 	.home-academy__pillar,
+	.home-academy__pillar::before,
 	.home-academy__pillar-background img,
 	.home-academy__pillar-link,
 	.home-academy__pillar-link svg,
+	.home-academy__pillar-link::after,
 	.home-academy__pillar-overlay,
-	.home-academy__pillar::before {
-		transition: none;
+	.home-academy__benefit,
+	.home-academy__benefit-icon {
+		transition: none !important;
+		animation: none !important;
 	}
-	.home-academy__pillar:focus-within,
-	.home-academy__pillar:hover {
+
+	.home-academy__pillar:hover,
+	.home-academy__pillar:focus-within {
 		transform: none;
 		box-shadow: none;
 	}
-	.home-academy__pillar:focus-within .home-academy__pillar-background img,
-	.home-academy__pillar:hover .home-academy__pillar-background img {
+
+	.home-academy__pillar:hover::before,
+	.home-academy__pillar:focus-within::before {
+		transform: scaleX(0);
+	}
+
+	.home-academy__pillar:hover .home-academy__pillar-background img,
+	.home-academy__pillar:focus-within .home-academy__pillar-background img {
+		transform: scale(1.015);
+	}
+
+	.home-academy__pillar-link:hover svg,
+	.home-academy__pillar-link:focus-visible svg {
 		transform: none;
 	}
-	.home-academy__cta:focus-visible svg,
-	.home-academy__cta:hover svg,
-	.home-academy__pillar-link:focus-visible svg,
-	.home-academy__pillar-link:hover svg {
+
+	.home-academy__benefit:hover,
+	.home-academy__benefit:focus-within {
 		transform: none;
+		box-shadow: none;
+	}
+
+	.home-academy__benefit:hover .home-academy__benefit-icon,
+	.home-academy__benefit:focus-within .home-academy__benefit-icon {
+		box-shadow: none;
 	}
 }
-/* ---------------------------------------------------------
-   FORCED COLORS
-   --------------------------------------------------------- */
-@media (forced-colors:active) {
+
+/* Windows high contrast */
+@media (forced-colors: active) {
+
+	.home-academy::before {
+		background: CanvasText;
+	}
+
+	.home-academy__header,
+	.home-academy__intake,
+	.home-academy__footer {
+		border-color: CanvasText;
+	}
+
+	.home-academy__title,
+	.home-academy__description,
+	.home-academy__intake,
+	.home-academy__footer-description,
+	.home-academy__pillar-title,
+	.home-academy__pillar-description,
+	.home-academy__benefit-title,
+	.home-academy__benefit-text {
+		color: CanvasText;
+	}
+
+	.home-academy__title em,
+	.home-academy__intake .text-link {
+		color: LinkText;
+	}
+
+	.home-academy__pillar {
+		background: Canvas;
+	}
+
+	.home-academy__pillar-background,
 	.home-academy__pillar-overlay,
 	.home-academy__pillar::before {
 		display: none;
 	}
+
 	.home-academy__pillar-content {
-		color: CanvasText;
 		background: Canvas;
-	}
-	.home-academy__pillar-description,
-	.home-academy__pillar-duration,
-	.home-academy__pillar-label,
-	.home-academy__pillar-link,
-	.home-academy__pillar-number,
-	.home-academy__pillar-title {
 		color: CanvasText;
 	}
+
+	.home-academy__pillar-number {
+		color: CanvasText;
+	}
+
+	.home-academy__pillar-duration,
+	.home-academy__pillar-label {
+		background: Canvas;
+		border-color: CanvasText;
+		color: CanvasText;
+	}
+
 	.home-academy__pillar-link {
 		border-color: ButtonText;
+		color: ButtonText;
+	}
+
+	.home-academy__benefit {
+		background: Canvas;
+		border-color: CanvasText;
+	}
+
+	.home-academy__benefit-icon {
+		background: Canvas;
+		border: 1px solid CanvasText;
+		color: CanvasText;
 	}
 }
-/* ---------------------------------------------------------
-   PRINT
-   --------------------------------------------------------- */
+
+/* Print */
 @media print {
+
+	.home-academy {
+		background: #fff;
+	}
+
+	.home-academy::before,
+	.home-academy__cta,
+	.home-academy__pillar-background,
+	.home-academy__pillar-overlay,
+	.home-academy__pillar::before {
+		display: none;
+	}
+
+	.home-academy__header,
+	.home-academy__intake,
+	.home-academy__footer {
+		border-color: #000;
+	}
+
+	.home-academy__title,
+	.home-academy__description,
+	.home-academy__intake,
+	.home-academy__footer-description,
+	.home-academy__pillar-number,
+	.home-academy__pillar-duration,
+	.home-academy__pillar-label,
+	.home-academy__pillar-title,
+	.home-academy__pillar-description,
+	.home-academy__pillar-link,
+	.home-academy__benefit-title,
+	.home-academy__benefit-text {
+		color: #000;
+	}
+
 	.home-academy__pillars {
 		display: block;
 	}
+
 	.home-academy__pillar {
 		min-height: auto;
 		margin-bottom: 1rem;
 		break-inside: avoid;
-	}
-	.home-academy__pillar-background {
-		position: absolute;
-	}
-	.home-academy__pillar-overlay,
-	.home-academy__pillar::before {
-		display: none;
-	}
-	.home-academy__pillar-content {
-		color: #000;
 		background: #fff;
+		border: 1px solid #000;
 	}
-	.home-academy__pillar-description,
-	.home-academy__pillar-duration,
-	.home-academy__pillar-label,
-	.home-academy__pillar-link,
-	.home-academy__pillar-number,
-	.home-academy__pillar-title {
+
+	.home-academy__pillar-content {
+		background: #fff;
 		color: #000;
+	}
+
+	.home-academy__benefits {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.home-academy__benefit {
+		background: #fff;
+		border-color: #000;
+	}
+
+	.home-academy__benefit-icon {
+		color: #fff;
+		background: #000;
+		border: 1px solid #000;
 	}
 }
 
 
-
-
-
+/* ==========================================================================
+   End of home-academy.css
+   ========================================================================== */
 
 
 
@@ -6394,4 +7042,1079 @@ a.btn {
   .site-footer .scroll-to-top {
     display: none;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   9. SECTION HEADER SYSTEM
+   =========================================================
+   Reusable heading pattern for content sections.
+   Used by: about, academy, shop, portfolio, contact pages.
+   ========================================================= */
+
+.section-header {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+
+	width: 100%;
+	max-width: var(--content-wide);
+	margin-inline: auto;
+
+	text-align: center;
+}
+
+.section-header--left {
+	align-items: flex-start;
+	margin-inline: 0;
+	text-align: left;
+}
+
+.section-header__label,
+.section-label {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-3);
+
+	margin: 0;
+
+	color: var(--color-accent-text);
+	font-family: var(--font-mono);
+	font-size: var(--type-label-size);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--tracking-widest);
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.section-label::before,
+.section-label::after {
+	content: "";
+	display: block;
+	width: 1.25rem;
+	height: 1px;
+	background: currentColor;
+	opacity: 0.7;
+}
+
+.section-title {
+	margin: 0;
+
+	color: var(--color-text);
+	font-family: var(--font-display);
+	font-size: clamp(2rem, 4.5vw, 3.5rem);
+	font-weight: var(--font-weight-medium);
+	line-height: 1.05;
+	letter-spacing: var(--tracking-tight);
+	text-wrap: balance;
+}
+
+.section-subtitle {
+	margin: 0;
+
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: clamp(1rem, 1.4vw, 1.25rem);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-relaxed);
+	text-wrap: pretty;
+}
+
+.section-description {
+	width: min(100%, 65ch);
+	margin: 0 auto;
+
+	color: var(--color-text-muted);
+	font-size: var(--text-base);
+	line-height: var(--leading-relaxed);
+	text-wrap: pretty;
+}
+
+@media (min-width: 48rem) {
+	.section-header--split {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: var(--space-10) var(--space-12);
+		align-items: end;
+		max-width: var(--container-max);
+		text-align: left;
+	}
+
+	.section-header--split .section-header__right {
+		justify-self: end;
+	}
+}
+
+
+/* =========================================================
+   10. FORM CONTROLS
+   ========================================================= */
+
+input,
+textarea,
+select {
+	width: 100%;
+	max-width: 100%;
+
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
+	line-height: var(--leading-normal);
+	color: var(--color-text);
+
+	background: var(--color-surface);
+
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-input);
+
+	padding: var(--padding-input);
+
+	transition:
+		border-color var(--duration-fast) var(--ease-standard),
+		background-color var(--duration-fast) var(--ease-standard),
+		box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+textarea {
+	min-height: 8rem;
+	resize: vertical;
+}
+
+select {
+	cursor: pointer;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding-right: calc(var(--space-10));
+
+	/* Chevron indicator */
+	background-image:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2385620b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right var(--space-4) center;
+	background-size: 1.1rem;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+	border-color: var(--color-border-strong);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	outline: none;
+	border-color: var(--color-gold-500);
+	box-shadow: 0 0 0 3px rgb(197 154 24 / 0.12);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+	background: var(--color-surface-muted);
+	cursor: not-allowed;
+	opacity: 0.7;
+}
+
+label {
+	display: inline-block;
+	margin-bottom: var(--space-2);
+
+	color: var(--color-text);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-wide);
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+legend {
+	padding: 0;
+	margin-bottom: var(--space-3);
+	font-weight: var(--font-weight-semibold);
+}
+
+::placeholder {
+	color: var(--color-text-subtle);
+	opacity: 1;
+}
+
+input,
+textarea,
+select {
+	accent-color: var(--color-gold-500);
+	caret-color: var(--color-gold-600);
+}
+
+
+/* =========================================================
+   11. FORM STATES
+   ========================================================= */
+
+/* Invalid field — set via JS or aria-invalid */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"],
+input.error,
+textarea.error,
+select.error {
+	border-color: var(--color-error);
+	background: var(--color-error-soft);
+}
+
+input[aria-invalid="true"]:focus,
+textarea[aria-invalid="true"]:focus,
+select[aria-invalid="true"]:focus,
+input.error:focus,
+textarea.error:focus,
+select.error:focus {
+	border-color: var(--color-error);
+	box-shadow: 0 0 0 3px rgb(180 35 24 / 0.12);
+}
+
+/* Field-level error message */
+.field-error,
+.form-error-message {
+	margin-top: var(--space-2);
+	padding: var(--space-2) var(--space-3);
+
+	color: var(--color-error);
+	background: var(--color-error-soft);
+
+	border-left: 3px solid var(--color-error);
+	border-radius: var(--radius-sm);
+
+	font-size: var(--text-sm);
+	line-height: var(--leading-normal);
+
+	animation: modeinfinity-fade-in 0.3s var(--ease-standard);
+}
+
+/* Full-form success state */
+.form-success {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-4);
+
+	padding: var(--space-10) var(--space-6);
+
+	color: var(--color-success);
+	background: var(--color-success-soft);
+
+	border: 2px solid var(--color-success);
+	border-radius: var(--radius-panel);
+
+	text-align: center;
+
+	animation: modeinfinity-fade-in 0.4s var(--ease-standard);
+}
+
+.form-success h3 {
+	margin: 0;
+	color: inherit;
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-semibold);
+}
+
+.form-success p {
+	max-width: 48ch;
+	margin: 0;
+	color: inherit;
+	line-height: var(--leading-relaxed);
+}
+
+/* Full-form error state */
+.form-error {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-3);
+
+	padding: var(--space-6);
+
+	color: var(--color-error);
+	background: var(--color-error-soft);
+
+	border: 2px solid var(--color-error);
+	border-radius: var(--radius-panel);
+
+	text-align: center;
+
+	animation: modeinfinity-fade-in 0.4s var(--ease-standard);
+}
+
+.form-error strong {
+	display: block;
+	color: inherit;
+	font-size: var(--text-base);
+	font-weight: var(--font-weight-semibold);
+}
+
+.form-error p {
+	margin: 0;
+	color: inherit;
+	line-height: var(--leading-relaxed);
+}
+
+/* Inline form status message (used by formhandler.js) */
+.form-status {
+	margin-top: var(--space-4);
+	padding: var(--space-3) var(--space-4);
+
+	border-radius: var(--radius-md);
+
+	font-size: var(--text-sm);
+	line-height: var(--leading-normal);
+}
+
+.form-status[data-status="success"] {
+	color: var(--color-success);
+	background: var(--color-success-soft);
+	border: 1px solid var(--color-success);
+}
+
+.form-status[data-status="error"] {
+	color: var(--color-error);
+	background: var(--color-error-soft);
+	border: 1px solid var(--color-error);
+}
+
+.form-status[data-status="info"] {
+	color: var(--color-info);
+	background: var(--color-info-soft);
+	border: 1px solid var(--color-info);
+}
+
+
+/* =========================================================
+   12. LOADING INDICATORS
+   ========================================================= */
+
+/* Inline spinner — safe to place inside a button */
+.loading-spinner {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-left: var(--space-2);
+
+	border: 2px solid currentColor;
+	border-top-color: transparent;
+	border-radius: 50%;
+
+	animation: modeinfinity-spin 0.8s linear infinite;
+	vertical-align: middle;
+}
+
+/* Larger standalone spinner */
+.spinner-lg {
+	display: inline-block;
+	width: 2.5rem;
+	height: 2.5rem;
+
+	border: 3px solid var(--color-border);
+	border-top-color: var(--color-gold-500);
+	border-radius: 50%;
+
+	animation: modeinfinity-spin 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.loading-spinner,
+	.spinner-lg {
+		animation: none;
+		border-top-color: currentColor;
+		opacity: 0.6;
+	}
+}
+
+
+/* =========================================================
+   13. COMPONENT ERROR STATE
+   =========================================================
+   Used when a JS-driven component fails to load or render.
+   ========================================================= */
+
+.component-error {
+	margin-block: var(--space-6);
+	padding: var(--space-6);
+
+	color: var(--color-error);
+	background: var(--color-error-soft);
+
+	border-left: 4px solid var(--color-error);
+	border-radius: var(--radius-panel);
+}
+
+.component-error p {
+	margin: 0 0 var(--space-3);
+	color: inherit;
+	line-height: var(--leading-relaxed);
+}
+
+.component-error p:last-child {
+	margin-bottom: 0;
+}
+
+.component-error .btn {
+	margin-top: var(--space-3);
+}
+
+
+/* =========================================================
+   14. MODAL SYSTEM (pure CSS, :target based)
+   =========================================================
+   Usage:
+     <a href="#my-modal">Open</a>
+     <aside id="my-modal" class="modal-overlay" role="dialog" aria-modal="true">
+       <a href="#" class="modal-bg-close-shield" aria-label="Close"></a>
+       <div class="modal-container">
+         <header class="modal-header">
+           <h2>Title</h2>
+           <a href="#" class="modal-close-btn" aria-label="Close">×</a>
+         </header>
+         <div class="modal-body">...</div>
+       </div>
+     </aside>
+   ========================================================= */
+
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: var(--z-modal);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: rgb(0 0 0 / 0.85);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+
+	transition:
+		opacity var(--duration-base) var(--ease-standard),
+		visibility 0s linear var(--duration-base);
+}
+
+.modal-overlay:target {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transition:
+		opacity var(--duration-base) var(--ease-standard),
+		visibility 0s linear 0s;
+}
+
+.modal-bg-close-shield {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	cursor: default;
+	-webkit-tap-highlight-color: var(--tap-highlight);
+}
+
+.modal-container {
+	display: flex;
+	flex-direction: column;
+
+	width: 90%;
+	max-width: 44rem;
+	max-height: 80vh;
+	overflow: hidden;
+
+	color: var(--color-text);
+	background: var(--color-surface);
+
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-panel);
+	box-shadow: var(--shadow-xl);
+
+	transform: translateY(-2.5rem);
+	transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.modal-overlay:target .modal-container {
+	transform: translateY(0);
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-4);
+
+	padding: var(--space-5) var(--space-6);
+
+	background: var(--section-secondary);
+	border-bottom: var(--border-width-thin) solid var(--color-border);
+}
+
+.modal-header h2 {
+	margin: 0;
+
+	color: var(--color-text-strong);
+	font-family: var(--font-display);
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-tight);
+}
+
+.modal-close-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 2.5rem;
+	height: 2.5rem;
+
+	color: var(--color-text-muted);
+	font-size: 1.5rem;
+	line-height: 1;
+	text-decoration: none;
+
+	cursor: pointer;
+	-webkit-tap-highlight-color: var(--tap-highlight);
+
+	transition:
+		color var(--duration-fast) var(--ease-standard),
+		transform var(--duration-fast) var(--ease-standard);
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus-visible {
+	color: var(--color-gold-500);
+	transform: scale(1.1);
+}
+
+.modal-close-btn:focus-visible {
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: 3px;
+	border-radius: var(--radius-sm);
+}
+
+.modal-body {
+	flex: 1;
+	padding: var(--space-6);
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior: contain;
+
+	font-size: var(--text-base);
+	line-height: var(--leading-relaxed);
+	color: var(--color-text-muted);
+	text-align: left;
+}
+
+.modal-body h3 {
+	margin: var(--space-6) 0 var(--space-3);
+	color: var(--color-text-strong);
+	font-family: var(--font-display);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-medium);
+}
+
+.modal-body h3:first-child {
+	margin-top: 0;
+}
+
+.modal-body h4 {
+	margin: var(--space-5) 0 var(--space-2);
+	color: var(--color-accent-text);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--tracking-wide);
+	text-transform: uppercase;
+}
+
+.modal-body p {
+	margin: 0 0 var(--space-4);
+}
+
+.modal-body ul,
+.modal-body ol {
+	margin: 0 0 var(--space-5);
+	padding-left: var(--space-5);
+}
+
+.modal-body li {
+	margin-bottom: var(--space-2);
+}
+
+.modal-body strong {
+	color: var(--color-text-strong);
+	font-weight: var(--font-weight-semibold);
+}
+
+.modal-body::-webkit-scrollbar {
+	width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+	background: var(--color-background);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+	background: var(--color-border);
+	border-radius: var(--radius-full);
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+	background: var(--color-gold-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.modal-overlay,
+	.modal-container {
+		transition: none !important;
+	}
+
+	.modal-container {
+		transform: none !important;
+	}
+}
+
+@media print {
+	.modal-overlay {
+		position: static;
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		background: none;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
+	}
+
+	.modal-bg-close-shield,
+	.modal-close-btn {
+		display: none;
+	}
+
+	.modal-container {
+		max-height: none;
+		box-shadow: none;
+		border: 1px solid #000;
+	}
+}
+
+
+/* =========================================================
+   15. SCROLL TO TOP
+   =========================================================
+   Position-fixed button. Visibility is controlled by JS
+   via the `.is-visible` class.
+   ========================================================= */
+
+.scroll-to-top {
+	position: fixed;
+	right: var(--space-5);
+	bottom: var(--space-5);
+	z-index: var(--z-toast);
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 3rem;
+	height: 3rem;
+	padding: 0;
+
+	color: var(--color-black);
+	background: var(--color-gold-400);
+
+	border: 0;
+	border-radius: 50%;
+
+	cursor: pointer;
+	-webkit-tap-highlight-color: var(--tap-highlight);
+
+	box-shadow: var(--shadow-lg);
+
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(1rem);
+
+	transition:
+		opacity var(--duration-base) var(--ease-standard),
+		visibility 0s linear var(--duration-base),
+		transform var(--duration-base) var(--ease-emphasized),
+		background-color var(--duration-fast) var(--ease-standard);
+}
+
+.scroll-to-top.is-visible {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	transition:
+		opacity var(--duration-base) var(--ease-standard),
+		visibility 0s linear 0s,
+		transform var(--duration-base) var(--ease-emphasized),
+		background-color var(--duration-fast) var(--ease-standard);
+}
+
+.scroll-to-top:hover,
+.scroll-to-top:focus-visible {
+	background: var(--color-gold-300);
+	transform: translateY(-3px);
+}
+
+.scroll-to-top:focus-visible {
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: 3px;
+}
+
+.scroll-to-top svg {
+	width: 1.25rem;
+	height: 1.25rem;
+	flex: 0 0 auto;
+}
+
+@media (max-width: 30rem) {
+	.scroll-to-top {
+		right: var(--space-4);
+		bottom: var(--space-4);
+		width: 2.75rem;
+		height: 2.75rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.scroll-to-top {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+
+/* =========================================================
+   16. ACCORDION (visual companion to animations.css)
+   =========================================================
+   animations.css already handles the open/close motion.
+   This section styles the visual chrome: borders, spacing,
+   trigger button, icon.
+   ========================================================= */
+
+.accordion {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	border-top: var(--border-width-thin) solid var(--color-border);
+}
+
+.accordion-item {
+	border-bottom: var(--border-width-thin) solid var(--color-border);
+}
+
+.accordion-item__heading {
+	margin: 0;
+	padding: 0;
+}
+
+.accordion-item__trigger {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-4);
+
+	width: 100%;
+	padding: var(--space-5) 0;
+
+	color: var(--color-text);
+	background: transparent;
+	border: 0;
+
+	font-family: var(--font-display);
+	font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-snug);
+	text-align: left;
+	letter-spacing: var(--tracking-tight);
+
+	cursor: pointer;
+	-webkit-tap-highlight-color: var(--tap-highlight);
+
+	transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.accordion-item__trigger:hover,
+.accordion-item__trigger:focus-visible {
+	color: var(--color-gold-600);
+}
+
+.accordion-item__trigger:focus-visible {
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: 2px;
+	border-radius: var(--radius-sm);
+}
+
+.accordion-item__question {
+	flex: 1;
+	min-width: 0;
+}
+
+.accordion-item__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 2rem;
+	height: 2rem;
+	flex: 0 0 auto;
+
+	color: var(--color-gold-500);
+
+	transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.accordion-item[open] .accordion-item__icon,
+.accordion-item.is-open .accordion-item__icon {
+	transform: rotate(45deg);
+}
+
+.accordion-item__panel {
+	color: var(--color-text-muted);
+	font-size: var(--text-base);
+	line-height: var(--leading-relaxed);
+}
+
+.accordion-item__content {
+	padding-block: 0 var(--space-6);
+}
+
+.accordion-item__content p {
+	margin: 0 0 var(--space-4);
+	max-width: 62ch;
+}
+
+.accordion-item__content p:last-child {
+	margin-bottom: 0;
+}
+
+.accordion-item__content ul {
+	margin: 0 0 var(--space-4);
+	padding-left: var(--space-5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.accordion-item__trigger,
+	.accordion-item__icon {
+		transition: none !important;
+	}
+}
+
+
+/* =========================================================
+   17. TESTIMONIAL CARD
+   =========================================================
+   Single card. Wrap in a grid or carousel where used.
+   Matches the markup in components/testimonial-card.html
+   ========================================================= */
+
+.testimonial-card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-5);
+
+	padding: var(--space-6);
+
+	background: var(--color-surface);
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-card);
+
+	transition:
+		border-color var(--duration-base) var(--ease-standard),
+		box-shadow var(--duration-base) var(--ease-standard),
+		transform var(--duration-base) var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.testimonial-card:hover {
+		border-color: var(--color-gold-400);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-2px);
+	}
+}
+
+.testimonial-card__rating {
+	display: inline-flex;
+	gap: 0.15em;
+
+	color: var(--color-gold-500);
+	font-size: var(--text-sm);
+	letter-spacing: 0.1em;
+}
+
+.testimonial-card__quote {
+	margin: 0;
+	padding: 0;
+
+	color: var(--color-text);
+	font-family: var(--font-display);
+	font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+	font-style: italic;
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-relaxed);
+}
+
+.testimonial-card__quote p {
+	margin: 0;
+	max-width: none;
+}
+
+.testimonial-card__quote p::before {
+	content: "\201C";
+	color: var(--color-gold-500);
+}
+
+.testimonial-card__quote p::after {
+	content: "\201D";
+	color: var(--color-gold-500);
+}
+
+.testimonial-card__author {
+	display: flex;
+	align-items: center;
+	gap: var(--space-4);
+
+	margin-top: auto;
+	padding-top: var(--space-5);
+
+	border-top: var(--border-width-thin) solid var(--color-border);
+}
+
+.testimonial-card__avatar,
+.testimonial-card__picture {
+	display: block;
+	flex: 0 0 auto;
+
+	width: 3.5rem;
+	height: 3.5rem;
+
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+.testimonial-card__image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.testimonial-card__author-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	min-width: 0;
+}
+
+.testimonial-card__name {
+	color: var(--color-text-strong);
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
+	font-style: normal;
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-snug);
+}
+
+.testimonial-card__role {
+	color: var(--color-text-muted);
+	font-size: var(--text-sm);
+	line-height: var(--leading-snug);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.testimonial-card {
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+@media (forced-colors: active) {
+	.testimonial-card {
+		border-color: CanvasText;
+	}
+
+	.testimonial-card__quote p::before,
+	.testimonial-card__quote p::after,
+	.testimonial-card__rating {
+		color: CanvasText;
+	}
 }

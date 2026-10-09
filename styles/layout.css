@@ -106,8 +106,8 @@ body {
 .section {
 	position: relative;
 	isolation: isolate;
-	padding-block: var(--section-space-md);
-}
+    padding-block: var(--section-space-sm);
+	}
 .section--compact {
 	padding-block: var(--section-space-sm);
 }
