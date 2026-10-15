@@ -1,65 +1,85 @@
 <!-- ============================================================
-     MODEINFINITY — TESTIMONIAL CARD
+     MODEINFINITY — TESTIMONIAL CARD  (components/testimonial-card.html)
      ============================================================
 
-     Reusable testimonial card component.
+     Reference template for one testimonial card.
 
-     Features:
-     - Responsive testimonial structure
-     - AVIF → WebP → JPEG/PNG fallback
-     - Accessible testimonial author information
-     - Optional rating display
-     - Semantic quotation markup
-     - No decorative content exposed unnecessarily to
-       assistive technologies
+     The homepage builds its cards in JavaScript
+     (scripts/testimonials.js, function buildCard) using exactly this
+     structure and these class names. If you change the card here,
+     change buildCard there too.
 
-     CSS:
-     - styles/components.css
-     - styles/animations.css
-     - styles/responsive.css
+     Data:   data/testimonials.json
+     CSS:    styles/components.css (base card)
+             styles/home-testimonials.css (photo badge, chips, location)
 
-     Data:
-     - data/testimonials.json
-
-     Usage:
-     - This file is a component reference/template.
-     - Individual testimonial content should be populated
-       from the testimonials data source when the page is
-       implemented.
+     Notes:
+     - Write quotes without quotation marks; the CSS adds them.
+     - rating, meta chips and location are optional.
+     - The photo uses AVIF, then WebP, then JPG.
+     - Paths have no leading slash so they work on GitHub Pages.
      ============================================================ -->
 <article class="testimonial-card">
-  <!-- ==========================================================
-       TESTIMONIAL CONTENT
-       ========================================================== -->
+
   <div class="testimonial-card__content">
+
     <!-- Optional rating -->
     <div class="testimonial-card__rating" role="img" aria-label="5 out of 5 stars">
       <span aria-hidden="true">★★★★★</span>
     </div>
-    <!-- Testimonial quotation -->
+
+    <!-- Quote -->
     <blockquote class="testimonial-card__quote">
-      <p> ModeInfinity gave me the practical skills, confidence, and understanding I needed to take my shoemaking work seriously. </p>
+      <p>The graduate's own words go here.</p>
     </blockquote>
+
+    <!-- Optional chips: class year and programme -->
+    <div class="testimonial-card__meta">
+      <span class="testimonial-card__chip testimonial-card__chip--year">Class of YYYY</span>
+      <span class="testimonial-card__chip">Programme name</span>
+    </div>
+
   </div>
-  <!-- ==========================================================
-       TESTIMONIAL AUTHOR
-       ========================================================== -->
+
   <footer class="testimonial-card__author">
-    <!-- Author image -->
-    <div class="testimonial-card__avatar">
-      <picture class="testimonial-card__picture">
-        <!-- Preferred modern format -->
-        <source srcset="assets/images/academy photos/testimonial/testimonial_1.avif" type="image/avif">
-        <!-- Modern fallback -->
-        <source srcset="assets/images/academy photos/testimonial/testimonial_1.webp" type="image/webp">
-        <!-- Original fallback -->
-        <img class="testimonial-card__image" src="assets/images/academy photos/testimonial/testimonial_1.jpg" alt="ModeInfinity student testimonial author" width="64" height="64" loading="lazy" decoding="async">
-      </picture>
+
+    <!-- Photo with a small gold badge -->
+    <div class="testimonial-card__avatar-wrap">
+      <div class="testimonial-card__avatar">
+        <picture class="testimonial-card__picture">
+          <source srcset="assets/images/testimonial/testimonial_1.avif" type="image/avif">
+          <source srcset="assets/images/testimonial/testimonial_1.webp" type="image/webp">
+          <img
+            class="testimonial-card__image"
+            src="assets/images/testimonial/testimonial_1.jpg"
+            alt="Describe the person in the photo"
+            width="64"
+            height="64"
+            loading="lazy"
+            decoding="async"
+          >
+        </picture>
+      </div>
+      <span class="testimonial-card__badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </span>
     </div>
-    <!-- Author information -->
+
+    <!-- Name, job title, location -->
     <div class="testimonial-card__author-info">
-      <cite class="testimonial-card__name"> Student Name </cite>
-      <span class="testimonial-card__role"> ModeInfinity Academy Student </span>
+      <cite class="testimonial-card__name">Full name</cite>
+      <span class="testimonial-card__role">Job title</span>
+      <span class="testimonial-card__location">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        City, Country
+      </span>
     </div>
+
   </footer>
+
 </article>

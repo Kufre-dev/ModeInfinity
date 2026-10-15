@@ -106,8 +106,8 @@ body {
 .section {
 	position: relative;
 	isolation: isolate;
-    padding-block: var(--section-space-sm);
-	}
+	padding-block: var(--section-space-sm);
+}
 .section--compact {
 	padding-block: var(--section-space-sm);
 }
@@ -175,13 +175,11 @@ body {
    -------------------------------------------------------------------------- */
 .section--divider {
 	border-bottom: 2px solid;
-	border-image: linear-gradient(
-		90deg,
-		transparent 0%,
-		var(--color-gold-500) 20%,
-		var(--color-gold-500) 80%,
-		transparent 100%
-	) 1;
+	border-image: linear-gradient(90deg,
+			transparent 0%,
+			var(--color-gold-500) 20%,
+			var(--color-gold-500) 80%,
+			transparent 100%) 1;
 }
 /* ==========================================================================
    4. SECTION HEADERS

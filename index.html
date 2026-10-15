@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 	<!-- ================= PRIMARY SEO ================= -->
 	<title>ModeInfinity | Shoemaking Academy &amp; Premium Footwear</title>
@@ -66,8 +66,13 @@
 	<link rel="stylesheet" href="styles/global.css">
 	<link rel="stylesheet" href="styles/layout.css">
 	<link rel="stylesheet" href="styles/components.css">
+	<link rel="stylesheet" href="styles/cart-drawer.css">
+	<link rel="stylesheet" href="styles/lightbox.css">
 	<link rel="stylesheet" href="styles/animations.css">
 	<link rel="stylesheet" href="styles/responsive.css">
+
+
+	
 
 	<!-- ================= STRUCTURED DATA: ORGANIZATION ================= -->
 	<script type="application/ld+json">
@@ -113,338 +118,157 @@
      HEADER
      ====================================================== -->
 <header class="site-header" data-site-header>
-
 	<div class="site-header__inner">
-
 		<!-- ==============================================
 		     BRAND / LOGO
 		     ============================================== -->
-		<a class="site-brand"
-		   href="index.html"
-		   data-nav-page="home"
-		   aria-label="ModeInfinity — home">
+		<a class="site-brand" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
 			<picture class="site-brand__picture">
 				<source srcset="assets/images/logo.avif" type="image/avif">
 				<source srcset="assets/images/logo.webp" type="image/webp">
-				<img
-					class="site-brand__logo"
-					src="assets/images/logo.png"
-					alt="ModeInfinity"
-					width="200"
-					height="56"
-					loading="eager"
-					decoding="async"
-					fetchpriority="high"
-				>
+				<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56" loading="eager" decoding="async" fetchpriority="high">
 			</picture>
 		</a>
-
 		<!-- ==============================================
 		     DESKTOP PRIMARY NAVIGATION
 		     ============================================== -->
-		<nav class="primary-navigation"
-		     data-primary-navigation
-		     aria-label="Primary navigation">
+		<nav class="primary-navigation" data-primary-navigation aria-label="Primary navigation">
 			<ul class="primary-navigation__list">
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link"
-					   href="index.html"
-					   data-nav-page="home">Home</a>
+					<a class="primary-navigation__link" href="index.html" data-nav-page="home">Home</a>
 				</li>
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link"
-					   href="about.html"
-					   data-nav-page="about">About</a>
+					<a class="primary-navigation__link" href="about.html" data-nav-page="about">About</a>
 				</li>
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link"
-					   href="academy.html"
-					   data-nav-page="academy">Academy</a>
+					<a class="primary-navigation__link" href="academy.html" data-nav-page="academy">Academy</a>
 				</li>
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link"
-					   href="portfolio.html"
-					   data-nav-page="portfolio">Portfolio</a>
+					<a class="primary-navigation__link" href="portfolio.html" data-nav-page="portfolio">Portfolio</a>
 				</li>
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link"
-					   href="shop.html"
-					   data-nav-page="shop">The Collection</a>
+					<a class="primary-navigation__link" href="shop.html" data-nav-page="shop">The Collection</a>
 				</li>
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link"
-					   href="contact.html"
-					   data-nav-page="contact">Contact</a>
+					<a class="primary-navigation__link" href="contact.html" data-nav-page="contact">Contact</a>
 				</li>
 			</ul>
 		</nav>
-
 		<!-- ==============================================
 		     HEADER ACTIONS
 		     ============================================== -->
 		<div class="header-actions">
-
 			<!-- Cart -->
-			<button
-				class="cart-button header-action"
-				id="cart-button"
-				type="button"
-				aria-controls="cart-drawer"
-				aria-expanded="false"
-				aria-label="Open shopping cart"
-				data-cart-open
-			>
-				<svg class="header-action__icon"
-				     aria-hidden="true"
-				     fill="none"
-				     focusable="false"
-				     height="22"
-				     stroke="currentColor"
-				     stroke-linecap="round"
-				     stroke-linejoin="round"
-				     stroke-width="1.7"
-				     viewBox="0 0 24 24"
-				     width="22">
+			<button class="cart-button header-action" id="cart-button" type="button"
+        aria-controls="mi-cart" aria-expanded="false"
+        aria-label="Open shopping cart" data-mi-cart-open>
+				<svg class="header-action__icon" aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
 					<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"></path>
 					<circle cx="9" cy="20" r="1"></circle>
 					<circle cx="18" cy="20" r="1"></circle>
 				</svg>
-				<span class="cart-button__count"
-				      aria-hidden="true"
-				      data-cart-count>0</span>
+				<span class="cart-button__count" data-mi-cart-count aria-hidden="true">0</span>
 			</button>
-
 			<!-- Mobile menu toggle -->
-			<button
-				class="mobile-nav-toggle"
-				type="button"
-				aria-controls="mobile-navigation"
-				aria-expanded="false"
-				aria-label="Open navigation menu"
-				data-mobile-nav-toggle
-			>
+			<button class="mobile-nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-mobile-nav-toggle>
 				<span class="mobile-nav-toggle__icon" aria-hidden="true">
 					<span></span>
 					<span></span>
 					<span></span>
 				</span>
 			</button>
-
 		</div>
 	</div>
-
-
 	<!-- ======================================================
 	     MOBILE NAVIGATION
 	     ====================================================== -->
-	<div class="mobile-navigation"
-	     id="mobile-navigation"
-	     data-mobile-navigation
-	     aria-hidden="true"
-	     aria-labelledby="mobile-nav-title"
-	     inert>
-
-		<div class="mobile-navigation__backdrop"
-		     data-mobile-nav-backdrop
-		     aria-hidden="true"></div>
-
-		<aside class="mobile-navigation__drawer"
-		       data-mobile-nav-drawer
-		       tabindex="-1">
-
+	<div class="mobile-navigation" id="mobile-navigation" role="dialog" aria-modal="true" data-mobile-navigation aria-hidden="true" aria-labelledby="mobile-nav-title" inert>
+		<div class="mobile-navigation__backdrop" data-mobile-nav-backdrop aria-hidden="true"></div>
+		<aside class="mobile-navigation__drawer" data-mobile-nav-drawer tabindex="-1">
 			<!-- Mobile navigation header -->
 			<div class="mobile-navigation__header">
-
-				<a class="site-brand site-brand--mobile"
-				   href="index.html"
-				   data-nav-page="home"
-				   aria-label="ModeInfinity — home">
+				<a class="site-brand site-brand--mobile" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
 					<picture class="site-brand__picture">
 						<source srcset="assets/images/logo.avif" type="image/avif">
 						<source srcset="assets/images/logo.webp" type="image/webp">
-						<img
-							class="site-brand__logo"
-							src="assets/images/logo.png"
-							alt="ModeInfinity"
-							width="160"
-							height="42"
-							decoding="async"
-						>
+						<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="160" height="42" decoding="async">
 					</picture>
 				</a>
-
 				<h2 class="sr-only" id="mobile-nav-title">Site navigation</h2>
-
-				<button class="mobile-navigation__close"
-				        type="button"
-				        aria-label="Close navigation menu"
-				        data-mobile-nav-close>
-					<svg aria-hidden="true"
-					     fill="none"
-					     focusable="false"
-					     height="22"
-					     stroke="currentColor"
-					     stroke-linecap="round"
-					     stroke-linejoin="round"
-					     stroke-width="1.7"
-					     viewBox="0 0 24 24"
-					     width="22">
+				<button class="mobile-navigation__close" type="button" aria-label="Close navigation menu" data-mobile-nav-close>
+					<svg aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
 						<path d="M6 6l12 12"></path>
 						<path d="M18 6L6 18"></path>
 					</svg>
 				</button>
-
 			</div>
-
 			<!-- Mobile navigation content -->
 			<div class="mobile-navigation__content">
 				<nav data-mobile-primary-navigation aria-label="Mobile primary navigation">
 					<ul class="mobile-navigation__list">
-
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link"
-							   href="index.html"
-							   data-nav-page="home">
+							<a class="mobile-navigation__link" href="index.html" data-nav-page="home">
 								<span>Home</span>
-								<svg aria-hidden="true"
-								     fill="none"
-								     focusable="false"
-								     height="18"
-								     stroke="currentColor"
-								     stroke-linecap="round"
-								     stroke-linejoin="round"
-								     stroke-width="1.6"
-								     viewBox="0 0 24 24"
-								     width="18">
+								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
 									<path d="M13 6l6 6-6 6"></path>
 								</svg>
 							</a>
 						</li>
-
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link"
-							   href="about.html"
-							   data-nav-page="about">
+							<a class="mobile-navigation__link" href="about.html" data-nav-page="about">
 								<span>About</span>
-								<svg aria-hidden="true"
-								     fill="none"
-								     focusable="false"
-								     height="18"
-								     stroke="currentColor"
-								     stroke-linecap="round"
-								     stroke-linejoin="round"
-								     stroke-width="1.6"
-								     viewBox="0 0 24 24"
-								     width="18">
+								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
 									<path d="M13 6l6 6-6 6"></path>
 								</svg>
 							</a>
 						</li>
-
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link"
-							   href="academy.html"
-							   data-nav-page="academy">
+							<a class="mobile-navigation__link" href="academy.html" data-nav-page="academy">
 								<span>Academy</span>
-								<svg aria-hidden="true"
-								     fill="none"
-								     focusable="false"
-								     height="18"
-								     stroke="currentColor"
-								     stroke-linecap="round"
-								     stroke-linejoin="round"
-								     stroke-width="1.6"
-								     viewBox="0 0 24 24"
-								     width="18">
+								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
 									<path d="M13 6l6 6-6 6"></path>
 								</svg>
 							</a>
 						</li>
-
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link"
-							   href="portfolio.html"
-							   data-nav-page="portfolio">
+							<a class="mobile-navigation__link" href="portfolio.html" data-nav-page="portfolio">
 								<span>Portfolio</span>
-								<svg aria-hidden="true"
-								     fill="none"
-								     focusable="false"
-								     height="18"
-								     stroke="currentColor"
-								     stroke-linecap="round"
-								     stroke-linejoin="round"
-								     stroke-width="1.6"
-								     viewBox="0 0 24 24"
-								     width="18">
+								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
 									<path d="M13 6l6 6-6 6"></path>
 								</svg>
 							</a>
 						</li>
-
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link"
-							   href="shop.html"
-							   data-nav-page="shop">
+							<a class="mobile-navigation__link" href="shop.html" data-nav-page="shop">
 								<span>The Collection</span>
-								<svg aria-hidden="true"
-								     fill="none"
-								     focusable="false"
-								     height="18"
-								     stroke="currentColor"
-								     stroke-linecap="round"
-								     stroke-linejoin="round"
-								     stroke-width="1.6"
-								     viewBox="0 0 24 24"
-								     width="18">
+								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
 									<path d="M13 6l6 6-6 6"></path>
 								</svg>
 							</a>
 						</li>
-
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link"
-							   href="contact.html"
-							   data-nav-page="contact">
+							<a class="mobile-navigation__link" href="contact.html" data-nav-page="contact">
 								<span>Contact</span>
-								<svg aria-hidden="true"
-								     fill="none"
-								     focusable="false"
-								     height="18"
-								     stroke="currentColor"
-								     stroke-linecap="round"
-								     stroke-linejoin="round"
-								     stroke-width="1.6"
-								     viewBox="0 0 24 24"
-								     width="18">
+								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
 									<path d="M13 6l6 6-6 6"></path>
 								</svg>
 							</a>
 						</li>
-
 					</ul>
 				</nav>
 			</div>
-
 			<!-- Mobile navigation footer -->
 			<div class="mobile-navigation__footer">
-				<button class="btn btn-block btn-ghost btn-secondary"
-				        type="button"
-				        aria-controls="cart-drawer"
-				        aria-expanded="false"
-				        data-cart-open>
-					View Shopping Cart
-				</button>
+				<button class="btn btn-block btn-ghost btn-secondary" type="button" aria-controls="cart-drawer" aria-expanded="false" data-cart-open> View Shopping Cart </button>
 			</div>
-
 		</aside>
 	</div>
-
 </header>
 
 		<!-- ======================================================
@@ -530,7 +354,7 @@
 	     ============================================== -->
 	<div class="home-hero__side-label" aria-hidden="true">
 		<span>Craftsmanship</span>
-		<span>Since 2020</span>
+		<span>Since 2015</span>
 	</div>
 
 	<!-- ==============================================
@@ -555,14 +379,14 @@
 
 	<div class="home-academy__heading">
 		<p class="eyebrow">The Academy</p>
-		<h2 id="academy-title" class="home-academy__title">
+		<h2 id="academy-title" class="home-academy__title home-section-title">
 			Learn the craft of footwear.
 			<em>Build your skill.</em>
 		</h2>
 	</div>
 
 	<div class="home-academy__intro">
-		<p class="home-academy__description">
+		<p class="home-academy__description home-section-intro">
 			Explore three pathways from beginner skills to professional
 			shoemaking and building your own footwear brand. Gain hands-on
 			experience in the atelier, master your craft, and turn your skills
@@ -579,9 +403,9 @@
 		     ================================================== -->
 		<section class="home-academy__programmes" aria-labelledby="academy-programmes-title">
 			<h3 id="academy-programmes-title" class="sr-only"> Learning pathways </h3>
-			<div class="home-academy__pillars" role="list" aria-label="ModeInfinity Academy learning pathways">
+			<div class="home-academy__pillars" aria-label="ModeInfinity Academy learning pathways">
 				<!-- Foundations -->
-				<article class="home-academy__pillar home-academy__pillar--foundations reveal reveal-left" role="listitem" data-delay="240">
+				<article class="home-academy__pillar home-academy__pillar--foundations reveal reveal-left"  data-delay="240">
 					<div class="home-academy__pillar-background" aria-hidden="true">
 						<picture>
 							<source srcset="assets/images/foundation.avif" type="image/avif">
@@ -610,7 +434,7 @@
 					</div>
 				</article>
 				<!-- Professional Practice -->
-				<article class="home-academy__pillar home-academy__pillar--professional reveal reveal-up" role="listitem" data-delay="320">
+				<article class="home-academy__pillar home-academy__pillar--professional reveal reveal-up"  data-delay="320">
 					<div class="home-academy__pillar-background" aria-hidden="true">
 						<picture>
 							<source srcset="assets/images/3-month.avif" type="image/avif">
@@ -626,7 +450,7 @@
 						</div>
 						<div class="home-academy__pillar-main">
 							<p class="home-academy__pillar-label">Develop</p>
-							<h4 class="home-academy__pillar-title">Professional Practice</h4>
+							<h4 class="home-academy__pillar-title">Professional</h4>
 							<p class="home-academy__pillar-description"> Develop stronger technical ability through deeper hands-on practice, refined construction, professional finishing, and the discipline required to produce footwear to a consistent standard. </p>
 						</div>
 						<a class="home-academy__pillar-link" href="academy.html#professional-practice" aria-label="Explore the Professional Practice programme">
@@ -639,7 +463,7 @@
 					</div>
 				</article>
 				<!-- Entrepreneur Mastery -->
-				<article class="home-academy__pillar home-academy__pillar--advanced reveal reveal-right" role="listitem" data-delay="400">
+				<article class="home-academy__pillar home-academy__pillar--advanced reveal reveal-right"  data-delay="400">
 					<div class="home-academy__pillar-background" aria-hidden="true">
 						<picture>
 							<source srcset="assets/images/1-3-year.avif" type="image/avif">
@@ -655,7 +479,7 @@
 						</div>
 						<div class="home-academy__pillar-main">
 							<p class="home-academy__pillar-label">Build</p>
-							<h4 class="home-academy__pillar-title">Entrepreneur Mastery</h4>
+							<h4 class="home-academy__pillar-title">Entrepreneur</h4>
 							<p class="home-academy__pillar-description"> Take your craftsmanship into business. Develop the technical, creative, and commercial skills to produce independently, price your work, build your brand, and grow your own footwear line. </p>
 						</div>
 						<a class="home-academy__pillar-link" href="academy.html#entrepreneur-mastery" aria-label="Explore the Entrepreneur Mastery programme">
@@ -734,6 +558,628 @@
 	</div>
 </section>
 
+
+
+
+		<!-- ==================================================
+		     COLLECTION
+		     Featured footwear. Rendered by scripts/shop.js
+		     from data/shoes.json.
+		     ================================================== -->
+
+
+<section class="home-collection section" id="collection" aria-labelledby="collection-title">
+	<div class="container">
+		<!-- Collection introduction -->
+		<header class="home-collection__header">
+			<p class="eyebrow home-collection__eyebrow"> The Collection </p>
+			<h2 class="home-collection__title home-section-title" id="collection-title"> Wear the craft. <em>Own the story.</em>
+			</h2>
+			<p class="home-collection__description home-section-intro"> Four pairs from the current run. Considered materials, disciplined construction, and everyday wear in mind — each pair made by hand in our workshop. </p>
+			<!-- No aria-label here: the visible text is the accessible name -->
+			<a class="btn btn-ghost home-collection__header-link" href="shop.html">
+				<span>View the full collection</span>
+				<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M5 12h14"></path>
+					<path d="M13 6l6 6-6 6"></path>
+				</svg>
+			</a>
+		</header>
+		<!-- Featured products
+         Your JavaScript fills this container. When it sets innerHTML the
+         skeleton cards disappear. It should also set aria-busy="false"
+         and show a message if loading fails. -->
+		<div class="home-collection__products" aria-busy="true" aria-label="Featured ModeInfinity footwear" data-home-products data-home-products-limit="4" role="region">
+			<div class="product-card product-card--skeleton" aria-hidden="true">
+				<div class="product-card__media skeleton"></div>
+				<div class="product-card__body">
+					<span class="sk-line sk-line--short"></span>
+					<span class="sk-line"></span>
+					<span class="sk-line sk-line--price"></span>
+				</div>
+			</div>
+			<div class="product-card product-card--skeleton" aria-hidden="true">
+				<div class="product-card__media skeleton"></div>
+				<div class="product-card__body">
+					<span class="sk-line sk-line--short"></span>
+					<span class="sk-line"></span>
+					<span class="sk-line sk-line--price"></span>
+				</div>
+			</div>
+			<div class="product-card product-card--skeleton" aria-hidden="true">
+				<div class="product-card__media skeleton"></div>
+				<div class="product-card__body">
+					<span class="sk-line sk-line--short"></span>
+					<span class="sk-line"></span>
+					<span class="sk-line sk-line--price"></span>
+				</div>
+			</div>
+			<div class="product-card product-card--skeleton" aria-hidden="true">
+				<div class="product-card__media skeleton"></div>
+				<div class="product-card__body">
+					<span class="sk-line sk-line--short"></span>
+					<span class="sk-line"></span>
+					<span class="sk-line sk-line--price"></span>
+				</div>
+			</div>
+		</div>
+		<noscript>
+			<p class="home-collection__empty"> Turn on JavaScript to see our featured pairs, or <a href="shop.html">browse the full collection</a>. </p>
+		</noscript>
+		<!-- Made to order -->
+		<footer class="home-collection__footer">
+			<div class="home-collection__footer-copy">
+				<p class="home-collection__footer-label"> Made to order </p>
+				<p class="home-collection__footer-note"> Custom sizing and bespoke colourways available on enquiry. </p>
+			</div>
+			<a class="btn btn-primary home-collection__footer-action" href="contact.html#custom-orders" aria-label="Request a custom pair from ModeInfinity">
+				<span>Request a custom pair</span>
+				<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M5 12h14"></path>
+					<path d="M13 6l6 6-6 6"></path>
+				</svg>
+			</a>
+		</footer>
+	</div>
+</section>
+
+
+
+
+<!-- =========================================
+     HOME CRAFTSMANSHIP — START
+========================================= -->
+
+
+
+<section class="home-craft section" aria-labelledby="craft-title">
+  <div class="container">
+
+    <!-- Section heading -->
+    <header class="home-craft__header section-header">
+      <p class="eyebrow home-craft__eyebrow">The Craft</p>
+
+      <div class="home-craft__heading-group">
+      
+<!-- <h2 class="home-craft__title">
+  <span class="home-craft__title-line">From Material to</span>
+  <span class="home-craft__title-line">
+    <span class="home-craft__title-accent">Finished Form</span>
+  </span>
+</h2> -->
+
+<h2 id="home-craft__title" class="home-craft__title home-academy__title home-section-title">
+			From Material to
+			<em>Finished Form.</em>
+		</h2>
+
+
+        <p class="home-craft__intro home-section-intro">
+          Every pair begins with understanding — the character of the
+          material, the balance of proportion, the discipline of
+          construction, and the patience required to turn an idea into
+          something made to be worn.
+        </p>
+      </div>
+    </header>
+
+    <!-- Craftsmanship feature -->
+    <div class="home-craft__feature">
+
+      <!-- Craftsmanship carousel -->
+      <div
+        class="home-craft__visual"
+        role="region"
+        aria-label="The ModeInfinity craftsmanship process"
+        aria-roledescription="carousel"
+        data-craft-autoplay="true"
+        data-craft-carousel
+        data-carousel-interval="5000"
+      >
+
+        <!-- Stage 1: Material -->
+        <div
+          class="home-craft__slide is-active"
+          data-craft-slide="0"
+          aria-hidden="false"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="1 of 4: Material"
+        >
+          <picture class="home-craft__image">
+            <source
+              srcset="/assets/images/Leather material.avif"
+              type="image/avif"
+            >
+            <source
+              srcset="/assets/images/Leather material.webp"
+              type="image/webp"
+            >
+            <img
+              src="/assets/images/Leather material.jpeg"
+              alt="Selected leather and footwear materials being prepared for handcrafted shoemaking"
+              decoding="async"
+              loading="eager"
+              fetchpriority="high"
+            >
+          </picture>
+        </div>
+
+        <!-- Stage 2: Construction -->
+        <div
+          class="home-craft__slide"
+          data-craft-slide="1"
+          aria-hidden="true"
+          inert
+          role="group"
+          aria-roledescription="slide"
+          aria-label="2 of 4: Construction"
+        >
+          <picture class="home-craft__image">
+            <source
+              srcset="/assets/images/construction.avif"
+              type="image/avif"
+            >
+            <source
+              srcset="/assets/images/construction.webp"
+              type="image/webp"
+            >
+            <img
+              src="/assets/images/construction.jpeg"
+              alt="Shoemaker constructing a leather shoe while students observe the hands-on process"
+              decoding="async"
+              loading="lazy"
+            >
+          </picture>
+        </div>
+
+        <!-- Stage 3: Finishing -->
+        <div
+          class="home-craft__slide"
+          data-craft-slide="2"
+          aria-hidden="true"
+          inert
+          role="group"
+          aria-roledescription="slide"
+          aria-label="3 of 4: Finishing"
+        >
+          <picture class="home-craft__image">
+            <source
+              srcset="/assets/images/finishing.avif"
+              type="image/avif"
+            >
+            <source
+              srcset="/assets/images/finishing.webp"
+              type="image/webp"
+            >
+            <img
+              src="/assets/images/finishing.jpeg"
+              alt="Shoemaker refining the finishing details of an almost-completed leather shoe while students observe"
+              decoding="async"
+              loading="lazy"
+            >
+          </picture>
+        </div>
+
+        <!-- Stage 4: Identity -->
+        <div
+          class="home-craft__slide"
+          data-craft-slide="3"
+          aria-hidden="true"
+          inert
+          role="group"
+          aria-roledescription="slide"
+          aria-label="4 of 4: Identity"
+        >
+          <picture class="home-craft__image">
+            <source
+              srcset="/assets/images/Identity.avif"
+              type="image/avif"
+            >
+            <source
+              srcset="/assets/images/Identity.webp"
+              type="image/webp"
+            >
+            <img
+              src="/assets/images/Identity.jpeg"
+              alt="Finished handcrafted leather shoe representing ModeInfinity craftsmanship and design identity"
+              decoding="async"
+              loading="lazy"
+            >
+          </picture>
+        </div>
+
+        <!-- Current stage counter -->
+        <div
+          class="home-craft__visual-index"
+          aria-hidden="true"
+          data-craft-index
+        >
+          01 / 04
+        </div>
+
+        <!-- Previous and next controls -->
+        <div class="home-craft__controls">
+          <button
+            class="home-craft__control home-craft__control--prev"
+            type="button"
+            aria-label="Previous craft stage"
+            data-craft-prev
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19 12H5"></path>
+              <path d="M11 6l-6 6 6 6"></path>
+            </svg>
+          </button>
+
+          <button
+            class="home-craft__control home-craft__control--next"
+            type="button"
+            aria-label="Next craft stage"
+            data-craft-next
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14"></path>
+              <path d="M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Stage pagination -->
+        <!-- <div
+          class="home-craft__pagination"
+          role="tablist"
+          aria-label="Craft stages"
+          data-craft-pagination
+        >
+          <button
+            class="home-craft__pagination-item is-active"
+            type="button"
+            role="tab"
+            aria-label="Show Material stage"
+            aria-selected="true"
+            aria-controls="craft-title"
+            data-craft-dot="0"
+          ></button>
+
+          <button
+            class="home-craft__pagination-item"
+            type="button"
+            role="tab"
+            aria-label="Show Construction stage"
+            aria-selected="false"
+            tabindex="-1"
+            data-craft-dot="1"
+          ></button>
+
+          <button
+            class="home-craft__pagination-item"
+            type="button"
+            role="tab"
+            aria-label="Show Finishing stage"
+            aria-selected="false"
+            tabindex="-1"
+            data-craft-dot="2"
+          ></button>
+
+          <button
+            class="home-craft__pagination-item"
+            type="button"
+            role="tab"
+            aria-label="Show Identity stage"
+            aria-selected="false"
+            tabindex="-1"
+            data-craft-dot="3"
+          ></button>
+        </div> -->
+
+      </div>
+      <!-- End craftsmanship carousel -->
+
+
+      <!-- Craftsmanship details -->
+      <div class="home-craft__details">
+
+        <div class="home-craft__detail-intro">
+
+          <h3 class="home-craft__detail-title">
+            Precision lives in the details.
+          </h3>
+
+          <p class="home-craft__detail-text">
+            Cutting, shaping, stitching, lasting and finishing are not
+            isolated steps. Together, they form a disciplined process
+            where material, technique and design must work as one.
+          </p>
+        </div>
+
+        <!-- Four stages of the craft -->
+        <ol
+          class="home-craft__process"
+          aria-label="The ModeInfinity craft process"
+        >
+          <li class="home-craft__process-item">
+            <span class="home-craft__process-number" aria-hidden="true">
+              01
+            </span>
+            <span class="home-craft__process-name">Material</span>
+          </li>
+
+          <li class="home-craft__process-item">
+            <span class="home-craft__process-number" aria-hidden="true">
+              02
+            </span>
+            <span class="home-craft__process-name">Construction</span>
+          </li>
+
+          <li class="home-craft__process-item">
+            <span class="home-craft__process-number" aria-hidden="true">
+              03
+            </span>
+            <span class="home-craft__process-name">Finishing</span>
+          </li>
+
+          <li class="home-craft__process-item">
+            <span class="home-craft__process-number" aria-hidden="true">
+              04
+            </span>
+            <span class="home-craft__process-name">Identity</span>
+          </li>
+        </ol>
+
+        <!-- Portfolio call to action -->
+        <div class="home-craft__proof">
+
+          <p class="home-craft__proof-text">
+            See the people, process, and finished work behind ModeInfinity.
+          </p>
+
+          
+
+<a class="home-craft__cta btn btn-primary" href="YOUR-EXISTING-DESTINATION">
+  <span class="home-craft__cta-label">Explore Our Craftsmanship</span>
+  <svg
+    class="home-craft__cta-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M5 12h14M13 6l6 6-6 6"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</a>
+
+        </div>
+
+      </div>
+      <!-- End craftsmanship details -->
+
+    </div>
+    <!-- End craftsmanship feature -->
+
+  </div>
+</section>
+
+
+
+<!-- =========================================
+     HOME CRAFTSMANSHIP — END
+========================================= -->
+
+
+<!-- The whole section is hidden until JavaScript confirms there is at least one
+     published testimonial (see scripts/testimonials.js). -->
+
+
+		<!-- ======================================================
+		     TESTIMONIALS
+
+		     Rendered by scripts/testimonials.js from
+		     data/testimonials.json.
+
+		     Tabs filter by entry type: student | customer | partner.
+		     Tabs with no published entries hide automatically.
+		     ====================================================== -->
+		<section class="home-testimonials section section--soft" id="testimonials" aria-labelledby="testimonials-title" data-home-testimonials-section>
+	<div class="container">
+		<!-- ==============================================
+				     HEADER
+				     ============================================== -->
+		<header class="home-testimonials__header">
+			<p class="eyebrow home-testimonials__eyebrow"> Voices </p>
+			<h2 id="testimonials-title" class="home-testimonials__title home-section-title"> Trained here. <em>In their own words.</em>
+			</h2>
+			<p class="home-testimonials__description home-section-intro"> What it was like to learn the craft, wear the footwear, or work with us at ModeInfinity. </p>
+		</header>
+		<!-- ==============================================
+				     TABS
+				     Tabs are hidden until the JS knows which types
+				     have published entries. Button clicks are handled
+				     in scripts/testimonials.js.
+				     ============================================== -->
+		<div class="home-testimonials__tabs" role="tablist" aria-label="Testimonial categories" data-testimonials-tabs hidden>
+			<button type="button" class="home-testimonials__tab" data-testimonials-tab="student"> Students </button>
+			<button type="button" class="home-testimonials__tab" data-testimonials-tab="customer"> Customers </button>
+			<button type="button" class="home-testimonials__tab" data-testimonials-tab="partner"> Partners </button>
+		</div>
+		<!-- ==============================================
+				     TESTIMONIAL ROW
+				     ============================================== -->
+		<div class="home-testimonials__viewport" role="region" aria-label="Testimonials" data-testimonials-viewport>
+			<div class="home-testimonials__list" aria-busy="true" data-home-testimonials data-home-testimonials-limit="12">
+				<!-- Skeleton × 3 -->
+				<div class="testimonial-card testimonial-card--skeleton" aria-hidden="true">
+					<div class="testimonial-card__content">
+						<span class="sk-line sk-line--stars"></span>
+						<span class="sk-line"></span>
+						<span class="sk-line"></span>
+						<span class="sk-line sk-line--short"></span>
+					</div>
+					<div class="testimonial-card__author">
+						<span class="sk-circle"></span>
+						<div class="testimonial-card__author-info">
+							<span class="sk-line sk-line--name"></span>
+							<span class="sk-line sk-line--role"></span>
+						</div>
+					</div>
+				</div>
+				<div class="testimonial-card testimonial-card--skeleton" aria-hidden="true">
+					<div class="testimonial-card__content">
+						<span class="sk-line sk-line--stars"></span>
+						<span class="sk-line"></span>
+						<span class="sk-line"></span>
+						<span class="sk-line sk-line--short"></span>
+					</div>
+					<div class="testimonial-card__author">
+						<span class="sk-circle"></span>
+						<div class="testimonial-card__author-info">
+							<span class="sk-line sk-line--name"></span>
+							<span class="sk-line sk-line--role"></span>
+						</div>
+					</div>
+				</div>
+				<div class="testimonial-card testimonial-card--skeleton" aria-hidden="true">
+					<div class="testimonial-card__content">
+						<span class="sk-line sk-line--stars"></span>
+						<span class="sk-line"></span>
+						<span class="sk-line"></span>
+						<span class="sk-line sk-line--short"></span>
+					</div>
+					<div class="testimonial-card__author">
+						<span class="sk-circle"></span>
+						<div class="testimonial-card__author-info">
+							<span class="sk-line sk-line--name"></span>
+							<span class="sk-line sk-line--role"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ==============================================
+				     CTA
+				     ============================================== -->
+		<div class="home-testimonials__cta">
+			<a class="btn btn-primary btn--large" href="academy.html"> Explore the Academy </a>
+		</div>
+	</div>
+</section>
+
+<!-- Add once, near the end of the page, with your other scripts:
+     <script src="scripts/testimonials.js" defer></script> -->
+
+
+
+
+
+
+		
+<section class="section section--academy home-academy-cta" id="home-academy-cta" aria-labelledby="home-academy-cta-title">
+	<div class="container">
+		<div class="home-academy-cta__inner">
+			<!-- Background decoration -->
+			<div class="home-academy-cta__background" aria-hidden="true">
+				<div class="home-academy-cta__pattern"></div>
+			</div>
+			<!-- CTA content -->
+			<div class="home-academy-cta__content">
+				<div class="home-academy-cta__main">
+					<h2 class="home-academy-cta__title home-section-title" id="home-academy-cta-title"> Build Your Future <em>in Shoemaking.</em> </h2>
+					<p class="home-academy-cta__description home-section-intro"> Learn practical shoemaking skills, develop your craft, and explore the knowledge needed to grow in the footwear industry. </p>
+					<!-- Program benefits -->
+					<ul class="home-academy-cta__features" aria-label="Academy learning benefits">
+						<li class="home-academy-cta__feature">
+							<svg class="home-academy-cta__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+								<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+								<path d="m22 4-10 10.01-3-3" />
+							</svg>
+							<span>Hands-on Training</span>
+						</li>
+						<li class="home-academy-cta__feature">
+							<svg class="home-academy-cta__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+								<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+								<path d="m22 4-10 10.01-3-3" />
+							</svg>
+							<span>Practical Skill Development</span>
+						</li>
+						<li class="home-academy-cta__feature">
+							<svg class="home-academy-cta__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+								<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+								<path d="m22 4-10 10.01-3-3" />
+							</svg>
+							<span>Explore Shoemaking as a Business</span>
+						</li>
+					</ul>
+				</div>
+				<!-- Primary action -->
+				<div class="home-academy-cta__actions">
+					<a class="btn btn--hero btn--hero-primary home-academy-cta__button" href="/academy.html#academy-programs">
+						<span class="btn-text btn-text-two"> Explore Academy Programs </span>
+						<svg class="home-academy-cta__button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+							<path d="M5 12h14" />
+							<path d="m12 5 7 7-7 7" />
+						</svg>
+					</a>
+				</div>
+			</div>
+			<!-- Supporting note -->
+			<div class="home-academy-cta__footer">
+				<p class="home-academy-cta__note">
+					<svg class="home-academy-cta__note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+						<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+					</svg>
+					<span> Join an upcoming cohort and take the next step in your shoemaking journey. </span>
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
 
 
 
@@ -920,12 +1366,12 @@
 				<a href="error.html">Privacy</a>
 				<a href="error.html">Terms</a>
 			</nav>
-			<button class="scroll-to-top" type="button" aria-label="Back to top" data-scroll-top>
+			<!-- <button class="scroll-to-top" type="button" aria-label="Back to top" data-scroll-top>
 				<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" width="20" height="20">
 					<path d="M12 19V5" />
 					<path d="m6 11 6-6 6 6" />
 				</svg>
-			</button>
+			</button> -->
 		</div>
 	</div>
 </footer>
@@ -937,14 +1383,29 @@
 		<!-- ======================================================
      REUSABLE FUNCTIONAL COMPONENTS
      ====================================================== -->
-	<div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
+	<!-- <div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
 <div data-component="lightbox" data-component-path="components/lightbox.html"></div>
 <div data-component="toast" data-component-path="components/toast.html"></div>
-<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div>
+<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div> -->
 		<!-- ======================================================
      APPLICATION ENTRY POINT
      ====================================================== -->
-<script type="module" src="scripts/main.js"></script>
-	</body>
+<!-- <script type="module" src="scripts/main.js"></script>
+<script src="scripts/testimonials.js" defer></script> -->
 
+
+
+<!-- Reusable functional components -->
+<div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
+<div data-component="lightbox" data-component-path="components/lightbox.html"></div>
+<div data-component="toast" data-component-path="components/toast.html"></div>
+<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div>
+
+<!-- Cart drawer — independent of main.js -->
+<script src="scripts/cart-drawer.js" defer></script>
+<script type="module" src="scripts/main.js"></script>
+<script src="scripts/testimonials.js" defer></script>
+
+
+	</body>
 </html>

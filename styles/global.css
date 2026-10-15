@@ -347,7 +347,7 @@ nav ol {
 blockquote {
 	margin-inline: 0;
 	padding-inline-start: var(--space-5);
-	border-inline-start: var(--border-width-medium) solid var(--color-accent);
+	/* border-inline-start: var(--border-width-medium) solid var(--color-accent); */
 	color: var(--color-text-muted);
 }
 cite {
