@@ -1,30 +1,6 @@
 /* ============================================================
    MODEINFINITY — CONTACT FORM PAGE CONTROLLER
    File: scripts/contact-form.js
-
-   Owns the contact-page-specific UI that scripts/formhandler.js
-   deliberately does not touch:
-
-     1. Conditional field visibility
-        - #programSelectField.visible  → when enquiry type = "Academy Inquiry"
-        - #customSubjectField.visible  → when enquiry type = "Custom Order"
-        - #orderReferenceField.visible → when enquiry type = "Existing Order"
-
-     2. Live hint under the enquiry select
-        - #subjectHint updates on every change with a short description
-          of the selected option.
-
-     3. Success modal open / close
-        - Opens on "modeinfinity:form:success" (dispatched by formhandler.js)
-        - Closes via [data-contact-success-close] buttons, backdrop, or Escape
-        - Traps focus while open, restores focus on close, locks body scroll
-
-   Loaded only on contact.html. Null-guards every lookup, so the
-   file is safe to load even if the contact markup changes.
-
-   Dependencies:
-     - scripts/formhandler.js must fire "modeinfinity:form:success"
-       with detail.formName === "contact".
    ============================================================ */
 
 (function () {
@@ -32,10 +8,6 @@
 
 	/* ============================================================
 	   0. SUBJECT HINTS
-	   ============================================================
-	   Short, human descriptions shown under the enquiry select.
-	   Keys must match the <option value="…"> strings in contact.html.
-	   Edit a description by changing one line here.
 	   ============================================================ */
 
 	const SUBJECT_HINTS = {
@@ -51,7 +23,82 @@
 	};
 
 	/* ============================================================
-	   1. CONDITIONAL FIELD VISIBILITY + HINT
+	   1. PREFILL FROM SHOP
+	   ============================================================ */
+
+	function initPrefillFromShop() {
+		const params = new URLSearchParams(window.location.search);
+		const productName = (params.get("custom") || "").trim();
+		const shoeId = (params.get("shoe") || "").trim();
+
+		if (!productName && !shoeId) {
+			return;
+		}
+
+		const subjectSelect = document.getElementById("modernSubject");
+		const customSubject = document.getElementById("customSubject");
+		const messageField = document.getElementById("modernMessage");
+		const formWrap = document.querySelector(".contact-form-wrap");
+
+		if (!subjectSelect) {
+			return;
+		}
+
+		/* 1. Pre-select "Custom Order" and fire change so
+		      applyVisibility() reveals the reference field. */
+		subjectSelect.value = "Custom Order";
+		subjectSelect.dispatchEvent(new Event("change", { bubbles: true }));
+
+		/* 2. Prefill reference code */
+		if (customSubject && shoeId && !customSubject.value) {
+			customSubject.value = shoeId;
+		}
+
+				/* 3. Prefill message with an editable template */
+		if (messageField && !messageField.value) {
+			const displayName = productName || "this pair";
+			const refLine = shoeId ? ` (${shoeId})` : "";
+
+			messageField.value =
+				`I'd like to customise "${displayName}"${refLine}.\n\n` +
+				`My preferences:\n` +
+				`- Colour / finish: \n` +
+				`- Leather preference: \n` +
+				`- Size: \n` +
+				`- Foot / fit notes (if any): \n` +
+				`- When I'd like it: \n` +
+				`- Occasion (everyday, work, event, gift): \n` +
+				`- Anything else — inspiration, materials, or photos you'd like to share: `;
+		}
+
+		/* 4. Scroll to the FORM WRAP (not the section header), then focus */
+		window.requestAnimationFrame(function () {
+			if (formWrap) {
+				formWrap.scrollIntoView({
+					behavior: "smooth",
+					block: "start"
+				});
+			}
+
+			window.setTimeout(function () {
+				if (customSubject) {
+					customSubject.focus({ preventScroll: true });
+				}
+			}, 500);
+		});
+
+		/* 5. Clean the URL */
+		try {
+			history.replaceState(
+				null,
+				"",
+				window.location.pathname + "#contact-form"
+			);
+		} catch (e) {}
+	}
+
+	/* ============================================================
+	   2. CONDITIONAL FIELD VISIBILITY + HINT
 	   ============================================================ */
 
 	function initConditionalFields() {
@@ -78,72 +125,57 @@
 		function applyVisibility() {
 			const value = subjectSelect.value;
 
-			/* ---- Academy application ---- */
+			/* Academy application */
 			if (programField) {
 				programField.classList.toggle(
 					"visible",
 					value === "Academy Inquiry"
 				);
 
-				/*
-				 * When program is hidden, mark its select
-				 * .has-value=false so the floating label
-				 * returns to its resting position on the
-				 * next open. formhandler.js keeps this in
-				 * sync on input/change, but we handle the
-				 * hidden case here because the field is
-				 * display:none and never receives an event.
-				 */
-				const programSelect =
-					programField.querySelector("select");
+				const programSelect = programField.querySelector("select");
 
 				if (programSelect && value !== "Academy Inquiry") {
 					programSelect.classList.remove("has-value");
 				}
 			}
 
-			/* ---- Custom order ---- */
+			/* Custom order */
 			if (customField) {
 				customField.classList.toggle(
 					"visible",
 					value === "Custom Order"
 				);
 
-				const customInput =
-					customField.querySelector("input");
+				const customInput = customField.querySelector("input");
 
 				if (customInput && value !== "Custom Order") {
 					customInput.classList.remove("has-value");
 				}
 			}
 
-			/* ---- Existing order ---- */
+			/* Existing order */
 			if (orderField) {
 				orderField.classList.toggle(
 					"visible",
 					value === "Existing Order"
 				);
 
-				const orderInput =
-					orderField.querySelector("input");
+				const orderInput = orderField.querySelector("input");
 
 				if (orderInput && value !== "Existing Order") {
 					orderInput.classList.remove("has-value");
 				}
 			}
 
-			/* ---- Live hint ---- */
 			updateHint(value);
 		}
 
 		subjectSelect.addEventListener("change", applyVisibility);
-
-		/* Honour a preselected option on first paint */
 		applyVisibility();
 	}
 
 	/* ============================================================
-	   2. SUCCESS MODAL
+	   3. SUCCESS MODAL
 	   ============================================================ */
 
 	function initSuccessModal() {
@@ -174,7 +206,6 @@
 			document.body.style.overflow = "hidden";
 			isOpen = true;
 
-			/* Move focus into the panel on next frame */
 			window.requestAnimationFrame(function () {
 				const focusables =
 					panel ?
@@ -214,7 +245,6 @@
 			lastFocus = null;
 		}
 
-		/* Close on any [data-contact-success-close] element */
 		closeButtons.forEach(function (button) {
 			button.addEventListener("click", function (event) {
 				event.preventDefault();
@@ -222,7 +252,6 @@
 			});
 		});
 
-		/* Close on Escape */
 		document.addEventListener("keydown", function (event) {
 			if (!isOpen) {
 				return;
@@ -234,7 +263,6 @@
 			}
 		});
 
-		/* Basic focus trap while open */
 		modal.addEventListener("keydown", function (event) {
 			if (!isOpen || event.key !== "Tab" || !panel) {
 				return;
@@ -274,12 +302,6 @@
 			}
 		});
 
-		/*
-		 * Open the modal when formhandler dispatches success.
-		 *
-		 * Guard on formName so this listener does nothing if a
-		 * different form on the page ever fires the same event.
-		 */
 		document.addEventListener(
 			"modeinfinity:form:success",
 			function (event) {
@@ -295,11 +317,12 @@
 	}
 
 	/* ============================================================
-	   3. INITIALIZATION
+	   4. INITIALIZATION
 	   ============================================================ */
 
 	function init() {
 		initConditionalFields();
+		initPrefillFromShop();
 		initSuccessModal();
 	}
 
