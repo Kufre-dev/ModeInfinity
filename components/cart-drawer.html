@@ -9,7 +9,7 @@
   <button
     class="mi-cart__backdrop"
     type="button"
-    aria-label="Close shopping cart"
+    aria-label="Close cart"
     tabindex="-1"
     data-mi-cart-close
   ></button>
@@ -17,14 +17,14 @@
   <div class="mi-cart__panel">
     <header class="mi-cart__header">
       <div class="mi-cart__heading">
-        <p class="mi-cart__eyebrow">Your selection</p>
-        <h2 class="mi-cart__title" id="mi-cart-title">Shopping cart</h2>
+        <p class="mi-cart__eyebrow">Selected pairs</p>
+        <h2 class="mi-cart__title" id="mi-cart-title">Your cart</h2>
       </div>
 
       <button
         class="mi-cart__close"
         type="button"
-        aria-label="Close shopping cart"
+        aria-label="Close cart"
         data-mi-cart-close
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
@@ -35,7 +35,7 @@
     </header>
 
     <div class="mi-cart__body">
-      <p class="mi-cart__empty" data-mi-cart-empty>Your cart is empty.</p>
+      <p class="mi-cart__empty" data-mi-cart-empty>Your cart is empty. Add a pair to start an order.</p>
       <ul class="mi-cart__items" data-mi-cart-items></ul>
     </div>
 
@@ -44,8 +44,8 @@
         <span>Subtotal</span>
         <strong data-mi-cart-subtotal>₦0</strong>
       </div>
-      <button class="mi-cart__checkout" type="button">Continue to checkout</button>
-      <button class="mi-cart__continue" type="button" data-mi-cart-close>Continue shopping</button>
+      <button class="mi-cart__checkout" type="button" data-mi-cart-checkout>Checkout via WhatsApp</button>
+      <button class="mi-cart__continue" type="button" data-mi-cart-close>Continue browsing</button>
     </footer>
   </div>
 </aside>

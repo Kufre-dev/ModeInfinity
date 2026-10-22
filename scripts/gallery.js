@@ -17,6 +17,7 @@
    - Screen-reader status announcements
    - Reduced-motion support
    - Graceful fallback
+   - Inert-based closed-state hardening
 
    HTML:
    - components/lightbox.html
@@ -25,6 +26,7 @@
    - styles/components.css
    - styles/animations.css
    - styles/responsive.css
+   - styles/lightbox.css
 
    Dependencies:
    - scripts/helpers.js
@@ -814,6 +816,26 @@ export function openLightbox(item) {
 		return;
 	}
 
+	/*
+	 * Guard against re-entry.
+	 *
+	 * The keydown handler on gallery triggers used to bind a
+	 * listener to <button> elements, which caused both our
+	 * listener and the native Enter/Space click to fire. The
+	 * second call would overwrite previouslyFocusedElement
+	 * (pointing it at the lightbox close button) and
+	 * previousBodyOverflow (already "hidden"), breaking focus
+	 * restoration and leaving the page scroll-locked after
+	 * close.
+	 *
+	 * The bindGalleryTriggers() fix removes the double-fire
+	 * at the source. This guard is defence-in-depth in case
+	 * any future code path calls openLightbox() twice.
+	 */
+	if (state.isOpen) {
+		return;
+	}
+
 	const galleryName =
 		getGalleryName(item);
 
@@ -853,6 +875,14 @@ export function openLightbox(item) {
 		gallery[index],
 		index,
 		gallery.length
+	);
+
+	/*
+	 * Remove inert BEFORE adding is-open so focus can move
+	 * into the lightbox in the next animation frame.
+	 */
+	elements.lightbox.removeAttribute(
+		"inert"
 	);
 
 	addClass(
@@ -911,7 +941,16 @@ export function closeLightbox(event = null) {
 	state.activeIndex = -1;
 	state.galleryItems = [];
 
+	/*
+	 * Restore focus BEFORE applying inert, so the focus()
+	 * call can move focus cleanly out of the lightbox.
+	 */
 	restoreFocus();
+
+	elements.lightbox.setAttribute(
+		"inert",
+		""
+	);
 }
 
 
@@ -1091,6 +1130,12 @@ function handleGalleryTrigger(event) {
 
 /**
  * Bind gallery trigger events.
+ *
+ * Native interactive elements (<button>, <a>) already fire
+ * click on Enter / Space (buttons) or Enter (links). Binding
+ * a separate keydown handler to them caused openLightbox to
+ * be invoked twice per activation. We only bind keydown for
+ * non-native elements that we promote to role="button".
  */
 function bindGalleryTriggers() {
 	state.galleryItems =
@@ -1104,28 +1149,35 @@ function bindGalleryTriggers() {
 				handleGalleryTrigger
 			);
 
+			const isNativeButton =
+				item instanceof HTMLButtonElement;
+
+			const isNativeLink =
+				item instanceof HTMLAnchorElement;
+
 			/*
-			 * Allow non-button elements to become keyboard
-			 * accessible gallery triggers.
+			 * Native interactive elements handle Enter / Space
+			 * themselves by dispatching a click event, which
+			 * the click handler above already processes.
 			 */
-			const naturallyFocusable =
-				item instanceof HTMLButtonElement ||
-				item instanceof HTMLAnchorElement ||
-				item.hasAttribute(
-					"tabindex"
-				);
-
-			if (!naturallyFocusable) {
-				item.setAttribute(
-					"tabindex",
-					"0"
-				);
-
-				item.setAttribute(
-					"role",
-					"button"
-				);
+			if (isNativeButton || isNativeLink) {
+				return;
 			}
+
+			/*
+			 * Promote a non-native element to a keyboard-
+			 * accessible button. Bind its own Enter / Space
+			 * handler because it will not fire click natively.
+			 */
+			item.setAttribute(
+				"tabindex",
+				"0"
+			);
+
+			item.setAttribute(
+				"role",
+				"button"
+			);
 
 			on(
 				item,
@@ -1281,6 +1333,16 @@ export function initGallery() {
 
 	updateAriaState(false);
 
+	/*
+	 * Mark the lightbox inert in its closed state so its
+	 * contents are excluded from focus, tab order and the
+	 * accessibility tree regardless of CSS visibility rules.
+	 */
+	elements.lightbox.setAttribute(
+		"inert",
+		""
+	);
+
 	bindGalleryTriggers();
 
 	bindLightboxControls();
@@ -1312,6 +1374,11 @@ export function destroyGallery() {
 		removeClass(
 			elements.lightbox,
 			"is-open"
+		);
+
+		elements.lightbox.setAttribute(
+			"inert",
+			""
 		);
 	}
 

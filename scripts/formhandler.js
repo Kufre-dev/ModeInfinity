@@ -15,6 +15,8 @@
    - Safe form data collection
    - Form reset after successful submission
    - Accessible status announcements
+   - Floating-label state (for <select>)
+   - Cross-module events (success / invalid / error)
 
    Intended forms:
    - Contact form
@@ -39,6 +41,12 @@
      stored in this frontend module.
    - No external form service is assumed.
 
+   Events dispatched on document:
+   - "modeinfinity:toast"         → { type, title, message }
+   - "modeinfinity:form:success"  → { form, formName, message, response }
+   - "modeinfinity:form:invalid"  → { form, formName, errors }
+   - "modeinfinity:form:error"    → { form, formName, error }
+
    Principles:
    - ES modules
    - No external dependencies
@@ -52,13 +60,7 @@
    1. IMPORTS
    ============================================================ */
 
-import {
-    $$,
-    $,
-    on,
-    escapeHTML,
-    onDOMReady
-} from "./helpers.js";
+import { $$, on } from "./helpers.js";
 
 import {
 	validateForm,
@@ -195,7 +197,99 @@ function clearSubmitting(form) {
 
 
 /* ============================================================
-   6. FORM VALIDATION RULE PARSING
+   6. FIELD STATE HELPERS
+   ============================================================ */
+
+/**
+ * Keep the select floating-label state in sync.
+ *
+ * The contact.css floating-label rules rely on
+ *   select.has-value ~ label
+ * because the DOM `value` attribute never updates when the
+ * user picks an option. This helper adds / removes the class
+ * so the label lifts when a real option is chosen.
+ *
+ * @param {HTMLElement} field
+ */
+function updateFieldState(field) {
+	if (!(field instanceof HTMLElement)) {
+		return;
+	}
+
+	if (field instanceof HTMLSelectElement) {
+		const hasValue =
+			typeof field.value === "string" &&
+			field.value.trim() !== "";
+
+		field.classList.toggle(
+			"has-value",
+			hasValue
+		);
+	}
+}
+
+
+/**
+ * Remove a field's validation error state and its message node.
+ *
+ * Mirrors what validators.js `clearFieldError` would do, but
+ * defined locally so this module stays robust against
+ * validators.js API changes.
+ *
+ * @param {HTMLElement} field
+ */
+function clearFieldError(field) {
+	if (!(field instanceof HTMLElement)) {
+		return;
+	}
+
+	field.removeAttribute(
+		"aria-invalid"
+	);
+
+	const errorId =
+		`${field.id || field.name}-error`;
+
+	if (!errorId || errorId === "-error") {
+		return;
+	}
+
+	const errorEl =
+		document.getElementById(errorId);
+
+	if (errorEl) {
+		errorEl.remove();
+	}
+
+	const describedBy =
+		field.getAttribute(
+			"aria-describedby"
+		);
+
+	if (!describedBy) {
+		return;
+	}
+
+	const remainingIds =
+		describedBy
+		.split(/\s+/)
+		.filter((id) => id && id !== errorId);
+
+	if (remainingIds.length) {
+		field.setAttribute(
+			"aria-describedby",
+			remainingIds.join(" ")
+		);
+	} else {
+		field.removeAttribute(
+			"aria-describedby"
+		);
+	}
+}
+
+
+/* ============================================================
+   7. FORM VALIDATION RULE PARSING
    ============================================================ */
 
 /**
@@ -204,9 +298,7 @@ function clearSubmitting(form) {
  * Examples:
  *
  * data-validate="required,email"
- *
  * data-min-length="10"
- *
  * data-max-length="500"
  *
  * @param {HTMLElement} field
@@ -218,6 +310,23 @@ function getFieldRules(field) {
 	}
 
 	const rules = [];
+
+	/*
+	 * A checkbox needs a "checkbox" rule rather than "required".
+	 *
+	 * The "required" rule is implemented by validateRequired()
+	 * which returns !isEmpty(value). isEmpty() runs
+	 * String(value).trim().length === 0. For a checkbox,
+	 * getFieldValue returns field.checked — a boolean. When
+	 * unchecked, String(false).trim() is "false" — length 5 —
+	 * so isEmpty returns false and validateRequired passes.
+	 *
+	 * The "checkbox" rule, by contrast, returns Boolean(value),
+	 * which correctly fails on false.
+	 */
+	const isCheckbox =
+		field instanceof HTMLInputElement &&
+		field.type === "checkbox";
 
 	const validateAttribute =
 		field.dataset.validate || "";
@@ -235,9 +344,18 @@ function getFieldRules(field) {
 		(ruleType) => {
 			switch (ruleType) {
 				case "required":
-					rules.push({
-						type: "required"
-					});
+					if (isCheckbox) {
+						rules.push({
+							type: "checkbox",
+							message:
+								field.dataset.requiredMessage ||
+								"Please confirm to continue."
+						});
+					} else {
+						rules.push({
+							type: "required"
+						});
+					}
 					break;
 
 				case "email":
@@ -317,7 +435,7 @@ function getFieldRules(field) {
 
 
 /* ============================================================
-   7. FIELD RULE COLLECTION
+   8. FIELD RULE COLLECTION
    ============================================================ */
 
 /**
@@ -378,7 +496,7 @@ function buildValidationRules(form) {
 
 
 /* ============================================================
-   8. FORM DATA COLLECTION
+   9. FORM DATA COLLECTION
    ============================================================ */
 
 /**
@@ -444,7 +562,7 @@ export function collectFormData(form) {
 
 
 /* ============================================================
-   9. SUBMIT BUTTON
+   10. SUBMIT BUTTON
    ============================================================ */
 
 /**
@@ -535,7 +653,7 @@ function setSubmitButtonState(
 
 
 /* ============================================================
-   10. FORM STATUS
+   11. FORM STATUS
    ============================================================ */
 
 /**
@@ -612,15 +730,12 @@ function clearFormStatus(form) {
 
 
 /* ============================================================
-   11. TOAST BRIDGE
+   12. EVENT BRIDGES
    ============================================================ */
 
 /**
  * Show a notification through the global toast component
  * when it exists.
- *
- * This uses a browser event so formhandler.js does not need
- * to directly own the global toast implementation.
  *
  * @param {Object} options
  */
@@ -638,8 +753,38 @@ function notify(options) {
 }
 
 
+/**
+ * Dispatch a lifecycle event for this form.
+ *
+ * Used by scripts/contact-form.js (and any future page
+ * module) to react to outcomes without formhandler needing
+ * to know about page-specific UI.
+ *
+ * @param {"success"|"invalid"|"error"} stage
+ * @param {HTMLFormElement} form
+ * @param {Object} detail
+ */
+function dispatchFormEvent(stage, form, detail = {}) {
+	const formName =
+		form.dataset.form ||
+		"form";
+
+	document.dispatchEvent(
+		new CustomEvent(
+			`modeinfinity:form:${stage}`, {
+				detail: {
+					form,
+					formName,
+					...detail
+				}
+			}
+		)
+	);
+}
+
+
 /* ============================================================
-   12. REQUEST TIMEOUT
+   13. REQUEST TIMEOUT
    ============================================================ */
 
 /**
@@ -670,20 +815,11 @@ function createRequestTimeout(
 
 
 /* ============================================================
-   13. BACKEND ENDPOINT
+   14. BACKEND ENDPOINT
    ============================================================ */
 
 /**
  * Read a form's configured endpoint.
- *
- * Supported:
- *
- * <form
- *     data-form="contact"
- *     data-endpoint="/api/contact"
- * >
- *
- * No endpoint means the form is not submitted to a server yet.
  *
  * @param {HTMLFormElement} form
  * @returns {string}
@@ -704,8 +840,62 @@ function getEndpoint(form) {
 
 
 /* ============================================================
-   14. NETWORK SUBMISSION
+   15. NETWORK SUBMISSION
    ============================================================ */
+
+/**
+ * Extract a human-readable message from a backend error body.
+ *
+ * Handles shapes commonly returned by Formspree, JSON APIs,
+ * and plain-text responses.
+ *
+ * @param {*} responseData
+ * @param {number} status
+ * @returns {string}
+ */
+function extractServerMessage(
+	responseData,
+	status
+) {
+	if (responseData && typeof responseData === "object") {
+		if (
+			typeof responseData.message === "string" &&
+			responseData.message.trim()
+		) {
+			return responseData.message.trim();
+		}
+
+		if (
+			typeof responseData.error === "string" &&
+			responseData.error.trim()
+		) {
+			return responseData.error.trim();
+		}
+
+		if (
+			Array.isArray(responseData.errors) &&
+			responseData.errors.length > 0
+		) {
+			const joined =
+				responseData.errors
+				.map((entry) =>
+					entry &&
+					typeof entry.message === "string" ?
+					entry.message.trim() :
+					""
+				)
+				.filter(Boolean)
+				.join(" ");
+
+			if (joined) {
+				return joined;
+			}
+		}
+	}
+
+	return `Request failed with status ${status}.`;
+}
+
 
 /**
  * Submit form data to the configured backend endpoint.
@@ -779,16 +969,11 @@ async function submitToEndpoint(
 		}
 
 		if (!response.ok) {
-			const serverMessage =
-				responseData &&
-				typeof responseData === "object" &&
-				typeof responseData.message === "string" ?
-				responseData.message :
-				"";
-
 			throw new Error(
-				serverMessage ||
-				`Request failed with status ${response.status}.`
+				extractServerMessage(
+					responseData,
+					response.status
+				)
 			);
 		}
 
@@ -806,7 +991,7 @@ async function submitToEndpoint(
 
 
 /* ============================================================
-   15. FORM VALIDATION
+   16. FORM VALIDATION
    ============================================================ */
 
 /**
@@ -842,7 +1027,7 @@ function validateCurrentForm(form) {
 
 
 /* ============================================================
-   16. SUCCESS HANDLING
+   17. SUCCESS HANDLING
    ============================================================ */
 
 /**
@@ -858,8 +1043,9 @@ function handleSuccess(
 	const message =
 		response?.data &&
 		typeof response.data === "object" &&
-		typeof response.data.message === "string" ?
-		response.data.message :
+		typeof response.data.message === "string" &&
+		response.data.message.trim() ?
+		response.data.message.trim() :
 		form.dataset.successMessage ||
 		CONFIG.successMessage;
 
@@ -879,8 +1065,11 @@ function handleSuccess(
 	form.reset();
 
 	/*
-	 * Reset fields that may still contain an explicit
-	 * accessibility error state.
+	 * Full reset of state that formhandler owns:
+	 *   - aria-invalid flags (validators.js sets these)
+	 *   - error message nodes (validators.js injects these)
+	 *   - aria-describedby references to those nodes
+	 *   - floating-label has-value on selects
 	 */
 	const controls =
 		form.querySelectorAll(
@@ -889,16 +1078,20 @@ function handleSuccess(
 
 	controls.forEach(
 		(control) => {
-			control.removeAttribute(
-				"aria-invalid"
-			);
+			clearFieldError(control);
+			updateFieldState(control);
 		}
 	);
+
+	dispatchFormEvent("success", form, {
+		message,
+		response
+	});
 }
 
 
 /* ============================================================
-   17. ERROR HANDLING
+   18. ERROR HANDLING
    ============================================================ */
 
 /**
@@ -932,11 +1125,16 @@ function handleError(
 		"ModeInfinity form submission failed:",
 		error
 	);
+
+	dispatchFormEvent("error", form, {
+		error,
+		serverMessage: error?.message || ""
+	});
 }
 
 
 /* ============================================================
-   18. LOCAL / UNCONFIGURED FORMS
+   19. LOCAL / UNCONFIGURED FORMS
    ============================================================ */
 
 /**
@@ -982,7 +1180,7 @@ function handleUnconfiguredForm(
 
 
 /* ============================================================
-   19. FORM SUBMISSION
+   20. FORM SUBMISSION
    ============================================================ */
 
 /**
@@ -1037,13 +1235,16 @@ async function handleSubmit(
 			message: "Please correct the highlighted fields and try again."
 		});
 
+		dispatchFormEvent("invalid", form, {
+			errors: validation.errors
+		});
+
 		return;
 	}
 
 	/*
-	 * If no endpoint exists, keep native behavior only when
-	 * explicitly requested. Otherwise prevent the browser
-	 * navigation and clearly identify the missing backend.
+	 * If no endpoint exists, prevent native submission and
+	 * clearly identify the missing backend.
 	 */
 	const endpoint =
 		getEndpoint(form);
@@ -1101,7 +1302,7 @@ async function handleSubmit(
 
 
 /* ============================================================
-   20. LIVE VALIDATION
+   21. LIVE VALIDATION
    ============================================================ */
 
 /**
@@ -1150,18 +1351,7 @@ function handleFieldBlur(event) {
 	 * remain untouched.
 	 */
 	if (result.valid) {
-		field.removeAttribute(
-			"aria-invalid"
-		);
-
-		const errorElement =
-			document.getElementById(
-				`${field.id || field.name}-error`
-			);
-
-		if (errorElement) {
-			errorElement.remove();
-		}
+		clearFieldError(field);
 
 		return;
 	}
@@ -1169,9 +1359,6 @@ function handleFieldBlur(event) {
 	if (
 		result.errors.length
 	) {
-		const firstError =
-			result.errors[0];
-
 		field.setAttribute(
 			"aria-invalid",
 			"true"
@@ -1181,13 +1368,12 @@ function handleFieldBlur(event) {
 		 * validateForm already creates the accessible error
 		 * element through the validation module.
 		 */
-		void firstError;
 	}
 }
 
 
 /* ============================================================
-   21. CLEAR VALIDATION ERROR ON INPUT
+   22. CLEAR VALIDATION ERROR ON INPUT
    ============================================================ */
 
 /**
@@ -1206,6 +1392,8 @@ function handleFieldInput(event) {
 		return;
 	}
 
+	updateFieldState(field);
+
 	if (
 		field.getAttribute(
 			"aria-invalid"
@@ -1214,26 +1402,12 @@ function handleFieldInput(event) {
 		return;
 	}
 
-	field.removeAttribute(
-		"aria-invalid"
-	);
-
-	const errorId =
-		`${field.id || field.name}-error`;
-
-	const errorElement =
-		document.getElementById(
-			errorId
-		);
-
-	if (errorElement) {
-		errorElement.remove();
-	}
+	clearFieldError(field);
 }
 
 
 /* ============================================================
-   22. FORM EVENT BINDING
+   23. FORM EVENT BINDING
    ============================================================ */
 
 /**
@@ -1276,32 +1450,15 @@ function bindForm(form) {
 				"change",
 				handleFieldInput
 			);
+
+			/*
+			 * Set the initial has-value state so a select
+			 * with a preselected option shows its label
+			 * lifted on first paint.
+			 */
+			updateFieldState(field);
 		}
 	);
-}
-
-
-/* ============================================================
-   23. TOAST EVENT BRIDGE
-   ============================================================ */
-
-/**
- * This bridge is intentionally small.
- *
- * main.js owns the global toast implementation. When
- * formhandler.js dispatches "modeinfinity:toast", main.js can
- * listen and forward the data to its toast controller.
- *
- * If main.js is not yet connected on a page, the event simply
- * has no consumer and the visible form status still works.
- */
-function initializeToastBridge() {
-	/*
-	 * No listener is required here.
-	 *
-	 * CustomEvent dispatching in notify() is enough to keep the
-	 * form module decoupled from the global notification UI.
-	 */
 }
 
 
@@ -1327,8 +1484,6 @@ export function initFormHandler() {
 	forms.forEach(
 		bindForm
 	);
-
-	initializeToastBridge();
 
 	state.initialized = true;
 }

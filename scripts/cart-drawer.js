@@ -1,12 +1,28 @@
 /* ============================================================
-   MODEINFINITY — CART DRAWER (self-contained)
+   MODEINFINITY — CART DRAWER (checkout via WhatsApp)
    No imports. No dependencies.
+
+   Cart checkout is sent via WhatsApp click-to-chat:
+   customer clicks "Checkout via WhatsApp" → WhatsApp
+   opens with the message pre-filled → customer hits send
+   → message arrives on the business WhatsApp number.
+
+   To change the receiving number, edit WHATSAPP_NUMBER below.
+   Format: international, no +, no spaces.
    ============================================================ */
 
 (function () {
   "use strict";
 
   var STORAGE_KEY = "mi_cart_v1";
+
+  /*
+   * Receiving WhatsApp number.
+   * Example: +2348097212238 → "2348097212238"
+   * Change this one line if the business WhatsApp changes.
+   */
+  var WHATSAPP_NUMBER = "2348097212238";
+
   var drawer = null;
   var items = [];
   var lastFocus = null;
@@ -206,6 +222,68 @@
   }
 
   /* ----------------------------------------------------------
+     Checkout — WhatsApp message composition
+     ---------------------------------------------------------- */
+  function buildCheckoutMessage() {
+    var lines = [];
+
+    lines.push("Hi ModeInfinity,");
+    lines.push("");
+    lines.push("I'd like to order the following " +
+      (items.length === 1 ? "pair" : "pairs") + ":");
+    lines.push("");
+
+    items.forEach(function (item, i) {
+      var qty = Number(item.quantity) || 1;
+      var price = formatNaira(item.price || 0);
+      var suffix = qty > 1 ? " \u00d7 " + qty : "";
+      lines.push((i + 1) + ". " + (item.name || "Product") + " \u2014 " + price + suffix);
+    });
+
+    lines.push("");
+    lines.push("Subtotal: " + formatNaira(subtotal()));
+    lines.push("");
+    lines.push("Please let me know about availability, delivery, and next steps.");
+    lines.push("");
+    lines.push("Thank you!");
+
+    return lines.join("\n");
+  }
+
+  function sendCheckout() {
+    if (!items.length) {
+      document.dispatchEvent(new CustomEvent("modeinfinity:toast", {
+        detail: {
+          type: "info",
+          title: "Cart is empty",
+          message: "Add at least one pair before checking out."
+        }
+      }));
+      return;
+    }
+
+    var message = buildCheckoutMessage();
+    var url =
+      "https://wa.me/" +
+      WHATSAPP_NUMBER +
+      "?text=" +
+      encodeURIComponent(message);
+
+    /*
+     * Triggered via a temporary anchor element rather than
+     * window.open() — more reliable across browsers and
+     * popup blockers when in response to a user click.
+     */
+    var link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  /* ----------------------------------------------------------
      Event binding
      ---------------------------------------------------------- */
   function bind() {
@@ -218,10 +296,11 @@
         return;
       }
 
-      // Add to cart
+      // Add to cart (legacy hook — still works if any HTML uses it)
       var addBtn = event.target.closest("[data-mi-cart-add]");
       if (addBtn) {
         event.preventDefault();
+        var addedName = addBtn.dataset.miCartName || addBtn.dataset.name || "Item";
         add({
           id: addBtn.dataset.miCartId || addBtn.dataset.id,
           name: addBtn.dataset.miCartName || addBtn.dataset.name,
@@ -229,16 +308,31 @@
           image: addBtn.dataset.miCartImage || addBtn.dataset.image,
           quantity: 1
         });
-        open();
+        document.dispatchEvent(new CustomEvent("modeinfinity:toast", {
+          detail: {
+            type: "success",
+            title: "Added to cart",
+            message: addedName + " was added to your cart."
+          }
+        }));
       }
     });
 
-    // Close cart — any element with data-mi-cart-close
+    // Close cart
     document.addEventListener("click", function (event) {
       var closer = event.target.closest("[data-mi-cart-close]");
       if (closer) {
         event.preventDefault();
         close();
+      }
+    });
+
+    // Checkout (WhatsApp)
+    document.addEventListener("click", function (event) {
+      var checkoutBtn = event.target.closest("[data-mi-cart-checkout]");
+      if (checkoutBtn) {
+        event.preventDefault();
+        sendCheckout();
       }
     });
 
@@ -292,12 +386,10 @@
   function init() {
     drawer = document.getElementById("mi-cart");
     if (!drawer) {
-      // The component file hasn't been injected yet — try again shortly.
       setTimeout(init, 100);
       return;
     }
 
-    // Start hidden / inert so it never flashes
     drawer.setAttribute("aria-hidden", "true");
     drawer.setAttribute("inert", "");
 
