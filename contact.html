@@ -6,6 +6,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
 
+	<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
+	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self';
+		script-src 'self';
+		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+		font-src 'self' https://fonts.gstatic.com;
+		img-src 'self' data: https:;
+		connect-src 'self' https://formspree.io;
+		form-action https://formspree.io;
+		base-uri 'self';
+		object-src 'none';
+	">
+	<meta http-equiv="X-Content-Type-Options" content="nosniff">
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+	<!-- ==================================================================== -->
+
 	<title>Contact ModeInfinity — Workshop, Showroom &amp; Enquiries</title>
 	<meta name="description" content="Get in touch with ModeInfinity — the Abuja workshop, the Lagos showroom, custom footwear commissions, academy enquiries, and workshop tours.">
 	<meta name="author" content="ModeInfinity | Jennifer I. Omomia">
@@ -45,7 +61,6 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="apple-mobile-web-app-title" content="ModeInfinity">
-	<meta name="referrer" content="strict-origin-when-cross-origin">
 
 	<link rel="icon" href="public/favicon.ico" sizes="any">
 	<link rel="apple-touch-icon" href="assets/images/logo.png">
@@ -264,19 +279,19 @@
 
 				<div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
 					<label for="_gotcha">Leave this field empty</label>
-					<input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+					<input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off" maxlength="100">
 				</div>
 
 				<input type="hidden" name="started" value="" data-started>
 
 				<div class="modern-form-group floating">
-					<input type="text" id="modernName" name="name" required placeholder=" " autocomplete="name" minlength="2" data-min-length="2">
+					<input type="text" id="modernName" name="name" required placeholder=" " autocomplete="name" minlength="2" maxlength="100" data-min-length="2">
 					<label for="modernName">Full name <span class="required-mark" aria-hidden="true">*</span></label>
 					<div class="modern-form-underline"></div>
 				</div>
 
 				<div class="modern-form-group floating">
-					<input type="email" id="modernEmail" name="email" required placeholder=" " autocomplete="email">
+					<input type="email" id="modernEmail" name="email" required placeholder=" " autocomplete="email" maxlength="254">
 					<label for="modernEmail">Email address <span class="required-mark" aria-hidden="true">*</span></label>
 					<div class="modern-form-underline"></div>
 				</div>

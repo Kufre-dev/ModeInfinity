@@ -29,6 +29,25 @@ import { initGalleryViewer } from "./gallery-viewer.js";
 
 let applicationInitialized = false;
 
+/* ============================================================
+   SECURITY: Safe URL Validator
+   Prevents javascript: and data: URI XSS attacks in attributes.
+   ============================================================ */
+function safeUrl(url) {
+  if (typeof url !== "string" || !url.trim()) return "";
+  try {
+    // Resolve relative URLs against the current domain
+    const parsed = new URL(url, window.location.href);
+    // Only allow standard web protocols
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      return url; // Return original to keep relative paths clean
+    }
+  } catch (e) {
+    // Invalid URL format
+  }
+  return ""; // Block everything else
+}
+
 
 /* ============================================================
    PRODUCTS — BEGIN (homepage featured grid)
@@ -93,13 +112,18 @@ function initProducts() {
     var category = escapeHtml(product.category);
     var badge = escapeHtml(product.badge);
     var description = escapeHtml(product.shortDescription);
+    
+    // Sanitize image paths
+    var safeAvif = safeUrl(product.imageAvif);
+    var safeWebp = safeUrl(product.imageWebp);
+    var safeFallback = safeUrl(product.imageFallback);
 
     var sources = "";
-    if (product.imageAvif) {
-      sources += '<source srcset="' + escapeHtml(product.imageAvif) + '" type="image/avif">';
+    if (safeAvif) {
+      sources += '<source srcset="' + escapeHtml(safeAvif) + '" type="image/avif">';
     }
-    if (product.imageWebp) {
-      sources += '<source srcset="' + escapeHtml(product.imageWebp) + '" type="image/webp">';
+    if (safeWebp) {
+      sources += '<source srcset="' + escapeHtml(safeWebp) + '" type="image/webp">';
     }
 
     return '' +
@@ -108,12 +132,12 @@ function initProducts() {
         ' data-product-name="' + name + '"' +
         ' data-product-price="' + escapeHtml(String(product.price)) + '"' +
         ' data-product-category="' + category + '"' +
-        ' data-product-image="' + escapeHtml(product.imageFallback) + '">' +
+        ' data-product-image="' + escapeHtml(safeFallback) + '">' +
         '<div class="product-card__media">' +
           (badge ? '<span class="product-card__badge" aria-label="' + badge + '">' + badge + '</span>' : '') +
           '<a class="product-card__media-link" href="' + href + '" aria-label="View ' + name + '">' +
             '<picture>' + sources +
-              '<img src="' + escapeHtml(product.imageFallback) + '" alt="' + escapeHtml(product.imageAlt) + '"' +
+              '<img src="' + escapeHtml(safeFallback) + '" alt="' + escapeHtml(product.imageAlt) + '"' +
               ' width="900" height="1125" loading="lazy" decoding="async">' +
             '</picture>' +
           '</a>' +
@@ -777,9 +801,14 @@ function initShopPage() {
     var badge = escapeHtml(p.badge);
     var description = escapeHtml(p.shortDescription);
 
+    // Sanitize image paths
+    var safeAvif = safeUrl(p.imageAvif);
+    var safeWebp = safeUrl(p.imageWebp);
+    var safeFallback = safeUrl(p.imageFallback);
+
     var sources = "";
-    if (p.imageAvif) sources += '<source srcset="' + escapeHtml(p.imageAvif) + '" type="image/avif">';
-    if (p.imageWebp) sources += '<source srcset="' + escapeHtml(p.imageWebp) + '" type="image/webp">';
+    if (safeAvif) sources += '<source srcset="' + escapeHtml(safeAvif) + '" type="image/avif">';
+    if (safeWebp) sources += '<source srcset="' + escapeHtml(safeWebp) + '" type="image/webp">';
 
     return '' +
       '<article class="product-card"' +
@@ -787,12 +816,12 @@ function initShopPage() {
         ' data-product-name="' + name + '"' +
         ' data-product-price="' + escapeHtml(String(p.price)) + '"' +
         ' data-product-category="' + category + '"' +
-        ' data-product-image="' + escapeHtml(p.imageFallback) + '">' +
+        ' data-product-image="' + escapeHtml(safeFallback) + '">' +
         '<div class="product-card__media">' +
           (badge ? '<span class="product-card__badge">' + badge + '</span>' : '') +
           '<button type="button" class="product-card__media-link" data-product-open aria-label="View details for ' + name + '">' +
             '<picture>' + sources +
-              '<img src="' + escapeHtml(p.imageFallback) + '" alt="' + escapeHtml(p.imageAlt) + '"' +
+              '<img src="' + escapeHtml(safeFallback) + '" alt="' + escapeHtml(p.imageAlt) + '"' +
               ' width="900" height="1125" loading="lazy" decoding="async">' +
             '</picture>' +
           '</button>' +

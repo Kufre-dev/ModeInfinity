@@ -5,6 +5,21 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
+		<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
+	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self';
+		script-src 'self';
+		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+		font-src 'self' https://fonts.gstatic.com;
+		img-src 'self' data: https:;
+		connect-src 'self' https://formspree.io;
+		form-action https://formspree.io;
+		base-uri 'self';
+		object-src 'none';
+	">
+	<meta http-equiv="X-Content-Type-Options" content="nosniff">
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+	<!-- ==================================================================== -->
 	<!-- ================= PRIMARY SEO ================= -->
 	<title>About ModeInfinity | Craft, Story &amp; Shoemaking Heritage</title>
 	<meta name="description" content="Discover ModeInfinity — a Nigerian shoemaking academy and premium footwear brand. Workshop in Abuja, showroom in Lagos, handcrafted footwear, and practical training.">

@@ -5,6 +5,21 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
+		<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
+	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self';
+		script-src 'self';
+		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+		font-src 'self' https://fonts.gstatic.com;
+		img-src 'self' data: https:;
+		connect-src 'self' https://formspree.io;
+		form-action https://formspree.io;
+		base-uri 'self';
+		object-src 'none';
+	">
+	<meta http-equiv="X-Content-Type-Options" content="nosniff">
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+	<!-- ==================================================================== -->
 	<title>Gallery | ModeInfinity — Student Work, Footwear &amp; Craft</title>
 	<meta name="description" content="Student work, graduate footwear, and the craft process behind both — from the ModeInfinity workshop and academy in Abuja, Nigeria.">
 	<meta name="author" content="ModeInfinity | Jennifer I. Omomia">
