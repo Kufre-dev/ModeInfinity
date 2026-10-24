@@ -6,30 +6,34 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
 
-		<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
+	<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
 	<meta http-equiv="Content-Security-Policy" content="
 		default-src 'self';
-		script-src 'self';
+		script-src 'self' 'unsafe-inline';
 		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
 		font-src 'self' https://fonts.gstatic.com;
 		img-src 'self' data: https:;
-		connect-src 'self' https://formspree.io;
-		form-action https://formspree.io;
 		base-uri 'self';
 		object-src 'none';
 	">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
 	<!-- ==================================================================== -->
-	 
+
 	<title>Privacy Policy | ModeInfinity</title>
-	<meta name="description" content="ModeInfinity's Privacy Policy. Learn how we collect, use, and protect your personal data in compliance with the Nigeria Data Protection Act (NDPA) 2023.">
-	<meta name="author" content="ModeInfinity | Jennifer I. Omomia">
-	<meta name="robots" content="index, follow">
+	<meta name="description" content="How ModeInfinity collects, uses, discloses, retains and protects personal information across our website, footwear orders and shoemaking academy.">
+	<meta name="robots" content="noindex, nofollow">
 
 	<link rel="icon" href="public/favicon.ico" sizes="any">
 	<link rel="apple-touch-icon" href="assets/images/logo.png">
 	<link rel="manifest" href="public/manifest.json">
+
+	<meta name="theme-color" content="#111111">
+	<meta name="color-scheme" content="light">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="ModeInfinity">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,191 +43,1340 @@
 	<link rel="stylesheet" href="styles/global.css">
 	<link rel="stylesheet" href="styles/layout.css">
 	<link rel="stylesheet" href="styles/components.css">
+	<link rel="stylesheet" href="styles/cart-drawer.css">
+	<link rel="stylesheet" href="styles/lightbox.css">
 	<link rel="stylesheet" href="styles/animations.css">
 	<link rel="stylesheet" href="styles/responsive.css">
 
 	<style>
-		/* Page-specific legal document styling */
+		/* ======================================================================
+		   DRAFT NOTICE
+		   ====================================================================== */
+		.legal-draft {
+			width: min(100% - (var(--container-padding-inline) * 2), 72rem);
+			margin: var(--space-6) auto 0;
+			padding: var(--space-4) var(--space-5);
+			background: var(--color-gold-100);
+			border: 1px solid rgb(197 154 24 / 0.4);
+			border-left: 4px solid var(--color-gold-500);
+			border-radius: var(--radius-sm);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-draft strong {
+			display: block;
+			margin-bottom: var(--space-1);
+			color: var(--color-gold-800);
+			font-weight: var(--font-weight-semibold);
+		}
+
+		/* ======================================================================
+		   HERO
+		   ====================================================================== */
 		.legal-hero {
 			background: var(--color-background-dark);
 			color: var(--color-white);
-			padding: calc(var(--header-height) + var(--space-12)) var(--container-padding-inline) var(--space-12);
-			text-align: center;
+			padding-block:
+				calc(var(--header-height) + var(--space-10))
+				var(--space-10);
+			padding-inline: var(--container-padding-inline);
+			text-align: left;
 		}
 		.legal-hero__inner {
-			max-width: 48rem;
+			width: min(100%, 72rem);
 			margin-inline: auto;
 		}
-		.legal-hero__title {
-			font-family: var(--font-display);
-			font-size: clamp(2rem, 4vw, 3rem);
-			margin-bottom: var(--space-3);
-		}
-		.legal-hero__title em {
+		.legal-hero__eyebrow {
+			margin: 0 0 var(--space-3);
 			color: var(--color-gold-300);
-			font-style: italic;
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-weight: var(--font-weight-semibold);
+			letter-spacing: var(--tracking-widest);
+			text-transform: uppercase;
+		}
+		.legal-hero__title {
+			max-width: 46rem;
+			margin: 0;
+			color: var(--color-white);
+			font-family: var(--font-display);
+			font-size: clamp(2.2rem, 6vw, 3.5rem);
+			font-weight: var(--font-weight-medium);
+			line-height: 1.1;
+			letter-spacing: var(--tracking-tight);
+			text-wrap: balance;
+		}
+		.legal-hero__description {
+			max-width: 60ch;
+			margin: var(--space-5) 0 0;
+			color: rgb(255 255 255 / 0.82);
+			font-family: var(--font-sans);
+			font-size: var(--text-base);
+			line-height: var(--leading-relaxed);
+			text-wrap: pretty;
 		}
 		.legal-hero__meta {
-			color: rgb(255 255 255 / 0.6);
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-2) var(--space-6);
+			margin-top: var(--space-6);
+			padding: 0;
+			color: rgb(255 255 255 / 0.7);
 			font-family: var(--font-mono);
 			font-size: var(--text-xs);
 			letter-spacing: var(--tracking-wider);
+			line-height: var(--leading-normal);
 			text-transform: uppercase;
 		}
-		.legal-content {
-			padding-block: var(--section-space-md);
-			background: var(--color-background);
+		.legal-hero__meta > span {
+			display: inline-flex;
+			align-items: baseline;
+			gap: var(--space-2);
+			flex-wrap: wrap;
 		}
-		.legal-content .container {
-			max-width: 48rem; /* Readable line length for legal text */
-			margin-inline: auto;
-			padding-inline: var(--container-padding-inline);
+		.legal-hero__meta strong {
+			color: rgb(255 255 255 / 0.95);
+			font-weight: var(--font-weight-semibold);
+		}
+		.legal-hero__actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-3);
+			margin-top: var(--space-6);
+		}
+		.legal-hero__actions .btn-ghost {
+			color: var(--color-white);
+			border-color: rgb(255 255 255 / 0.4);
+		}
+		.legal-hero__actions .btn-ghost:hover,
+		.legal-hero__actions .btn-ghost:focus-visible {
+			color: var(--color-gold-300);
+			border-color: var(--color-gold-300);
+			background: transparent;
+			box-shadow: 0 3px 0 rgb(237 200 79 / 20%);
+		}
+
+		/* ======================================================================
+		   LAYOUT — TOC + CONTENT
+		   ====================================================================== */
+	.legal-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+    width: min(100% - (var(--container-padding-inline) * 2), 72rem);
+    margin-inline: auto;
+    padding-block: var(--section-space-md);
+    align-items: start;
+    overflow-x: clip;
+}
+		@media (min-width: 64rem) {
+			.legal-layout {
+				grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+				gap: var(--space-10);
+			}
+		}
+
+		/* ======================================================================
+		   TOC SIDEBAR
+		   ====================================================================== */
+		.legal-toc {
+			padding: var(--space-5);
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		@media (min-width: 64rem) {
+			.legal-toc {
+				position: sticky;
+				top: calc(var(--header-height) + var(--space-4));
+				max-height: calc(100vh - var(--header-height) - var(--space-8));
+				overflow-y: auto;
+			}
+		}
+		.legal-toc__title {
+			margin: 0 0 var(--space-3);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-weight: var(--font-weight-semibold);
+			letter-spacing: var(--tracking-widest);
+			text-transform: uppercase;
+		}
+		.legal-toc__list {
+			margin: 0;
+			padding-left: var(--space-5);
+			list-style: decimal;
+		}
+		.legal-toc__list li {
+			margin-block: var(--space-1);
+			color: var(--color-text-muted);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			line-height: var(--leading-snug);
+		}
+		.legal-toc__link {
+			color: var(--color-text-muted);
+			text-decoration: none;
+			transition: color var(--transition-fast);
+			overflow-wrap: anywhere;
+		}
+		.legal-toc__link:hover,
+		.legal-toc__link:focus-visible {
+			color: var(--color-accent-text);
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+		}
+		.legal-toc__link:focus-visible {
+			outline: var(--focus-ring-width) solid var(--focus-ring-color);
+			outline-offset: var(--focus-ring-offset);
+			border-radius: var(--radius-xs);
+		}
+		@media (min-width: 30rem) and (max-width: 63.999rem) {
+			.legal-toc__list {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: var(--space-1) var(--space-6);
+			}
+		}
+
+		/* ======================================================================
+		   LEGAL CONTENT
+		   ====================================================================== */
+	.legal-content {
+    min-width: 0;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow-x: clip;
+    overflow-wrap: break-word;
+}
+
+.legal-content > * {
+    max-width: 100%;
+}
+		@media (min-width: 64rem) {
+			.legal-content {
+				max-width: none;
+				margin-inline: 0;
+			}
+		}
+		.legal-content section {
+			margin: 0 0 var(--space-8);
+			padding: 0 0 var(--space-6);
+			border-bottom: 1px solid var(--color-border);
+			scroll-margin-top: var(--space-6);
+		}
+		.legal-content section:last-of-type {
+			margin-bottom: 0;
+			padding-bottom: 0;
+			border-bottom: 0;
 		}
 		.legal-content h2 {
-			font-family: var(--font-display);
-			font-size: var(--text-2xl);
-			color: var(--color-text-strong);
-			margin-top: var(--space-10);
-			margin-bottom: var(--space-4);
+			margin: 0 0 var(--space-4);
 			padding-bottom: var(--space-2);
-			border-bottom: 1px solid var(--color-border);
-		}
-		.legal-content h2:first-child {
-			margin-top: 0;
+			color: var(--color-text-strong);
+			font-family: var(--font-display);
+			font-size: clamp(1.35rem, 3vw, 1.8rem);
+			font-weight: var(--font-weight-medium);
+			line-height: var(--leading-snug);
+			letter-spacing: var(--tracking-tight);
 		}
 		.legal-content h3 {
+			margin: var(--space-6) 0 var(--space-3);
+			color: var(--color-text-strong);
 			font-family: var(--font-sans);
 			font-size: var(--text-lg);
-			color: var(--color-text-strong);
-			margin-top: var(--space-6);
-			margin-bottom: var(--space-3);
+			font-weight: var(--font-weight-semibold);
+			line-height: var(--leading-snug);
+			letter-spacing: var(--tracking-tight);
 		}
-		.legal-content p, 
+		.legal-content p,
 		.legal-content li {
+			margin: 0 0 var(--space-3);
 			color: var(--color-text-muted);
+			font-family: var(--font-sans);
 			font-size: var(--text-base);
 			line-height: var(--leading-relaxed);
-			margin-bottom: var(--space-4);
+			text-wrap: pretty;
 		}
-		.legal-content ul {
+		.legal-content ul,
+		.legal-content ol {
+			margin: 0 0 var(--space-4);
 			padding-left: var(--space-5);
-			margin-bottom: var(--space-4);
+		}
+		.legal-content li {
+			margin-bottom: var(--space-2);
+			padding-left: var(--space-1);
 		}
 		.legal-content a {
 			color: var(--color-accent-text);
 			text-decoration: underline;
 			text-underline-offset: 0.2em;
+			overflow-wrap: anywhere;
 		}
-		.legal-content a:hover {
+		.legal-content a:hover,
+		.legal-content a:focus-visible {
 			color: var(--color-gold-600);
+		}
+		.legal-content a:focus-visible {
+			outline: var(--focus-ring-width) solid var(--focus-ring-color);
+			outline-offset: var(--focus-ring-offset);
+			border-radius: var(--radius-xs);
 		}
 		.legal-content strong {
 			color: var(--color-text-strong);
+			font-weight: var(--font-weight-semibold);
 		}
+		.legal-content code {
+			padding: 0.1em 0.4em;
+			background: var(--color-surface-muted);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-xs);
+			color: var(--color-text-strong);
+			font-family: var(--font-mono);
+			font-size: 0.9em;
+			overflow-wrap: anywhere;
+		}
+
+		/* ======================================================================
+		   TABLES — only legal page with tables
+		   ====================================================================== */
+.legal-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: var(--space-5) 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+.legal-content table {
+    width: 100%;
+    min-width: 36rem;
+    max-width: none;
+    border-collapse: collapse;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+}
+
+.legal-content table td,
+.legal-content table th {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+		.legal-content th,
+		.legal-content td {
+			padding: var(--space-3) var(--space-4);
+			text-align: left;
+			vertical-align: top;
+			border-bottom: 1px solid var(--color-border);
+			color: var(--color-text);
+		}
+		.legal-content th {
+			background: var(--color-surface-muted);
+			color: var(--color-text-strong);
+			font-weight: var(--font-weight-semibold);
+			font-size: var(--text-xs);
+			letter-spacing: var(--tracking-wide);
+			text-transform: uppercase;
+			line-height: var(--leading-normal);
+		}
+		.legal-content tbody tr:last-child td {
+			border-bottom: 0;
+		}
+		.legal-content td ul,
+		.legal-content td ol {
+			margin: 0;
+			padding-left: var(--space-4);
+		}
+		.legal-content td li {
+			margin-bottom: var(--space-1);
+			font-size: var(--text-sm);
+		}
+
+		/* ======================================================================
+		   CONTACT CARD
+		   ====================================================================== */
+		.legal-contact-card {
+			margin: var(--space-5) 0;
+			padding: var(--space-5);
+			background: var(--color-surface-muted);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		.legal-contact-card > p:first-child,
+		.legal-contact-card > strong:first-child {
+			margin-top: 0;
+		}
+		.legal-contact-card > p:last-child {
+			margin-bottom: 0;
+		}
+		.legal-contact-card > ul:last-child,
+		.legal-contact-card > ol:last-child {
+			margin-bottom: 0;
+		}
+		.legal-contact-card p {
+			margin: 0 0 var(--space-3);
+			color: var(--color-text);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-contact-card ul,
+		.legal-contact-card ol {
+			padding-left: var(--space-5);
+			margin: 0 0 var(--space-3);
+		}
+		.legal-contact-card li {
+			margin-bottom: var(--space-2);
+			color: var(--color-text);
+			font-size: var(--text-sm);
+		}
+
+		/* ======================================================================
+		   CALLOUTS
+		   ====================================================================== */
+		.legal-callout {
+			margin: var(--space-5) 0;
+			padding: var(--space-4) var(--space-5);
+			background: var(--color-gold-100);
+			border-left: 4px solid var(--color-gold-500);
+			border-radius: var(--radius-sm);
+		}
+		.legal-callout > strong {
+			display: block;
+			margin-bottom: var(--space-2);
+			color: var(--color-gold-800);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			font-weight: var(--font-weight-semibold);
+		}
+		.legal-callout p,
+		.legal-callout li {
+			color: var(--color-text);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+
+		/* ======================================================================
+		   CHECKLIST (§20)
+		   ====================================================================== */
+		.legal-checklist {
+			margin: var(--space-4) 0;
+			padding: 0;
+			list-style: none;
+		}
+		.legal-checklist li {
+			position: relative;
+			padding-left: var(--space-8);
+			margin: 0 0 var(--space-3);
+			color: var(--color-text);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-checklist li::before {
+			position: absolute;
+			left: 0;
+			top: 0;
+			content: "□";
+			color: var(--color-gold-700);
+			font-size: 1.25rem;
+			line-height: 1.2;
+		}
+
+		/* ======================================================================
+		   PLACEHOLDER HIGHLIGHT
+		   ====================================================================== */
+		.legal-placeholder {
+			display: inline;
+			padding: 0 var(--space-1);
+			background: var(--color-gold-200);
+			color: var(--color-gold-800);
+			font-family: var(--font-mono);
+			font-size: 0.9em;
+			font-weight: var(--font-weight-semibold);
+			border-radius: var(--radius-xs);
+		}
+
+		.legal-content .legal-placeholder {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+		/* ======================================================================
+		   REDUCED MOTION
+		   ====================================================================== */
+		@media (prefers-reduced-motion: reduce) {
+			html {
+				scroll-behavior: auto;
+			}
+		}
+
+		/* ======================================================================
+		   PRINT
+		   ====================================================================== */
+		@media print {
+    body {
+        background: #fff;
+        color: #111;
+        font-size: 11pt;
+        line-height: 1.55;
+    }
+    .site-header,
+    .legal-toc,
+    .legal-draft,
+    .legal-hero__actions,
+    .site-footer {
+        display: none !important;
+    }
+    .legal-hero {
+        padding: 0 0 var(--space-5);
+        background: #fff;
+        color: #111;
+    }
+    .legal-hero__title,
+    .legal-hero__eyebrow,
+    .legal-hero__description,
+    .legal-hero__meta,
+    .legal-hero__meta strong {
+        color: #111;
+    }
+    .legal-hero__title {
+        font-size: 28pt;
+    }
+    .legal-layout {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .legal-content {
+        max-width: none;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+        background: #fff;
+    }
+    .legal-content section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    .legal-content a {
+        color: #111;
+        text-decoration: none;
+    }
+    /* Privacy-specific additions — required because this page has tables, code and callouts that the ToS does not. */
+    .legal-table-wrap {
+        overflow: visible;
+        border: 1px solid #555;
+    }
+    .legal-content table {
+        min-width: 0;
+    }
+    .legal-content th {
+        background: #fff;
+        color: #111;
+        border-bottom: 1px solid #555;
+    }
+    .legal-content th,
+    .legal-content td {
+        border-color: #ccc;
+    }
+    .legal-content code {
+        background: #fff;
+        border: 1px solid #888;
+        color: #111;
+    }
+    .legal-contact-card,
+    .legal-callout {
+        background: #fff;
+        border: 1px solid #555;
+    }
+    .legal-placeholder {
+        background: none;
+        border-bottom: 1px solid #555;
+        color: #111;
+    }
+}
 	</style>
 </head>
 
 <body>
 
+	<!-- ======================================================
+	     FULL SITE HEADER
+	     ====================================================== -->
 	<header class="site-header" data-site-header>
+		<a class="skip-link" href="#main-content">Skip to main content</a>
 		<div class="site-header__inner">
-			<a class="site-brand" href="index.html" aria-label="ModeInfinity — home">
+			<a class="site-brand" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
 				<picture class="site-brand__picture">
 					<source srcset="assets/images/logo.avif" type="image/avif">
 					<source srcset="assets/images/logo.webp" type="image/webp">
-					<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56">
+					<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56" loading="eager" decoding="async" fetchpriority="high">
 				</picture>
 			</a>
-			<div class="header-actions" style="margin-left: auto;">
-				<a href="index.html" class="btn btn-ghost" style="color: white;">Return Home</a>
+			<nav class="primary-navigation" data-primary-navigation aria-label="Primary navigation">
+				<ul class="primary-navigation__list">
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="index.html" data-nav-page="home">Home</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="about.html" data-nav-page="about">About</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="academy.html" data-nav-page="academy">ModeInfinity Academy</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="shop.html" data-nav-page="shop">Shop</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="gallery.html" data-nav-page="Gallery">Gallery</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="contact.html" data-nav-page="contact">Contact</a></li>
+				</ul>
+			</nav>
+			<div class="header-actions">
+				<button class="cart-button header-action" id="cart-button" type="button" aria-controls="mi-cart" aria-expanded="false" aria-label="Open shopping cart" data-mi-cart-open>
+					<svg class="header-action__icon" aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
+						<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+						<circle cx="9" cy="20" r="1"></circle>
+						<circle cx="18" cy="20" r="1"></circle>
+					</svg>
+					<span class="cart-button__count" data-mi-cart-count aria-hidden="true">0</span>
+				</button>
+				<button class="mobile-nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-mobile-nav-toggle>
+					<span class="mobile-nav-toggle__icon" aria-hidden="true">
+						<span></span><span></span><span></span>
+					</span>
+				</button>
 			</div>
+		</div>
+		<div class="mobile-navigation" id="mobile-navigation" role="dialog" aria-modal="true" data-mobile-navigation aria-hidden="true" aria-labelledby="mobile-nav-title" inert>
+			<div class="mobile-navigation__backdrop" data-mobile-nav-backdrop aria-hidden="true"></div>
+			<aside class="mobile-navigation__drawer" data-mobile-nav-drawer tabindex="-1">
+				<div class="mobile-navigation__header">
+					<a class="site-brand site-brand--mobile" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
+						<picture class="site-brand__picture">
+							<source srcset="assets/images/logo.avif" type="image/avif">
+							<source srcset="assets/images/logo.webp" type="image/webp">
+							<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="160" height="42" decoding="async">
+						</picture>
+					</a>
+					<h2 class="sr-only" id="mobile-nav-title">Site navigation</h2>
+					<button class="mobile-navigation__close" type="button" aria-label="Close navigation menu" data-mobile-nav-close>
+						<svg aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
+							<path d="M6 6l12 12"></path>
+							<path d="M18 6L6 18"></path>
+						</svg>
+					</button>
+				</div>
+				<div class="mobile-navigation__content">
+					<nav data-mobile-primary-navigation aria-label="Mobile primary navigation">
+						<ul class="mobile-navigation__list">
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="index.html" data-nav-page="home"><span>Home</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="about.html" data-nav-page="about"><span>About</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="academy.html" data-nav-page="academy"><span>ModeInfinity Academy</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="shop.html" data-nav-page="shop"><span>Shop</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="gallery.html" data-nav-page="Gallery"><span>Gallery</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="contact.html" data-nav-page="contact"><span>Contact</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="mobile-navigation__footer">
+					<button class="btn btn-block btn-secondary" type="button" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button>
+				</div>
+			</aside>
 		</div>
 	</header>
 
-	<main id="main-content" class="site-main">
-		<section class="legal-hero">
+	<main id="main-content" class="site-main" tabindex="-1">
+
+		<!-- ==================================================
+		     HERO
+		     ================================================== -->
+		<section class="legal-hero" aria-labelledby="page-title">
 			<div class="legal-hero__inner">
-				<p class="eyebrow" style="color: var(--color-gold-300);">Legal</p>
-				<h1 class="legal-hero__title">Privacy <em>Policy.</em></h1>
-				<p class="legal-hero__meta">Last updated: October 2026</p>
-			</div>
-		</section>
-
-		<section class="legal-content">
-			<div class="container">
-				<p>ModeInfinity (“we”, “us”, or “our”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or interact with our services.</p>
-				<p>We operate in accordance with the <strong>Nigeria Data Protection Act (NDPA) 2023</strong>, its General Application and Implementation Directive (GAID) 2025, and align our practices with international standards such as the <strong>General Data Protection Regulation (GDPR)</strong> for visitors outside Nigeria.</p>
-
-				<h2>1. Information We Collect</h2>
-				<p>We collect information that you voluntarily provide to us when you:</p>
-				<ul>
-					<li><strong>Submit an enquiry:</strong> Name, email address, phone number (optional), enquiry type, program interest, custom order details, and message content.</li>
-					<li><strong>Place an order (via WhatsApp):</strong> Name, delivery address, phone number, shoe size, and payment confirmation details.</li>
-					<li><strong>Subscribe to our newsletter:</strong> Email address.</li>
-				</ul>
-				<p>We also automatically collect certain technical data when you visit our website, including IP address, browser type, and interaction data (via cookies or analytics tools, where applicable).</p>
-
-				<h2>2. Lawful Basis for Processing</h2>
-				<p>Under the NDPA and GDPR, we must have a lawful basis for processing your personal data. We rely on the following:</p>
-				<ul>
-					<li><strong>Consent:</strong> When you submit our contact form or opt-in to marketing, you give explicit consent for us to use your data to respond to your enquiry.</li>
-					<li><strong>Contract:</strong> When you commission a pair of shoes or enrol in the Academy, we process your data to fulfil our contractual obligations.</li>
-					<li><strong>Legitimate Interest:</strong> To improve our website, secure our services, and prevent fraud.</li>
-					<li><strong>Legal Obligation:</strong> To comply with Nigerian tax, accounting, or consumer protection laws.</li>
-				</ul>
-
-				<h2>3. How We Use Your Information</h2>
-				<p>We use the information we collect to:</p>
-				<ul>
-					<li>Respond to your enquiries, custom order requests, and Academy applications.</li>
-					<li>Process and fulfil orders, including communicating about lead times and delivery.</li>
-					<li>Send administrative information, such as updates to our terms or policies.</li>
-					<li>Comply with legal obligations and enforce our rights.</li>
-				</ul>
-
-				<h2>4. Data Sharing and International Transfers</h2>
-				<p>We do not sell or rent your personal data. We share it only with trusted service providers who help us operate:</p>
-				<ul>
-					<li><strong>Formspree:</strong> Our contact form is processed by Formspree (formspree.io), which stores data on servers located outside Nigeria. Formspree is GDPR-compliant and processes data under strict data processing agreements.</li>
-					<li><strong>Google Fonts:</strong> Our website loads fonts from Google, which may collect your IP address for technical delivery.</li>
-					<li><strong>WhatsApp:</strong> If you choose to checkout via WhatsApp, your data is processed by WhatsApp (Meta Platforms) under their privacy policy.</li>
-				</ul>
-				<p>Where we transfer data outside Nigeria, we ensure appropriate safeguards are in place, in line with the NDPA’s cross-border transfer rules.</p>
-
-				<h2>5. Data Retention</h2>
-				<p>We retain your personal data only for as long as necessary to fulfil the purposes outlined in this policy, or as required by law. Enquiry data is typically retained for 24 months. Order data is retained for 7 years to comply with Nigerian financial record-keeping laws.</p>
-
-				<h2>6. Your Rights</h2>
-				<p>Under the NDPA 2023 (and the GDPR for international visitors), you have the right to:</p>
-				<ul>
-					<li><strong>Be Informed:</strong> Know how your data is collected and used.</li>
-					<li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
-					<li><strong>Rectification:</strong> Correct any inaccurate or incomplete data.</li>
-					<li><strong>Erasure (“Right to be Forgotten”):</strong> Request deletion of your data, subject to legal retention requirements.</li>
-					<li><strong>Restrict Processing:</strong> Limit how we use your data.</li>
-					<li><strong>Object:</strong> Object to processing based on legitimate interests.</li>
-					<li><strong>Data Portability:</strong> Receive your data in a structured, machine-readable format.</li>
-					<li><strong>Withdraw Consent:</strong> Withdraw your consent at any time, without affecting the lawfulness of prior processing.</li>
-				</ul>
-				<p>To exercise any of these rights, please contact us at <a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a>.</p>
-
-				<h2>7. Data Security</h2>
-				<p>We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, alteration, disclosure, or destruction. In the event of a data breach that poses a risk to your rights, we will notify the Nigeria Data Protection Commission (NDPC) within 72 hours and inform you without undue delay, in accordance with NDPA requirements.</p>
-
-				<h2>8. Cookies</h2>
-				<p>Our website uses essential cookies to function properly. We do not use invasive tracking cookies or advertising cookies without your explicit consent. You can control cookie settings in your browser.</p>
-
-				<h2>9. Contact Us</h2>
-				<p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
-				<p>
-					<strong>ModeInfinity</strong><br>
-					Email: <a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a><br>
-					Phone: <a href="tel:+2348050424000">+234 805 042 4000</a><br>
-					Address: Sentosa Parks & Garden, Plot 2028, Legislative Quarters Apo, Abuja, Nigeria
+				<p class="legal-hero__eyebrow">Customer information · Document 5 of 7</p>
+				<h1 id="page-title" class="legal-hero__title">Privacy Policy</h1>
+				<p class="legal-hero__description">
+					How ModeInfinity may collect, use, disclose, retain and protect
+					personal information when you visit our website, enquire about
+					footwear, place an order, or contact our shoemaking academy.
 				</p>
+				<div class="legal-hero__meta">
+					<span><strong>Policy owner:</strong> ModeInfinity Management</span>
+					<span><strong>Version:</strong> Draft 1.0</span>
+					<span><strong>Effective date:</strong> <span class="legal-placeholder">[INSERT APPROVED DATE]</span></span>
+					<span><strong>Last updated:</strong> <span class="legal-placeholder">[INSERT DATE]</span></span>
+				</div>
+				<div class="legal-hero__actions">
+					<button class="btn btn-secondary" id="printPolicy" type="button">Print / Save PDF</button>
+					<button class="btn btn-ghost" id="reviewChecklist" type="button">Review publication checklist</button>
+				</div>
 			</div>
 		</section>
+
+		<!-- ==================================================
+		     DRAFT NOTICE
+		     ================================================== -->
+		<div class="legal-draft" role="note" aria-label="Draft status">
+			<strong>Internal draft — not approved for publication</strong>
+			This policy must be reconciled with the live website, actual data flows,
+			Formspree configuration, hosting and analytics settings, business contact
+			details, and academy recordkeeping practices before publication.
+		</div>
+
+		<!-- ==================================================
+		     LAYOUT — TOC + CONTENT
+		     ================================================== -->
+		<div class="legal-layout">
+
+			<nav class="legal-toc" aria-label="On this page">
+				<p class="legal-toc__title">On this page</p>
+				<ol class="legal-toc__list">
+					<li><a class="legal-toc__link" href="#who">Who we are</a></li>
+					<li><a class="legal-toc__link" href="#scope">When this policy applies</a></li>
+					<li><a class="legal-toc__link" href="#data">Information we may collect</a></li>
+					<li><a class="legal-toc__link" href="#sources">How we obtain information</a></li>
+					<li><a class="legal-toc__link" href="#purposes">How we use information</a></li>
+					<li><a class="legal-toc__link" href="#lawful-basis">Lawful basis for processing</a></li>
+					<li><a class="legal-toc__link" href="#forms">Website forms and Formspree</a></li>
+					<li><a class="legal-toc__link" href="#cart">Shopping cart and WhatsApp</a></li>
+					<li><a class="legal-toc__link" href="#academy">Academy and student records</a></li>
+					<li><a class="legal-toc__link" href="#sharing">Sharing and service providers</a></li>
+					<li><a class="legal-toc__link" href="#transfers">International transfers</a></li>
+					<li><a class="legal-toc__link" href="#cookies">Cookies and local storage</a></li>
+					<li><a class="legal-toc__link" href="#retention">Retention and deletion</a></li>
+					<li><a class="legal-toc__link" href="#security">Information security</a></li>
+					<li><a class="legal-toc__link" href="#rights">Your privacy rights</a></li>
+					<li><a class="legal-toc__link" href="#children">Children and young people</a></li>
+					<li><a class="legal-toc__link" href="#marketing">Marketing and publicity</a></li>
+					<li><a class="legal-toc__link" href="#changes">Policy changes</a></li>
+					<li><a class="legal-toc__link" href="#contact">Contact and complaints</a></li>
+					<li><a class="legal-toc__link" href="#checklist">Internal publication checklist</a></li>
+				</ol>
+			</nav>
+<article class="legal-content">
+
+				<div class="legal-callout">
+					<strong>Important — this draft contains assumptions that must be verified</strong>
+					<p>
+						The website design and described workflows indicate that contact and
+						custom-order forms may collect personal information, Formspree may
+						receive form submissions, and the cart may store information in the
+						browser's local storage before opening WhatsApp. The final policy must
+						accurately describe the deployed website and the actual services enabled.
+						Do not publish statements about security, retention, email confirmations,
+						analytics, cookies, or third-party providers until they have been checked.
+					</p>
+				</div>
+
+				<section id="who">
+					<h2>1. Who We Are</h2>
+					<p>ModeInfinity is a Nigerian footwear business and shoemaking academy offering footwear-related products, custom footwear services, and shoemaking education.</p>
+					<p>For the purposes of this policy, "ModeInfinity," "we," "us," and "our" refer to the business entity responsible for the relevant processing of personal information.</p>
+					<p>The legal identity and contact details of the responsible business must be confirmed before publication:</p>
+					<ul>
+						<li>Legal or registered business name: <span class="legal-placeholder">[CONFIRM EXACT LEGAL NAME]</span></li>
+						<li>Business address: <span class="legal-placeholder">[VERIFY OFFICIAL BUSINESS ADDRESS]</span></li>
+						<li>Privacy contact email: <span class="legal-placeholder">[CONFIRM APPROVED PRIVACY EMAIL]</span></li>
+						<li>Business telephone: <span class="legal-placeholder">[INSERT ONLY AFTER VERIFICATION]</span></li>
+					</ul>
+					<p>The person or entity legally responsible for deciding why and how personal information is processed is generally referred to as the data controller. Whether ModeInfinity acts as a controller, processor, or in another role must be determined for each relevant activity.</p>
+				</section>
+
+				<section id="scope">
+					<h2>2. When This Policy Applies</h2>
+					<p>This policy is intended to apply when you:</p>
+					<ul>
+						<li>Visit or interact with the ModeInfinity website.</li>
+						<li>Submit a contact, product, custom-footwear, or academy enquiry.</li>
+						<li>Request information about courses, enrolment, or training.</li>
+						<li>Use the website's shopping-cart or WhatsApp checkout workflow.</li>
+						<li>Communicate with us about an order, delivery, complaint, or after-sales matter.</li>
+						<li>Provide information to us in another business-related interaction covered by this policy.</li>
+					</ul>
+					<p>Some services, including third-party websites and messaging platforms, have their own privacy policies. When you leave our website or use an external service, that service's terms and privacy information may also apply to its handling of your information.</p>
+				</section>
+
+				<section id="data">
+					<h2>3. Information We May Collect</h2>
+					<p>The information we collect depends on what you choose to do. We should request only information that is relevant and reasonably necessary for the stated purpose.</p>
+
+					<div class="legal-table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th scope="col">Information category</th>
+									<th scope="col">Examples</th>
+									<th scope="col">Possible purpose</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Identity and contact details</td>
+									<td>Name, email address, telephone number.</td>
+									<td>Responding to enquiries, communicating about orders, and providing support.</td>
+								</tr>
+								<tr>
+									<td>Enquiry information</td>
+									<td>Enquiry category, message, preferred contact method, and relevant correspondence.</td>
+									<td>Understanding and responding to your request.</td>
+								</tr>
+								<tr>
+									<td>Custom footwear information</td>
+									<td>Footwear size or measurements, style, colour, leather preferences, fit notes, timeline, occasion, and reference images or links.</td>
+									<td>Assessing feasibility and discussing or producing a requested custom item.</td>
+								</tr>
+								<tr>
+									<td>Order information</td>
+									<td>Order reference, selected products, quantities, prices, delivery or pickup arrangements, and order correspondence.</td>
+									<td>Handling orders, payment reconciliation, fulfilment, and customer support.</td>
+								</tr>
+								<tr>
+									<td>Academy enquiry or enrolment information</td>
+									<td>Course interest, contact details, enrolment information, and relevant training records.</td>
+									<td>Responding to course enquiries and administering approved academy services.</td>
+								</tr>
+								<tr>
+									<td>Payment-related records</td>
+									<td>Payment status, transaction reference, amount, date, and records supplied for reconciliation.</td>
+									<td>Confirming and accounting for payments and resolving disputes.</td>
+								</tr>
+								<tr>
+									<td>Technical information</td>
+									<td>Browser or device information, IP address, access logs, and usage data, if collected by hosting or other enabled services.</td>
+									<td>Website operation, security, troubleshooting, and analytics where enabled and appropriately disclosed.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<p>We do not need to collect every category listed above from every visitor. Some categories may not be collected at all, depending on the actual website configuration and how you interact with us.</p>
+					<p>Please do not send payment-card details, passwords, government identity documents, or other highly sensitive information through a general enquiry form unless we have expressly requested it through a suitable and secure process.</p>
+				</section>
+
+				<section id="sources">
+					<h2>4. How We Obtain Information</h2>
+					<p>Information may be obtained:</p>
+					<ul>
+						<li>Directly from you when you complete a form, send a message, or contact us.</li>
+						<li>From details you provide during custom footwear discussions or academy enquiries.</li>
+						<li>From order and payment records generated or received while handling a transaction.</li>
+						<li>From your device or browser through technical logs and storage mechanisms, where enabled.</li>
+						<li>From third-party services you choose to use to communicate or transact with us.</li>
+					</ul>
+					<p>If another person provides your information, we should take reasonable steps to ensure that the information was provided appropriately and that you receive any privacy information required by applicable law.</p>
+				</section>
+
+				<section id="purposes">
+					<h2>5. How We Use Information</h2>
+					<p>Subject to the applicable legal basis, we may use relevant information to:</p>
+					<ul>
+						<li>Respond to enquiries and provide information about our products or academy.</li>
+						<li>Discuss custom footwear requirements and clarify specifications.</li>
+						<li>Prepare, process, and manage orders and agreed services.</li>
+						<li>Coordinate dispatch, delivery, or customer pickup.</li>
+						<li>Reconcile payments, maintain business records, and address disputes.</li>
+						<li>Administer course enquiries, enrolment, training, and relevant student communications.</li>
+						<li>Maintain website functionality and troubleshoot technical issues.</li>
+						<li>Detect, prevent, or investigate fraud, misuse, and security incidents.</li>
+						<li>Meet legal, regulatory, accounting, or recordkeeping obligations.</li>
+						<li>Send marketing communications where an appropriate legal basis and any required consent exist.</li>
+						<li>Exercise or defend legal claims where permitted by law.</li>
+					</ul>
+					<p>We will not treat every possible use listed here as automatically authorized. The actual use must be necessary, proportionate, compatible with the stated purpose, and supported by an applicable legal basis.</p>
+				</section>
+
+				<section id="lawful-basis">
+					<h2>6. Lawful Basis for Processing</h2>
+					<p>Where required by applicable data protection law, we will identify and document an appropriate lawful basis for each processing activity. Depending on the circumstances, that basis may include:</p>
+					<ul>
+						<li><strong>Consent:</strong> where you have freely agreed to a specific use and the law requires or permits consent as the basis.</li>
+						<li><strong>Contract or pre-contractual steps:</strong> where processing is necessary to respond to your request, take steps toward an agreement, or perform an agreement with you.</li>
+						<li><strong>Legal obligation:</strong> where processing is required to comply with a legal duty.</li>
+						<li><strong>Legitimate interests:</strong> where a legitimate interest applies, the processing is necessary, and your rights and interests do not override it.</li>
+						<li><strong>Other lawful bases:</strong> where specifically applicable under the governing law and circumstances.</li>
+					</ul>
+					<p>The correct basis depends on the purpose and context. We will not rely on consent as a blanket justification for every processing activity. Where consent is used, it should be specific, informed, and capable of being withdrawn as applicable.</p>
+					<p>If we need information to take steps requested by you or fulfil an agreement, we will explain when the information is necessary and what may happen if you do not provide it.</p>
+				</section>
+
+				<section id="forms">
+					<h2>7. Website Forms and Formspree</h2>
+					<p>The ModeInfinity contact workflow has been configured in the development material to use Formspree as a form-submission service. The current configuration references a Formspree endpoint, but its live status, account settings, recipients, retention arrangements, and security configuration must be verified before publication.</p>
+					<p>Depending on the form you complete, information may include your name, email address, enquiry type, message, optional telephone number, programme interest, order reference, custom design preferences, size or fit notes, and reference images or links.</p>
+					<p>When you submit a form, the information may be transmitted to Formspree and made available to ModeInfinity through the configured submission workflow. Formspree may process information under its own service terms and privacy documentation. Its role and the applicable contractual and transfer arrangements must be confirmed.</p>
+					<p>Do not assume that a success message proves an email was delivered or that a separate customer confirmation email was sent. Those outcomes depend on the actual endpoint, configuration, and any additional services enabled. ModeInfinity must test and document the live workflow.</p>
+					<p>If a form fails, please use the verified contact method published on the approved website. Avoid resubmitting sensitive details repeatedly or sending unnecessary personal information.</p>
+				</section>
+
+				<section id="cart">
+					<h2>8. Shopping Cart and WhatsApp Checkout</h2>
+					<h3>8.1 Browser-Based Cart</h3>
+					<p>The website's cart implementation uses browser local storage under the key <code>mi_cart_v1</code>. The described implementation stores cart item details such as product names, prices, images, and quantities on the device or browser being used.</p>
+					<p>This allows cart contents to persist between visits in the same browser until they are removed, browser storage is cleared, or another event changes the stored data. The described implementation does not include an automatic expiry period.</p>
+					<p>Local storage is not the same as a server-side account or a completed order. People with access to your device or browser profile may be able to access its stored information. Avoid using a shared device for private transactions unless you can protect your session.</p>
+					<h3>8.2 WhatsApp Checkout</h3>
+					<p>The described checkout workflow prepares an order message and opens WhatsApp. You must review and send the message yourself. Opening WhatsApp does not, by itself, submit an order to ModeInfinity, confirm availability, confirm payment, or guarantee acceptance of the order.</p>
+					<p>If you choose to send the message, the information you include will be processed by WhatsApp under its own terms and privacy practices. Depending on the message, this may include product choices, quantities, prices, and other details you choose to provide.</p>
+					<p>Before publishing this policy, ModeInfinity must verify the WhatsApp destination number, the exact message contents, and whether any additional order-processing system receives or retains the message. No unverified telephone number should be published as an official contact.</p>
+					<p>Payment is not processed by the described cart code itself. Any payment arrangement must be separately communicated and handled through the actual approved business process.</p>
+				</section>
+
+				<section id="academy">
+					<h2>9. Academy Enquiries and Student Information</h2>
+					<p>When you enquire about or enrol in a ModeInfinity shoemaking programme, we may need information to respond to your request and administer the course or training arrangement.</p>
+					<p>Depending on the actual process, this may include:</p>
+					<ul>
+						<li>Contact details and programme of interest.</li>
+						<li>Enrolment, attendance, course progress, and training-related records.</li>
+						<li>Relevant communications about schedules, fees, materials, and practical sessions.</li>
+						<li>Payment records and other information needed to administer an enrolment.</li>
+						<li>Safety training and equipment authorization records where required.</li>
+					</ul>
+					<p>We should limit collection to information that is necessary for the relevant activity. Access to student records must be restricted to authorized persons who need the information for their responsibilities.</p>
+					<p>If the academy accepts children or young people, it must establish appropriate age-related privacy safeguards, lawful consent or authorization procedures where required, and clear rules governing parent or guardian communications.</p>
+					<p>Photographs, video, testimonials, student work, and identifiable training footage must not automatically be treated as authorized for marketing. The academy should establish a separate, transparent process for any optional publicity use, including any consent or authorization required by law.</p>
+				</section>
+
+				<section id="sharing">
+					<h2>10. Sharing Information and Service Providers</h2>
+					<p>We do not sell personal information as a business practice described by this policy. We may disclose relevant information where necessary and lawful for the purposes explained here.</p>
+					<p>Depending on the services actually used, recipients may include:</p>
+					<ul>
+						<li>Formspree, for form submissions and related processing.</li>
+						<li>WhatsApp, if you choose to use WhatsApp to communicate with us.</li>
+						<li>Website hosting, domain, security, or infrastructure providers.</li>
+						<li>Delivery or dispatch providers, where information is needed to fulfil a delivery.</li>
+						<li>Payment or banking providers involved in a transaction or reconciliation.</li>
+						<li>Professional advisers, auditors, or service providers acting under appropriate arrangements.</li>
+						<li>Public authorities, regulators, courts, or law enforcement where disclosure is legally required or otherwise permitted.</li>
+					</ul>
+					<p>This is a list of possible categories, not confirmation that every provider is currently engaged. Before publication, ModeInfinity must identify the providers actually used and disclose them appropriately.</p>
+					<p>Where a third party processes personal information on our behalf, appropriate contractual, confidentiality, security, and data protection arrangements should be assessed and implemented as required by law.</p>
+				</section>
+
+				<section id="transfers">
+					<h2>11. International Data Transfers</h2>
+					<p>Some website or communication providers may process or store information outside Nigeria. Whether international transfers occur depends on the actual providers, their infrastructure, and their configurations.</p>
+					<p>ModeInfinity must identify relevant transfers and assess the safeguards and conditions required by applicable Nigerian data protection law before enabling or continuing them.</p>
+					<p>The final policy should identify material transfer arrangements and describe the applicable safeguards in a clear and accurate way. It must not claim that all data remains in Nigeria unless this has been verified for every relevant service.</p>
+				</section>
+
+				<section id="cookies">
+					<h2>12. Cookies, Local Storage and Website Technologies</h2>
+					<p>The described shopping cart uses browser local storage to retain cart contents. Local storage is a browser storage mechanism and is not itself a cookie.</p>
+					<p>The website's use of cookies, analytics, advertising pixels, embedded content, session storage, or other tracking technologies must be confirmed by inspecting the deployed site and its third-party scripts. This draft does not confirm that those technologies are enabled.</p>
+					<p>If optional analytics, advertising, or other tracking technologies are used, the site should explain their purposes and provide any notice, consent mechanism, and user controls required by applicable law.</p>
+					<p>You may be able to remove locally stored cart information by clearing your browser's site data. Doing so may also remove other website preferences. The exact process depends on your browser.</p>
+				</section>
+
+				<section id="retention">
+					<h2>13. Retention and Deletion</h2>
+					<p>We should retain personal information only for as long as it is reasonably necessary for the purpose for which it was collected, subject to legal obligations, legitimate business needs, dispute resolution, and any applicable retention requirements.</p>
+					<p>Retention periods depend on the information category and actual processing arrangement. They must be established and documented by ModeInfinity rather than assumed.</p>
+
+					<div class="legal-table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th scope="col">Information category</th>
+									<th scope="col">Retention approach to confirm</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>General enquiries</td>
+									<td><span class="legal-placeholder">[SET RETENTION PERIOD]</span> based on enquiry resolution and legitimate follow-up needs.</td>
+								</tr>
+								<tr>
+									<td>Order and payment records</td>
+									<td>Retain according to applicable accounting, tax, legal, and dispute requirements; document the period.</td>
+								</tr>
+								<tr>
+									<td>Academy records</td>
+									<td><span class="legal-placeholder">[SET PERIODS BY RECORD TYPE]</span> for enrolment, training, and safety records.</td>
+								</tr>
+								<tr>
+									<td>Form submissions</td>
+									<td>Confirm retention in Formspree, any email inboxes, backups, and any other connected systems.</td>
+								</tr>
+								<tr>
+									<td>Browser cart data</td>
+									<td>The described cart has no automatic expiry; it remains until removed, storage is cleared, or it is overwritten.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<p>When information is no longer required, it should be securely deleted, anonymized, or otherwise handled in accordance with applicable law and the approved retention schedule. Deletion from one system may not immediately remove copies held in backups or by independent third parties.</p>
+				</section>
+
+				<section id="security">
+					<h2>14. Information Security</h2>
+					<p>ModeInfinity should implement appropriate technical and organizational measures to protect personal information against unauthorized access, loss, alteration, disclosure, and destruction.</p>
+					<p>Measures should be proportionate to the risks and may include:</p>
+					<ul>
+						<li>Restricting access to business systems and records according to role.</li>
+						<li>Using strong authentication and protecting account credentials.</li>
+						<li>Keeping website software and dependencies appropriately maintained.</li>
+						<li>Using secure connections and reviewing form and hosting configurations.</li>
+						<li>Limiting the personal information collected and shared.</li>
+						<li>Providing staff with privacy and security instructions.</li>
+						<li>Maintaining suitable backup, incident-response, and recovery arrangements.</li>
+						<li>Assessing third-party providers and their security arrangements.</li>
+					</ul>
+					<p>No method of online transmission or storage can be guaranteed to be completely secure. However, this does not remove our responsibility to implement appropriate safeguards and respond to incidents in accordance with applicable requirements.</p>
+					<p>If a personal data breach occurs, ModeInfinity must assess and handle it under its incident-response procedure and comply with applicable notification and reporting obligations, including any relevant requirements of the Nigeria Data Protection Act 2023.</p>
+				</section>
+
+				<section id="rights">
+					<h2>15. Your Privacy Rights</h2>
+					<p>Depending on the applicable law, the nature of the processing, and any lawful limitations, you may have rights concerning your personal information. These may include the right to:</p>
+					<ul>
+						<li>Request access to personal information about you.</li>
+						<li>Request correction of inaccurate or incomplete information.</li>
+						<li>Request deletion or erasure in circumstances where the law provides that right.</li>
+						<li>Request restriction of processing in circumstances where it applies.</li>
+						<li>Object to certain processing, including relevant direct marketing.</li>
+						<li>Request portability of certain information where the legal conditions are met.</li>
+						<li>Withdraw consent where processing is based on consent, without affecting the lawfulness of prior processing.</li>
+						<li>Raise a complaint with the relevant data protection authority.</li>
+					</ul>
+					<p>These rights are not absolute in every circumstance. The applicable legal conditions, exemptions, and balancing tests may affect whether a request can be fulfilled.</p>
+					<p>To make a privacy request, contact us using the verified details in Section 19. We may need to verify your identity before acting on a request. Please provide enough information for us to locate the relevant records, but do not send unnecessary identity documents or sensitive information.</p>
+					<p>We will handle requests within the time limits and according to the procedures required by applicable law. If we cannot fully comply, we will explain the outcome and any available next steps where required.</p>
+				</section>
+
+				<section id="children">
+					<h2>16. Children and Young People</h2>
+					<p>The academy must determine whether its programmes or website services are intended for, or may be used by, children or young people and establish safeguards appropriate to those circumstances.</p>
+					<p>Where applicable, we will follow the requirements governing children's personal information, parental or guardian authorization, age verification, and consent under the relevant law.</p>
+					<p>If a parent, guardian, or individual believes that personal information relating to a child has been collected or used inappropriately, they may contact us through the verified privacy contact listed in Section 19.</p>
+					<p>This section must be reviewed against the actual age range of academy students and the legal requirements applicable to those students before the policy is published.</p>
+				</section>
+
+				<section id="marketing">
+					<h2>17. Marketing Communications and Publicity</h2>
+					<p>We may provide information about products, services, or academy programmes where permitted by law and where any required consent has been obtained.</p>
+					<p>Where marketing messages are sent, the applicable process should make the sender identifiable and provide a clear way to opt out. An opt-out request should be handled promptly and reflected in the relevant marketing records.</p>
+					<p>A request for product information, an order, or academy enrolment does not automatically mean you have agreed to receive unrelated marketing communications.</p>
+					<p>Photographs, video, testimonials, student projects, and identifiable personal stories may be used for publicity only under a suitable documented process and where any required permission, consent, or other lawful basis exists. Participation in a course or purchase should not automatically be treated as permission for optional publicity.</p>
+				</section>
+
+				<section id="changes">
+					<h2>18. Changes to This Privacy Policy</h2>
+					<p>We may update this policy to reflect changes to our business, website, service providers, legal obligations, or data-handling practices.</p>
+					<p>The current version should display its effective or last-updated date. Where changes are material, we will provide notice or take any additional steps required by applicable law.</p>
+					<p>We will not rely on a policy update alone to replace consent or another legal basis where separate action is required.</p>
+				</section>
+
+				<section id="contact">
+					<h2>19. Privacy Enquiries and Complaints</h2>
+					<p>If you have a question about this policy, want to exercise a privacy right, or wish to raise a concern about our handling of personal information, please contact us through the verified details below.</p>
+					<ul>
+						<li>Privacy email: <span class="legal-placeholder">[CONFIRM APPROVED PRIVACY EMAIL]</span></li>
+						<li>Business address: <span class="legal-placeholder">[VERIFY OFFICIAL BUSINESS ADDRESS]</span></li>
+						<li>Telephone: <span class="legal-placeholder">[INSERT VERIFIED NUMBER ONLY IF APPROVED]</span></li>
+					</ul>
+					<p>If you remain dissatisfied, you may have the right to complain to the relevant data protection authority, including the Nigeria Data Protection Commission where applicable. Consult the Commission's official resources for current complaint procedures and contact details.</p>
+					<p>We should not publish an unverified telephone number, address, or privacy email as an official contact.</p>
+				</section>
+
+				<section id="checklist">
+					<h2>20. Internal Publication Checklist</h2>
+					<p>This section is an internal release checklist and should not be part of the public-facing policy after approval. Complete it before removing the draft label.</p>
+
+					<h3>Business identity and contact details</h3>
+					<ul class="legal-checklist">
+						<li>Verify the responsible legal entity and business name.</li>
+						<li>Confirm the official business address and privacy contact email.</li>
+						<li>Verify all telephone numbers before publication.</li>
+					</ul>
+
+					<h3>Website and form verification</h3>
+					<ul class="legal-checklist">
+						<li>Inspect all live forms and record the exact fields collected.</li>
+						<li>Verify the Formspree endpoint, account configuration, submission recipients, and retention arrangements.</li>
+						<li>Test whether any automatic customer confirmation email is actually configured and sent.</li>
+						<li>Confirm whether form data is stored in email, spreadsheets, CRM systems, or other locations.</li>
+						<li>Inspect the deployed website for cookies, analytics, advertising scripts, embedded media, and other tracking technologies.</li>
+						<li>Verify the cart's local-storage behavior and the information included in the WhatsApp message.</li>
+						<li>Verify the destination telephone number used by the checkout workflow.</li>
+					</ul>
+
+					<h3>Data governance</h3>
+					<ul class="legal-checklist">
+						<li>Map each category of personal information to its purpose, lawful basis, recipient, and retention period.</li>
+						<li>Identify relevant third-party processors and assess contractual safeguards.</li>
+						<li>Review international transfers and applicable safeguards.</li>
+						<li>Establish a process for access, correction, deletion, objection, and other applicable rights requests.</li>
+						<li>Establish a personal data breach response procedure and assess applicable notification requirements.</li>
+						<li>Determine whether any data protection impact assessment, registration, or other compliance obligation applies to the actual processing.</li>
+						<li>Review student data, children's information, publicity permissions, and marketing consent arrangements.</li>
+						<li>Establish and approve retention and secure deletion schedules.</li>
+					</ul>
+
+					<h3>Publication controls</h3>
+					<ul class="legal-checklist">
+						<li>Obtain review by qualified Nigerian data protection/legal counsel where appropriate.</li>
+						<li>Confirm that all statements in the policy match the deployed website and actual operations.</li>
+						<li>Remove this internal checklist from the public-facing version.</li>
+						<li>Replace the draft status and dates only after formal approval.</li>
+						<li>Keep the policy accessible from the website footer and relevant forms.</li>
+						<li>Remove the noindex directive only if the approved public policy is intended to be indexed by search engines.</li>
+						<li>Verify that the public privacy policy URL is not unintentionally blocked by robots.txt or other site configuration.</li>
+					</ul>
+				</section>
+
+				<div class="legal-contact-card">
+					<p><strong>Document:</strong> ModeInfinity Privacy Policy</p>
+					<p><strong>Status:</strong> Draft for operational and legal review</p>
+					<p><strong>Version:</strong> 1.0 · <strong>Prepared:</strong> <span id="preparedYear"></span></p>
+					<p>This document is a drafting aid, not legal advice or a guarantee of compliance. The final version must be checked against the actual processing activities and applicable legal requirements.</p>
+				</div>
+
+			</article>
+
+
+		</div>
+
 	</main>
 
+	<!-- ======================================================
+	     FULL SITE FOOTER
+	     ====================================================== -->
+	<footer class="site-footer">
+		<section class="site-footer__contact-strip" aria-label="ModeInfinity contact options">
+			<div class="container site-footer__contact-grid">
+				<a class="site-footer__contact-card" href="contact.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+							<circle cx="12" cy="9" r="2.5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Visit · Workshop</span>
+						<span class="site-footer__contact-title">ModeInfinity Abuja</span>
+						<span class="site-footer__contact-description"> Sentosa Parks &amp; Garden, Plot 2028, Legislative Quarters Apo, Abuja </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+				<a class="site-footer__contact-card" href="contact.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+							<circle cx="12" cy="9" r="2.5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Visit · Showroom</span>
+						<span class="site-footer__contact-title">ModeInfinity Lagos</span>
+						<span class="site-footer__contact-description"> B3106 Tejuosho Shopping Complex, Yaba, Lagos </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+				<div class="site-footer__contact-card">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Talk to us</span>
+						<span class="site-footer__contact-title">Call Us</span>
+						<span class="site-footer__contact-description">
+							<a href="tel:+2348050424000">+234 805 042 4000</a><br>
+							<a href="tel:+2349035830940">+234 903 583 0940</a>
+						</span>
+					</span>
+				</div>
+				<div class="site-footer__contact-card">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z" />
+							<path d="m5 7 7 5 7-5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Write to us</span>
+						<span class="site-footer__contact-title">Email</span>
+						<span class="site-footer__contact-description">
+							<a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a><br>
+							<a href="mailto:jennyomomia@gmail.com">jennyomomia@gmail.com</a>
+						</span>
+					</span>
+				</div>
+				<a class="site-footer__contact-card" href="academy.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="m3.5 9 8.5-4 8.5 4-8.5 4-8.5-4Z" />
+							<path d="M7 11.2v4.1c0 1.7 2.2 3.2 5 3.2s5-1.5 5-3.2v-4.1" />
+							<path d="M20.5 9v5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Learn the craft</span>
+						<span class="site-footer__contact-title">ModeInfinity Academy</span>
+						<span class="site-footer__contact-description"> Practical shoemaking education </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</section>
+		<div class="site-footer__main">
+			<div class="container">
+				<div class="site-footer__brand-row">
+					<section class="site-footer__brand" aria-labelledby="footer-brand-title">
+						<p class="site-footer__brand-kicker"> Footwear · Craft · Education </p>
+						<h2 class="site-footer__brand-title" id="footer-brand-title"> Learn. Create. Build. </h2>
+						<p class="site-footer__description"> ModeInfinity brings together handcrafted footwear, practical shoemaking education and purposeful design, all rooted in the craft of making. </p>
+						<div class="site-footer__socials">
+							<a href="https://www.instagram.com/officialmodeinfinityw" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+									<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+									<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+								</svg>
+							</a>
+							<a href="https://www.facebook.com/modeinfinity" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+								</svg>
+							</a>
+							<a href="https://www.tiktok.com/@modeinfinity2" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="site-footer__origin">
+							<span>Crafted in Nigeria.</span>
+						</div>
+					</section>
+					<div class="site-footer__navigation">
+						<nav class="site-footer__column" aria-labelledby="footer-explore-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">01</span>
+								<h2 id="footer-explore-title"> Explore </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html">About</a></li>
+								<li><a href="academy.html">Academy</a></li>
+								<li><a href="shop.html">Shop</a></li>
+								<li><a href="gallery.html">Gallery</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</nav>
+						<nav class="site-footer__column" aria-labelledby="footer-academy-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">02</span>
+								<h2 id="footer-academy-title"> Academy </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="academy.html"> Learn Shoemaking </a></li>
+								<li><a href="academy.html#courses"> Our Courses </a></li>
+								<li><a href="academy.html#process"> Training Process </a></li>
+								<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
+							</ul>
+						</nav>
+						<nav class="site-footer__column" aria-labelledby="footer-collection-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">03</span>
+								<h2 id="footer-collection-title"> The Collection </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="shop.html"> Shop Footwear </a></li>
+								<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
+								<li><a href="contact.html#custom-orders"> Custom Orders </a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div class="site-footer__statement">
+					<p class="site-footer__statement-text"> Made with <span>intention.</span> Made to <span>endure.</span> </p>
+				</div>
+				<div class="site-footer__cta">
+					<div class="site-footer__cta-copy">
+						<span class="site-footer__cta-eyebrow"> Start your next step </span>
+						<h2> Choose your path. </h2>
+						<p> Discover the collection or learn the craft behind every pair. </p>
+					</div>
+					<div class="site-footer__cta-actions">
+						<a class="btn btn-primary" href="shop.html"> Shop the Collection </a>
+						<a class="btn btn-secondary" href="academy.html"> Explore the Academy </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="site-footer__bottom">
+			<div class="container site-footer__bottom-inner">
+				<p class="site-footer__copyright"> &copy; ModeInfinity. All rights reserved. </p>
+				<nav class="site-footer__legal" aria-label="Legal navigation">
+					<a href="privacy.html">Privacy</a>
+					<a href="terms.html">Terms</a>
+				</nav>
+			</div>
+		</div>
+	</footer>
+
+	<!-- ======================================================
+	     REUSABLE FUNCTIONAL COMPONENTS
+	     ====================================================== -->
+	<div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
+	<div data-component="lightbox" data-component-path="components/lightbox.html"></div>
+	<div data-component="toast" data-component-path="components/toast.html"></div>
+	<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div>
+
+	<!-- ======================================================
+	     APPLICATION SCRIPTS
+	     ====================================================== -->
+	<script src="scripts/cart-drawer.js" defer></script>
+	<script type="module" src="scripts/main.js"></script>
+
+	<!-- Page-specific handlers -->
+	<script>
+		"use strict";
+
+		/* ---------- Prepared year ---------- */
+		const preparedYearEl = document.getElementById("preparedYear");
+		if (preparedYearEl) {
+			preparedYearEl.textContent = String(new Date().getFullYear());
+		}
+
+		/* ---------- Print / Save PDF ---------- */
+		const printButton = document.getElementById("printPolicy");
+		if (printButton) {
+			printButton.addEventListener("click", () => { window.print(); });
+		}
+
+		/* ---------- Scroll to publication checklist (§20) ---------- */
+		const reviewChecklistButton = document.getElementById("reviewChecklist");
+		if (reviewChecklistButton) {
+			reviewChecklistButton.addEventListener("click", () => {
+				const section = document.getElementById("checklist");
+				if (!section) return;
+
+				const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+				section.scrollIntoView({
+					behavior: reduceMotion ? "auto" : "smooth",
+					block: "start"
+				});
+
+				const heading = section.querySelector("h2");
+				if (heading) {
+					heading.setAttribute("tabindex", "-1");
+					heading.focus({ preventScroll: true });
+				}
+			});
+		}
+	</script>
+
 </body>
+
 </html>

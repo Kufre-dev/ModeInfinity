@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
+	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self';
+		script-src 'self' 'unsafe-inline';
+		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+		font-src 'self' https://fonts.gstatic.com;
+		img-src 'self' data: https:;
+		base-uri 'self';
+		object-src 'none';
+	">
+	<meta http-equiv="X-Content-Type-Options" content="nosniff">
+	<meta name="referrer" content="strict-origin-when-cross-origin">
+	<!-- ==================================================================== -->
+
+	<title>Student Workshop Safety Policy | ModeInfinity</title>
+	<meta name="description" content="ModeInfinity Student Workshop Safety Policy — safety expectations for students, instructors and workshop supervisors participating in shoemaking training.">
+	<meta name="robots" content="noindex, nofollow">
+
+	<link rel="icon" href="public/favicon.ico" sizes="any">
+	<link rel="apple-touch-icon" href="assets/images/logo.png">
+	<link rel="manifest" href="public/manifest.json">
+
+	<meta name="theme-color" content="#111111">
+	<meta name="color-scheme" content="light">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="ModeInfinity">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="styles/variables.css">
+	<link rel="stylesheet" href="styles/global.css">
+	<link rel="stylesheet" href="styles/layout.css">
+	<link rel="stylesheet" href="styles/components.css">
+	<link rel="stylesheet" href="styles/cart-drawer.css">
+	<link rel="stylesheet" href="styles/lightbox.css">
+	<link rel="stylesheet" href="styles/animations.css">
+	<link rel="stylesheet" href="styles/responsive.css">
+
+	<style>
+		/* ======================================================================
+		   DRAFT NOTICE
+		   ====================================================================== */
+		.legal-draft {
+			width: min(100% - (var(--container-padding-inline) * 2), 72rem);
+			margin: var(--space-6) auto 0;
+			padding: var(--space-4) var(--space-5);
+			background: var(--color-gold-100);
+			border: 1px solid rgb(197 154 24 / 0.4);
+			border-left: 4px solid var(--color-gold-500);
+			border-radius: var(--radius-sm);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-draft strong {
+			display: block;
+			margin-bottom: var(--space-1);
+			color: var(--color-gold-800);
+			font-weight: var(--font-weight-semibold);
+		}
+
+		/* ======================================================================
+		   HERO
+		   ====================================================================== */
+		.legal-hero {
+			background: var(--color-background-dark);
+			color: var(--color-white);
+			padding-block:
+				calc(var(--header-height) + var(--space-10))
+				var(--space-10);
+			padding-inline: var(--container-padding-inline);
+			text-align: left;
+		}
+		.legal-hero__inner {
+			width: min(100%, 72rem);
+			margin-inline: auto;
+		}
+		.legal-hero__eyebrow {
+			margin: 0 0 var(--space-3);
+			color: var(--color-gold-300);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-weight: var(--font-weight-semibold);
+			letter-spacing: var(--tracking-widest);
+			text-transform: uppercase;
+		}
+		.legal-hero__title {
+			max-width: 46rem;
+			margin: 0;
+			color: var(--color-white);
+			font-family: var(--font-display);
+			font-size: clamp(2.2rem, 6vw, 3.5rem);
+			font-weight: var(--font-weight-medium);
+			line-height: 1.1;
+			letter-spacing: var(--tracking-tight);
+			text-wrap: balance;
+		}
+		.legal-hero__description {
+			max-width: 60ch;
+			margin: var(--space-5) 0 0;
+			color: rgb(255 255 255 / 0.82);
+			font-family: var(--font-sans);
+			font-size: var(--text-base);
+			line-height: var(--leading-relaxed);
+			text-wrap: pretty;
+		}
+		.legal-hero__meta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-2) var(--space-6);
+			margin-top: var(--space-6);
+			padding: 0;
+			color: rgb(255 255 255 / 0.7);
+			font-family: var(--font-mono);
+			font-size: var(--text-xs);
+			letter-spacing: var(--tracking-wider);
+			line-height: var(--leading-normal);
+			text-transform: uppercase;
+		}
+		.legal-hero__meta > span {
+			display: inline-flex;
+			align-items: baseline;
+			gap: var(--space-2);
+			flex-wrap: wrap;
+		}
+		.legal-hero__meta strong {
+			color: rgb(255 255 255 / 0.95);
+			font-weight: var(--font-weight-semibold);
+		}
+		.legal-hero__actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-3);
+			margin-top: var(--space-6);
+		}
+		.legal-hero__actions .btn-ghost {
+			color: var(--color-white);
+			border-color: rgb(255 255 255 / 0.4);
+		}
+		.legal-hero__actions .btn-ghost:hover,
+		.legal-hero__actions .btn-ghost:focus-visible {
+			color: var(--color-gold-300);
+			border-color: var(--color-gold-300);
+			background: transparent;
+			box-shadow: 0 3px 0 rgb(237 200 79 / 20%);
+		}
+
+		/* ======================================================================
+		   LAYOUT — TOC + CONTENT
+		   ====================================================================== */
+		.legal-layout {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--space-8);
+			width: min(100% - (var(--container-padding-inline) * 2), 72rem);
+			margin-inline: auto;
+			padding-block: var(--section-space-md);
+			align-items: start;
+		}
+		@media (min-width: 64rem) {
+			.legal-layout {
+				grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+				gap: var(--space-10);
+			}
+		}
+
+		/* ======================================================================
+		   TOC SIDEBAR
+		   ====================================================================== */
+		.legal-toc {
+			padding: var(--space-5);
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		@media (min-width: 64rem) {
+			.legal-toc {
+				position: sticky;
+				top: calc(var(--header-height) + var(--space-4));
+				max-height: calc(100vh - var(--header-height) - var(--space-8));
+				overflow-y: auto;
+			}
+		}
+		.legal-toc__title {
+			margin: 0 0 var(--space-3);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-weight: var(--font-weight-semibold);
+			letter-spacing: var(--tracking-widest);
+			text-transform: uppercase;
+		}
+		.legal-toc__list {
+			margin: 0;
+			padding-left: var(--space-5);
+			list-style: decimal;
+		}
+		.legal-toc__list li {
+			margin-block: var(--space-1);
+			color: var(--color-text-muted);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			line-height: var(--leading-snug);
+		}
+		.legal-toc__link {
+			color: var(--color-text-muted);
+			text-decoration: none;
+			transition: color var(--transition-fast);
+			overflow-wrap: anywhere;
+		}
+		.legal-toc__link:hover,
+		.legal-toc__link:focus-visible {
+			color: var(--color-accent-text);
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+		}
+		.legal-toc__link:focus-visible {
+			outline: var(--focus-ring-width) solid var(--focus-ring-color);
+			outline-offset: var(--focus-ring-offset);
+			border-radius: var(--radius-xs);
+		}
+		@media (min-width: 30rem) and (max-width: 63.999rem) {
+			.legal-toc__list {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: var(--space-1) var(--space-6);
+			}
+		}
+
+		/* ======================================================================
+		   LEGAL CONTENT
+		   ====================================================================== */
+		.legal-content {
+			min-width: 0;
+			max-width: 42rem;
+			margin-inline: auto;
+			padding: clamp(1.25rem, 3vw, 2.5rem);
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+			box-shadow: var(--shadow-sm);
+		}
+		@media (min-width: 64rem) {
+			.legal-content {
+				max-width: none;
+				margin-inline: 0;
+			}
+		}
+		.legal-content section {
+			margin: 0 0 var(--space-8);
+			padding: 0 0 var(--space-6);
+			border-bottom: 1px solid var(--color-border);
+			scroll-margin-top: var(--space-6);
+		}
+		.legal-content section:last-of-type {
+			margin-bottom: 0;
+			padding-bottom: 0;
+			border-bottom: 0;
+		}
+		.legal-content h2 {
+			margin: 0 0 var(--space-4);
+			padding-bottom: var(--space-2);
+			color: var(--color-text-strong);
+			font-family: var(--font-display);
+			font-size: clamp(1.35rem, 3vw, 1.8rem);
+			font-weight: var(--font-weight-medium);
+			line-height: var(--leading-snug);
+			letter-spacing: var(--tracking-tight);
+		}
+		.legal-content h3 {
+			margin: var(--space-6) 0 var(--space-3);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-lg);
+			font-weight: var(--font-weight-semibold);
+			line-height: var(--leading-snug);
+			letter-spacing: var(--tracking-tight);
+		}
+		.legal-content p,
+		.legal-content li {
+			margin: 0 0 var(--space-3);
+			color: var(--color-text-muted);
+			font-family: var(--font-sans);
+			font-size: var(--text-base);
+			line-height: var(--leading-relaxed);
+			text-wrap: pretty;
+		}
+		.legal-content ul,
+		.legal-content ol {
+			margin: 0 0 var(--space-4);
+			padding-left: var(--space-5);
+		}
+		.legal-content li {
+			margin-bottom: var(--space-2);
+			padding-left: var(--space-1);
+		}
+		.legal-content a {
+			color: var(--color-accent-text);
+			text-decoration: underline;
+			text-underline-offset: 0.2em;
+			overflow-wrap: anywhere;
+		}
+		.legal-content a:hover,
+		.legal-content a:focus-visible {
+			color: var(--color-gold-600);
+		}
+		.legal-content a:focus-visible {
+			outline: var(--focus-ring-width) solid var(--focus-ring-color);
+			outline-offset: var(--focus-ring-offset);
+			border-radius: var(--radius-xs);
+		}
+		.legal-content strong {
+			color: var(--color-text-strong);
+			font-weight: var(--font-weight-semibold);
+		}
+
+		/* ======================================================================
+		   CONTACT CARD / CALLOUTS
+		   ====================================================================== */
+		.legal-contact-card {
+			margin: var(--space-5) 0;
+			padding: var(--space-5);
+			background: var(--color-surface-muted);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		.legal-contact-card > p:first-child,
+		.legal-contact-card > strong:first-child {
+			margin-top: 0;
+		}
+		.legal-contact-card > p:last-child {
+			margin-bottom: 0;
+		}
+		.legal-contact-card > ul:last-child,
+		.legal-contact-card > ol:last-child {
+			margin-bottom: 0;
+		}
+		.legal-contact-card p {
+			margin: 0 0 var(--space-3);
+			color: var(--color-text);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-contact-card ul,
+		.legal-contact-card ol {
+			padding-left: var(--space-5);
+			margin: 0 0 var(--space-3);
+		}
+		.legal-contact-card li {
+			margin-bottom: var(--space-2);
+			color: var(--color-text);
+			font-size: var(--text-sm);
+		}
+		.legal-callout {
+			margin: var(--space-5) 0;
+			padding: var(--space-4) var(--space-5);
+			background: var(--color-gold-100);
+			border-left: 4px solid var(--color-gold-500);
+			border-radius: var(--radius-sm);
+		}
+		.legal-callout > strong {
+			display: block;
+			margin-bottom: var(--space-2);
+			color: var(--color-gold-800);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			font-weight: var(--font-weight-semibold);
+		}
+		.legal-callout p,
+		.legal-callout li {
+			color: var(--color-text);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-callout--warning {
+			background: #fef3f2;
+			border-left-color: var(--color-error, #b42318);
+		}
+		.legal-callout--warning > strong {
+			color: #5f211b;
+		}
+		.legal-callout--warning p {
+			color: #5f211b;
+		}
+
+		/* ======================================================================
+		   FORM FIELDS (signoff sections)
+		   ====================================================================== */
+		.legal-field-grid {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--space-4);
+			margin-bottom: var(--space-4);
+		}
+		@media (min-width: 48rem) {
+			.legal-field-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: var(--space-4) var(--space-5);
+			}
+		}
+		.legal-field {
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+		}
+		.legal-field--full {
+			grid-column: 1 / -1;
+		}
+		.legal-field label {
+			display: block;
+			margin: 0 0 var(--space-2);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			font-weight: var(--font-weight-semibold);
+			line-height: var(--leading-snug);
+		}
+		.legal-field input,
+		.legal-field textarea {
+			width: 100%;
+			min-height: 2.75rem;
+			padding: var(--space-2) var(--space-3);
+			border: 1px solid var(--color-border-strong);
+			border-radius: var(--radius-sm);
+			background: var(--color-surface);
+			color: var(--color-text);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-normal);
+			transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+		}
+		.legal-field textarea {
+			min-height: 5rem;
+			resize: vertical;
+		}
+		.legal-field input:focus,
+		.legal-field textarea:focus {
+			outline: none;
+			border-color: var(--color-gold-500);
+			box-shadow: 0 0 0 3px rgb(197 154 24 / 0.12);
+		}
+		.legal-field-note {
+			margin: var(--space-4) 0 0;
+			padding: var(--space-3) var(--space-4);
+			background: var(--color-surface);
+			border-left: 3px solid var(--color-gold-500);
+			border-radius: var(--radius-sm);
+			color: var(--color-text-muted);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-style: italic;
+			line-height: var(--leading-relaxed);
+		}
+
+		/* ======================================================================
+		   CHECKLIST (§15)
+		   ====================================================================== */
+		.legal-checklist {
+			margin: var(--space-4) 0;
+			padding: 0;
+			list-style: none;
+		}
+		.legal-checklist li {
+			position: relative;
+			padding-left: var(--space-8);
+			margin: 0 0 var(--space-3);
+			color: var(--color-text);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-checklist li::before {
+			position: absolute;
+			left: 0;
+			top: 0;
+			content: "□";
+			color: var(--color-gold-700);
+			font-size: 1.25rem;
+			line-height: 1.2;
+		}
+
+		/* ======================================================================
+		   PLACEHOLDER HIGHLIGHT
+		   ====================================================================== */
+		.legal-placeholder {
+			display: inline;
+			padding: 0 var(--space-1);
+			background: var(--color-gold-200);
+			color: var(--color-gold-800);
+			font-family: var(--font-mono);
+			font-size: 0.9em;
+			font-weight: var(--font-weight-semibold);
+			border-radius: var(--radius-xs);
+		}
+
+		/* ======================================================================
+		   REDUCED MOTION
+		   ====================================================================== */
+		@media (prefers-reduced-motion: reduce) {
+			html {
+				scroll-behavior: auto;
+			}
+		}
+
+		/* ======================================================================
+		   PRINT
+		   ====================================================================== */
+		@media print {
+			@page {
+				size: A4;
+				margin: 16mm 14mm;
+			}
+			body {
+				background: #fff;
+				color: #111;
+				font-size: 10.5pt;
+				line-height: 1.55;
+			}
+			.site-header,
+			.site-footer,
+			.legal-toc,
+			.legal-draft,
+			.legal-hero__actions,
+			.legal-field-note {
+				display: none !important;
+			}
+			.legal-hero {
+				padding: 0 0 var(--space-5);
+				background: #fff;
+				color: #111;
+				border-bottom: 3px solid #a88722;
+			}
+			.legal-hero__title,
+			.legal-hero__eyebrow,
+			.legal-hero__description,
+			.legal-hero__meta,
+			.legal-hero__meta strong {
+				color: #111;
+			}
+			.legal-hero__eyebrow {
+				color: #6b5310;
+			}
+			.legal-hero__title {
+				font-size: 24pt;
+			}
+			.legal-layout {
+				display: block;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			.legal-content {
+				max-width: none;
+				padding: 0;
+				border: 0;
+				box-shadow: none;
+				background: #fff;
+			}
+			.legal-content section,
+			.legal-callout,
+			.legal-contact-card,
+			.legal-field-grid {
+				break-inside: avoid;
+				page-break-inside: avoid;
+			}
+			.legal-content a {
+				color: #111;
+				text-decoration: none;
+			}
+			.legal-contact-card,
+			.legal-callout {
+				background: #fff;
+				border: 1px solid #555;
+			}
+			.legal-callout--warning {
+				border-left: 4px solid #555;
+			}
+			.legal-placeholder {
+				background: none;
+				border-bottom: 1px solid #555;
+				color: #111;
+			}
+			.legal-field input,
+			.legal-field textarea {
+				border: 0;
+				border-bottom: 1px solid #888;
+				border-radius: 0;
+				background: #fff;
+				color: #111;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- ======================================================
+	     FULL SITE HEADER
+	     ====================================================== -->
+	<header class="site-header" data-site-header>
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<div class="site-header__inner">
+			<a class="site-brand" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
+				<picture class="site-brand__picture">
+					<source srcset="assets/images/logo.avif" type="image/avif">
+					<source srcset="assets/images/logo.webp" type="image/webp">
+					<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56" loading="eager" decoding="async" fetchpriority="high">
+				</picture>
+			</a>
+			<nav class="primary-navigation" data-primary-navigation aria-label="Primary navigation">
+				<ul class="primary-navigation__list">
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="index.html" data-nav-page="home">Home</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="about.html" data-nav-page="about">About</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="academy.html" data-nav-page="academy">ModeInfinity Academy</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="shop.html" data-nav-page="shop">Shop</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="gallery.html" data-nav-page="Gallery">Gallery</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="contact.html" data-nav-page="contact">Contact</a></li>
+				</ul>
+			</nav>
+			<div class="header-actions">
+				<button class="cart-button header-action" id="cart-button" type="button" aria-controls="mi-cart" aria-expanded="false" aria-label="Open shopping cart" data-mi-cart-open>
+					<svg class="header-action__icon" aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
+						<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+						<circle cx="9" cy="20" r="1"></circle>
+						<circle cx="18" cy="20" r="1"></circle>
+					</svg>
+					<span class="cart-button__count" data-mi-cart-count aria-hidden="true">0</span>
+				</button>
+				<button class="mobile-nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-mobile-nav-toggle>
+					<span class="mobile-nav-toggle__icon" aria-hidden="true">
+						<span></span><span></span><span></span>
+					</span>
+				</button>
+			</div>
+		</div>
+		<div class="mobile-navigation" id="mobile-navigation" role="dialog" aria-modal="true" data-mobile-navigation aria-hidden="true" aria-labelledby="mobile-nav-title" inert>
+			<div class="mobile-navigation__backdrop" data-mobile-nav-backdrop aria-hidden="true"></div>
+			<aside class="mobile-navigation__drawer" data-mobile-nav-drawer tabindex="-1">
+				<div class="mobile-navigation__header">
+					<a class="site-brand site-brand--mobile" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
+						<picture class="site-brand__picture">
+							<source srcset="assets/images/logo.avif" type="image/avif">
+							<source srcset="assets/images/logo.webp" type="image/webp">
+							<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="160" height="42" decoding="async">
+						</picture>
+					</a>
+					<h2 class="sr-only" id="mobile-nav-title">Site navigation</h2>
+					<button class="mobile-navigation__close" type="button" aria-label="Close navigation menu" data-mobile-nav-close>
+						<svg aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
+							<path d="M6 6l12 12"></path>
+							<path d="M18 6L6 18"></path>
+						</svg>
+					</button>
+				</div>
+				<div class="mobile-navigation__content">
+					<nav data-mobile-primary-navigation aria-label="Mobile primary navigation">
+						<ul class="mobile-navigation__list">
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="index.html" data-nav-page="home"><span>Home</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="about.html" data-nav-page="about"><span>About</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="academy.html" data-nav-page="academy"><span>ModeInfinity Academy</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="shop.html" data-nav-page="shop"><span>Shop</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="gallery.html" data-nav-page="Gallery"><span>Gallery</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="contact.html" data-nav-page="contact"><span>Contact</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="mobile-navigation__footer">
+					<button class="btn btn-block btn-secondary" type="button" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button>
+				</div>
+			</aside>
+		</div>
+	</header>
+
+	<main id="main-content" class="site-main" tabindex="-1">
+
+		<!-- ==================================================
+		     HERO
+		     ================================================== -->
+		<section class="legal-hero" aria-labelledby="page-title">
+			<div class="legal-hero__inner">
+				<p class="legal-hero__eyebrow">Academy Policy · Document 4 of 7</p>
+				<h1 id="page-title" class="legal-hero__title">Student Workshop Safety Policy</h1>
+				<p class="legal-hero__description">
+					Safety expectations for students, instructors, workshop supervisors
+					and authorized visitors participating in ModeInfinity shoemaking
+					training and practical workshop activities.
+				</p>
+				<div class="legal-hero__meta">
+					<span><strong>Policy owner:</strong> ModeInfinity Academy Management</span>
+					<span><strong>Version:</strong> Draft 1.0</span>
+					<span><strong>Effective date:</strong> <span class="legal-placeholder">[INSERT APPROVED DATE]</span></span>
+					<span><strong>Review date:</strong> <span class="legal-placeholder">[INSERT REVIEW DATE]</span></span>
+				</div>
+				<div class="legal-hero__actions">
+					<button class="btn btn-secondary" id="printPolicy" type="button">Print / Save PDF</button>
+					<button class="btn btn-ghost" id="showChecklist" type="button">Show publication checklist</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- ==================================================
+		     DRAFT NOTICE
+		     ================================================== -->
+		<div class="legal-draft" role="note" aria-label="Draft status">
+			<strong>Internal draft — not approved for operational use</strong>
+			This policy requires a site-specific risk assessment, equipment review,
+			emergency arrangements and management approval before it is issued to
+			students or used to authorize workshop activities.
+		</div>
+
+		<!-- ==================================================
+		     LAYOUT — TOC + CONTENT
+		     ================================================== -->
+		<div class="legal-layout">
+
+			<nav class="legal-toc" aria-label="On this page">
+				<p class="legal-toc__title">On this page</p>
+				<ol class="legal-toc__list">
+					<li><a class="legal-toc__link" href="#purpose">Purpose and scope</a></li>
+					<li><a class="legal-toc__link" href="#principles">Safety principles</a></li>
+					<li><a class="legal-toc__link" href="#responsibilities">Roles and responsibilities</a></li>
+					<li><a class="legal-toc__link" href="#induction">Induction and authorization</a></li>
+					<li><a class="legal-toc__link" href="#ppe">Clothing and protective equipment</a></li>
+					<li><a class="legal-toc__link" href="#tools">Tools, blades and needles</a></li>
+					<li><a class="legal-toc__link" href="#machines">Machinery and powered equipment</a></li>
+					<li><a class="legal-toc__link" href="#chemicals">Adhesives and chemicals</a></li>
+					<li><a class="legal-toc__link" href="#housekeeping">Housekeeping and storage</a></li>
+					<li><a class="legal-toc__link" href="#electrical">Electrical safety</a></li>
+					<li><a class="legal-toc__link" href="#emergency">Fire and emergency response</a></li>
+					<li><a class="legal-toc__link" href="#first-aid">First aid and incidents</a></li>
+					<li><a class="legal-toc__link" href="#conduct">Student conduct and stop-work authority</a></li>
+					<li><a class="legal-toc__link" href="#monitoring">Records, monitoring and review</a></li>
+					<li><a class="legal-toc__link" href="#signoff">Acknowledgment</a></li>
+				</ol>
+			</nav>
+
+			<article class="legal-content">
+
+				<div class="legal-callout">
+					<strong>Important safety limitation</strong>
+					<p>
+						This is a policy framework, not a completed workshop risk assessment.
+						It does not authorize students to use machinery, blades, adhesives,
+						solvents, grinders or other potentially hazardous equipment without
+						appropriate assessment, instruction, supervision and authorization.
+						Management must tailor it to the actual premises, equipment, materials,
+						age and experience of students, and applicable Nigerian requirements.
+					</p>
+				</div>
+
+				<section id="purpose">
+					<h2>1. Purpose and Scope</h2>
+					<p>ModeInfinity aims to provide a workshop environment in which students can learn shoemaking skills while identifying, preventing and responding appropriately to foreseeable risks.</p>
+					<p>This policy applies to:</p>
+					<ul>
+						<li>Students enrolled in ModeInfinity shoemaking programmes.</li>
+						<li>Instructors, technicians, workshop supervisors and academy management.</li>
+						<li>Authorized contractors and visitors entering practical work areas.</li>
+						<li>Practical activities involving footwear design, cutting, stitching, lasting, sole preparation, finishing, adhesives and related processes.</li>
+					</ul>
+					<p>This policy applies whenever academy workshop activities are conducted, including approved demonstrations and supervised practical sessions. It must be read with equipment-specific instructions, chemical safety information, risk assessments, emergency procedures and any applicable premises rules.</p>
+				</section>
+
+				<section id="principles">
+					<h2>2. Core Safety Principles</h2>
+					<p>Everyone in the workshop must follow these principles:</p>
+					<ul>
+						<li>Safety takes priority over speed, production targets and completing a project.</li>
+						<li>No person may operate equipment without the required training and authorization.</li>
+						<li>Hazards, damaged equipment, unsafe conditions and near misses must be reported promptly.</li>
+						<li>Safety guards, interlocks, ventilation and other protective measures must not be bypassed.</li>
+						<li>Only approved tools, materials and methods may be used for each task.</li>
+						<li>Instructions from the designated workshop supervisor must be followed.</li>
+						<li>Any person may stop an activity they reasonably believe presents an immediate danger.</li>
+					</ul>
+					<div class="legal-callout legal-callout--warning">
+						<strong>Stop-work rule</strong>
+						<p>
+							If an activity appears unsafe, stop when it is safe to do so, keep
+							others clear of the hazard, and notify the workshop supervisor.
+							Do not restart until the hazard has been assessed and the supervisor
+							has authorized the activity to resume.
+						</p>
+					</div>
+				</section>
+
+				<section id="responsibilities">
+					<h2>3. Roles and Responsibilities</h2>
+					<h3>3.1 Academy Management</h3>
+					<ul>
+						<li>Provide a suitable workshop, appropriate equipment and adequate safety arrangements.</li>
+						<li>Ensure documented risk assessments are completed and reviewed for actual workshop tasks.</li>
+						<li>Appoint competent persons to supervise practical activities.</li>
+						<li>Arrange suitable training, protective equipment, first-aid provisions and emergency procedures.</li>
+						<li>Maintain relevant equipment, inspection, training and incident records.</li>
+						<li>Investigate reported incidents and ensure corrective actions are tracked.</li>
+					</ul>
+					<h3>3.2 Instructors and Workshop Supervisors</h3>
+					<ul>
+						<li>Explain task-specific hazards and demonstrate safe methods before work begins.</li>
+						<li>Confirm that students are trained and authorized for the equipment they use.</li>
+						<li>Check the work area and equipment before practical sessions.</li>
+						<li>Ensure guards and protective systems remain in place and functional.</li>
+						<li>Provide supervision appropriate to the task, the student's experience and the level of risk.</li>
+						<li>Stop unsafe work and escalate hazards that cannot be corrected immediately.</li>
+					</ul>
+					<h3>3.3 Students</h3>
+					<ul>
+						<li>Attend required safety induction and task-specific instruction.</li>
+						<li>Follow approved procedures and use required protective equipment correctly.</li>
+						<li>Use only equipment for which they have been authorized.</li>
+						<li>Keep work areas orderly and report injuries, near misses, damaged tools and unsafe conditions.</li>
+						<li>Never interfere with guards, electrical controls, extraction systems or safety devices.</li>
+						<li>Stop and seek assistance when uncertain about a tool, material or process.</li>
+					</ul>
+					<h3>3.4 Contractors and Visitors</h3>
+					<p>Contractors and visitors must receive appropriate site instructions, remain in authorized areas, follow the supervisor's directions and use any protective equipment required for their visit. Visitors must not handle tools or machinery unless separately authorized.</p>
+				</section>
+
+				<section id="induction">
+					<h2>4. Safety Induction and Equipment Authorization</h2>
+					<p>Before participating in practical work, each student must complete the induction requirements established by the academy.</p>
+					<p>The induction process must cover, at minimum:</p>
+					<ul>
+						<li>Workshop layout, restricted areas, exits and assembly arrangements.</li>
+						<li>How to report hazards, injuries, near misses and equipment faults.</li>
+						<li>First-aid arrangements and the location of available safety equipment.</li>
+						<li>Required clothing and task-specific personal protective equipment.</li>
+						<li>Safe handling, carrying, storage and disposal of tools and materials.</li>
+						<li>Fire precautions and the procedure for raising an alarm and evacuating.</li>
+						<li>Relevant hazards identified in the workshop's risk assessments.</li>
+					</ul>
+					<p>Induction alone does not authorize the use of every tool or machine. Before independent use of any equipment, a student must receive equipment-specific instruction, demonstrate competence where required, and obtain authorization from the designated instructor or supervisor.</p>
+					<p>Training and authorization records must identify the student, equipment or activity, instructor, date, and any restrictions or refresher-training requirements.</p>
+				</section>
+
+				<section id="ppe">
+					<h2>5. Clothing and Personal Protective Equipment</h2>
+					<p>Clothing and protective equipment must be selected according to the hazards of the specific task and the findings of the relevant risk assessment. Management must document the required equipment for each approved activity.</p>
+					<h3>5.1 General Workshop Clothing</h3>
+					<ul>
+						<li>Wear clothing that allows safe movement without loose material that could become caught in machinery.</li>
+						<li>Secure long hair and keep dangling jewelry, lanyards and accessories away from moving equipment.</li>
+						<li>Wear suitable closed footwear appropriate to the work area and task.</li>
+						<li>Keep personal belongings outside work areas where they could create obstructions or hazards.</li>
+					</ul>
+					<h3>5.2 Task-Specific Protection</h3>
+					<p>Depending on the task and assessed risk, protective equipment may include eye protection, hearing protection, suitable gloves, respiratory protection or other specialist equipment. These examples are not a universal specification for every task.</p>
+					<p>The academy must identify the correct type, fit, limitations, inspection, cleaning, storage and replacement arrangements for each required item. Respiratory protection must not be treated as a substitute for effective ventilation or source control.</p>
+					<div class="legal-callout">
+						<strong>Glove and machine compatibility</strong>
+						<p>Gloves can introduce an entanglement hazard around rotating or moving machinery. Do not wear gloves near such equipment unless a documented assessment and the equipment's safe operating instructions expressly permit them.</p>
+					</div>
+				</section>
+
+				<section id="tools">
+					<h2>6. Hand Tools, Blades, Awls and Needles</h2>
+					<p>Shoemaking tools may create risks of cuts, punctures, impact injuries and damage to nearby persons or materials.</p>
+					<ul>
+						<li>Use the correct tool for the job and inspect it before use.</li>
+						<li>Keep blades and sharp points controlled, directed away from the body and other people.</li>
+						<li>Cut on a suitable, stable cutting surface; never use a hand or leg as a cutting support.</li>
+						<li>Carry and pass sharp tools in a controlled manner, with the point or cutting edge safely directed.</li>
+						<li>Use protective covers or designated storage when tools are not in use.</li>
+						<li>Do not leave blades, awls, needles or sharp offcuts loose on benches or floors.</li>
+						<li>Remove damaged tools from service and report them to the supervisor.</li>
+						<li>Dispose of used blades and other sharps in an approved, puncture-resistant container.</li>
+						<li>Do not improvise repairs or modify tools unless an authorized person has approved the work.</li>
+					</ul>
+					<p>Students must receive instruction in the safe method for each cutting, punching, trimming and stitching operation. The supervisor must determine when direct supervision is necessary.</p>
+				</section>
+
+				<section id="machines">
+					<h2>7. Stitching Machines and Powered Equipment</h2>
+					<p>Powered stitching machines and other equipment can cause puncture, entanglement, crushing, abrasion, electrical, noise and projectile hazards. The actual equipment inventory must be assessed before this section is adopted.</p>
+					<h3>7.1 Before Operation</h3>
+					<ul>
+						<li>Confirm that the student is authorized to use the particular machine.</li>
+						<li>Check that guards, covers, controls, lighting and other safety devices are present and functional.</li>
+						<li>Check the work area for loose items, obstruction and unsuitable materials.</li>
+						<li>Understand the machine's operating instructions, safe limits and stopping procedure.</li>
+						<li>Report any unusual noise, vibration, overheating, damage or malfunction before use.</li>
+					</ul>
+					<h3>7.2 During Operation</h3>
+					<ul>
+						<li>Keep fingers and other body parts clear of needles, blades, pinch points and moving components.</li>
+						<li>Do not distract the operator or reach across moving equipment.</li>
+						<li>Do not remove, defeat or bypass guards or safety devices.</li>
+						<li>Do not leave running equipment unattended unless the approved procedure expressly permits it.</li>
+						<li>Keep loose clothing, hair, jewelry and unsuitable accessories away from moving parts.</li>
+						<li>Use the machine only for its intended purpose and within the manufacturer's instructions.</li>
+					</ul>
+					<h3>7.3 Adjustments, Jams and Maintenance</h3>
+					<p>Stop the machine before making adjustments, changing needles, clearing jams, cleaning or carrying out other work that could expose a person to moving parts. Where hazardous energy could cause injury, the equipment must be isolated and secured using the approved procedure before the work begins.</p>
+					<p>Repairs and electrical maintenance must be carried out only by appropriately competent and authorized persons. Students must not undertake maintenance beyond the tasks they have been trained and authorized to perform.</p>
+					<p>The academy must create machine-specific operating instructions for every powered device in use. This policy does not replace those instructions.</p>
+				</section>
+
+				<section id="chemicals">
+					<h2>8. Adhesives, Solvents, Finishing Products and Chemicals</h2>
+					<p>Footwear production may involve adhesives, cleaners, dyes, coatings, finishing agents and other products that can present inhalation, skin-contact, eye-contact, fire or environmental hazards. The hazards vary by product.</p>
+					<ul>
+						<li>Use only approved products and follow their labels, safety data sheets and documented handling instructions.</li>
+						<li>Review the risks before introducing a new chemical or changing a process.</li>
+						<li>Use products only in the designated area with the ventilation and controls required by the assessment.</li>
+						<li>Keep containers clearly labeled and closed when not in use.</li>
+						<li>Never transfer chemicals into food or drink containers.</li>
+						<li>Keep incompatible products apart and follow approved storage requirements.</li>
+						<li>Keep ignition sources away from flammable products and their vapors.</li>
+						<li>Use only the protective equipment specified for the actual product and task.</li>
+						<li>Do not eat, drink or store food in chemical handling areas.</li>
+						<li>Report spills, leaks, unusual odors, exposure and damaged containers immediately.</li>
+					</ul>
+					<p>Management must determine whether local exhaust ventilation, specialized storage, spill-control materials, fire precautions or other controls are required. Students must not clean up a chemical spill unless the academy's procedure specifically authorizes them and they are trained and equipped to do so.</p>
+					<p>Chemical waste, contaminated materials and empty containers must be handled and disposed of according to the product instructions and applicable requirements. Do not pour chemicals into drains unless an approved procedure expressly permits it.</p>
+				</section>
+
+				<section id="housekeeping">
+					<h2>9. Housekeeping, Materials and Storage</h2>
+					<p>A clean and organized workshop reduces trips, falls, cuts, fire risks and damage to materials or equipment.</p>
+					<ul>
+						<li>Keep walkways, exits, electrical panels and emergency equipment accessible.</li>
+						<li>Store leather, soles, tools, patterns and supplies in designated areas.</li>
+						<li>Keep materials stable and prevent stacks from falling or obstructing access.</li>
+						<li>Clean spills promptly using the approved method for the substance involved.</li>
+						<li>Remove scraps, offcuts, thread, packaging and waste from work surfaces and walkways.</li>
+						<li>Keep sharp waste separate and place it in suitable designated containers.</li>
+						<li>Return tools and equipment to their designated storage locations after use.</li>
+						<li>Do not block ventilation openings or cover equipment vents.</li>
+						<li>Report damaged storage racks, unstable stacks, leaks or recurring housekeeping problems.</li>
+					</ul>
+					<p>The instructor or designated person must establish and communicate responsibility for cleaning at the end of each practical session.</p>
+				</section>
+
+				<section id="electrical">
+					<h2>10. Electrical Safety</h2>
+					<ul>
+						<li>Use electrical equipment only when it is suitable for the environment and task.</li>
+						<li>Check for visible damage to cables, plugs, switches and equipment before use.</li>
+						<li>Keep electrical equipment and connections away from liquids and wet areas.</li>
+						<li>Do not use damaged equipment, exposed wiring, improvised connections or overloaded outlets.</li>
+						<li>Do not pull a plug out by its cable.</li>
+						<li>Report electrical faults and remove affected equipment from use where it is safe to do so.</li>
+						<li>Do not attempt electrical repairs unless properly competent and authorized.</li>
+					</ul>
+					<p>The academy must establish inspection, maintenance, isolation and repair arrangements appropriate to its equipment and premises. Any suspected electrical emergency must be handled under the site's emergency procedure; do not touch a person who may still be in contact with a live electrical source.</p>
+				</section>
+
+				<section id="emergency">
+					<h2>11. Fire Prevention and Emergency Response</h2>
+					<h3>11.1 Prevention</h3>
+					<ul>
+						<li>Keep escape routes and exits clear and accessible.</li>
+						<li>Store flammable products according to their safety information and the site's approved arrangements.</li>
+						<li>Control ignition sources where flammable materials or vapors may be present.</li>
+						<li>Report damaged electrical equipment, overheating, smoke, leaks and other warning signs.</li>
+						<li>Do not obstruct fire alarms, extinguishers or other emergency equipment.</li>
+					</ul>
+					<h3>11.2 When an Emergency Occurs</h3>
+					<ol>
+						<li>Stop work if it is safe to do so.</li>
+						<li>Raise the alarm using the site's established method.</li>
+						<li>Warn people in immediate danger without putting yourself at risk.</li>
+						<li>Evacuate by the designated route and follow the instructions of the responsible person.</li>
+						<li>Go to the confirmed assembly point and remain available for a headcount.</li>
+						<li>Do not re-enter until the responsible emergency authority or designated site lead gives permission.</li>
+					</ol>
+					<div class="legal-contact-card">
+						<p><strong>Emergency arrangements — must be completed before use</strong></p>
+						<ul>
+							<li>Workshop address: <span class="legal-placeholder">[VERIFY AND INSERT FULL ADDRESS]</span></li>
+							<li>Primary exit route(s): <span class="legal-placeholder">[COMPLETE FROM SITE PLAN]</span></li>
+							<li>Assembly point: <span class="legal-placeholder">[CONFIRM PHYSICAL LOCATION]</span></li>
+							<li>Person responsible for evacuation/headcount: <span class="legal-placeholder">[NAME AND ROLE]</span></li>
+							<li>Alarm-raising method: <span class="legal-placeholder">[DOCUMENT SITE PROCEDURE]</span></li>
+							<li>Emergency contact numbers: <span class="legal-placeholder">[VERIFY OFFICIAL NUMBERS AND DISPLAY THEM ON SITE]</span></li>
+						</ul>
+					</div>
+					<p>Students must not attempt to fight a fire unless the site's approved procedures permit it, they have been trained, and it is safe to do so. Evacuation and raising the alarm take priority. The academy must select and maintain appropriate fire equipment and train designated personnel based on the actual site risks.</p>
+				</section>
+
+				<section id="first-aid">
+					<h2>12. First Aid, Injuries and Incident Reporting</h2>
+					<p>All injuries, exposures, equipment failures, unsafe conditions and near misses must be reported to the workshop supervisor as soon as practicable. A near miss must be reported even when no injury occurred.</p>
+					<h3>12.1 Immediate Response</h3>
+					<ul>
+						<li>Stop the activity and prevent others from entering the hazard area.</li>
+						<li>Raise the alarm or request assistance where necessary.</li>
+						<li>Arrange help from a designated first aider or emergency service, as appropriate.</li>
+						<li>Do not provide treatment beyond your training and authorization.</li>
+						<li>Do not move a seriously injured person unless there is an immediate danger requiring it.</li>
+						<li>Preserve the incident area when safe and appropriate, except where action is needed to protect life or prevent further harm.</li>
+					</ul>
+					<h3>12.2 First-Aid Arrangements</h3>
+					<p>The academy must complete and communicate the following details:</p>
+					<ul>
+						<li>Designated first aider(s): <span class="legal-placeholder">[INSERT VERIFIED NAME(S) OR ROLE(S)]</span></li>
+						<li>First-aid kit location(s): <span class="legal-placeholder">[CONFIRM LOCATIONS]</span></li>
+						<li>Emergency assistance process: <span class="legal-placeholder">[DOCUMENT SITE-SPECIFIC PROCEDURE]</span></li>
+						<li>Nearest suitable medical facility: <span class="legal-placeholder">[VERIFY FACILITY AND ROUTE]</span></li>
+						<li>Incident reporting form or register location: <span class="legal-placeholder">[INSERT LOCATION]</span></li>
+					</ul>
+					<h3>12.3 Investigation and Follow-Up</h3>
+					<p>Management or the designated competent person must review reported incidents, identify contributing factors, decide on corrective actions, assign responsibility and deadlines, and record when actions are completed. Where necessary, the affected activity must remain suspended until the risk has been reassessed and adequate controls are in place.</p>
+					<p>Incident records must be stored securely, access restricted to authorized persons, and retained according to the academy's approved recordkeeping requirements.</p>
+				</section>
+
+				<section id="conduct">
+					<h2>13. Student Conduct and Stop-Work Authority</h2>
+					<p>Students must not:</p>
+					<ul>
+						<li>Use tools, machinery or chemicals without required authorization.</li>
+						<li>Run, play-fight, distract operators or engage in horseplay in practical areas.</li>
+						<li>Use equipment while impaired, excessively fatigued or unable to work safely.</li>
+						<li>Bring unauthorized tools, chemicals, ignition sources or other hazardous items into the workshop.</li>
+						<li>Remove guards or safety devices or interfere with another person's safe operation.</li>
+						<li>Ignore safety instructions or conceal an injury, spill, fault or near miss.</li>
+						<li>Allow unauthorized persons to operate equipment or enter restricted areas.</li>
+					</ul>
+					<p>Students should ask for clarification whenever they do not understand an instruction or believe a method is unsafe. A student who raises a genuine safety concern must be heard and the concern assessed.</p>
+					<p>Where a safety rule is breached, the instructor or management may stop the activity, withdraw equipment authorization, require additional training, or apply the academy's established disciplinary process. Responses should be proportionate, documented where appropriate, and consistent with the student's enrolment terms and applicable law.</p>
+				</section>
+
+				<section id="monitoring">
+					<h2>14. Safety Records, Monitoring and Review</h2>
+					<p>Management must maintain records appropriate to the workshop, including:</p>
+					<ul>
+						<li>Workshop and task-specific risk assessments.</li>
+						<li>Equipment inventory, operating instructions, inspection and maintenance records.</li>
+						<li>Student induction, training, competence and authorization records.</li>
+						<li>Protective equipment requirements and relevant issue or inspection records.</li>
+						<li>Safety inspections, hazard reports, incident and near-miss reports, and corrective actions.</li>
+						<li>Emergency arrangements, drills where applicable, and training records.</li>
+						<li>Relevant chemical inventories and safety data sheets.</li>
+					</ul>
+					<p>Records containing personal information must be handled under the academy's applicable privacy and recordkeeping procedures.</p>
+					<p>This policy must be reviewed:</p>
+					<ul>
+						<li>Before the workshop first operates under this policy.</li>
+						<li>When premises, equipment, chemicals or processes change materially.</li>
+						<li>Following an incident, near miss, inspection finding or identified control failure.</li>
+						<li>When legal requirements or relevant manufacturer instructions change.</li>
+						<li>At the interval approved by management and recorded in the policy register.</li>
+					</ul>
+					<p>The policy owner must record the review outcome, approved amendments, responsible approver and next review date. Staff and students must receive updates relevant to their work.</p>
+				</section>
+
+				<section id="publication-checklist">
+					<h2>15. Management Completion Checklist</h2>
+					<p>The items below are internal implementation controls. Complete and verify them before issuing the policy. A written policy alone does not establish that the workshop is safe.</p>
+					<ul class="legal-checklist">
+						<li>Confirm the operating address and actual workshop layout.</li>
+						<li>Inventory all tools, machines, chemicals and other hazardous materials.</li>
+						<li>Complete and approve task-specific risk assessments.</li>
+						<li>Document equipment-specific operating and isolation procedures.</li>
+						<li>Confirm required PPE and its suitability for each task.</li>
+						<li>Confirm ventilation, fire precautions and chemical storage arrangements.</li>
+						<li>Verify first-aid arrangements, emergency contacts, exits and assembly point.</li>
+						<li>Identify competent instructors, first aiders and emergency responsibilities.</li>
+						<li>Establish induction, training, authorization and refresher arrangements.</li>
+						<li>Establish incident reporting, investigation and corrective-action procedures.</li>
+						<li>Obtain management approval and qualified Nigerian legal/safety review as appropriate.</li>
+						<li>Remove draft markers only after all material details have been verified and approved.</li>
+					</ul>
+				</section>
+
+				<section id="signoff">
+					<h2>16. Student Acknowledgment</h2>
+					<p>I acknowledge that I have received or been given access to the ModeInfinity Student Workshop Safety Policy. I understand that I must follow workshop instructions, complete required induction and training, use equipment only when authorized, wear required protective equipment, and report hazards, injuries and near misses.</p>
+					<p>I understand that this acknowledgment does not replace practical instruction, equipment-specific authorization, or the academy's duty to maintain appropriate safety arrangements.</p>
+					<div class="legal-field-grid">
+						<div class="legal-field">
+							<label for="studentName">Student full name</label>
+							<input id="studentName" name="studentName" autocomplete="name">
+						</div>
+						<div class="legal-field">
+							<label for="studentId">Student ID / enrolment reference</label>
+							<input id="studentId" name="studentId">
+						</div>
+						<div class="legal-field">
+							<label for="studentSignature">Student signature / confirmation</label>
+							<input id="studentSignature" name="studentSignature">
+						</div>
+						<div class="legal-field">
+							<label for="studentDate">Date</label>
+							<input id="studentDate" name="studentDate" type="date">
+						</div>
+						<div class="legal-field">
+							<label for="trainerName">Induction instructor / supervisor</label>
+							<input id="trainerName" name="trainerName">
+						</div>
+						<div class="legal-field">
+							<label for="trainerDate">Induction date</label>
+							<input id="trainerDate" name="trainerDate" type="date">
+						</div>
+					</div>
+					<p class="legal-field-note">
+						This HTML acknowledgment form does not submit or store information.
+						If a signed record is required, use the academy's approved secure
+						recordkeeping process. Do not publish student signatures or personal
+						details on a public website.
+					</p>
+				</section>
+
+				<section id="approval">
+					<h2>17. Policy Approval</h2>
+					<p>This policy becomes operational only after the authorized approver confirms that the policy and the associated site-specific safety arrangements are complete.</p>
+					<div class="legal-field-grid">
+						<div class="legal-field">
+							<label for="approverName">Approver full name</label>
+							<input id="approverName" name="approverName">
+						</div>
+						<div class="legal-field">
+							<label for="approverRole">Role / authority</label>
+							<input id="approverRole" name="approverRole">
+						</div>
+						<div class="legal-field">
+							<label for="approvalDate">Approval date</label>
+							<input id="approvalDate" name="approvalDate" type="date">
+						</div>
+						<div class="legal-field">
+							<label for="nextReview">Next review date</label>
+							<input id="nextReview" name="nextReview" type="date">
+						</div>
+						<div class="legal-field legal-field--full">
+							<label for="approvalNotes">Conditions, outstanding actions or approval notes</label>
+							<textarea id="approvalNotes" name="approvalNotes"></textarea>
+						</div>
+					</div>
+				</section>
+
+				<div class="legal-contact-card">
+					<p><strong>Document:</strong> ModeInfinity Student Workshop Safety Policy</p>
+					<p><strong>Document status:</strong> Draft — not approved for operational use</p>
+					<p><strong>Version:</strong> 1.0 · <strong>Prepared:</strong> <span id="preparedYear"></span></p>
+					<p>This document is a starting framework, not legal advice or a substitute for site-specific risk assessments, competent safety advice, manufacturer instructions, emergency planning, or applicable legal obligations.</p>
+				</div>
+
+			</article>
+
+		</div>
+
+	</main>
+
+	<!-- ======================================================
+	     FULL SITE FOOTER
+	     ====================================================== -->
+	<footer class="site-footer">
+		<section class="site-footer__contact-strip" aria-label="ModeInfinity contact options">
+			<div class="container site-footer__contact-grid">
+				<a class="site-footer__contact-card" href="contact.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+							<circle cx="12" cy="9" r="2.5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Visit · Workshop</span>
+						<span class="site-footer__contact-title">ModeInfinity Abuja</span>
+						<span class="site-footer__contact-description"> Sentosa Parks &amp; Garden, Plot 2028, Legislative Quarters Apo, Abuja </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+				<a class="site-footer__contact-card" href="contact.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+							<circle cx="12" cy="9" r="2.5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Visit · Showroom</span>
+						<span class="site-footer__contact-title">ModeInfinity Lagos</span>
+						<span class="site-footer__contact-description"> B3106 Tejuosho Shopping Complex, Yaba, Lagos </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+				<div class="site-footer__contact-card">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Talk to us</span>
+						<span class="site-footer__contact-title">Call Us</span>
+						<span class="site-footer__contact-description">
+							<a href="tel:+2348050424000">+234 805 042 4000</a><br>
+							<a href="tel:+2349035830940">+234 903 583 0940</a>
+						</span>
+					</span>
+				</div>
+				<div class="site-footer__contact-card">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z" />
+							<path d="m5 7 7 5 7-5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Write to us</span>
+						<span class="site-footer__contact-title">Email</span>
+						<span class="site-footer__contact-description">
+							<a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a><br>
+							<a href="mailto:jennyomomia@gmail.com">jennyomomia@gmail.com</a>
+						</span>
+					</span>
+				</div>
+				<a class="site-footer__contact-card" href="academy.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="m3.5 9 8.5-4 8.5 4-8.5 4-8.5-4Z" />
+							<path d="M7 11.2v4.1c0 1.7 2.2 3.2 5 3.2s5-1.5 5-3.2v-4.1" />
+							<path d="M20.5 9v5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Learn the craft</span>
+						<span class="site-footer__contact-title">ModeInfinity Academy</span>
+						<span class="site-footer__contact-description"> Practical shoemaking education </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</section>
+		<div class="site-footer__main">
+			<div class="container">
+				<div class="site-footer__brand-row">
+					<section class="site-footer__brand" aria-labelledby="footer-brand-title">
+						<p class="site-footer__brand-kicker"> Footwear · Craft · Education </p>
+						<h2 class="site-footer__brand-title" id="footer-brand-title"> Learn. Create. Build. </h2>
+						<p class="site-footer__description"> ModeInfinity brings together handcrafted footwear, practical shoemaking education and purposeful design, all rooted in the craft of making. </p>
+						<div class="site-footer__socials">
+							<a href="https://www.instagram.com/officialmodeinfinityw" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+									<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+									<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+								</svg>
+							</a>
+							<a href="https://www.facebook.com/modeinfinity" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+								</svg>
+							</a>
+							<a href="https://www.tiktok.com/@modeinfinity2" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="site-footer__origin">
+							<span>Crafted in Nigeria.</span>
+						</div>
+					</section>
+					<div class="site-footer__navigation">
+						<nav class="site-footer__column" aria-labelledby="footer-explore-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">01</span>
+								<h2 id="footer-explore-title"> Explore </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html">About</a></li>
+								<li><a href="academy.html">Academy</a></li>
+								<li><a href="shop.html">Shop</a></li>
+								<li><a href="gallery.html">Gallery</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</nav>
+						<nav class="site-footer__column" aria-labelledby="footer-academy-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">02</span>
+								<h2 id="footer-academy-title"> Academy </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="academy.html"> Learn Shoemaking </a></li>
+								<li><a href="academy.html#courses"> Our Courses </a></li>
+								<li><a href="academy.html#process"> Training Process </a></li>
+								<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
+							</ul>
+						</nav>
+						<nav class="site-footer__column" aria-labelledby="footer-collection-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">03</span>
+								<h2 id="footer-collection-title"> The Collection </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="shop.html"> Shop Footwear </a></li>
+								<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
+								<li><a href="contact.html#custom-orders"> Custom Orders </a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div class="site-footer__statement">
+					<p class="site-footer__statement-text"> Made with <span>intention.</span> Made to <span>endure.</span> </p>
+				</div>
+				<div class="site-footer__cta">
+					<div class="site-footer__cta-copy">
+						<span class="site-footer__cta-eyebrow"> Start your next step </span>
+						<h2> Choose your path. </h2>
+						<p> Discover the collection or learn the craft behind every pair. </p>
+					</div>
+					<div class="site-footer__cta-actions">
+						<a class="btn btn-primary" href="shop.html"> Shop the Collection </a>
+						<a class="btn btn-secondary" href="academy.html"> Explore the Academy </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="site-footer__bottom">
+			<div class="container site-footer__bottom-inner">
+				<p class="site-footer__copyright"> &copy; ModeInfinity. All rights reserved. </p>
+				<nav class="site-footer__legal" aria-label="Legal navigation">
+					<a href="privacy.html">Privacy</a>
+					<a href="terms.html">Terms</a>
+				</nav>
+			</div>
+		</div>
+	</footer>
+
+	<!-- ======================================================
+	     REUSABLE FUNCTIONAL COMPONENTS
+	     ====================================================== -->
+	<div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
+	<div data-component="lightbox" data-component-path="components/lightbox.html"></div>
+	<div data-component="toast" data-component-path="components/toast.html"></div>
+	<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div>
+
+	<!-- ======================================================
+	     APPLICATION SCRIPTS
+	     ====================================================== -->
+	<script src="scripts/cart-drawer.js" defer></script>
+	<script type="module" src="scripts/main.js"></script>
+
+	<!-- Page-specific handlers -->
+	<script>
+		"use strict";
+
+		/* ---------- Prepared year ---------- */
+		const preparedYearEl = document.getElementById("preparedYear");
+		if (preparedYearEl) {
+			preparedYearEl.textContent = String(new Date().getFullYear());
+		}
+
+		/* ---------- Print / Save PDF ---------- */
+		const printButton = document.getElementById("printPolicy");
+		if (printButton) {
+			printButton.addEventListener("click", () => { window.print(); });
+		}
+
+		/* ---------- Scroll to publication checklist (§15) ---------- */
+		const showChecklistButton = document.getElementById("showChecklist");
+		if (showChecklistButton) {
+			showChecklistButton.addEventListener("click", () => {
+				const checklist = document.getElementById("publication-checklist");
+				if (!checklist) return;
+
+				const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+				checklist.scrollIntoView({
+					behavior: reduceMotion ? "auto" : "smooth",
+					block: "start"
+				});
+
+				const heading = checklist.querySelector("h2");
+				if (heading) {
+					heading.setAttribute("tabindex", "-1");
+					heading.focus({ preventScroll: true });
+				}
+			});
+		}
+	</script>
+
+</body>
+
+</html>

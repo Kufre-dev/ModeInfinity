@@ -1,0 +1,13 @@
+﻿User-agent: *
+Allow: /
+
+# Prevent crawling of the custom error page
+Disallow: /404.html
+
+# XML sitemap
+# Uncomment this line after creating and publishing sitemap.xml
+# Sitemap: https://kufre-dev.github.io/ModeInfinity/sitemap.xml
+
+
+# XML sitemap
+Sitemap: https://kufre-dev.github.io/ModeInfinity/sitemap.xml

@@ -6,31 +6,34 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
 
-		<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
+	<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
 	<meta http-equiv="Content-Security-Policy" content="
 		default-src 'self';
-		script-src 'self';
+		script-src 'self' 'unsafe-inline';
 		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
 		font-src 'self' https://fonts.gstatic.com;
 		img-src 'self' data: https:;
-		connect-src 'self' https://formspree.io;
-		form-action https://formspree.io;
 		base-uri 'self';
 		object-src 'none';
 	">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
 	<!-- ==================================================================== -->
-	 
 
 	<title>Terms of Service | ModeInfinity</title>
-	<meta name="description" content="ModeInfinity's Terms of Service. Read about our bespoke footwear policies, refunds, and Academy enrolment terms.">
-	<meta name="author" content="ModeInfinity | Jennifer I. Omomia">
-	<meta name="robots" content="index, follow">
+	<meta name="description" content="ModeInfinity Terms of Service covering website use, footwear purchases, custom commissions, academy enrolment, privacy and related services.">
+	<meta name="robots" content="noindex, nofollow">
 
 	<link rel="icon" href="public/favicon.ico" sizes="any">
 	<link rel="apple-touch-icon" href="assets/images/logo.png">
 	<link rel="manifest" href="public/manifest.json">
+
+	<meta name="theme-color" content="#111111">
+	<meta name="color-scheme" content="light">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="ModeInfinity">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,172 +43,896 @@
 	<link rel="stylesheet" href="styles/global.css">
 	<link rel="stylesheet" href="styles/layout.css">
 	<link rel="stylesheet" href="styles/components.css">
+	<link rel="stylesheet" href="styles/cart-drawer.css">
+	<link rel="stylesheet" href="styles/lightbox.css">
 	<link rel="stylesheet" href="styles/animations.css">
 	<link rel="stylesheet" href="styles/responsive.css">
 
 	<style>
-		/* Page-specific legal document styling */
+		/* ======================================================================
+		   DRAFT NOTICE
+		   ====================================================================== */
+		.legal-draft {
+			width: min(100% - (var(--container-padding-inline) * 2), 72rem);
+			margin: var(--space-6) auto 0;
+			padding: var(--space-4) var(--space-5);
+			background: var(--color-gold-100);
+			border: 1px solid rgb(197 154 24 / 0.4);
+			border-left: 4px solid var(--color-gold-500);
+			border-radius: var(--radius-sm);
+			color: var(--color-text-strong);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-draft strong {
+			display: block;
+			margin-bottom: var(--space-1);
+			color: var(--color-gold-800);
+			font-weight: var(--font-weight-semibold);
+		}
+
+		/* ======================================================================
+		   HERO
+		   ====================================================================== */
 		.legal-hero {
 			background: var(--color-background-dark);
 			color: var(--color-white);
-			padding: calc(var(--header-height) + var(--space-12)) var(--container-padding-inline) var(--space-12);
-			text-align: center;
+			padding-block:
+				calc(var(--header-height) + var(--space-10))
+				var(--space-10);
+			padding-inline: var(--container-padding-inline);
+			text-align: left;
 		}
 		.legal-hero__inner {
-			max-width: 48rem;
+			width: min(100%, 72rem);
 			margin-inline: auto;
 		}
-		.legal-hero__title {
-			font-family: var(--font-display);
-			font-size: clamp(2rem, 4vw, 3rem);
-			margin-bottom: var(--space-3);
-		}
-		.legal-hero__title em {
+		.legal-hero__eyebrow {
+			margin: 0 0 var(--space-3);
 			color: var(--color-gold-300);
-			font-style: italic;
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-weight: var(--font-weight-semibold);
+			letter-spacing: var(--tracking-widest);
+			text-transform: uppercase;
+		}
+		.legal-hero__title {
+			max-width: 46rem;
+			margin: 0;
+			color: var(--color-white);
+			font-family: var(--font-display);
+			font-size: clamp(2.2rem, 6vw, 3.5rem);
+			font-weight: var(--font-weight-medium);
+			line-height: 1.1;
+			letter-spacing: var(--tracking-tight);
+			text-wrap: balance;
+		}
+		.legal-hero__description {
+			max-width: 60ch;
+			margin: var(--space-5) 0 0;
+			color: rgb(255 255 255 / 0.82);
+			font-family: var(--font-sans);
+			font-size: var(--text-base);
+			line-height: var(--leading-relaxed);
+			text-wrap: pretty;
 		}
 		.legal-hero__meta {
-			color: rgb(255 255 255 / 0.6);
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-2) var(--space-6);
+			margin-top: var(--space-6);
+			padding: 0;
+			color: rgb(255 255 255 / 0.7);
 			font-family: var(--font-mono);
 			font-size: var(--text-xs);
 			letter-spacing: var(--tracking-wider);
+			line-height: var(--leading-normal);
 			text-transform: uppercase;
 		}
-		.legal-content {
-			padding-block: var(--section-space-md);
-			background: var(--color-background);
+		.legal-hero__meta > span {
+			display: inline-flex;
+			align-items: baseline;
+			gap: var(--space-2);
+			flex-wrap: wrap;
 		}
-		.legal-content .container {
-			max-width: 48rem;
+		.legal-hero__meta strong {
+			color: rgb(255 255 255 / 0.95);
+			font-weight: var(--font-weight-semibold);
+		}
+		.legal-hero__actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-3);
+			margin-top: var(--space-6);
+		}
+
+		/* ======================================================================
+		   LAYOUT — TOC + CONTENT GRID
+		   ====================================================================== */
+		.legal-layout {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--space-8);
+			width: min(100% - (var(--container-padding-inline) * 2), 72rem);
 			margin-inline: auto;
-			padding-inline: var(--container-padding-inline);
+			padding-block: var(--section-space-md);
+			align-items: start;
 		}
-		.legal-content h2 {
-			font-family: var(--font-display);
-			font-size: var(--text-2xl);
+		@media (min-width: 64rem) {
+			.legal-layout {
+				grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+				gap: var(--space-10);
+			}
+		}
+
+		/* ======================================================================
+		   TOC SIDEBAR
+		   ====================================================================== */
+		.legal-toc {
+			padding: var(--space-5);
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		@media (min-width: 64rem) {
+			.legal-toc {
+				position: sticky;
+				top: calc(var(--header-height) + var(--space-4));
+				max-height: calc(100vh - var(--header-height) - var(--space-8));
+				overflow-y: auto;
+			}
+		}
+		.legal-toc__title {
+			margin: 0 0 var(--space-3);
 			color: var(--color-text-strong);
-			margin-top: var(--space-10);
-			margin-bottom: var(--space-4);
-			padding-bottom: var(--space-2);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			font-weight: var(--font-weight-semibold);
+			letter-spacing: var(--tracking-widest);
+			text-transform: uppercase;
+		}
+		.legal-toc__list {
+			margin: 0;
+			padding-left: var(--space-5);
+			list-style: decimal;
+		}
+		.legal-toc__list li {
+			margin-block: var(--space-1);
+			color: var(--color-text-muted);
+			font-family: var(--font-sans);
+			font-size: var(--text-xs);
+			line-height: var(--leading-snug);
+		}
+		.legal-toc__link {
+			color: var(--color-text-muted);
+			text-decoration: none;
+			transition: color var(--transition-fast);
+			overflow-wrap: anywhere;
+		}
+		.legal-toc__link:hover,
+		.legal-toc__link:focus-visible {
+			color: var(--color-accent-text);
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+		}
+		.legal-toc__link:focus-visible {
+			outline: var(--focus-ring-width) solid var(--focus-ring-color);
+			outline-offset: var(--focus-ring-offset);
+			border-radius: var(--radius-xs);
+		}
+		@media (min-width: 30rem) and (max-width: 63.999rem) {
+			.legal-toc__list {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: var(--space-1) var(--space-6);
+			}
+		}
+
+		/* ======================================================================
+		   LEGAL CONTENT
+		   ====================================================================== */
+		.legal-content {
+			min-width: 0;
+			max-width: 42rem;
+			margin-inline: auto;
+			padding: clamp(1.25rem, 3vw, 2.5rem);
+			background: var(--color-surface);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+			box-shadow: var(--shadow-sm);
+		}
+		@media (min-width: 64rem) {
+			.legal-content {
+				max-width: none;
+				margin-inline: 0;
+			}
+		}
+		.legal-content section {
+			margin: 0 0 var(--space-8);
+			padding: 0 0 var(--space-6);
 			border-bottom: 1px solid var(--color-border);
 		}
-		.legal-content h2:first-child {
-			margin-top: 0;
+		.legal-content section:last-of-type {
+			margin-bottom: 0;
+			padding-bottom: 0;
+			border-bottom: 0;
 		}
-		.legal-content h3 {
-			font-family: var(--font-sans);
-			font-size: var(--text-lg);
+		.legal-content h2 {
+			margin: 0 0 var(--space-4);
+			padding-bottom: var(--space-2);
 			color: var(--color-text-strong);
-			margin-top: var(--space-6);
-			margin-bottom: var(--space-3);
+			font-family: var(--font-display);
+			font-size: clamp(1.35rem, 3vw, 1.8rem);
+			font-weight: var(--font-weight-medium);
+			line-height: var(--leading-snug);
+			letter-spacing: var(--tracking-tight);
 		}
-		.legal-content p, 
+		.legal-content p,
 		.legal-content li {
+			margin: 0 0 var(--space-3);
 			color: var(--color-text-muted);
+			font-family: var(--font-sans);
 			font-size: var(--text-base);
 			line-height: var(--leading-relaxed);
-			margin-bottom: var(--space-4);
+			text-wrap: pretty;
 		}
 		.legal-content ul {
+			margin: 0 0 var(--space-4);
 			padding-left: var(--space-5);
-			margin-bottom: var(--space-4);
+		}
+		.legal-content li {
+			margin-bottom: var(--space-2);
+			padding-left: var(--space-1);
 		}
 		.legal-content a {
 			color: var(--color-accent-text);
 			text-decoration: underline;
 			text-underline-offset: 0.2em;
+			overflow-wrap: anywhere;
 		}
-		.legal-content a:hover {
+		.legal-content a:hover,
+		.legal-content a:focus-visible {
 			color: var(--color-gold-600);
+		}
+		.legal-content a:focus-visible {
+			outline: var(--focus-ring-width) solid var(--focus-ring-color);
+			outline-offset: var(--focus-ring-offset);
+			border-radius: var(--radius-xs);
 		}
 		.legal-content strong {
 			color: var(--color-text-strong);
+			font-weight: var(--font-weight-semibold);
+		}
+
+		/* ======================================================================
+		   CONTACT CARD
+		   ====================================================================== */
+		.legal-contact-card {
+			margin: var(--space-5) 0;
+			padding: var(--space-5);
+			background: var(--color-surface-muted);
+			border: 1px solid var(--color-border);
+			border-radius: var(--radius-md);
+		}
+		.legal-contact-card p {
+			margin: 0 0 var(--space-3);
+			color: var(--color-text);
+			font-family: var(--font-sans);
+			font-size: var(--text-sm);
+			line-height: var(--leading-relaxed);
+		}
+		.legal-contact-card p:last-child {
+			margin-bottom: 0;
+		}
+
+		/* ======================================================================
+		   PLACEHOLDER HIGHLIGHT
+		   ====================================================================== */
+		.legal-placeholder {
+			display: inline;
+			padding: 0 var(--space-1);
+			background: var(--color-gold-200);
+			color: var(--color-gold-800);
+			font-family: var(--font-mono);
+			font-size: 0.9em;
+			font-weight: var(--font-weight-semibold);
+			border-radius: var(--radius-xs);
+		}
+
+		/* ======================================================================
+		   REDUCED MOTION
+		   ====================================================================== */
+		@media (prefers-reduced-motion: reduce) {
+			html {
+				scroll-behavior: auto;
+			}
+		}
+
+		/* ======================================================================
+		   PRINT
+		   ====================================================================== */
+		@media print {
+			body {
+				background: #fff;
+				color: #111;
+				font-size: 11pt;
+				line-height: 1.55;
+			}
+			.site-header,
+			.legal-toc,
+			.legal-draft,
+			.legal-hero__actions,
+			.site-footer {
+				display: none !important;
+			}
+			.legal-hero {
+				padding: 0 0 var(--space-5);
+				background: #fff;
+				color: #111;
+			}
+			.legal-hero__title,
+			.legal-hero__eyebrow,
+			.legal-hero__description,
+			.legal-hero__meta,
+			.legal-hero__meta strong {
+				color: #111;
+			}
+			.legal-hero__title {
+				font-size: 28pt;
+			}
+			.legal-layout {
+				display: block;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			.legal-content {
+				max-width: none;
+				padding: 0;
+				border: 0;
+				box-shadow: none;
+				background: #fff;
+			}
+			.legal-content section {
+				break-inside: avoid;
+				page-break-inside: avoid;
+			}
+			.legal-content a {
+				color: #111;
+				text-decoration: none;
+			}
+			.legal-contact-card {
+				background: #fff;
+				border: 1px solid #555;
+			}
+			.legal-placeholder {
+				background: none;
+				border-bottom: 1px solid #555;
+				color: #111;
+			}
 		}
 	</style>
 </head>
 
 <body>
 
+	<!-- ======================================================
+	     FULL SITE HEADER
+	     ====================================================== -->
 	<header class="site-header" data-site-header>
+		<a class="skip-link" href="#main-content">Skip to main content</a>
 		<div class="site-header__inner">
-			<a class="site-brand" href="index.html" aria-label="ModeInfinity — home">
+			<!-- BRAND / LOGO -->
+			<a class="site-brand" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
 				<picture class="site-brand__picture">
 					<source srcset="assets/images/logo.avif" type="image/avif">
 					<source srcset="assets/images/logo.webp" type="image/webp">
-					<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56">
+					<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56" loading="eager" decoding="async" fetchpriority="high">
 				</picture>
 			</a>
-			<div class="header-actions" style="margin-left: auto;">
-				<a href="index.html" class="btn btn-ghost" style="color: white;">Return Home</a>
+			<!-- DESKTOP PRIMARY NAVIGATION -->
+			<nav class="primary-navigation" data-primary-navigation aria-label="Primary navigation">
+				<ul class="primary-navigation__list">
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="index.html" data-nav-page="home">Home</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="about.html" data-nav-page="about">About</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="academy.html" data-nav-page="academy">ModeInfinity Academy</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="shop.html" data-nav-page="shop">Shop</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="gallery.html" data-nav-page="Gallery">Gallery</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="contact.html" data-nav-page="contact">Contact</a></li>
+				</ul>
+			</nav>
+			<!-- HEADER ACTIONS -->
+			<div class="header-actions">
+				<button class="cart-button header-action" id="cart-button" type="button" aria-controls="mi-cart" aria-expanded="false" aria-label="Open shopping cart" data-mi-cart-open>
+					<svg class="header-action__icon" aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
+						<path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+						<circle cx="9" cy="20" r="1"></circle>
+						<circle cx="18" cy="20" r="1"></circle>
+					</svg>
+					<span class="cart-button__count" data-mi-cart-count aria-hidden="true">0</span>
+				</button>
+				<button class="mobile-nav-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation menu" data-mobile-nav-toggle>
+					<span class="mobile-nav-toggle__icon" aria-hidden="true">
+						<span></span><span></span><span></span>
+					</span>
+				</button>
 			</div>
+		</div>
+		<!-- MOBILE NAVIGATION -->
+		<div class="mobile-navigation" id="mobile-navigation" role="dialog" aria-modal="true" data-mobile-navigation aria-hidden="true" aria-labelledby="mobile-nav-title" inert>
+			<div class="mobile-navigation__backdrop" data-mobile-nav-backdrop aria-hidden="true"></div>
+			<aside class="mobile-navigation__drawer" data-mobile-nav-drawer tabindex="-1">
+				<div class="mobile-navigation__header">
+					<a class="site-brand site-brand--mobile" href="index.html" data-nav-page="home" aria-label="ModeInfinity — home">
+						<picture class="site-brand__picture">
+							<source srcset="assets/images/logo.avif" type="image/avif">
+							<source srcset="assets/images/logo.webp" type="image/webp">
+							<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="160" height="42" decoding="async">
+						</picture>
+					</a>
+					<h2 class="sr-only" id="mobile-nav-title">Site navigation</h2>
+					<button class="mobile-navigation__close" type="button" aria-label="Close navigation menu" data-mobile-nav-close>
+						<svg aria-hidden="true" fill="none" focusable="false" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24" width="22">
+							<path d="M6 6l12 12"></path>
+							<path d="M18 6L6 18"></path>
+						</svg>
+					</button>
+				</div>
+				<div class="mobile-navigation__content">
+					<nav data-mobile-primary-navigation aria-label="Mobile primary navigation">
+						<ul class="mobile-navigation__list">
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="index.html" data-nav-page="home"><span>Home</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="about.html" data-nav-page="about"><span>About</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="academy.html" data-nav-page="academy"><span>ModeInfinity Academy</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="shop.html" data-nav-page="shop"><span>Shop</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="gallery.html" data-nav-page="Gallery"><span>Gallery</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="contact.html" data-nav-page="contact"><span>Contact</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="mobile-navigation__footer">
+					<button class="btn btn-block btn-secondary" type="button" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button>
+				</div>
+			</aside>
 		</div>
 	</header>
 
-	<main id="main-content" class="site-main">
-		<section class="legal-hero">
+	<main id="main-content" class="site-main" tabindex="-1">
+
+		<!-- ==================================================
+		     HERO
+		     ================================================== -->
+		<section class="legal-hero" aria-labelledby="page-title">
 			<div class="legal-hero__inner">
-				<p class="eyebrow" style="color: var(--color-gold-300);">Legal</p>
-				<h1 class="legal-hero__title">Terms of <em>Service.</em></h1>
-				<p class="legal-hero__meta">Last updated: October 2026</p>
-			</div>
-		</section>
-
-		<section class="legal-content">
-			<div class="container">
-				<p>Welcome to ModeInfinity. By accessing our website, commissioning a pair of shoes, or enrolling in the ModeInfinity Academy, you agree to these Terms of Service. Please read them carefully.</p>
-
-				<h2>1. About ModeInfinity</h2>
-				<p>ModeInfinity is a shoemaking workshop and academy based in Abuja, Nigeria. We create handcrafted, made-to-order footwear and provide practical education in the craft of shoemaking.</p>
-
-				<h2>2. Bespoke & Made-to-Order Footwear</h2>
-				<h3>2.1 Commissioning a Pair</h3>
-				<p>When you commission a custom pair, you are entering into a bespoke manufacturing process. All commissions require a deposit (as agreed in writing) to secure your place in the production queue.</p>
-				<h3>2.2 Measurements and Fit</h3>
-				<p>You are responsible for providing accurate measurements and foot details. We offer guidance on how to measure, but we cannot be held liable for errors in measurements you provide if you decline our remote or in-person fitting guidance.</p>
-				<h3>2.3 Lead Times</h3>
-				<p>Custom pairs typically take 3–4 weeks from the date measurements, leather, and deposit are confirmed. Lead times may vary based on material availability and design complexity. We will confirm your specific timeline in writing before production begins.</p>
-
-				<h2>3. Returns, Refunds & Exchanges</h2>
-				<h3>3.1 Custom and Personalised Items</h3>
-				<p>In accordance with the <strong>Federal Competition and Consumer Protection Act (FCCPA) 2018</strong>, custom-made or personalised goods are exempt from standard change-of-mind returns. Because your shoes are cut and lasted specifically for your measurements, we do not offer refunds or exchanges for a change of mind.</p>
-				<h3>3.2 Defective Goods</h3>
-				<p>Despite the bespoke nature of our work, your statutory rights under the FCCPA apply. If a pair is delivered with a genuine manufacturing defect or is materially different from the confirmed specification, you have the right to return the item for a repair, replacement, or full refund (Section 122, FCCPA 2018).</p>
-				<h3>3.3 Fit Adjustments</h3>
-				<p>We want your shoes to fit perfectly. If your custom pair requires adjustment, we offer complimentary fitting alterations within the first 30 days of delivery. We will assess the fit and make necessary adjustments at our workshop.</p>
-				<h3>3.4 Ready-to-Wear Items</h3>
-				<p>Ready-to-wear footwear purchased from the shop may be returned within 14 days of delivery, provided they are unworn, in their original packaging, and in a resalable condition. Return shipping costs are the responsibility of the buyer unless the item is defective.</p>
-
-				<h2>4. Academy Enrolment & Policies</h2>
-				<h3>4.1 Program Fees</h3>
-				<p>Fees for the ModeInfinity Academy are confirmed upon application. Payment plans are available. A deposit is required to secure your place in a cohort.</p>
-				<h3>4.2 Cancellations and Refunds</h3>
-				<p>If you cancel your enrolment more than 14 days before the program start date, you will receive a full refund minus an administrative fee. Cancellations within 14 days of the start date may be subject to a partial refund or credit transfer to a future cohort, at our discretion.</p>
-				<h3>4.3 Tools and Materials</h3>
-				<p>All necessary tools, leather, and materials for practical projects are provided during the program. You do not need to purchase equipment separately.</p>
-
-				<h2>5. Intellectual Property</h2>
-				<p>All content on this website — including text, images, designs, logos, and the ModeInfinity name — is the property of ModeInfinity and is protected by Nigerian and international copyright laws. You may not reproduce, distribute, or use our content for commercial purposes without our explicit written permission.</p>
-
-				<h2>6. Limitation of Liability</h2>
-				<p>To the fullest extent permitted by Nigerian law, ModeInfinity shall not be liable for any indirect, incidental, or consequential damages arising from the use of our website or the purchase of our products. Our total liability for any claim shall not exceed the amount you paid for the specific product or service in question.</p>
-
-				<h2>7. Governing Law</h2>
-				<p>These Terms shall be governed by and construed in accordance with the laws of the Federal Republic of Nigeria. Any disputes arising from these Terms shall be subject to the exclusive jurisdiction of the courts of Nigeria.</p>
-
-				<h2>8. Changes to These Terms</h2>
-				<p>We reserve the right to update these Terms at any time. Changes will be effective immediately upon posting on this page. We encourage you to review this page periodically.</p>
-
-				<h2>9. Contact Us</h2>
-				<p>If you have any questions about these Terms, please contact us:</p>
-				<p>
-					<strong>ModeInfinity</strong><br>
-					Email: <a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a><br>
-					Phone: <a href="tel:+2348050424000">+234 805 042 4000</a><br>
-					Address: Sentosa Parks & Garden, Plot 2028, Legislative Quarters Apo, Abuja, Nigeria
+				<p class="legal-hero__eyebrow">Learn. Create. Build.</p>
+				<h1 id="page-title" class="legal-hero__title">Terms of Service</h1>
+				<p class="legal-hero__description">
+					These Terms explain the general conditions for using the
+					ModeInfinity website and engaging with our footwear, custom
+					commissions and shoemaking academy services.
 				</p>
+				<div class="legal-hero__meta">
+					<span>
+						<strong>Version:</strong>
+						<span class="legal-placeholder">[v1.0]</span>
+					</span>
+					<span>
+						<strong>Effective date:</strong>
+						<span class="legal-placeholder">[DD Month YYYY]</span>
+					</span>
+					<span>
+						<strong>Last reviewed:</strong>
+						<span class="legal-placeholder">[DD Month YYYY]</span>
+					</span>
+				</div>
+				<div class="legal-hero__actions">
+					<button class="btn btn-secondary" id="printDocument" type="button">Print / Save PDF</button>
+				</div>
 			</div>
 		</section>
+
+		<!-- ==================================================
+		     DRAFT NOTICE
+		     ================================================== -->
+		<div class="legal-draft" role="note" aria-label="Draft status">
+			<strong>Draft — not approved for publication</strong>
+			This document contains unresolved business and legal details. Complete
+			the marked fields, verify the actual business practices and website
+			behaviour, and obtain review by qualified Nigerian counsel before use.
+		</div>
+
+		<!-- ==================================================
+		     LAYOUT — TOC + CONTENT
+		     ================================================== -->
+		<div class="legal-layout">
+
+			<nav class="legal-toc" aria-label="On this page">
+				<p class="legal-toc__title">On this page</p>
+				<ol class="legal-toc__list">
+					<li><a class="legal-toc__link" href="#about">About these Terms</a></li>
+					<li><a class="legal-toc__link" href="#acceptance">Contracting party and acceptance</a></li>
+					<li><a class="legal-toc__link" href="#website-use">Website use</a></li>
+					<li><a class="legal-toc__link" href="#products">Products and prices</a></li>
+					<li><a class="legal-toc__link" href="#orders">Orders and payments</a></li>
+					<li><a class="legal-toc__link" href="#footwear">Footwear commissions</a></li>
+					<li><a class="legal-toc__link" href="#returns">Delivery, returns and refunds</a></li>
+					<li><a class="legal-toc__link" href="#academy">Academy services</a></li>
+					<li><a class="legal-toc__link" href="#workshop">Workshop rules</a></li>
+					<li><a class="legal-toc__link" href="#intellectual-property">Intellectual property</a></li>
+					<li><a class="legal-toc__link" href="#privacy">Privacy and publicity</a></li>
+					<li><a class="legal-toc__link" href="#complaints">Complaints</a></li>
+					<li><a class="legal-toc__link" href="#liability">Liability and fair terms</a></li>
+					<li><a class="legal-toc__link" href="#third-party">Third-party services</a></li>
+					<li><a class="legal-toc__link" href="#events">Events outside our control</a></li>
+					<li><a class="legal-toc__link" href="#changes">Changes to these Terms</a></li>
+					<li><a class="legal-toc__link" href="#law">Governing law</a></li>
+					<li><a class="legal-toc__link" href="#contact">Contact</a></li>
+				</ol>
+			</nav>
+
+			<article class="legal-content">
+
+				<section id="about">
+					<h2>1. About these Terms</h2>
+					<p>1.1 These Terms govern use of the ModeInfinity website and, where the relevant terms have been provided and accepted before commitment, enquiries, footwear purchases, custom commissions, Academy enrolment and related services.</p>
+					<p>1.2 "ModeInfinity", "we", "us" and "our" mean the legal operator identified in this document. "You" means the relevant website user, customer or student. "Academy" means the ModeInfinity shoemaking and leather-craft training operation.</p>
+					<p>1.3 Read these Terms together with the applicable Ready-Made and Custom Footwear Terms, Shoemaking Academy Enrolment Agreement, Student Workshop Safety Policy and Privacy Policy. An accepted quotation, order specification, course schedule and fee schedule may also form part of the relevant agreement.</p>
+					<p>1.4 Applicable mandatory law prevails over any inconsistent provision. Nothing in these Terms excludes a right or liability that cannot lawfully be excluded.</p>
+				</section>
+
+				<section id="acceptance">
+					<h2>2. Contracting party and acceptance</h2>
+					<p>2.1 Before a customer or student commits, ModeInfinity will identify the contracting legal operator, disclose material terms and charges, and make the relevant agreement reasonably available.</p>
+					<p>2.2 A website visit, enquiry, social-media conversation, quotation request or automated acknowledgement does not by itself constitute acceptance of an order. A contract forms when ModeInfinity confirms acceptance through the stated ordering or enrolment process, subject to conditions disclosed before payment or commitment.</p>
+					<p>2.3 ModeInfinity will maintain reasonable records of the terms presented, accepted quotation or specification, transaction details, payments and material variations. Customers and students should retain their copies.</p>
+					<p>2.4 A term that was not reasonably brought to a person's attention before contracting may not be enforceable against that person. We will not rely on an undisclosed term as if it had been accepted.</p>
+					<div class="legal-contact-card">
+						<p><strong>Legal operator:</strong> <span class="legal-placeholder">[Exact CAC-registered name and legal form]</span></p>
+						<p><strong>Registration number:</strong> <span class="legal-placeholder">[Verify and insert, if applicable]</span></p>
+						<p><strong>Registered address:</strong> <span class="legal-placeholder">[Verify and insert]</span></p>
+					</div>
+				</section>
+
+				<section id="website-use">
+					<h2>3. Lawful website use</h2>
+					<p>3.1 You must provide accurate information to the best of your knowledge and must not knowingly interfere with website security or operation.</p>
+					<p>3.2 You must not use the website to submit fraudulent orders, impersonate another person, infringe another person's rights, distribute malicious code, gain unauthorised access or disrupt other users.</p>
+					<p>3.3 Where website accounts are provided, take reasonable care of access credentials and notify us of suspected unauthorised access. Responsibility for unauthorised activity depends on the facts and applicable law.</p>
+					<p>3.4 We may restrict access where reasonably necessary to address a credible security risk, fraud, unlawful activity or material disruption. This does not authorise us to evade an existing contract or statutory rights.</p>
+				</section>
+
+				<section id="products">
+					<h2>4. Products, images, descriptions and prices</h2>
+					<p>4.1 We will take reasonable care to ensure product descriptions, photographs, materials, dimensions, sizes, prices and other material representations are accurate and not misleading.</p>
+					<p>4.2 Screen settings, lighting and handmade processes can affect the appearance of an item. Natural leather and handmade products may show ordinary variations in grain, texture, shade and finish. Such variation does not excuse a material defect, misleading description or failure to meet an agreed specification.</p>
+					<p>4.3 The total price, applicable taxes, delivery or collection charges, payment milestones and material conditions will be disclosed before acceptance.</p>
+					<p>4.4 Promotions must state material eligibility requirements and conditions. We will not use promotions to mislead customers or remove statutory rights.</p>
+					<p>4.5 Availability and estimated timelines may change. We will communicate material changes affecting an accepted order and explain the lawful options available.</p>
+				</section>
+
+				<section id="orders">
+					<h2>5. Orders, payments and records</h2>
+					<p>5.1 The order confirmation or accepted quotation should identify the product or service, quantity, specification, total price, payment milestones, delivery or collection method and special conditions.</p>
+					<p>5.2 Payment methods and deadlines will be stated in the applicable agreement. Do not send full card credentials, passwords or banking authentication codes through ordinary email or unsecured messaging.</p>
+					<p>5.3 We will issue a receipt or appropriate transaction record for payments received. Additional charges must have a disclosed contractual or lawful basis.</p>
+					<p>5.4 We may pause unstarted work for an overdue payment after reasonable notice where lawful and proportionate. We will not use this provision to avoid remedies arising from our own breach.</p>
+					<p>5.5 Current payment methods and any applicable payment instructions must be confirmed in the order documents before the customer pays. An enquiry or prefilled WhatsApp message is not, by itself, proof that an order has been accepted or payment received.</p>
+				</section>
+
+				<section id="footwear">
+					<h2>6. Footwear and custom commissions</h2>
+					<p>6.1 Ready-made orders are governed by the Ready-Made and Custom Footwear Terms where those terms are provided and applicable.</p>
+					<p>6.2 Custom commissions require an agreed specification, sizing or measurement record, materials, price, payment schedule, estimated completion period and any fitting arrangements. Required approvals should be recorded before production.</p>
+					<p>6.3 Approval of a design or measurement does not automatically waive claims concerning negligent measurement, defective materials, poor workmanship, failure to follow the specification, misrepresentation or a right that cannot lawfully be excluded.</p>
+					<p>6.4 Customer-supplied designs, logos, photographs and references may be used only for the agreed purpose and to the extent the customer is authorised to permit that use.</p>
+				</section>
+
+				<section id="returns">
+					<h2>7. Delivery, cancellations, returns and refunds</h2>
+					<p>7.1 Delivery and collection arrangements and estimated periods will be communicated before the customer commits. We will provide a reasonable update when a material delay becomes apparent. An estimated date is not a guaranteed date unless expressly identified as a firm commitment.</p>
+					<p>7.2 Returns, repairs, replacements, cancellations and refunds are governed by the applicable transaction agreement and Nigerian law, including mandatory consumer protections.</p>
+					<p>7.3 There is no blanket exclusion of remedies for custom-made or personalised goods where the law provides a remedy. This clause does not guarantee a change-of-mind return in every circumstance.</p>
+					<p>7.4 Any lawful cancellation deduction must be reasonable, explained, supported by the relevant facts and must not operate as a penalty or double recovery. A "no refund" statement cannot remove a remedy that mandatory law requires.</p>
+					<p>7.5 Customers are encouraged to inspect goods and report visible damage or apparent non-conformity promptly. A suggested inspection period does not automatically extinguish statutory rights.</p>
+					<p>7.6 The detailed cancellation, remedy and refund procedure must be stated in the applicable footwear agreement and must match ModeInfinity's actual practices and legal obligations.</p>
+				</section>
+
+				<section id="academy">
+					<h2>8. Academy services and certificates</h2>
+					<p>8.1 Course content, duration, timetable, syllabus, fees, materials, attendance expectations, assessment and completion criteria must be disclosed before enrolment.</p>
+					<p>8.2 The Shoemaking Academy Enrolment Agreement governs enrolment, fees, withdrawal, deferral, refunds, assessment, complaints and completion. The Student Workshop Safety Policy applies to practical activities.</p>
+					<p>8.3 ModeInfinity does not guarantee employment, income, business success or external accreditation unless an accurate, specific promise is expressly made and can be substantiated.</p>
+					<p>8.4 Certificates must accurately identify the issuer and status. We will not imply government recognition or third-party accreditation unless verified.</p>
+				</section>
+
+				<section id="workshop">
+					<h2>9. Workshop rules</h2>
+					<p>Customers, students, staff, contractors and visitors must follow lawful safety instructions, signs and access restrictions.</p>
+					<p>No person may use restricted machinery, tools or hazardous materials without authorisation, required instruction and protective equipment. The Student Workshop Safety Policy does not replace ModeInfinity's legal duties.</p>
+				</section>
+
+				<section id="intellectual-property">
+					<h2>10. Intellectual property</h2>
+					<p>10.1 Rights in the ModeInfinity name, logos, website content, photographs, patterns, templates, course materials and other protected works remain with their lawful owners unless a written licence or transfer says otherwise.</p>
+					<p>10.2 Buying a product or course does not automatically transfer rights in underlying patterns, processes or teaching materials.</p>
+					<p>10.3 Customers retain rights they lawfully hold in materials they supply. Students retain rights in their original work, subject to third-party rights and any separate written agreement. Enrolment alone does not transfer all student designs to the Academy.</p>
+					<p>10.4 You must not copy, sell, publish or commercially exploit protected material beyond a licence expressly granted or permitted by law.</p>
+				</section>
+
+				<section id="privacy">
+					<h2>11. Privacy and publicity</h2>
+					<p>Personal data is handled under the ModeInfinity Privacy Policy and applicable law.</p>
+					<p>Acceptance of these Terms is not blanket permission to use a person's image, voice, testimonial, measurements or student work in public marketing. Separate permission will be obtained where required.</p>
+					<p>Refusal of optional publicity consent will not by itself prevent a purchase or enrolment.</p>
+				</section>
+
+				<section id="complaints">
+					<h2>12. Complaints</h2>
+					<p>Send complaints using the verified contact details listed below. Include the order or enrolment reference, relevant dates, a description of the issue, supporting information and the outcome requested.</p>
+					<p>We will review relevant records and provide a reasoned response within a reasonable period. An internal complaint process does not prevent a person from approaching a competent regulator, tribunal or court where the law permits.</p>
+				</section>
+
+				<section id="liability">
+					<h2>13. Liability and fair terms</h2>
+					<p>13.1 Nothing in these Terms excludes or restricts liability where prohibited by law, including applicable consumer-protection obligations and liability for fraud, misrepresentation, negligence or defective performance to the extent non-excludable.</p>
+					<p>13.2 Any limitation permitted by law must be clear, reasonable in context, proportionate and disclosed before contracting. It must not remove statutory remedies or disguise an unfair term.</p>
+					<p>13.3 No customer or student is required to indemnify ModeInfinity for ModeInfinity's own unlawful conduct or for liability that cannot lawfully be transferred.</p>
+				</section>
+
+				<section id="third-party">
+					<h2>14. Third-party services and links</h2>
+					<p>We may use third-party hosting, form-processing, email, messaging, delivery, analytics or other service providers where actually configured. Their own terms and privacy notices may govern their independent services.</p>
+					<p>We remain responsible for our own obligations and for duties imposed by law concerning our providers. External links do not mean that we control every linked website.</p>
+				</section>
+
+				<section id="events">
+					<h2>15. Events outside reasonable control</h2>
+					<p>If an event outside our reasonable control materially affects performance, we will notify affected persons when reasonably practicable, explain the impact and take reasonable steps to reduce disruption.</p>
+					<p>This clause does not automatically cancel a refund obligation or excuse avoidable delay.</p>
+				</section>
+
+				<section id="changes">
+					<h2>16. Changes to these Terms</h2>
+					<p>We may update these Terms for future transactions and will show the effective date. We will not apply a material adverse change retroactively to an existing order or enrolment without a lawful basis and any agreement required by law.</p>
+					<p>We will notify affected persons where required.</p>
+				</section>
+
+				<section id="law">
+					<h2>17. Governing law</h2>
+					<p>These Terms are governed by the laws of the Federal Republic of Nigeria, subject to mandatory applicable law and the jurisdiction of competent courts, tribunals and regulators. This choice does not exclude mandatory rights that may apply in another jurisdiction.</p>
+				</section>
+
+				<section id="contact">
+					<h2>18. Contact ModeInfinity</h2>
+					<p>For questions about these Terms, footwear orders, Academy services or complaints, use the verified contact details below.</p>
+					<div class="legal-contact-card">
+						<p><strong>Business name:</strong> ModeInfinity</p>
+						<p><strong>Contracting legal operator:</strong> <span class="legal-placeholder">[Insert verified legal name]</span></p>
+						<p><strong>Workshop / Academy:</strong> <span class="legal-placeholder">[Verify address before publication]</span></p>
+						<p><strong>Showroom:</strong> <span class="legal-placeholder">[Verify address before publication]</span></p>
+						<p><strong>Email:</strong> <a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a></p>
+						<p><strong>Additional email:</strong> <a href="mailto:jennyomomia@gmail.com">jennyomomia@gmail.com</a> <span class="legal-placeholder">[Confirm this address should remain public]</span></p>
+						<p><strong>Telephone / WhatsApp:</strong> <span class="legal-placeholder">[Insert verified business number(s)]</span></p>
+						<p><strong>Website:</strong> <span class="legal-placeholder">[Confirm canonical website domain]</span></p>
+					</div>
+				</section>
+
+				<p>
+					<strong>Document status:</strong> Draft for review. The highlighted
+					placeholders must be resolved or deliberately removed before
+					publication. This page is not a substitute for advice from qualified
+					Nigerian counsel.
+				</p>
+
+			</article>
+
+		</div>
+
 	</main>
 
+	<!-- ======================================================
+	     FULL SITE FOOTER
+	     ====================================================== -->
+	<footer class="site-footer">
+		<section class="site-footer__contact-strip" aria-label="ModeInfinity contact options">
+			<div class="container site-footer__contact-grid">
+				<a class="site-footer__contact-card" href="contact.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+							<circle cx="12" cy="9" r="2.5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Visit · Workshop</span>
+						<span class="site-footer__contact-title">ModeInfinity Abuja</span>
+						<span class="site-footer__contact-description"> Sentosa Parks &amp; Garden, Plot 2028, Legislative Quarters Apo, Abuja </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+				<a class="site-footer__contact-card" href="contact.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
+							<circle cx="12" cy="9" r="2.5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Visit · Showroom</span>
+						<span class="site-footer__contact-title">ModeInfinity Lagos</span>
+						<span class="site-footer__contact-description"> B3106 Tejuosho Shopping Complex, Yaba, Lagos </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+				<div class="site-footer__contact-card">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Talk to us</span>
+						<span class="site-footer__contact-title">Call Us</span>
+						<span class="site-footer__contact-description">
+							<a href="tel:+2348050424000">+234 805 042 4000</a><br>
+							<a href="tel:+2349035830940">+234 903 583 0940</a>
+						</span>
+					</span>
+				</div>
+				<div class="site-footer__contact-card">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z" />
+							<path d="m5 7 7 5 7-5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Write to us</span>
+						<span class="site-footer__contact-title">Email</span>
+						<span class="site-footer__contact-description">
+							<a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a><br>
+							<a href="mailto:jennyomomia@gmail.com">jennyomomia@gmail.com</a>
+						</span>
+					</span>
+				</div>
+				<a class="site-footer__contact-card" href="academy.html">
+					<span class="site-footer__contact-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" focusable="false">
+							<path d="m3.5 9 8.5-4 8.5 4-8.5 4-8.5-4Z" />
+							<path d="M7 11.2v4.1c0 1.7 2.2 3.2 5 3.2s5-1.5 5-3.2v-4.1" />
+							<path d="M20.5 9v5" />
+						</svg>
+					</span>
+					<span class="site-footer__contact-content">
+						<span class="site-footer__contact-label">Learn the craft</span>
+						<span class="site-footer__contact-title">ModeInfinity Academy</span>
+						<span class="site-footer__contact-description"> Practical shoemaking education </span>
+					</span>
+					<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</section>
+		<div class="site-footer__main">
+			<div class="container">
+				<div class="site-footer__brand-row">
+					<section class="site-footer__brand" aria-labelledby="footer-brand-title">
+						<p class="site-footer__brand-kicker"> Footwear · Craft · Education </p>
+						<h2 class="site-footer__brand-title" id="footer-brand-title"> Learn. Create. Build. </h2>
+						<p class="site-footer__description"> ModeInfinity brings together handcrafted footwear, practical shoemaking education and purposeful design, all rooted in the craft of making. </p>
+						<div class="site-footer__socials">
+							<a href="https://www.instagram.com/officialmodeinfinityw" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+									<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+									<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+								</svg>
+							</a>
+							<a href="https://www.facebook.com/modeinfinity" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+								</svg>
+							</a>
+							<a href="https://www.tiktok.com/@modeinfinity2" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="site-footer__origin">
+							<span>Crafted in Nigeria.</span>
+						</div>
+					</section>
+					<div class="site-footer__navigation">
+						<nav class="site-footer__column" aria-labelledby="footer-explore-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">01</span>
+								<h2 id="footer-explore-title"> Explore </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html">About</a></li>
+								<li><a href="academy.html">Academy</a></li>
+								<li><a href="shop.html">Shop</a></li>
+								<li><a href="gallery.html">Gallery</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</nav>
+						<nav class="site-footer__column" aria-labelledby="footer-academy-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">02</span>
+								<h2 id="footer-academy-title"> Academy </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="academy.html"> Learn Shoemaking </a></li>
+								<li><a href="academy.html#courses"> Our Courses </a></li>
+								<li><a href="academy.html#process"> Training Process </a></li>
+								<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
+							</ul>
+						</nav>
+						<nav class="site-footer__column" aria-labelledby="footer-collection-title">
+							<div class="site-footer__heading">
+								<span class="site-footer__heading-number">03</span>
+								<h2 id="footer-collection-title"> The Collection </h2>
+							</div>
+							<ul class="site-footer__links">
+								<li><a href="shop.html"> Shop Footwear </a></li>
+								<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
+								<li><a href="contact.html#custom-orders"> Custom Orders </a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div class="site-footer__statement">
+					<p class="site-footer__statement-text"> Made with <span>intention.</span> Made to <span>endure.</span> </p>
+				</div>
+				<div class="site-footer__cta">
+					<div class="site-footer__cta-copy">
+						<span class="site-footer__cta-eyebrow"> Start your next step </span>
+						<h2> Choose your path. </h2>
+						<p> Discover the collection or learn the craft behind every pair. </p>
+					</div>
+					<div class="site-footer__cta-actions">
+						<a class="btn btn-primary" href="shop.html"> Shop the Collection </a>
+						<a class="btn btn-secondary" href="academy.html"> Explore the Academy </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="site-footer__bottom">
+			<div class="container site-footer__bottom-inner">
+				<p class="site-footer__copyright"> &copy; ModeInfinity. All rights reserved. </p>
+				<nav class="site-footer__legal" aria-label="Legal navigation">
+					<a href="privacy.html">Privacy</a>
+					<a href="terms.html">Terms</a>
+				</nav>
+			</div>
+		</div>
+	</footer>
+
+	<!-- ======================================================
+	     REUSABLE FUNCTIONAL COMPONENTS
+	     ====================================================== -->
+	<div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
+	<div data-component="lightbox" data-component-path="components/lightbox.html"></div>
+	<div data-component="toast" data-component-path="components/toast.html"></div>
+	<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div>
+
+	<!-- ======================================================
+	     APPLICATION SCRIPTS
+	     ====================================================== -->
+	<script src="scripts/cart-drawer.js" defer></script>
+	<script type="module" src="scripts/main.js"></script>
+
+	<!-- Print handler for this page only -->
+	<script>
+		"use strict";
+		const printButton = document.getElementById("printDocument");
+		if (printButton) {
+			printButton.addEventListener("click", () => { window.print(); });
+		}
+	</script>
+
 </body>
+
 </html>
