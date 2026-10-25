@@ -171,32 +171,23 @@
 				"addressCountry": "NG"
 			},
 			"hasOfferCatalog": {
-				"@type": "OfferCatalog",
-				"name": "Shoemaking Programs",
-				"itemListElement": [{
-					"@type": "Offer",
-					"itemOffered": {
-						"@type": "Course",
-						"name": "Foundation Mastery Program",
-						"description": "3-Month Program featuring 6 Weeks of Daily Hands-On Shoemaking Mastery."
-					}
-				}, {
-					"@type": "Offer",
-					"itemOffered": {
-						"@type": "Course",
-						"name": "Artisan Excellence Program",
-						"description": "6-Month Program featuring Expert-Level Shoemaking Craftsmanship Mastery."
-					}
-				}, {
-					"@type": "Offer",
-					"itemOffered": {
-						"@type": "Course",
-						"name": "Entrepreneur Mastery Program",
-						"description": "1-3 Year Program featuring shoemaking and Business Development Enterprise."
-					}
-				}]
-			}
-		}
+    "itemListElement": [{
+        "itemOffered": {
+            "name": "Foundation Craft",
+            "description": "3-Month program featuring 6 weeks of daily hands-on shoemaking."
+        }
+    }, {
+        "itemOffered": {
+            "name": "Advanced Craftsmanship",
+            "description": "6-Month program for luxury-level shoemaking mastery."
+        }
+    }, {
+        "itemOffered": {
+            "name": "Enterprise & Brand",
+            "description": "1-3 year program combining shoemaking and business development."
+        }
+    }]
+}
 
 	</script>
 	<!-- ================= STRUCTURED DATA: BREADCRUMB ================= -->
@@ -396,10 +387,10 @@
 				<p class="eyebrow academy-hero__eyebrow">ModeInfinity Academy</p>
 				
 				<!-- Changed from h1 to h2 -->
-				<h2 id="academy-hero-title" class="academy-hero__title">
+				<h1 id="academy-hero-title" class="academy-hero__title">
 					Don't just wear the craft. <br>
 					<em>Learn to make it.</em>
-				</h2>
+				</h1>
 				
 				<p class="academy-hero__description">
 					ModeInfinity Academy is not a lecture hall. It is a working atelier. Here, you learn shoemaking the way it has always been learned — at the bench, with real leather, under the correction of a master.
@@ -521,7 +512,7 @@
 		</header>
 		<div class="academy-pathways__grid">
 			<!-- PROGRAM 1: FOUNDATIONS -->
-			<article class="academy-pathways__card">
+			<article class="academy-pathways__card" id="foundations">
 				<div class="academy-pathways__card-top">
 					<p class="academy-pathways__level">Beginner</p>
 					<span class="academy-pathways__duration">3 Months</span>
@@ -559,7 +550,7 @@
 				</div>
 			</article>
 			<!-- PROGRAM 2: ARTISAN (FEATURED) -->
-			<article class="academy-pathways__card academy-pathways__card--featured">
+			<article class="academy-pathways__card academy-pathways__card--featured" id="professional-practice">
 				<div class="academy-pathways__badge">Most Popular</div>
 				<div class="academy-pathways__card-top">
 					<p class="academy-pathways__level">Intermediate</p>
@@ -598,7 +589,7 @@
 				</div>
 			</article>
 			<!-- PROGRAM 3: ENTREPRENEUR -->
-			<article class="academy-pathways__card">
+			<article class="academy-pathways__card" id="entrepreneur-mastery">
 				<div class="academy-pathways__card-top">
 					<p class="academy-pathways__level">Advanced</p>
 					<span class="academy-pathways__duration">1–3 Years</span>
@@ -816,9 +807,9 @@
 		<div class="academy-atelier__split">
 			<figure class="academy-atelier__media">
 				<picture>
-					<source srcset="assets/images/workshop/training1.avif" type="image/avif">
-					<source srcset="assets/images/workshop/training1.webp" type="image/webp">
-					<img src="assets/images/workshop/training1.jpg" alt="Students working at the ModeInfinity bench" loading="lazy" decoding="async">
+					<source srcset="assets/images/workshop/training4.avif" type="image/avif">
+					<source srcset="assets/images/workshop/training4.webp" type="image/webp">
+					<img src="assets/images/workshop/training4.jpg" alt="Students working at the ModeInfinity bench" loading="lazy" decoding="async">
 				</picture>
 			</figure>
 
@@ -1091,95 +1082,153 @@
 		<!-- <div data-component="footer" data-component-path="/components/footer.html"></div> -->
 
 <footer class="site-footer">
+
 	<!-- ======================================================
-       CONTACT STRIP
-       ====================================================== -->
-	<section class="site-footer__contact-strip" aria-label="ModeInfinity contact options">
-		<div class="container site-footer__contact-grid">
-			<!-- Abuja Workshop -->
-			<a class="site-footer__contact-card" href="contact.html">
-				<span class="site-footer__contact-icon" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" focusable="false">
-						<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
-						<circle cx="12" cy="9" r="2.5" />
-					</svg>
-				</span>
-				<span class="site-footer__contact-content">
-					<span class="site-footer__contact-label">Visit · Workshop</span>
-					<span class="site-footer__contact-title">ModeInfinity Abuja</span>
-					<span class="site-footer__contact-description"> Sentosa Parks &amp; Garden, Plot 2028, Legislative Quarters Apo, Abuja </span>
-				</span>
-				<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
-			</a>
-			<!-- Lagos Showroom -->
-			<a class="site-footer__contact-card" href="contact.html">
-				<span class="site-footer__contact-icon" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" focusable="false">
-						<path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
-						<circle cx="12" cy="9" r="2.5" />
-					</svg>
-				</span>
-				<span class="site-footer__contact-content">
-					<span class="site-footer__contact-label">Visit · Showroom</span>
-					<span class="site-footer__contact-title">ModeInfinity Lagos</span>
-					<span class="site-footer__contact-description"> B3106 Tejuosho Shopping Complex, Yaba, Lagos </span>
-				</span>
-				<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
-			</a>
-			<!-- Call Us -->
-			<div class="site-footer__contact-card">
-				<span class="site-footer__contact-icon" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" focusable="false">
-						<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-					</svg>
-				</span>
-				<span class="site-footer__contact-content">
-					<span class="site-footer__contact-label">Talk to us</span>
-					<span class="site-footer__contact-title">Call Us</span>
-					<span class="site-footer__contact-description">
-						<a href="tel:+2348050424000">+234 805 042 4000</a><br>
-						<a href="tel:+2349035830940">+234 903 583 0940</a>
-					</span>
-				</span>
+	     CONNECT WITH US
+	     ====================================================== -->
+	<section class="mi-footer-connect-section" aria-labelledby="mi-connect-heading">
+		<div class="container">
+			<h2 class="mi-connect-heading" id="mi-connect-heading">Connect With Us</h2>
+
+			<div class="mi-contact-items-grid">
+
+				<!-- Abuja Workshop -->
+				<a href="https://maps.google.com/?q=Sentosa+Parks+%26+Garden,+plot+2028,+Sentosa+park.+Legislative+Quarters+Apo,+Abuja"
+				   class="mi-contact-item-link" target="_blank" rel="noopener noreferrer">
+					<div class="mi-contact-item">
+						<div class="mi-contact-icon">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+								<circle cx="12" cy="10" r="3"></circle>
+							</svg>
+						</div>
+						<div class="mi-contact-details">
+							<p class="mi-location-title">Abuja Workshop</p>
+							<address class="mi-location-title">Sentosa Parks &amp; Garden, Plot 2028<br>Legislative Quarters Apo, Abuja</address>
+						</div>
+					</div>
+				</a>
+
+				<!-- Phone & WhatsApp -->
+				<div class="mi-contact-item-link">
+					<div class="mi-contact-item">
+						<div class="mi-contact-icon">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+								<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path>
+							</svg>
+						</div>
+						<div class="mi-contact-details">
+							<p class="mi-location-title">Phone &amp; WhatsApp</p>
+							<p class="mi-contact-link"><a href="tel:+2348050424000">+2348050424000</a></p>
+							<p class="mi-contact-link"><a href="tel:+2349035830940">+2349035830940</a></p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Email -->
+				<a href="mailto:officialmodeinfinity11@gmail.com" class="mi-contact-item-link">
+					<div class="mi-contact-item">
+						<div class="mi-contact-icon">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+								<polyline points="22,6 12,13 2,6"></polyline>
+							</svg>
+						</div>
+						<div class="mi-contact-details">
+							<p class="mi-location-title">Email</p>
+							<p class="mi-contact-link">officialmodeinfinity11@gmail.com</p>
+							<span class="mi-contact-note">We respond within 24 hours</span>
+						</div>
+					</div>
+				</a>
+
+				<!-- Lagos Showroom -->
+				<a href="https://maps.app.goo.gl/AaS7P9FotyJA2JCM6" class="mi-contact-item-link"
+				   target="_blank" rel="noopener noreferrer">
+					<div class="mi-contact-item">
+						<div class="mi-contact-icon">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+								<circle cx="12" cy="10" r="3"></circle>
+							</svg>
+						</div>
+						<div class="mi-contact-details">
+							<p class="mi-location-title">Lagos Showroom</p>
+							<address class="mi-location-title">B3106 Tejuosho Shopping Complex, Yaba, Lagos</address>
+						</div>
+					</div>
+				</a>
+
+				<!-- Follow Us -->
+				<div class="mi-contact-item-link social-media-wrapper">
+					<div class="mi-contact-item">
+						<div class="mi-contact-details">
+							<p class="mi-social-heading">Follow Us</p>
+							<div class="mi-social-header">
+								<div class="mi-social-links">
+									<a href="https://www.instagram.com/officialmodeinfinity?igsh=MmExcG14a2tkMHU="
+									   class="mi-social-link mi-location-title" aria-label="Instagram"
+									   target="_blank" rel="noopener noreferrer">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+											<title>Instagram</title>
+											<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+											<path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+											<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+										</svg>
+									</a>
+									<a href="https://www.facebook.com/share/1DeLREZgUA/"
+									   class="mi-social-link mi-location-title" aria-label="Facebook"
+									   target="_blank" rel="noopener noreferrer">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+											<path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+										</svg>
+									</a>
+									<a href="https://www.tiktok.com/@modeinfinity2?is_from_webapp=1&amp;sender_device=pc"
+									   class="mi-social-link mi-location-title" aria-label="TikTok"
+									   target="_blank" rel="noopener noreferrer">
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Working Hours -->
+				<div class="mi-contact-item-link working-hours-wrapper">
+					<div class="mi-contact-item">
+						<div class="mi-contact-icon">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+								<circle cx="12" cy="12" r="10"></circle>
+								<polyline points="12 6 12 12 16 14"></polyline>
+							</svg>
+						</div>
+						<div class="mi-contact-details">
+							<div class="mi-hours-header">
+								<span class="mi-hours-heading">Working Hours</span>
+							</div>
+							<div class="mi-working-hours-single-line">
+								<span class="mi-hours-combined">
+									<strong>Monday - Friday, 9:00 AM - 6:00 PM</strong>
+									<span class="mi-status-badge closed" data-status="closed" title="We're closed. Current Nigeria time: 6:29 PM WAT. Opens Monday at 9:00 AM"><strong>CLOSED</strong></span>
+								</span>
+							</div>
+							<div class="mi-hours-note-container">
+								<p class="mi-hours-note"><strong>Note:</strong> Hours may vary on each day. Please call ahead to confirm.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
-			<!-- Email Us -->
-			<div class="site-footer__contact-card">
-				<span class="site-footer__contact-icon" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" focusable="false">
-						<path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z" />
-						<path d="m5 7 7 5 7-5" />
-					</svg>
-				</span>
-				<span class="site-footer__contact-content">
-					<span class="site-footer__contact-label">Write to us</span>
-					<span class="site-footer__contact-title">Email</span>
-					<span class="site-footer__contact-description">
-						<a href="mailto:officialmodeinfinity11@gmail.com">officialmodeinfinity11@gmail.com</a><br>
-						<a href="mailto:jennyomomia@gmail.com">jennyomomia@gmail.com</a>
-					</span>
-				</span>
-			</div>
-			<!-- Academy -->
-			<a class="site-footer__contact-card" href="academy.html">
-				<span class="site-footer__contact-icon" aria-hidden="true">
-					<svg viewBox="0 0 24 24" fill="none" focusable="false">
-						<path d="m3.5 9 8.5-4 8.5 4-8.5 4-8.5-4Z" />
-						<path d="M7 11.2v4.1c0 1.7 2.2 3.2 5 3.2s5-1.5 5-3.2v-4.1" />
-						<path d="M20.5 9v5" />
-					</svg>
-				</span>
-				<span class="site-footer__contact-content">
-					<span class="site-footer__contact-label">Learn the craft</span>
-					<span class="site-footer__contact-title">ModeInfinity Academy</span>
-					<span class="site-footer__contact-description"> Practical shoemaking education </span>
-				</span>
-				<span class="site-footer__contact-arrow" aria-hidden="true">↗</span>
-			</a>
 		</div>
 	</section>
+
 	<!-- ======================================================
-       MAIN FOOTER
-       ====================================================== -->
+	     MAIN FOOTER — UNCHANGED
+	     ====================================================== -->
 	<div class="site-footer__main">
 		<div class="container">
 			<!-- ==================================================
@@ -1240,8 +1289,8 @@
 						</div>
 						<ul class="site-footer__links">
 							<li><a href="academy.html"> Learn Shoemaking </a></li>
-							<li><a href="academy.html#courses"> Our Courses </a></li>
-							<li><a href="academy.html#process"> Training Process </a></li>
+							<li><a href="academy.html#pathways"> Our Courses </a></li>
+<li><a href="academy.html#atelier"> Training Process </a></li>
 							<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
 						</ul>
 					</nav>
@@ -1254,7 +1303,7 @@
 						<ul class="site-footer__links">
 							<li><a href="shop.html"> Shop Footwear </a></li>
 							<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
-							<li><a href="contact.html#custom-orders"> Custom Orders </a></li>
+							<li><a href="contact.html#contact-form"> Custom Orders </a></li>
 						</ul>
 					</nav>
 				</div>
@@ -1281,27 +1330,25 @@
 			</div>
 		</div>
 	</div>
+
 	<!-- ======================================================
-       FOOTER BOTTOM / LEGAL
-       ====================================================== -->
+	     FOOTER BOTTOM / LEGAL
+	     ====================================================== -->
 	<div class="site-footer__bottom">
 		<div class="container site-footer__bottom-inner">
-<p class="site-footer__copyright"> &copy; ModeInfinity. All rights reserved. </p>			
-<nav class="site-footer__legal" aria-label="Legal navigation">
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="Ready-Made and Custom Footwear Terms.html.html">
-        Footwear Terms
-    </a>
-    <a href="academy-enrolment-agreement.html">
-        Academy Enrolment
-    </a>
-    <a href="student-workshop-safety-policy.html">
-        Workshop Safety
-    </a>
-</nav>
+			<p class="site-footer__copyright"> &copy; ModeInfinity. All rights reserved. </p>
+			<nav class="site-footer__legal" aria-label="Legal navigation">
+				<ul role="list">
+					<li><a href="privacy.html">Privacy Policy</a></li>
+					<li><a href="terms.html">Terms of Service</a></li>
+					<li><a href="Ready-Made%20and%20Custom%20Footwear%20Terms.html">Footwear Terms</a></li>
+					<li><a href="academy-enrolment-agreement.html">Academy Enrolment</a></li>
+					<li><a href="student-workshop-safety-policy.html">Workshop Safety</a></li>
+				</ul>
+			</nav>
 		</div>
 	</div>
+
 </footer>
 
 
