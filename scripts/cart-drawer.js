@@ -18,10 +18,10 @@
 
   /*
    * Receiving WhatsApp number.
-   * Example: +2348097212238 → "2348097212238"
+   * Example: +2348050424000 → "2348050424000"
    * Change this one line if the business WhatsApp changes.
    */
-  var WHATSAPP_NUMBER = "2348097212238";
+  var WHATSAPP_NUMBER = "2348050424000";
 
   var drawer = null;
   var items = [];
