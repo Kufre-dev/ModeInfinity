@@ -1,13 +1,11 @@
-﻿User-agent: *
+﻿# ModeInfinity — robots.txt
+# https://kufre-dev.github.io/ModeInfinity/robots.txt
+
+User-agent: *
 Allow: /
 
-# Prevent crawling of the custom error page
+# Custom error page — no value in indexing a 404
 Disallow: /404.html
-
-# XML sitemap
-# Uncomment this line after creating and publishing sitemap.xml
-# Sitemap: https://kufre-dev.github.io/ModeInfinity/sitemap.xml
-
 
 # XML sitemap
 Sitemap: https://kufre-dev.github.io/ModeInfinity/sitemap.xml

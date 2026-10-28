@@ -7,15 +7,19 @@
 	<meta name="format-detection" content="telephone=no">
 
 	<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
-	<meta http-equiv="Content-Security-Policy" content="
-		default-src 'self';
-		script-src 'self' 'unsafe-inline';
-		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-		font-src 'self' https://fonts.gstatic.com;
-		img-src 'self' data: https:;
-		base-uri 'self';
-		object-src 'none';
-	">
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    script-src-attr 'none';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
 	<!-- ==================================================================== -->

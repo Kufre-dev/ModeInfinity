@@ -6,16 +6,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
 		<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
-	<meta http-equiv="Content-Security-Policy" content="
-		default-src 'self';
-		script-src 'self';
-		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-		font-src 'self' https://fonts.gstatic.com;
-		img-src 'self' data: https:;
-		connect-src 'self' https://formspree.io;
-		form-action https://formspree.io;
-		base-uri 'self';
-		object-src 'none';
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    script-src-attr 'none';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+">bject-src 'none';
 	">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
@@ -68,13 +71,13 @@
 	<!-- ================= FONT HINTS + FONTS ================= -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<!-- ================= STYLESHEETS ================= -->
 	<link rel="stylesheet" href="styles/variables.css">
 	<link rel="stylesheet" href="styles/global.css">
 	<link rel="stylesheet" href="styles/layout.css">
 	<link rel="stylesheet" href="styles/components.css">
-	<link rel="stylesheet" href="styles/shop.css">
+	<!-- <link rel="stylesheet" href="styles/shop.css"> -->
 	<link rel="stylesheet" href="styles/cart-drawer.css">
 	<link rel="stylesheet" href="styles/lightbox.css">
 	<link rel="stylesheet" href="styles/animations.css">
@@ -770,8 +773,10 @@
 						</h3>
 						<div class="accordion-item__panel" id="shop-faq-panel-1" role="region" aria-labelledby="shop-faq-trigger-1" hidden>
 							<div class="accordion-item__content">
-								<!-- [CONFIRM: lead time] -->
-								<p>Most custom commissions are completed in 3–4 weeks from the date your measurements, leather, and deposit are confirmed. Complex designs, unusual leathers, or international shipping may extend this — we confirm your specific timeline in writing before you commit.</p>
+								<div class="accordion-item__inner">
+									<!-- [CONFIRM: lead time] -->
+									<p>Most custom commissions are completed in 3–4 weeks from the date your measurements, leather, and deposit are confirmed. Complex designs, unusual leathers, or international shipping may extend this — we confirm your specific timeline in writing before you commit.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -789,7 +794,9 @@
 						</h3>
 						<div class="accordion-item__panel" id="shop-faq-panel-2" role="region" aria-labelledby="shop-faq-trigger-2" hidden>
 							<div class="accordion-item__content">
-								<p>Our ready-to-wear range covers sizes 38–46. If you're outside that range, or if you'd prefer a made-to-measure pair, add a note in your enquiry — every ModeInfinity pair can be made to your measurements.</p>
+								<div class="accordion-item__inner">
+									<p>Our ready-to-wear range covers sizes 38–46. If you're outside that range, or if you'd prefer a made-to-measure pair, add a note in your enquiry — every ModeInfinity pair can be made to your measurements.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -807,8 +814,10 @@
 						</h3>
 						<div class="accordion-item__panel" id="shop-faq-panel-3" role="region" aria-labelledby="shop-faq-trigger-3" hidden>
 							<div class="accordion-item__content">
-								<!-- [CONFIRM: international shipping policy and pricing] -->
-								<p>We ship nationwide across Nigeria. International shipping is available on request — please include your destination in your enquiry and we'll confirm timing and cost before you commit.</p>
+								<div class="accordion-item__inner">
+									<!-- [CONFIRM: international shipping policy and pricing] -->
+									<p>We ship nationwide across Nigeria. International shipping is available on request — please include your destination in your enquiry and we'll confirm timing and cost before you commit.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -826,8 +835,10 @@
 						</h3>
 						<div class="accordion-item__panel" id="shop-faq-panel-4" role="region" aria-labelledby="shop-faq-trigger-4" hidden>
 							<div class="accordion-item__content">
-								<!-- [CONFIRM: returns policy] -->
-								<p>Because made-to-order pairs are cut specifically for you, returns are limited to workmanship defects. If a pair doesn't fit as expected, contact us — we assess it case by case.</p>
+								<div class="accordion-item__inner">
+									<!-- [CONFIRM: returns policy] -->
+									<p>Because made-to-order pairs are cut specifically for you, returns are limited to workmanship defects. If a pair doesn't fit as expected, contact us — we assess it case by case.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -845,7 +856,9 @@
 						</h3>
 						<div class="accordion-item__panel" id="shop-faq-panel-5" role="region" aria-labelledby="shop-faq-trigger-5" hidden>
 							<div class="accordion-item__content">
-								<p>Yes. We repair ModeInfinity pairs made in our workshop. Contact us with photos and the approximate date of your commission — we quote repair costs before any work begins.</p>
+								<div class="accordion-item__inner">
+									<p>Yes. We repair ModeInfinity pairs made in our workshop. Contact us with photos and the approximate date of your commission — we quote repair costs before any work begins.</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -863,7 +876,9 @@
 						</h3>
 						<div class="accordion-item__panel" id="shop-faq-panel-6" role="region" aria-labelledby="shop-faq-trigger-6" hidden>
 							<div class="accordion-item__content">
-								<p>Full care guidance is in the sizing and care section above. If you have a specific leather or finish you're unsure about, include a note in your enquiry and we'll advise based on the exact material.</p>
+								<div class="accordion-item__inner">
+									<p>Full care guidance is in the sizing and care section above. If you have a specific leather or finish you're unsure about, include a note in your enquiry and we'll advise based on the exact material.</p>
+								</div>
 							</div>
 						</div>
 					</div>

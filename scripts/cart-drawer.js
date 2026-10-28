@@ -42,6 +42,18 @@
       and restore it on close, so cart and other overlays can
       coexist without fighting over body scroll.
 
+   5. CART PRICE RECONCILIATION. Item prices, names, and image
+      paths are now re-checked against data/shoes.json on init,
+      on drawer open, and immediately before composing the
+      WhatsApp checkout message. Any tampered or stale prices
+      are corrected; items whose base product id is not in the
+      current catalogue are removed; the customer is notified
+      via toast if anything changed. This is defence-in-depth,
+      not a security boundary — a user can still edit their own
+      browser state and message before sending — but it ensures
+      stale prices never reach the business and casual tampering
+      is corrected silently before checkout.
+
    Not changed (verified correct):
    - Focus trap, focus restoration, Escape-to-close
    - WhatsApp message composition and handoff
@@ -63,6 +75,12 @@
    */
   var WHATSAPP_NUMBER = "2348050424000";
 
+  /*
+   * Catalogue source. Prices in this file are authoritative;
+   * anything in localStorage is corrected against it.
+   */
+  var CATALOGUE_URL = "data/shoes.json";
+
   var INIT_MAX_ATTEMPTS = 100;      // 100 × 100ms = 10s
   var INIT_RETRY_DELAY = 100;
 
@@ -71,6 +89,18 @@
   var lastFocus = null;
   var isOpen = false;
   var previousBodyOverflow = null;
+
+  /*
+   * Catalogue cache, populated by loadProductPrices().
+   * Structure:
+   *   {
+   *     "mi-shoe-003": { name: "The Maitama Oxford", price: 245000, image: "..." },
+   *     ...
+   *   }
+   * null means "not yet loaded". A failed load leaves it null
+   * so validateCartPrices() becomes a no-op for that session.
+   */
+  var productPriceMap = null;
 
   /* ----------------------------------------------------------
      Storage
@@ -135,6 +165,149 @@
     } catch (e) {
       return "₦" + String(value);
     }
+  }
+
+  /* ----------------------------------------------------------
+     Catalogue loading + price reconciliation
+     ---------------------------------------------------------- */
+
+  /*
+   * Load data/shoes.json once and populate productPriceMap.
+   * Resolves after the map is set. Rejects on network or parse
+   * failure — the caller should NOT treat rejection as fatal.
+   */
+  function loadProductPrices() {
+    return fetch(CATALOGUE_URL, { headers: { Accept: "application/json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        var products = Array.isArray(data)
+          ? data
+          : (data.products || data.shoes || data.items || []);
+
+        var map = {};
+        products.forEach(function (p) {
+          if (!p || !p.id) return;
+          map[String(p.id)] = {
+            name: String(p.name || "").trim(),
+            price: safePrice(p.price),
+            image: String(p.imageFallback || p.image || "").trim()
+          };
+        });
+        productPriceMap = map;
+      });
+  }
+
+  /*
+   * Reconcile items[] against productPriceMap.
+   *
+   * - If the map is not loaded yet, does nothing and returns false.
+   * - Strips the " (Size NN)" suffix from item ids to find the
+   *   base product, then re-applies the suffix to the expected
+   *   name so size-specific entries are preserved.
+   * - Corrects price, name, and image path to match the catalogue.
+   * - Removes items whose base id is not in the catalogue.
+   * - Fires one toast summarising what changed, if anything.
+   *
+   * Returns true if any mutation was made (which implies a save
+   * and re-render already happened).
+   */
+  function validateCartPrices() {
+    if (!productPriceMap) return false;
+    if (!items.length) return false;
+
+    var corrected = false;
+    var dropped = 0;
+    var validItems = [];
+
+    items.forEach(function (item) {
+      if (!item || typeof item !== "object") {
+        dropped++;
+        return;
+      }
+
+      var rawId = String(item.id || "").trim();
+      if (!rawId) {
+        dropped++;
+        return;
+      }
+
+      /*
+       * Cart entries added from the product modal carry a size
+       * suffix like "mi-shoe-003__size-42". Strip it to find the
+       * base product, then rebuild the expected name with the
+       * same suffix so size-specific rows are preserved.
+       */
+      var sizeMatch = rawId.match(/^(.*?)__size-(.+)$/);
+      var baseId = sizeMatch ? sizeMatch[1] : rawId;
+      var sizeSuffix = sizeMatch ? " (Size " + sizeMatch[2] + ")" : "";
+
+      var product = productPriceMap[baseId];
+
+      if (!product) {
+        // Not in current catalogue — drop it.
+        dropped++;
+        return;
+      }
+
+      // Correct price
+      var canonicalPrice = safePrice(product.price);
+      if (safePrice(item.price) !== canonicalPrice) {
+        item.price = canonicalPrice;
+        corrected = true;
+      }
+
+      // Correct name (preserving any size suffix)
+      if (product.name) {
+        var expectedName = product.name + sizeSuffix;
+        if (String(item.name || "") !== expectedName) {
+          item.name = expectedName;
+          corrected = true;
+        }
+      }
+
+      // Correct image path
+      if (product.image && String(item.image || "") !== product.image) {
+        item.image = product.image;
+        corrected = true;
+      }
+
+      validItems.push(item);
+    });
+
+    if (dropped > 0) {
+      items = validItems;
+      corrected = true;
+    }
+
+    if (corrected) {
+      save();
+      render();
+    }
+
+    if (dropped > 0) {
+      document.dispatchEvent(new CustomEvent("modeinfinity:toast", {
+        detail: {
+          type: "warning",
+          title: dropped === 1 ? "Item removed" : "Items removed",
+          message: dropped + (dropped === 1
+            ? " item is"
+            : " items are") + " no longer available and have been removed from your cart."
+        }
+      }));
+    } else if (corrected) {
+      document.dispatchEvent(new CustomEvent("modeinfinity:toast", {
+        detail: {
+          type: "info",
+          title: "Cart updated",
+          message: "Item details were refreshed from the current catalogue."
+        }
+      }));
+    }
+
+    return corrected;
   }
 
   /* ----------------------------------------------------------
@@ -216,6 +389,19 @@
     document.querySelectorAll("[data-mi-cart-open]").forEach(function (btn) {
       btn.setAttribute("aria-expanded", "true");
     });
+
+    /*
+     * Reconcile prices with the catalogue. If the catalogue
+     * never loaded (fetch failed at init), try again now.
+     * Non-blocking — the drawer animates open regardless.
+     */
+    if (!productPriceMap) {
+      loadProductPrices()
+        .then(function () { validateCartPrices(); })
+        .catch(function () {});
+    } else {
+      validateCartPrices();
+    }
 
     // Save the previous overflow so we can restore it verbatim on
     // close — avoids clobbering other overlays that may have
@@ -339,6 +525,25 @@
           type: "info",
           title: "Cart is empty",
           message: "Add at least one pair before checking out."
+        }
+      }));
+      return;
+    }
+
+    /*
+     * Final synchronous reconciliation before composing the
+     * message. If the catalogue was loaded, any tampered or
+     * stale prices are corrected here so the WhatsApp message
+     * carries authoritative values.
+     */
+    validateCartPrices();
+
+    if (!items.length) {
+      document.dispatchEvent(new CustomEvent("modeinfinity:toast", {
+        detail: {
+          type: "warning",
+          title: "Cart is empty",
+          message: "Your cart items are no longer available."
         }
       }));
       return;
@@ -486,6 +691,19 @@
     load();
     render();
     bind();
+
+    /*
+     * Fetch the catalogue and reconcile prices.
+     * Non-blocking — cart renders immediately with whatever
+     * localStorage had, then updates once prices are loaded.
+     */
+    loadProductPrices()
+      .then(function () {
+        validateCartPrices();
+      })
+      .catch(function (error) {
+        console.warn("[ModeInfinity] Cart price validation skipped:", error);
+      });
 
     window.MiCart = {
       open: open,

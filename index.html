@@ -7,17 +7,19 @@
 	<meta name="format-detection" content="telephone=no">
 
 	<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
-	<meta http-equiv="Content-Security-Policy" content="
-		default-src 'self';
-		script-src 'self';
-		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-		font-src 'self' https://fonts.gstatic.com;
-		img-src 'self' data: https:;
-		connect-src 'self' https://formspree.io;
-		form-action https://formspree.io;
-		base-uri 'self';
-		object-src 'none';
-	">
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    script-src-attr 'none';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
 
@@ -66,13 +68,7 @@
 	-->
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
-<meta name="color-scheme" content="light dark">
-	<!--
-		H1 FIX: single color-scheme declaration. Previously two conflicting
-		tags ("light" then "light dark"). Browsers used the last, but the
-		duplication was fragile and confusing. Aligns with :root's
-		color-scheme: light dark in variables.css.
-	-->
+
 	<meta name="color-scheme" content="light dark">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -93,7 +89,7 @@
 	-->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<!-- ================= STYLESHEETS ================= -->
 	<link rel="stylesheet" href="styles/variables.css">
 	<link rel="stylesheet" href="styles/global.css">
@@ -727,7 +723,7 @@
 				<p class="home-collection__footer-label"> Made to order </p>
 				<p class="home-collection__footer-note"> Custom sizing and bespoke colourways available on enquiry. </p>
 			</div>
-			<a class="btn btn-primary home-collection__footer-action" href="contact.html#custom-orders" aria-label="Request a custom pair from ModeInfinity">
+			<a class="btn btn-primary home-collection__footer-action" href="contact.html#contact-form" aria-label="Request a custom pair from ModeInfinity">
 				<span>Request a custom pair</span>
 				<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
 					<path d="M5 12h14"></path>
@@ -1292,7 +1288,7 @@
 				</div>
 				<!-- Primary action -->
 				<div class="home-academy-cta__actions">
-					<a class="btn btn--hero btn--hero-primary home-academy-cta__button" href="academy.html#academy-programs">
+					<a class="btn btn--hero btn--hero-primary home-academy-cta__button" href="academy.html#pathways">
 						<span class="btn-text btn-text-two"> Explore Academy Programs </span>
 						<svg class="home-academy-cta__button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
 							<path d="M5 12h14" />
@@ -1525,8 +1521,8 @@
 						</div>
 						<ul class="site-footer__links">
 							<li><a href="academy.html"> Learn Shoemaking </a></li>
-							<li><a href="academy.html#courses"> Our Courses </a></li>
-							<li><a href="academy.html#process"> Training Process </a></li>
+							<li><a href="academy.html#pathways"> Our Courses </a></li>
+							<li><a href="academy.html#atelier"> Training Process </a></li>
 							<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
 						</ul>
 					</nav>

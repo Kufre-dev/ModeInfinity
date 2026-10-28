@@ -24,8 +24,9 @@
 			"role": "Luxury Shoemaker & Designer",
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
-			"programme": "Advanced Craftsmanship",
-			"quote": "The advanced techniques and business mentorship at ModeInfinity are what I use every day. I take bespoke orders nationwide, mostly through social media and referrals from past clients.",
+						"programme": "Enterprise & Brand",
+
+			"quote": "Enterprise & Brand gave me the business side of shoemaking: pricing, marketing, dealing with clients. What used to be a passion is now how I pay my bills.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_2",
 			"imageAlt": "Portrait of Poki Lengshimwa"
@@ -39,7 +40,7 @@
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
 			"programme": "Enterprise & Brand",
-			"quote": "Enterprise & Brand gave me the business side of shoemaking: pricing, marketing, dealing with clients. What used to be a passion is now how I pay my bills.",
+			"quote": "Enterprise & Brand gave me the framework to run a footwear business, not just a bench. Pricing, positioning, and planning for export are the areas I lean on most.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_3",
 			"imageAlt": "Portrait of Audu Solomon"
@@ -53,7 +54,7 @@
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
 			"programme": "Foundation Craft",
-			"quote": "Foundation Craft gave me the confidence to make shoes properly. We covered pattern drafting, leather selection, and hand stitching; everything I needed to build a pair from scratch.",
+			"quote": "I arrived with no workshop experience at all. Foundation Craft taught me how to cut cleanly, stitch evenly, and finish a pair without shortcuts. Those habits stuck with me.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_4",
 			"imageAlt": "Portrait of Jaga Nsan"
@@ -67,7 +68,7 @@
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
 			"programme": "Advanced Craftsmanship",
-			"quote": "Exceptional mentorship and world-class facilities. I learned more in six weeks than in years of self-study. The academy's focus on sustainable leather practices has helped me create a unique brand identity.",
+			"quote": "The mentorship was specific and practical. I learned more in six weeks than in years of self-study, and the focus on sustainable leather shaped the brand I now run.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_5",
 			"imageAlt": "Portrait of Ocha Okrie"
@@ -81,7 +82,7 @@
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
 			"programme": "Enterprise & Brand",
-			"quote": "From pattern making to business setup, the academy covers everything. The entrepreneurship module helped me secure funding and establish my international brand.",
+			"quote": "From pattern making to business setup, the academy covered what I needed. Enterprise & Brand taught me how to price my work, handle clients, and run my own workshop.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_6",
 			"imageAlt": "Portrait of James Happiness"
@@ -108,8 +109,8 @@
 			"role": "Luxury Shoemaker & Designer",
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
-			"programme": "Advanced Craftsmanship",
-			"quote": "The bar at ModeInfinity is high, and that is exactly what makes the training work. I left with technique, judgment, and the confidence to build at the level I wanted.",
+			"programme": "Foundation Craft",
+			"quote": "Foundation Craft gave me the confidence to make shoes properly. We covered pattern drafting, leather selection, and hand stitching; everything I needed to build a pair from scratch.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_8",
 			"imageAlt": "Portrait of Gideon Philip"
@@ -122,8 +123,8 @@
 			"role": "Brand Owner & Export Specialist",
 			"location": "Abuja, Nigeria",
 			"classYear": "Class of 2025",
-			"programme": "Enterprise & Brand",
-			"quote": "ModeInfinity taught me how to make footwear that can compete internationally. The academy's standard raised everything about the way I work.",
+			"programme": "Advanced Craftsmanship",
+			"quote": "The advanced techniques and business mentorship at ModeInfinity are what I use every day. The standard I learned here is the standard I build to now.",
 			"rating": 5,
 			"image": "assets/images/testimonial/testimonial_9",
 			"imageAlt": "Portrait of James Uzor"

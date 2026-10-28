@@ -6,17 +6,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 	<meta name="format-detection" content="telephone=no">
 		<!-- ================= SECURITY HEADERS (Meta Fallback) ================= -->
-	<meta http-equiv="Content-Security-Policy" content="
-		default-src 'self';
-		script-src 'self';
-		style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-		font-src 'self' https://fonts.gstatic.com;
-		img-src 'self' data: https:;
-		connect-src 'self' https://formspree.io;
-		form-action https://formspree.io;
-		base-uri 'self';
-		object-src 'none';
-	">
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    script-src-attr 'none';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data: https:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
 	<!-- ==================================================================== -->
@@ -68,7 +70,7 @@
 	<!-- ================= FONT HINTS + FONTS ================= -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<!-- ================= STYLESHEETS ================= -->
 	<link rel="stylesheet" href="styles/variables.css">
 	<link rel="stylesheet" href="styles/global.css">
@@ -386,13 +388,12 @@
 			<!-- Content Column -->
 			<div class="academy-hero__content">
 				<p class="eyebrow academy-hero__eyebrow">ModeInfinity Academy</p>
-				
-				<!-- Changed from h1 to h2 -->
+
 				<h1 id="academy-hero-title" class="academy-hero__title">
 					Don't just wear the craft. <br>
 					<em>Learn to make it.</em>
 				</h1>
-				
+
 				<p class="academy-hero__description">
 					ModeInfinity Academy is not a lecture hall. It is a working atelier. Here, you learn shoemaking the way it has always been learned — at the bench, with real leather, under the correction of a master.
 				</p>
@@ -666,12 +667,12 @@
 					<picture>
 						<source srcset="assets/images/student%20showcase/showcase3.avif" type="image/avif">
 						<source srcset="assets/images/student%20showcase/showcase3.webp" type="image/webp">
-						<img src="assets/images/student%20showcase/showcase3.jpg" alt="Handcrafted shoes made by Dan Reynold Ogah" loading="lazy" decoding="async">
+						<img src="assets/images/student%20showcase/showcase3.jpg" alt="Handcrafted shoes made by James Happiness" loading="lazy" decoding="async">
 					</picture>
 				</figure>
 				<div class="academy-showcase__content">
 					<blockquote class="academy-showcase__quote">
-						<p>"The Academy transformed me from a dreamer into a maker. Today I run my own workshop, take bespoke commissions, and build every pair properly, as I was taught."</p>
+						<p>"From pattern making to business setup, the academy covered what I needed. Enterprise & Brand taught me how to price my work, handle clients, and run my own workshop."</p>
 					</blockquote>
 					<footer class="academy-showcase__author">
 						<div class="academy-showcase__avatar">
@@ -683,7 +684,7 @@
 						</div>
 						<div class="academy-showcase__author-info">
 							<strong class="academy-showcase__name">James Happiness</strong>
-							<span class="academy-showcase__role">Master Craftsman Program</span>
+							<span class="academy-showcase__role">Advanced Craftsmanship</span>
 						</div>
 					</footer>
 				</div>
@@ -700,7 +701,7 @@
 				</figure>
 				<div class="academy-showcase__content">
 					<blockquote class="academy-showcase__quote">
-						<p>"The advanced techniques and business mentorship at ModeInfinity are what I use every day. I take bespoke orders nationwide, mostly through social media and referrals from past clients."</p>
+						<p>"The advanced techniques and business mentorship at ModeInfinity are what I use every day. The standard I learned here is the standard I build to now."</p>
 					</blockquote>
 					<footer class="academy-showcase__author">
 						<div class="academy-showcase__avatar">
@@ -712,7 +713,7 @@
 						</div>
 						<div class="academy-showcase__author-info">
 							<strong class="academy-showcase__name">James Uzor</strong>
-							<span class="academy-showcase__role">Advanced Artisan Program</span>
+							<span class="academy-showcase__role">Advanced Craftsmanship</span>
 						</div>
 					</footer>
 				</div>
@@ -724,12 +725,12 @@
 					<picture>
 						<source srcset="assets/images/student%20showcase/showcase5.avif" type="image/avif">
 						<source srcset="assets/images/student%20showcase/showcase5.webp" type="image/webp">
-						<img src="assets/images/student%20showcase/showcase5.jpg" alt="Handcrafted shoes made by Audu Solomon" loading="lazy" decoding="async">
+						<img src="assets/images/student%20showcase/showcase5.jpg" alt="Handcrafted shoes made by Poki Lengshimwa" loading="lazy" decoding="async">
 					</picture>
 				</figure>
 				<div class="academy-showcase__content">
 					<blockquote class="academy-showcase__quote">
-						<p>"The entrepreneurial program gave me the business side of shoemaking: pricing, marketing, dealing with clients. What used to be a passion is now how I pay my bills."</p>
+						<p>"Enterprise & Brand gave me the business side of shoemaking: pricing, marketing, dealing with clients. What used to be a passion is now how I pay my bills."</p>
 					</blockquote>
 					<footer class="academy-showcase__author">
 						<div class="academy-showcase__avatar">
@@ -741,7 +742,7 @@
 						</div>
 						<div class="academy-showcase__author-info">
 							<strong class="academy-showcase__name">Poki Lengshimwa</strong>
-							<span class="academy-showcase__role">Entrepreneurship Program</span>
+							<span class="academy-showcase__role">Enterprise & Brand</span>
 						</div>
 					</footer>
 				</div>
@@ -753,12 +754,12 @@
 					<picture>
 						<source srcset="assets/images/student%20showcase/showcase7.avif" type="image/avif">
 						<source srcset="assets/images/student%20showcase/showcase7.webp" type="image/webp">
-						<img src="assets/images/student%20showcase/showcase7.jpg" alt="Handcrafted shoes made by Jaga Nsan" loading="lazy" decoding="async">
+						<img src="assets/images/student%20showcase/showcase7.jpg" alt="Handcrafted shoes made by Gideon Philip" loading="lazy" decoding="async">
 					</picture>
 				</figure>
 				<div class="academy-showcase__content">
 					<blockquote class="academy-showcase__quote">
-						<p>"The program gave me the confidence to start making shoes properly. We covered pattern drafting, leather selection, and hand stitching, everything I needed to build a pair from scratch."</p>
+						<p>"Foundation Craft gave me the confidence to make shoes properly. We covered pattern drafting, leather selection, and hand stitching; everything I needed to build a pair from scratch."</p>
 					</blockquote>
 					<footer class="academy-showcase__author">
 						<div class="academy-showcase__avatar">
@@ -770,7 +771,7 @@
 						</div>
 						<div class="academy-showcase__author-info">
 							<strong class="academy-showcase__name">Gideon Philip</strong>
-							<span class="academy-showcase__role">Foundation Mastery Program</span>
+							<span class="academy-showcase__role">Foundation Craft</span>
 						</div>
 					</footer>
 				</div>
@@ -938,7 +939,9 @@
 				</h3>
 				<div class="accordion-item__panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1" hidden>
 					<div class="accordion-item__content">
-						<p>No. The Foundation Craft program is designed specifically for beginners with little to no workshop experience. We start from the absolute basics.</p>
+						<div class="accordion-item__inner">
+							<p>No. The Foundation Craft program is designed specifically for beginners with little to no workshop experience. We start from the absolute basics.</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -957,7 +960,9 @@
 				</h3>
 				<div class="accordion-item__panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2" hidden>
 					<div class="accordion-item__content">
-						<p>Yes. We provide professional-grade tools, industrial machines, and premium leather for all practical work during the program. You do not need to purchase anything before you arrive.</p>
+						<div class="accordion-item__inner">
+							<p>Yes. We provide professional-grade tools, industrial machines, and premium leather for all practical work during the program. You do not need to purchase anything before you arrive.</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -976,7 +981,9 @@
 				</h3>
 				<div class="accordion-item__panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3" hidden>
 					<div class="accordion-item__content">
-						<p>Fees vary depending on the pathway and duration you choose. We offer flexible payment plans to help accommodate different budgets. Please <a href="contact.html#contact-form" class="text-link">contact admissions</a> for a full breakdown of fees for your chosen program.</p>
+						<div class="accordion-item__inner">
+							<p>Fees vary depending on the pathway and duration you choose. We offer flexible payment plans to help accommodate different budgets. Please <a href="contact.html#contact-form" class="text-link">contact admissions</a> for a full breakdown of fees for your chosen program.</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -995,7 +1002,9 @@
 				</h3>
 				<div class="accordion-item__panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4" hidden>
 					<div class="accordion-item__content">
-						<p>Yes. Upon successful completion of the program and assessment of your final Gallery, you will receive a ModeInfinity Certificate of Completion.</p>
+						<div class="accordion-item__inner">
+							<p>Yes. Upon successful completion of the program and assessment of your final Gallery, you will receive a ModeInfinity Certificate of Completion.</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1014,11 +1023,13 @@
 				</h3>
 				<div class="accordion-item__panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5" hidden>
 					<div class="accordion-item__content">
-						<p>We limit our cohorts to a maximum of 8 students. This ensures that every student gets individual attention at the bench and direct correction from the instructor.</p>
+						<div class="accordion-item__inner">
+							<p>We limit our cohorts to a maximum of 8 students. This ensures that every student gets individual attention at the bench and direct correction from the instructor.</p>
+						</div>
 					</div>
 				</div>
 			</div>
-			<!-- FAQ 6 (NEW) -->
+			<!-- FAQ 6 -->
 			<div class="accordion-item">
 				<h3 class="accordion-item__heading">
 					<button class="accordion-item__trigger" type="button" id="faq-trigger-6" aria-expanded="false" aria-controls="faq-panel-6">
@@ -1033,7 +1044,9 @@
 				</h3>
 				<div class="accordion-item__panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6" hidden>
 					<div class="accordion-item__content">
-						<p>All workshops take place at the ModeInfinity Abuja workshop (Sentosa Parks &amp; Garden, Plot 2028, Legislative Quarters Apo, Abuja). For directions and tour bookings, please <a href="contact.html#contact-form" class="text-link">contact our admissions team</a>.</p>
+						<div class="accordion-item__inner">
+							<p>All workshops take place at the ModeInfinity Abuja workshop (Sentosa Parks &amp; Garden, Plot 2028, Legislative Quarters Apo, Abuja). For directions and tour bookings, please <a href="contact.html#contact-form" class="text-link">contact our admissions team</a>.</p>
+						</div>
 					</div>
 				</div>
 			</div>

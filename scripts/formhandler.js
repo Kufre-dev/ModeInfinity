@@ -10,6 +10,7 @@
    - Accessible error handling
    - Submit-state management
    - Duplicate-submit prevention
+   - Anti-spam time gate
    - Success / error notifications
    - Backend-ready request handling
    - Safe form data collection
@@ -106,6 +107,14 @@ const CONFIG = Object.freeze({
 	requestTimeout: 15000,
 
 	/*
+	 * Anti-spam: a form submitted faster than this many
+	 * milliseconds after page load is almost certainly
+	 * automated. Legitimate users cannot read the form,
+	 * type their details, and submit in under 3 seconds.
+	 */
+	minimumSubmitDelayMs: 3000,
+
+	/*
 	 * Default success message.
 	 */
 	successTitle: "Message sent",
@@ -116,6 +125,18 @@ const CONFIG = Object.freeze({
 
 	errorMessage: "We could not submit your message. Please try again."
 });
+
+
+/*
+ * Form fields managed internally that must not be sent
+ * to the backend. The `started` field is a hidden anti-spam
+ * marker; its value is tracked on `form.dataset.gateStarted`
+ * and is not meaningful to Formspree.
+ *
+ * `_gotcha` (honeypot) is intentionally NOT listed here —
+ * Formspree inspects it to reject spam submissions.
+ */
+const INTERNAL_FORM_FIELDS = new Set(["started"]);
 
 
 /* ============================================================
@@ -478,9 +499,9 @@ function buildValidationRules(form) {
 		).filter(
 			(field) =>
 			field instanceof HTMLElement &&
-			field instanceof HTMLInputElement ||
-			field instanceof HTMLSelectElement ||
-			field instanceof HTMLTextAreaElement
+			(field instanceof HTMLInputElement ||
+				field instanceof HTMLSelectElement ||
+				field instanceof HTMLTextAreaElement)
 		);
 
 	fields.forEach(
@@ -529,6 +550,7 @@ function buildValidationRules(form) {
  *
  * Checkbox values are represented as booleans.
  * Multiple fields with the same name are represented as arrays.
+ * Internal fields (see INTERNAL_FORM_FIELDS) are excluded.
  *
  * @param {HTMLFormElement} form
  * @returns {Object}
@@ -551,6 +573,14 @@ export function collectFormData(form) {
 			String(key).trim();
 
 		if (!cleanKey) {
+			continue;
+		}
+
+		/*
+		 * Drop internal bookkeeping fields so they do not
+		 * pollute the Formspree payload.
+		 */
+		if (INTERNAL_FORM_FIELDS.has(cleanKey)) {
 			continue;
 		}
 
@@ -1296,6 +1326,15 @@ function handleSuccess(
 		}
 	);
 
+	/*
+	 * Re-arm the anti-spam time gate so a second
+	 * submission from the same page load is subject
+	 * to the same 3-second minimum.
+	 */
+	if (form.dataset.gateStarted) {
+		form.dataset.gateStarted = String(Date.now());
+	}
+
 	const detail = {
 		message,
 		response,
@@ -1546,7 +1585,84 @@ async function handleSubmit(
 
 
 /* ============================================================
-   23. LIVE VALIDATION
+   23. ANTI-SPAM TIME GATE
+   ============================================================
+   Automated submissions reach the server within milliseconds
+   of page load. Legitimate users need at least a few seconds
+   to read the form and type their details. This gate blocks
+   any submission fired within CONFIG.minimumSubmitDelayMs of
+   either page load or the previous successful submission.
+
+   How it works:
+   - On init, we store the current timestamp on the form as
+     `form.dataset.gateStarted`. This survives form.reset()
+     because it is a form attribute, not a control value.
+   - A capture-phase submit listener fires before any other
+     submit handler. If less than the minimum has elapsed,
+     the event is cancelled with preventDefault() and
+     stopImmediatePropagation(), so no other handler sees it.
+   - On success, handleSuccess() re-arms the gate with a
+     fresh timestamp so the next submission is also gated.
+
+   This is defence-in-depth, not a security boundary. A
+   determined attacker can still POST directly to Formspree
+   or tamper with form.dataset from DevTools. The honeypot
+   and Formspree's own spam controls handle the rest.
+   ============================================================ */
+
+/**
+ * Initialise the anti-spam time gate on every form that
+ * opts in via a `[data-started]` marker inside the form.
+ */
+function initFormTimeGate() {
+	const MINIMUM_MS = CONFIG.minimumSubmitDelayMs;
+
+	$$(CONFIG.formSelector).forEach((form) => {
+		if (!(form instanceof HTMLFormElement)) {
+			return;
+		}
+
+		/*
+		 * Opt-in: only forms that already carry a
+		 * [data-started] marker receive the gate. All
+		 * current forms do; future forms can opt out by
+		 * omitting the marker.
+		 */
+		if (!form.querySelector("[data-started]")) {
+			return;
+		}
+
+		/*
+		 * Store the arm time on the form itself so
+		 * form.reset() cannot wipe it.
+		 */
+		form.dataset.gateStarted = String(Date.now());
+
+		form.addEventListener(
+			"submit",
+			(event) => {
+				const started = Number(form.dataset.gateStarted);
+				const elapsed = Date.now() - started;
+
+				if (Number.isFinite(elapsed) && elapsed < MINIMUM_MS) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+
+					notify({
+						type: "error",
+						title: "Submission too fast",
+						message: "Please take a moment to review the form and try again."
+					});
+				}
+			},
+			{ capture: true }
+		);
+	});
+}
+
+
+/* ============================================================
+   24. LIVE VALIDATION
    ============================================================ */
 
 /**
@@ -1617,7 +1733,7 @@ function handleFieldBlur(event) {
 
 
 /* ============================================================
-   24. CLEAR VALIDATION ERROR ON INPUT
+   25. CLEAR VALIDATION ERROR ON INPUT
    ============================================================ */
 
 /**
@@ -1651,7 +1767,7 @@ function handleFieldInput(event) {
 
 
 /* ============================================================
-   25. FORM EVENT BINDING
+   26. FORM EVENT BINDING
    ============================================================ */
 
 /**
@@ -1707,7 +1823,7 @@ function bindForm(form) {
 
 
 /* ============================================================
-   26. INITIALIZATION
+   27. INITIALIZATION
    ============================================================ */
 
 /**
@@ -1729,12 +1845,21 @@ export function initFormHandler() {
 		bindForm
 	);
 
+	/*
+	 * Arm the anti-spam time gate. This runs after
+	 * bindForm() so the submit listener order is:
+	 *   1. gate (capture phase)
+	 *   2. handleSubmit (bubble phase)
+	 * If the gate blocks, handleSubmit never runs.
+	 */
+	initFormTimeGate();
+
 	state.initialized = true;
 }
 
 
 /* ============================================================
-   27. PUBLIC API
+   28. PUBLIC API
    ============================================================ */
 
 export const formHandler =
@@ -1749,7 +1874,7 @@ export default formHandler;
 
 
 /* ============================================================
-   28. AUTOMATIC INITIALIZATION
+   29. AUTOMATIC INITIALIZATION
    ============================================================ */
 
 // onDOMReady(

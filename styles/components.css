@@ -11357,6 +11357,10 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 }
 
 .academy-faq__grid .accordion-item__content {
+	padding: 0;
+}
+
+.academy-faq__grid .accordion-item__inner {
 	padding: 0 var(--space-5) var(--space-5);
 }
 
@@ -13002,6 +13006,10 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 }
 
 .shop-faq__grid .accordion-item__content {
+	padding: 0;
+}
+
+.shop-faq__grid .accordion-item__inner {
 	padding: 0 var(--space-5) var(--space-5);
 }
 
@@ -17600,6 +17608,16 @@ select.error:focus {
 	line-height: var(--leading-relaxed);
 }
 .accordion-item__content {
+	/* No padding here — this is the direct grid item that must collapse
+	  to zero height when the panel track is 0fr. Padding on this element
+	 would keep a 24px gap visible under closed accordions.
+	 Padding lives on .accordion-item__inner instead. */
+	padding: 0;
+}
+
+.accordion-item__inner {
+	/* The padded content sits one level below the grid item so it can be
+	 * clipped by .accordion-item__content's overflow:hidden when collapsed. */
 	padding-block: 0 var(--space-6);
 }
 .accordion-item__content p {
