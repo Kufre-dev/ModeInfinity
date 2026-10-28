@@ -20,7 +20,45 @@
  * - strong focus visibility
  * - accessible states
  * - no decorative markup required
+ *
+ * PATCH ROUND — TOKEN / THEME FIXES
+ * ---------------------------------
+ * B1. font-weight: --weight-semibold (undefined) → --type-button-weight.
+ *     All buttons had been rendering at 400 (inherited body weight)
+ *     because the token did not exist and CSS silently fell back.
+ *
+ * B2. Restored font-size via --type-button-size (was commented out).
+ *     Buttons now use --text-sm as the design system intends.
+ *
+ * B3. .btn-secondary rewritten to use semantic tokens. Previously
+ *     hardcoded as "white outline for dark backgrounds" — invisible on
+ *     every light-mode section. Now adapts:
+ *       light surface       → dark outline / dark text
+ *       dark surface        → white outline / white text
+ *       inside .section--dark (either theme) → white outline / white text
+ *     The .section--dark token reset (layout.css) drives this
+ *     automatically; no per-usage modifier required.
+ *
+ * B4. .btn-dark rewritten to use semantic tokens. Previously
+ *     hardcoded as "solid black button" — invisible on dark-mode
+ *     pages. Now becomes:
+ *       light surface       → near-black button / white text
+ *       dark surface        → white button / near-black text
+ *       inside .section--dark (either theme) → white button / near-black text
+ *     Visual parity in light mode is preserved.
+ *
+ * B5. .btn-ghost:hover → --color-interactive (was gold-600, failed
+ *     AA on white at ~3.5:1). Now gold-700 / gold-300 — passes AA.
+ *
+ * B6. .btn-ghost shadow: corrected rgb(197 155 75 / 18%) to
+ *     rgb(197 154 24 / 0.18) — matching --color-gold-500. Apparent
+ *     typo in the previous value (B channel off by 51).
+ *
+ * B10. Added letter-spacing via --type-button-tracking.
+ *      VISIBLE CHANGE: button label tracking widens 0 → 0.04em
+ *      (imperceptible on short labels, noticeable on long ones).
  */
+
 /* ---------------------------------------------------------
    BASE
    --------------------------------------------------------- */
@@ -33,10 +71,17 @@
 	padding-inline: var(--button-padding-inline-md);
 	border: var(--border-width-thin) solid transparent;
 	border-radius: var(--radius-sm);
-	font-family: var(--font-sans);
-	/* font-size: var(--text-sm); */
-	font-weight: var(--weight-semibold);
-	line-height: 1;
+	/* B1 + B2 + B10: use the full button role — font-family, size,
+	 * weight, line-height, tracking. Previously:
+	 *   - --weight-semibold was undefined (weight fell back to 400)
+	 *   - font-size was commented out (buttons inherited body size)
+	 *   - no letter-spacing applied
+	 */
+	font-family: var(--type-button-family);
+	font-size: var(--type-button-size);
+	font-weight: var(--type-button-weight);
+	line-height: var(--type-button-leading);
+	letter-spacing: var(--type-button-tracking);
 	text-align: center;
 	text-decoration: none;
 	white-space: nowrap;
@@ -49,18 +94,21 @@
 		box-shadow var(--transition-fast),
 		transform var(--transition-fast);
 }
+
 /* ---------------------------------------------------------
    LINK RESET
    --------------------------------------------------------- */
 a.btn {
 	text-decoration: none;
 }
+
 /* ---------------------------------------------------------
    HOVER RESET
    --------------------------------------------------------- */
 .btn:hover {
 	text-decoration: none;
 }
+
 /* ---------------------------------------------------------
    FOCUS
    --------------------------------------------------------- */
@@ -69,12 +117,14 @@ a.btn {
 		var(--focus-ring-width) solid var(--focus-ring-color);
 	outline-offset: var(--focus-ring-offset);
 }
+
 /* ---------------------------------------------------------
    ACTIVE
    --------------------------------------------------------- */
 .btn:active {
 	transform: translateY(2px);
 }
+
 /* ---------------------------------------------------------
    DISABLED
    --------------------------------------------------------- */
@@ -86,6 +136,7 @@ a.btn {
 	transform: none;
 	box-shadow: none;
 }
+
 /* =========================================================
    PRIMARY
    ========================================================= */
@@ -109,52 +160,73 @@ a.btn {
 	box-shadow:
 		0 1px 0 var(--color-gold-700);
 }
+
 /* =========================================================
    SECONDARY
+   =========================================================
+   B3: Theme-adaptive outline button.
+
+     Light surface      : dark text + soft gray border
+     Dark surface       : light text + soft white border
+     .section--dark     : light text + soft white border (any theme)
+
+   Previously hardcoded to white-on-transparent, which was invisible
+   on every light-mode section outside a dark hero.
    ========================================================= */
 .btn-secondary {
-	color: var(--color-white);
+	color: var(--color-text);
 	background: transparent;
-	border-color: rgb(255 255 255 / 60%);
+	border-color: var(--color-border-strong);
 	box-shadow:
-		0 3px 0 rgb(255 255 255 / 18%);
+		0 3px 0 var(--color-border);
 }
 .btn-secondary:hover {
-	color: var(--color-black);
-	background: var(--color-white);
-	border-color: var(--color-white);
+	color: var(--color-background);
+	background: var(--color-text-strong);
+	border-color: var(--color-text-strong);
 	transform: translateY(-2px);
 	box-shadow:
-		0 5px 0 rgb(255 255 255 / 25%);
+		0 5px 0 var(--color-border-strong);
 }
 .btn-secondary:active {
 	transform: translateY(1px);
 	box-shadow:
-		0 1px 0 rgb(255 255 255 / 18%);
+		0 1px 0 var(--color-border);
 }
+
 /* =========================================================
    DARK
+   =========================================================
+   B4: Theme-adaptive solid button.
+
+     Light surface      : near-black button, white text (current look)
+     Dark surface       : white button, near-black text (fixes invisible)
+     .section--dark     : white button, near-black text (any theme)
+
+   Previously hardcoded black background, which was invisible on
+   any dark-mode page.
    ========================================================= */
 .btn-dark {
-	color: var(--color-white);
-	background: var(--color-black);
-	border-color: var(--color-black);
+	color: var(--color-background);
+	background: var(--color-text-strong);
+	border-color: var(--color-text-strong);
 	box-shadow:
-		0 3px 0 rgb(0 0 0 / 35%);
+		0 3px 0 var(--color-border-strong);
 }
 .btn-dark:hover {
-	color: var(--color-black);
-	background: var(--color-white);
-	border-color: var(--color-white);
+	color: var(--color-text-strong);
+	background: var(--color-background);
+	border-color: var(--color-border-strong);
 	transform: translateY(-2px);
 	box-shadow:
-		0 5px 0 rgb(0 0 0 / 25%);
+		0 5px 0 var(--color-border-strong);
 }
 .btn-dark:active {
 	transform: translateY(1px);
 	box-shadow:
-		0 1px 0 rgb(0 0 0 / 35%);
+		0 1px 0 var(--color-border-strong);
 }
+
 /* =========================================================
    GHOST
    ========================================================= */
@@ -165,17 +237,20 @@ a.btn {
 	box-shadow: none;
 }
 .btn-ghost:hover {
-	color: var(--color-gold-600);
+	/* B5: was --color-gold-600 (fails AA on white). */
+	color: var(--color-interactive);
 	background: transparent;
-	border-color: var(--color-gold-500);
+	border-color: var(--color-interactive);
 	transform: translateY(-1px);
+	/* B6: shadow now matches --color-gold-500 rgb (was a typo). */
 	box-shadow:
-		0 3px 0 rgb(197 155 75 / 18%);
+		0 3px 0 rgb(197 154 24 / 0.18);
 }
 .btn-ghost:active {
 	transform: translateY(1px);
 	box-shadow: none;
 }
+
 /* =========================================================
    LARGE
    ========================================================= */
@@ -183,6 +258,7 @@ a.btn {
 	min-height: var(--control-height-lg);
 	padding-inline: var(--button-padding-inline-lg);
 }
+
 /* =========================================================
    BLOCK
    ========================================================= */
@@ -190,6 +266,7 @@ a.btn {
 	display: flex;
 	width: 100%;
 }
+
 /* =========================================================
    REDUCED MOTION
    ========================================================= */
@@ -213,7 +290,43 @@ a.btn {
 
 /* =====================================================================
    MODEINFINITY — SITE HEADER / NAVIGATION
+
+   PATCH ROUND — TOKEN / THEME FIXES
+   ---------------------------------
+   HD1. --focus-width → --focus-ring-width; --focus-offset →
+        --focus-ring-offset. Both tokens were previously undefined,
+        which silently killed the focus ring on every interactive
+        element in the header (6 selectors × 2 tokens = 12 invalid
+        declarations). Accessibility-critical.
+
+   HD2. Added local token scope to .mobile-navigation__drawer so
+        components nested inside it (notably .btn-secondary in the
+        drawer footer) resolve to on-dark values. Previously in
+        light mode the "View Shopping Cart" button rendered near-black
+        text on a dark drawer — invisible. Matches .section--dark
+        pattern from layout.css.
+
+   HD3. Removed `color: blue` debug leftover on .site-brand__logo.
+        Kept `color: #C59B4B` with an explanatory comment (no-op on
+        <img>, but preserved in case the logo becomes an inline SVG).
+
+   HD5. .site-header.is-scrolled background: rgb(3 3 3 / 1) →
+        var(--color-black-deep) (#080808). Same rendered color,
+        theme-aware expression. .site-header--solid similarly
+        tokenized.
+
+   HD6. Transition timings use --duration-* and --ease-standard
+        tokens where equivalents exist. Behavior preserved.
+
+   HD7. Font weights on nav links: 500/600 → --font-weight-medium /
+        --font-weight-semibold. Same values, semantic names.
+
+   HD10. Skip link remains inside <header> — works today because
+         position: fixed escapes the header's fixed containing block.
+         If the header later gains a transform/filter for scroll
+         effects, MOVE THE SKIP LINK ABOVE <header> first.
    ================================================================== */
+
 .site-header {
 	position: fixed;
 	inset: 0 0 auto;
@@ -224,30 +337,56 @@ a.btn {
 	border-bottom: 1px solid transparent;
 	overflow: visible;
 	transition:
-		background-color 280ms ease,
-		border-color 280ms ease,
-		box-shadow 280ms ease,
-		color 280ms ease;
+		background-color var(--duration-slow) var(--ease-standard),
+		border-color var(--duration-slow) var(--ease-standard),
+		box-shadow var(--duration-slow) var(--ease-standard),
+		color var(--duration-slow) var(--ease-standard);
 }
+
 .site-header.is-scrolled {
 	color: var(--color-white);
-	background-color: rgb(3 3 3 / 1);
+	/* HD5: was rgb(3 3 3 / 1) — same rendered color, semantic name. */
+	background-color: var(--color-black-deep);
 	border-bottom-color: rgb(255 255 255 / 0.08);
 	box-shadow:
 		0 8px 30px rgb(0 0 0 / 0.16);
 }
+
+
+/* ==========================================================================
+   SITE HEADER — LIGHT-HERO MODIFIER
+   ==========================================================================
+   For pages whose hero has a light background in light theme (currently
+   only .academy-hero). Uses --color-text so text stays readable in both
+   themes at the unscrolled state.
+
+   The .site-header.is-scrolled rule keeps priority (higher specificity
+   + source order), so once JS adds .is-scrolled, the header correctly
+   reverts to white text on its dark background.
+   ========================================================================== */
+/* .site-header.site-header--on-light {
+	color: var(--color-text);
+} */
+
+.site-header.site-header--on-light:not(.is-scrolled) {
+	color: var(--color-text);
+}
+
 .site-header--solid {
 	color: var(--color-white);
-	background-color: rgb(8 8 8 / 0.98);
+	/* HD5: was rgb(8 8 8 / 0.98) — resolved color is --color-black-deep. */
+	background-color: var(--color-black-deep);
 	border-bottom-color: rgb(255 255 255 / 0.08);
 }
+
 /* ==========================================================================
    HEADER INNER
    ========================================================================== */
 .site-header__inner {
 	position: relative;
 	width: 100%;
-	max-width: 1680px;
+	/* 1680px === --container-wide (105rem) */
+	max-width: var(--container-wide);
 	height: 68px;
 	min-height: 68px;
 	margin-inline: auto;
@@ -265,6 +404,7 @@ a.btn {
 	box-sizing: border-box;
 	overflow: visible;
 }
+
 /* ==========================================================================
    BRAND / LOGO
    ========================================================================== */
@@ -286,18 +426,23 @@ a.btn {
 		opacity var(--duration-fast) var(--ease-standard),
 		transform var(--duration-fast) var(--ease-standard);
 }
+
 .site-brand:hover {
 	opacity: 0.92;
 }
+
 .site-brand:active {
 	transform: translateY(1px);
 }
+
 .site-brand:focus-visible {
+	/* HD1: was --focus-width / --focus-offset (both undefined). */
 	outline:
-		var(--focus-width) solid var(--color-gold-400);
+		var(--focus-ring-width) solid var(--color-gold-400);
 	outline-offset:
-		var(--focus-offset);
+		var(--focus-ring-offset);
 }
+
 .site-brand__picture {
 	display: block;
 	width: auto;
@@ -308,6 +453,7 @@ a.btn {
 	flex: 0 0 auto;
 	overflow: visible;
 }
+
 .site-brand__logo {
 	position: relative;
 	display: block;
@@ -317,14 +463,17 @@ a.btn {
 	max-height: none;
 	margin: 0;
 	padding: 0;
-	color: blue;
+	/*
+	 * HD3: removed `color: blue` debug leftover.
+	 * HD9: `color` is a no-op on <img>. Preserved the second declaration
+	 *      only because it may be intended for a future inline-SVG logo.
+	 */
+	color: #C59B4B;
 	object-fit: contain;
 	object-position: left center;
 	z-index: 21;
 }
-.site-brand__logo {
-	color: #C59B4B;
-}
+
 /* ==========================================================================
    DESKTOP PRIMARY NAVIGATION
    ========================================================================== */
@@ -333,6 +482,7 @@ a.btn {
 	flex: 1 1 auto;
 	min-width: 0;
 }
+
 .primary-navigation__list {
 	display: flex;
 	align-items: center;
@@ -345,11 +495,13 @@ a.btn {
 			1.75rem);
 	list-style: none;
 }
+
 .primary-navigation__item {
 	flex: 0 0 auto;
 	margin: 0;
 	padding: 0;
 }
+
 .primary-navigation__link {
 	position: relative;
 	display: inline-flex;
@@ -357,19 +509,21 @@ a.btn {
 	justify-content: center;
 	min-height: 40px;
 	padding-inline: 0.25rem;
-	color: var(--color-white);
+	color: inherit; 
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
-	font-weight: 500;
+	/* HD7: was `font-weight: 500` */
+	font-weight: var(--font-weight-medium);
 	line-height: 1.2;
 	letter-spacing: 0.01em;
 	text-decoration: none;
 	white-space: nowrap;
 	border-radius: var(--radius-sm);
 	transition:
-		color 180ms ease,
-		opacity 180ms ease;
+		color var(--duration-fast) var(--ease-standard),
+		opacity var(--duration-fast) var(--ease-standard);
 }
+
 .primary-navigation__link::after {
 	position: absolute;
 	inset-inline: 0.25rem;
@@ -383,35 +537,43 @@ a.btn {
 	transform-origin:
 		right center;
 	transition:
-		transform 220ms ease;
+		transform var(--duration-normal) var(--ease-standard);
 }
+
 .primary-navigation__link:hover {
 	color:
 		var(--color-gold-400);
 }
+
 .primary-navigation__link:hover::after {
 	transform:
 		scaleX(1);
 	transform-origin:
 		left center;
 }
+
 .primary-navigation__link[aria-current="page"] {
 	color:
 		var(--color-gold-400);
-	font-weight: 600;
+	/* HD7: was `font-weight: 600` */
+	font-weight: var(--font-weight-semibold);
 }
+
 .primary-navigation__link[aria-current="page"]::after {
 	transform:
 		scaleX(1);
 	transform-origin:
 		left center;
 }
+
 .primary-navigation__link:focus-visible {
+	/* HD1: was --focus-width / --focus-offset */
 	outline:
-		var(--focus-width) solid var(--color-gold-400);
+		var(--focus-ring-width) solid var(--color-gold-400);
 	outline-offset:
-		var(--focus-offset);
+		var(--focus-ring-offset);
 }
+
 /* ==========================================================================
    HEADER ACTIONS
    ========================================================================== */
@@ -423,6 +585,7 @@ a.btn {
 	min-width: 0;
 	gap: 0.35rem;
 }
+
 /* ==========================================================================
    CART BUTTON
    ========================================================================== */
@@ -437,8 +600,7 @@ a.btn {
 	min-width: 40px;
 	min-height: 40px;
 	padding: 0;
-	color:
-		var(--color-white);
+	color: inherit;
 	border: 0;
 	border-radius:
 		var(--radius-sm);
@@ -447,32 +609,38 @@ a.btn {
 	-webkit-tap-highlight-color:
 		transparent;
 	transition:
-		color 180ms ease,
-		background-color 180ms ease,
-		transform 180ms ease;
+		color var(--duration-fast) var(--ease-standard),
+		background-color var(--duration-fast) var(--ease-standard),
+		transform var(--duration-fast) var(--ease-standard);
 }
+
 .cart-button:hover {
 	color:
 		var(--color-gold-400);
 	background-color:
 		rgb(255 255 255 / 0.08);
 }
+
 .cart-button:active {
 	transform:
 		translateY(1px);
 }
+
 .cart-button:focus-visible {
+	/* HD1 */
 	outline:
-		var(--focus-width) solid var(--color-gold-400);
+		var(--focus-ring-width) solid var(--color-gold-400);
 	outline-offset:
-		var(--focus-offset);
+		var(--focus-ring-offset);
 }
+
 .header-action__icon {
 	display: block;
 	width: 22px;
 	height: 22px;
 	flex: 0 0 auto;
 }
+
 /* ==========================================================================
    CART COUNT
    ========================================================================== */
@@ -506,9 +674,11 @@ a.btn {
 	pointer-events:
 		none;
 }
+
 .cart-button__count:empty {
 	display: none;
 }
+
 /* ==========================================================================
    MOBILE NAV TOGGLE
    ========================================================================== */
@@ -522,8 +692,7 @@ a.btn {
 	min-width: 40px;
 	min-height: 40px;
 	padding: 0;
-	color:
-		var(--color-white);
+	color: inherit; 
 	border: 0;
 	border-radius:
 		var(--radius-sm);
@@ -533,21 +702,25 @@ a.btn {
 	-webkit-tap-highlight-color:
 		transparent;
 	transition:
-		color 180ms ease,
-		background-color 180ms ease;
+		color var(--duration-fast) var(--ease-standard),
+		background-color var(--duration-fast) var(--ease-standard);
 }
+
 .mobile-nav-toggle:hover {
 	color:
 		var(--color-gold-400);
 	background-color:
 		rgb(255 255 255 / 0.08);
 }
+
 .mobile-nav-toggle:focus-visible {
+	/* HD1 */
 	outline:
-		var(--focus-width) solid var(--color-gold-400);
+		var(--focus-ring-width) solid var(--color-gold-400);
 	outline-offset:
-		var(--focus-offset);
+		var(--focus-ring-offset);
 }
+
 .mobile-nav-toggle__icon {
 	display: flex;
 	flex-direction: column;
@@ -556,6 +729,7 @@ a.btn {
 	height: 20px;
 	gap: 5px;
 }
+
 .mobile-nav-toggle__icon span {
 	display: block;
 	width: 100%;
@@ -565,20 +739,24 @@ a.btn {
 	transform-origin:
 		center;
 	transition:
-		transform 220ms ease,
-		opacity 180ms ease;
+		transform var(--duration-normal) var(--ease-standard),
+		opacity var(--duration-fast) var(--ease-standard);
 }
+
 .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-toggle__icon span:nth-child(1) {
 	transform:
 		translateY(6px) rotate(45deg);
 }
+
 .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-toggle__icon span:nth-child(2) {
 	opacity: 0;
 }
+
 .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-toggle__icon span:nth-child(3) {
 	transform:
 		translateY(-6px) rotate(-45deg);
 }
+
 /* ==========================================================================
    MOBILE NAVIGATION — PREMIUM MODEINFINITY
    ========================================================================== */
@@ -592,17 +770,19 @@ a.btn {
 	opacity: 0;
 	isolation: isolate;
 	transition:
-		opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
-		visibility 0s linear 320ms;
+		opacity var(--duration-slow) var(--ease-emphasized),
+		visibility 0s linear var(--duration-slow);
 }
+
 .mobile-navigation[aria-hidden="false"] {
 	visibility: visible;
 	pointer-events: auto;
 	opacity: 1;
 	transition:
-		opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
+		opacity var(--duration-slow) var(--ease-emphasized),
 		visibility 0s linear 0s;
 }
+
 /* ==========================================================================
    MOBILE NAV BACKDROP
    ========================================================================== */
@@ -618,15 +798,44 @@ a.btn {
 	cursor: pointer;
 	opacity: 0;
 	transition:
-		opacity 360ms cubic-bezier(0.22, 1, 0.36, 1);
+		opacity var(--duration-slow) var(--ease-emphasized);
 }
+
 .mobile-navigation[aria-hidden="false"] .mobile-navigation__backdrop {
 	opacity: 1;
 }
+
 /* ==========================================================================
    MOBILE DRAWER
+   ==========================================================================
+   HD2: Always-dark surface (fixed design). Local token scope ensures
+   nested components — notably .btn-secondary in the drawer footer —
+   resolve to on-dark values so they remain visible in light mode.
+   Mirrors the .section--dark pattern from layout.css.
    ========================================================================== */
 .mobile-navigation__drawer {
+	/* Local dark token scope */
+	--color-background: rgb(10 10 10);
+	--color-surface: rgb(10 10 10);
+	--color-surface-raised: #1a1a1a;
+	--color-surface-muted: #1a1a1a;
+	--color-text: var(--color-white);
+	--color-text-strong: var(--color-white);
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-border: rgb(255 255 255 / 0.09);
+	--color-border-strong: rgb(255 255 255 / 0.35);
+	--color-border-subtle: rgb(255 255 255 / 0.06);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-link-active: var(--color-gold-100);
+	--color-interactive: var(--color-gold-300);
+	--color-interactive-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
+	--color-focus: var(--focus-ring-color);
+
 	position: absolute;
 	inset-block: 0;
 	inset-inline-end: 0;
@@ -653,12 +862,14 @@ a.btn {
 	transform:
 		translate3d(100%, 0, 0);
 	transition:
-		transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+		transform var(--duration-slow) var(--ease-emphasized);
 }
+
 .mobile-navigation[aria-hidden="false"] .mobile-navigation__drawer {
 	transform:
 		translate3d(0, 0, 0);
 }
+
 /* ==========================================================================
    MOBILE NAV HEADER
    ========================================================================== */
@@ -682,6 +893,7 @@ a.btn {
 	box-sizing:
 		border-box;
 }
+
 .mobile-navigation__header::after {
 	position: absolute;
 	inset-inline-start: 0;
@@ -695,6 +907,7 @@ a.btn {
 	opacity:
 		0.9;
 }
+
 /* ==========================================================================
    MOBILE LOGO
    ========================================================================== */
@@ -709,11 +922,13 @@ a.btn {
 		var(--color-white);
 	z-index: 20;
 }
+
 .site-brand--mobile .site-brand__picture {
 	display: block;
 	width: auto;
 	max-width: none;
 }
+
 .site-brand--mobile .site-brand__logo {
 	display: block;
 	width: auto;
@@ -726,6 +941,7 @@ a.btn {
 		left center;
 	z-index: 21;
 }
+
 /* ==========================================================================
    MOBILE CLOSE BUTTON
    ========================================================================== */
@@ -753,11 +969,12 @@ a.btn {
 	-webkit-tap-highlight-color:
 		transparent;
 	transition:
-		color 180ms ease,
-		background-color 180ms ease,
-		border-color 180ms ease,
-		transform 180ms ease;
+		color var(--duration-fast) var(--ease-standard),
+		background-color var(--duration-fast) var(--ease-standard),
+		border-color var(--duration-fast) var(--ease-standard),
+		transform var(--duration-fast) var(--ease-standard);
 }
+
 .mobile-navigation__close:hover {
 	color:
 		var(--color-gold-400);
@@ -768,16 +985,20 @@ a.btn {
 	transform:
 		rotate(90deg);
 }
+
 .mobile-navigation__close:active {
 	transform:
 		rotate(90deg) scale(0.94);
 }
+
 .mobile-navigation__close:focus-visible {
+	/* HD1 */
 	outline:
-		var(--focus-width) solid var(--color-gold-400);
+		var(--focus-ring-width) solid var(--color-gold-400);
 	outline-offset:
-		var(--focus-offset);
+		var(--focus-ring-offset);
 }
+
 /* ==========================================================================
    MOBILE NAV CONTENT
    ========================================================================== */
@@ -799,6 +1020,7 @@ a.btn {
 	scrollbar-width:
 		thin;
 }
+
 /* ==========================================================================
    MOBILE NAV LIST
    ========================================================================== */
@@ -811,6 +1033,7 @@ a.btn {
 	border-top:
 		1px solid rgb(255 255 255 / 0.09);
 }
+
 .mobile-navigation__item {
 	position: relative;
 	margin: 0;
@@ -818,6 +1041,7 @@ a.btn {
 	border-bottom:
 		1px solid rgb(255 255 255 / 0.09);
 }
+
 /* ==========================================================================
    MOBILE NAV LINKS
    ========================================================================== */
@@ -841,12 +1065,13 @@ a.btn {
 		rgb(255 255 255 / 0.92);
 	font-family:
 		var(--font-sans);
+	/* HD8: was clamp(1.05rem, 3vw, 1.2rem) — --text-lg is slightly
+	 * larger and matches the type role. */
 	font-size:
-		clamp(1.05rem,
-			3vw,
-			1.2rem);
+		var(--text-lg);
+	/* HD7: was `font-weight: 500` */
 	font-weight:
-		500;
+		var(--font-weight-medium);
 	line-height:
 		1.25;
 	letter-spacing:
@@ -858,10 +1083,11 @@ a.btn {
 	background:
 		transparent;
 	transition:
-		color 180ms ease,
-		padding-inline 220ms ease,
-		background-color 180ms ease;
+		color var(--duration-fast) var(--ease-standard),
+		padding-inline var(--duration-normal) var(--ease-standard),
+		background-color var(--duration-fast) var(--ease-standard);
 }
+
 /* ==========================================================================
    GOLD ACTIVE / HOVER RAIL
    ========================================================================== */
@@ -878,8 +1104,9 @@ a.btn {
 	transform-origin:
 		center;
 	transition:
-		transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+		transform var(--duration-normal) var(--ease-emphasized);
 }
+
 /* ==========================================================================
    MOBILE NAV HOVER
    ========================================================================== */
@@ -893,37 +1120,44 @@ a.btn {
 			rgb(212 175 55 / 0.055),
 			transparent 75%);
 }
+
 .mobile-navigation__link:hover::before {
 	transform:
 		scaleY(1);
 }
+
 .mobile-navigation__link:hover svg {
 	color:
 		var(--color-gold-400);
 	transform:
 		translateX(0.3rem);
 }
+
 /* ==========================================================================
    MOBILE NAV CURRENT PAGE
    ========================================================================== */
 .mobile-navigation__link[aria-current="page"] {
 	color:
 		var(--color-gold-400);
+	/* HD7: was `font-weight: 600` */
 	font-weight:
-		600;
+		var(--font-weight-semibold);
 	background:
 		linear-gradient(90deg,
 			rgb(212 175 55 / 0.075),
 			transparent 78%);
 }
+
 .mobile-navigation__link[aria-current="page"]::before {
 	transform:
 		scaleY(1);
 }
+
 .mobile-navigation__link[aria-current="page"] svg {
 	color:
 		var(--color-gold-400);
 }
+
 /* ==========================================================================
    MOBILE NAV ARROWS
    ========================================================================== */
@@ -934,17 +1168,20 @@ a.btn {
 	color:
 		rgb(255 255 255 / 0.55);
 	transition:
-		color 180ms ease,
-		transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+		color var(--duration-fast) var(--ease-standard),
+		transform var(--duration-normal) var(--ease-emphasized);
 }
+
 .mobile-navigation__link:focus-visible {
+	/* HD1 */
 	outline:
-		var(--focus-width) solid var(--color-gold-400);
+		var(--focus-ring-width) solid var(--color-gold-400);
 	outline-offset:
-		var(--focus-offset);
+		var(--focus-ring-offset);
 	border-radius:
 		var(--radius-sm);
 }
+
 /* ==========================================================================
    MOBILE NAV FOOTER
    ========================================================================== */
@@ -968,12 +1205,14 @@ a.btn {
 	box-shadow:
 		0 -12px 30px rgb(0 0 0 / 0.14);
 }
+
 .mobile-navigation__footer .btn {
 	min-height:
 		48px;
 	letter-spacing:
 		0.04em;
 }
+
 /* ==========================================================================
    DESKTOP BREAKPOINT
    ========================================================================== */
@@ -989,6 +1228,7 @@ a.btn {
 		display: none;
 	}
 }
+
 /* ==========================================================================
    TABLET / MOBILE
    ========================================================================== */
@@ -1018,6 +1258,7 @@ a.btn {
 				92vw);
 	}
 }
+
 /* ==========================================================================
    SMALL PHONES
    ========================================================================== */
@@ -1056,9 +1297,6 @@ a.btn {
 		height: 0.95rem;
 		font-size: 0.55rem;
 	}
-	/* ------------------------------------------------------------------------
-     Mobile drawer
-     ------------------------------------------------------------------------ */
 	.mobile-navigation__drawer {
 		width: 100%;
 		border-inline-start:
@@ -1106,6 +1344,7 @@ a.btn {
 				var(--safe-area-right));
 	}
 }
+
 /* ==========================================================================
    VERY SMALL PHONES
    ========================================================================== */
@@ -1144,6 +1383,7 @@ a.btn {
 			1rem;
 	}
 }
+
 /* ==========================================================================
    LANDSCAPE PHONES / SHORT VIEWPORTS
    ========================================================================== */
@@ -1178,6 +1418,7 @@ a.btn {
 				var(--safe-area-bottom));
 	}
 }
+
 /* ==========================================================================
    ULTRAWIDE DISPLAYS
    ========================================================================== */
@@ -1191,6 +1432,7 @@ a.btn {
 			var(--space-7);
 	}
 }
+
 /* ==========================================================================
    FORCED COLORS / HIGH CONTRAST
    ========================================================================== */
@@ -1212,6 +1454,7 @@ a.btn {
 			ButtonText;
 	}
 }
+
 /* ==========================================================================
    REDUCED MOTION
    ========================================================================== */
@@ -1233,6 +1476,18 @@ a.btn {
 	}
 }
 
+/* Header buttons inherit the header's color so they're readable on the
+   always-dark error hero, regardless of theme. */
+.site-header .btn-ghost {
+	color: inherit;
+	border-color: rgb(255 255 255 / 0.4);
+}
+.site-header .btn-ghost:hover,
+.site-header .btn-ghost:focus-visible {
+	color: var(--color-gold-300);
+	border-color: var(--color-gold-300);
+	background: transparent;
+}
 
 
 
@@ -1240,10 +1495,6 @@ a.btn {
 
 
 
-
-/* =====================================================================
-   MODEINFINITY HOME HERO
-   ================================================================== */
 /* =====================================================================
    HERO FOUNDATION
    ================================================================== */
@@ -1356,7 +1607,7 @@ a.btn {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	pointer-events: none;
+	/* pointer-events: none;  */
 	animation:
 		modeinfinity-scale-in var(--duration-slow) var(--ease-emphasized) both;
 	animation-delay: 0s;
@@ -1465,14 +1716,14 @@ a.btn {
 		modeinfinity-fade-up var(--duration-slow) var(--ease-emphasized) both;
 	animation-delay: 120ms;
 }
-.home-hero__eyebrow::before {
+/* .home-hero__eyebrow::before {
 	display: block;
 	width: 2rem;
 	height: 1px;
 	flex: 0 0 auto;
 	content: "";
 	background: currentColor;
-}
+} */
 /* ==========================================================================
    TITLE
    ========================================================================== */
@@ -1495,7 +1746,7 @@ a.btn {
 	font-size: clamp(2rem,
 			8vw,
 			3.5rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: 0.98;
 	animation-delay: 240ms;
@@ -1583,13 +1834,11 @@ a.btn {
 		align-self: center;
 		width: auto;
 	}
-	.home-hero__visual-frame {
-		--hero-visual-size:
-			clamp(210px,
-				32vmin,
-				330px);
+.home-hero__visual-frame {
+		--hero-visual-size: clamp(210px, 32vmin, 330px);
 		width: var(--hero-visual-size);
-		max-height: 76%;
+		max-height: 76vh;   /* fallback for older browsers */
+		max-height: 76svh;  /* safe viewport height — no mobile chrome reflow */
 	}
 	.home-hero__content {
 		order: 1;
@@ -1751,7 +2000,7 @@ a.btn {
 			clamp(300px,
 				52vh,
 				390px);
-		max-height: none;
+		/* max-height: none; */
 	}
 	.home-hero__visual-line {
 		right: -1rem;
@@ -2432,7 +2681,7 @@ a.btn {
 	color: var(--color-text);
 	font-family: var(--font-display);
 	font-size: clamp(2.2rem, 5vw, 4rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.08;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -2448,7 +2697,7 @@ a.btn {
 .home-academy__description {
 	width: min(100%, 62ch);
 	margin: 0 auto;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -2637,7 +2886,7 @@ a.btn {
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: clamp(1.8rem, 3.2vw, 2.75rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -2796,7 +3045,7 @@ a.btn {
 .home-academy__benefit-text {
 	/* width: min(100%, 26ch); */
 	margin: 0 auto;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	/* font-size: var(--text-sm); */
 	line-height: var(--leading-relaxed);
@@ -3484,7 +3733,7 @@ a.btn {
 	color: var(--color-text);
 	font-family: var(--font-display);
 	font-size: clamp(2.2rem, 9vw, 3.25rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-tight);
 	letter-spacing: var(--tracking-tight);
 	text-align: center;
@@ -3498,7 +3747,7 @@ a.btn {
 .home-collection__description {
 	width: min(100%, 48ch);
 	margin: var(--space-5) auto 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	line-height: var(--leading-relaxed);
 	text-align: center;
 	text-wrap: pretty;
@@ -3685,7 +3934,7 @@ a.btn {
 	color: var(--color-text-muted);
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.3;
 	letter-spacing: var(--tracking-wider);
 	text-transform: uppercase;
@@ -3705,9 +3954,9 @@ a.btn {
 }
 .home-collection__products .product-card__price {
 	margin: var(--space-2) 0 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-size: var(--text-xs);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-normal);
 	font-variant-numeric: tabular-nums;
 }
@@ -3715,7 +3964,7 @@ a.btn {
 	display: none; /* hidden on phones, shown from 48rem */
 	max-width: 42ch;
 	margin: var(--space-2) 0 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
 }
@@ -3783,10 +4032,19 @@ html.js .home-collection .product-card--skeleton {
 /* ==========================================================================
    8. CUSTOM ORDER PROCESS (NEW)
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   Custom Order Process — 3 step cards
+   --------------------------------------------------------------------------
+   Matches the .shop-process__step pattern used on shop.html for
+   visual consistency across the site. Each step is a card with
+   a filled gold number badge, left-aligned content, and a
+   hover lift.
+   -------------------------------------------------------------------------- */
 .home-collection__process {
 	width: 100%;
 	max-width: 1520px;
-    margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;	padding-top: clamp(2rem, 4vw, 3rem);
+	margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
+	padding-top: clamp(2rem, 4vw, 3rem);
 	border-top: var(--border-width-thin) solid var(--color-border);
 }
 
@@ -3795,7 +4053,7 @@ html.js .home-collection .product-card--skeleton {
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-2xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	text-align: center;
 	letter-spacing: var(--tracking-tight);
 }
@@ -3809,46 +4067,97 @@ html.js .home-collection .product-card--skeleton {
 	margin-inline: auto;
 }
 
-.home-collection__process-step {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	gap: var(--space-3);
+/* Tablet and up: 3 side-by-side cards */
+@media (min-width: 48rem) {
+	.home-collection__process-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--space-5);
+	}
 }
 
+.home-collection__process-step {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-3);
+	min-width: 0;
+	height: 100%;
+	padding: clamp(1.5rem, 3vw, 2rem);
+	background: var(--color-surface);
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-md);
+	transition:
+		transform var(--transition-base),
+		border-color var(--transition-base),
+		box-shadow var(--transition-base);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.home-collection__process-step:hover {
+		transform: translateY(-3px);
+		border-color: var(--color-gold-400);
+		box-shadow: var(--shadow-sm);
+	}
+}
+
+/* Number badge: fixed size, never shrinks, never grows.
+   flex: 0 0 auto = basis auto, no grow, no shrink. */
 .home-collection__process-num {
+	flex: 0 0 auto;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	width: 2.5rem;
 	height: 2.5rem;
-	background: var(--color-surface);
-	border: 1px solid var(--color-gold-500);
+	background: var(--color-gold-500);
+	border: 0;
 	border-radius: 50%;
-	color: var(--color-accent-text);
+	color: var(--color-black-soft);
 	font-family: var(--font-mono);
 	font-size: var(--text-sm);
 	font-weight: var(--font-weight-semibold);
+	line-height: 1;
 }
 
+/* Name: sits beside the number on the same row when it fits,
+   wraps to its own row when it doesn't. flex: 0 0 auto is what
+   forces the wrap instead of squishing the text in place.
+   max-width: 100% caps a long name that's on its own row so it
+   never overflows the card. */
 .home-collection__process-name {
+	flex: 0 0 auto;
+	max-width: 100%;
 	margin: 0;
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--leading-snug);
 }
 
+/* Body text: always its own row. flex-basis: 100% forces
+   wrapping because no row can be wider than the container.
+   grow/shrink disabled so it can't be compressed. */
 .home-collection__process-text {
+	flex-basis: 100%;
+	flex-grow: 0;
+	flex-shrink: 0;
 	margin: 0;
 	color: var(--color-text-muted);
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
-	max-width: 28ch;
+	max-width: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+	.home-collection__process-step {
+		transition: none;
+	}
+	.home-collection__process-step:hover {
+		transform: none;
+	}
+}
 
 /* ==========================================================================
    9. FOOTER ("Made to order")
@@ -3857,22 +4166,43 @@ html.js .home-collection .product-card--skeleton {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	gap: var(--space-5);
 	width: 100%;
 	min-width: 0;
 	max-width: 1520px;
 	margin: var(--space-8) auto 0;
-	padding-top: var(--space-6);
-	border-top: var(--border-width-thin) solid var(--color-border);
+	/* padding-top: var(--space-6); */
+	/* border-top: var(--border-width-thin) solid var(--color-border); */
+	text-align: center;
+
+
+	padding: clamp(1.5rem, 3vw, 2rem);
+	background: var(--color-surface-muted);
+	border: var(--border-width-thin) solid var(--color-border);
+	border-radius: var(--radius-md);
 }
+
+/* Tablet and up: copy left, action right */
+@media (min-width: 48rem) {
+	.home-collection__footer {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-8);
+		text-align: left;
+	}
+}
+
 .home-collection__footer-copy {
 	flex: 1 1 auto;
 	min-width: 0;
+	max-width: 60ch;
 }
+
 .home-collection__footer-label {
 	margin: 0;
-	color: var(--color-text);
+	color: var(--color-accent-text);
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-semibold);
@@ -3880,23 +4210,60 @@ html.js .home-collection .product-card--skeleton {
 	letter-spacing: var(--tracking-wider);
 	text-transform: uppercase;
 }
+
 .home-collection__footer-note {
 	margin: var(--space-2) 0 0;
 	color: var(--color-text-muted);
+	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
+	text-wrap: pretty;
 }
 
-/* "Request a custom pair" (a .btn .btn-primary) */
+/* "Request a custom pair" — a .btn .btn-primary */
 .home-collection .home-collection__footer-action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	gap: var(--space-2);
-	flex: 0 1 auto;
+	flex: 0 0 auto;
 	min-width: 0;
 	max-width: 100%;
 	line-height: 1.35;
 	white-space: normal;
 }
 
+/* Arrow icon: fixed size, smooth slide on hover */
+.home-collection .home-collection__footer-action svg {
+	display: block;
+	flex: 0 0 auto;
+	transition: transform var(--transition-fast) var(--ease-standard);
+}
+
+/* Mobile: full-width button for comfortable tap target */
+@media (max-width: 47.999rem) {
+	.home-collection .home-collection__footer-action {
+		width: 100%;
+	}
+}
+
+/* Hover and keyboard focus both animate the arrow */
+@media (hover: hover) and (pointer: fine) {
+	.home-collection .home-collection__footer-action:hover svg,
+	.home-collection .home-collection__footer-action:focus-visible svg {
+		transform: translateX(3px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.home-collection .home-collection__footer-action svg {
+		transition: none;
+	}
+	.home-collection .home-collection__footer-action:hover svg,
+	.home-collection .home-collection__footer-action:focus-visible svg {
+		transform: none;
+	}
+}
 
 /* ==========================================================================
    10. HOVER (mouse only)
@@ -4296,7 +4663,7 @@ html.js .home-collection .product-card--skeleton {
     width: 100%;
     max-width: 64rem;
   margin: clamp(1rem, 2vw, 1.5rem) auto 0;
-  color: var(--color-text-secondary);
+  /* color: var(--color-text-secondary); */
   /* font-size: clamp(1rem, 1.1vw, var(--text-lg)); */
   line-height: var(--line-relaxed);
   text-align: center;
@@ -4490,9 +4857,13 @@ html.js .home-collection .product-card--skeleton {
   transform: none;
 }
 
+/* AFTER */
 .home-craft__control:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 3px;
+  /* Carousel controls sit on a dark surface — use on-dark gold so the
+     ring is visible in both themes. Previously used --color-primary
+     which was undefined → outline became invisible (a11y bug). */
+  outline: var(--focus-ring-width) solid var(--color-accent-on-dark);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .home-craft__pagination {
@@ -4529,15 +4900,19 @@ html.js .home-collection .product-card--skeleton {
   transform: scale(1.12);
 }
 
+/* AFTER */
 .home-craft__pagination-item.is-active {
   width: 1.5rem;
   border-radius: 999px;
-  background: var(--color-primary);
+  /* Dark-surface context — use on-dark gold. Was --color-primary
+     (undefined) → active dot looked identical to inactive. */
+  background: var(--color-accent-on-dark);
 }
 
+/* AFTER */
 .home-craft__pagination-item:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
+  outline: var(--focus-ring-width) solid var(--color-accent-on-dark);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* 5. Craft details and typography
@@ -4591,7 +4966,7 @@ html.js .home-collection .product-card--skeleton {
   width: 100%;
   max-width: 58ch;
   margin: var(--space-5) 0 0;
-  color: var(--color-text-secondary);
+  /* color: var(--color-text-secondary); */
   font-size: var(--text-base);
   line-height: var(--line-relaxed);
   text-wrap: pretty;
@@ -5497,7 +5872,7 @@ html.js .home-collection .product-card--skeleton {
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(2.25rem, 4vw, 3rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -5511,7 +5886,7 @@ html.js .home-collection .product-card--skeleton {
 
 .home-founder__text {
 	margin: 0 0 var(--space-6);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -5533,7 +5908,7 @@ html.js .home-collection .product-card--skeleton {
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: 1.2;
 }
@@ -5558,16 +5933,19 @@ html.js .home-collection .product-card--skeleton {
 	color: var(--color-accent-text);
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 	transition: color var(--transition-fast);
 }
 
-.home-founder__link:hover {
-	color: var(--color-gold-600);
+/* AFTER */
+.home-founder__link:hover,
+.home-founder__link:focus-visible {
+  /* Was gold-600 (~3.5:1 on white, fails AA). Resolves to gold-800 in
+     light / gold-200 in dark — passes AA in both. */
+  color: var(--color-link-hover);
 }
-
 /* ==========================================================================
    RESPONSIVE OVERRIDES
    ========================================================================== */
@@ -5708,7 +6086,7 @@ html.js .home-testimonials {
 	color: var(--color-text);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.2rem, 6vw, 3.25rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.08;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -5724,7 +6102,7 @@ html.js .home-testimonials {
 	/* width: min(100%, 52ch); */
 	margin: var(--space-5) auto 0;
 
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
 	text-wrap: pretty;
@@ -5761,11 +6139,11 @@ html.js .home-testimonials {
 	background: transparent;
 	border: var(--border-width-thin) solid var(--color-border-strong);
 	border-radius: var(--radius-full);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1;
 	letter-spacing: var(--tracking-wide);
 	white-space: nowrap;
@@ -5916,20 +6294,18 @@ html.js .home-testimonials {
 	letter-spacing: 0.05em;
 }
 
-.home-testimonials .testimonial-card__quote {
-	margin: 0;
-	padding: 0;
-
-	color: var(--color-text);
-	font-family: var(--font-display);
-	font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-	font-style: italic;
-	font-weight: var(--font-weight-regular);
-	line-height: 1.55;
-	letter-spacing: -0.005em;
-
-	text-wrap: pretty;
-}
+/* .home-testimonials .testimonial-card__quote {
+	    margin: 0;
+    padding: 0;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    font-style: italic;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    text-wrap: pretty;
+} */
 
 .home-testimonials .testimonial-card__quote p {
 	margin: 0;
@@ -5994,7 +6370,7 @@ html.js .home-testimonials {
 
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1;
 }
 
@@ -6016,7 +6392,7 @@ html.js .home-testimonials {
 }
 
 .home-testimonials .testimonial-card__role {
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-snug);
@@ -6029,7 +6405,7 @@ html.js .home-testimonials {
 	color: var(--color-text-subtle);
 	font-family: var(--font-mono);
 	font-size: 0.7rem;
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-wider);
 	line-height: 1.4;
 	text-transform: uppercase;
@@ -6099,7 +6475,7 @@ html.js .home-testimonials {
 	background: transparent;
 	border: var(--border-width-thin) solid var(--color-border-strong);
 	border-radius: var(--radius-full);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
@@ -6480,7 +6856,7 @@ html.js .home-testimonials {
   color: var(--color-white);
   font-family: var(--font-display);
   /* font-size: clamp(1.9rem, 4.2vw, 3.5rem); */
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.12;
   letter-spacing: var(--tracking-tight);
   text-wrap: balance;
@@ -6523,7 +6899,7 @@ html.js .home-testimonials {
   color: rgb(255 255 255 / 88%);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-normal);
 }
 
@@ -6837,7 +7213,38 @@ html.js .home-testimonials {
 }
 
 
+.home-academy__pillar {
+  /* ... existing properties ... */
+  
+  /* Local dark token scope — matches .section--dark in layout.css */
+  --color-text: var(--color-white);
+  --color-text-strong: var(--color-white);
+  --color-text-muted: rgb(255 255 255 / 88%);
+  --color-text-subtle: rgb(255 255 255 / 65%);
+  --color-border: rgb(255 255 255 / 22%);
+  --color-border-strong: rgb(255 255 255 / 35%);
+  --color-link: var(--color-gold-300);
+  --color-link-hover: var(--color-gold-200);
+  --color-accent-text: var(--color-gold-300);
+  --color-interactive: var(--color-gold-300);
+  --focus-ring-color: var(--color-gold-300);
+}
 
+.home-academy-cta__inner {
+  /* ... existing properties ... */
+  
+  --color-text: var(--color-white);
+  --color-text-strong: var(--color-white);
+  --color-text-muted: rgb(255 255 255 / 78%);
+  --color-text-subtle: rgb(255 255 255 / 65%);
+  --color-border: rgb(255 255 255 / 14%);
+  --color-border-strong: rgb(255 255 255 / 25%);
+  --color-link: var(--color-gold-300);
+  --color-link-hover: var(--color-gold-200);
+  --color-accent-text: var(--color-gold-300);
+  --color-interactive: var(--color-gold-300);
+  --focus-ring-color: var(--color-gold-300);
+}
 
 
 
@@ -6869,33 +7276,47 @@ html.js .home-testimonials {
    ========================================================================== */
 
 .about-hero {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: clamp(38rem, 78vh, 52rem);
-  padding-block:
-    calc(var(--header-height) + var(--space-16))
-    var(--space-20);
-  padding-inline: var(--container-padding-inline);
-  overflow: hidden;
-  color: var(--color-white);
-  background-color: var(--color-black-deep);
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	min-height: 100svh;
+	min-height: 100dvh;
+	padding-block:
+		calc(var(--header-height) + var(--space-16))
+		var(--space-20);
+	padding-inline: var(--container-padding-inline);
+	overflow: hidden;
+	color: var(--color-white);
+	background-color: var(--color-black-deep);
+	background-image:
+		linear-gradient(
+			180deg,
+			rgb(5 5 5 / 0.62) 0%,
+			rgb(5 5 5 / 0.48) 42%,
+			rgb(5 5 5 / 0.72) 78%,
+			rgb(5 5 5 / 0.94) 100%
+		),
+		url("../assets/images/golden_hour_atelier.jpeg");
+	background-repeat: no-repeat;
+	background-position: center, center;
+	background-size: cover, cover;
+	background-attachment: scroll, scroll;
 
-  background-image:
-    linear-gradient(
-      180deg,
-      rgb(5 5 5 / 0.62) 0%,
-      rgb(5 5 5 / 0.48) 42%,
-      rgb(5 5 5 / 0.72) 78%,
-      rgb(5 5 5 / 0.94) 100%
-    ),
-    url("../assets/images/golden_hour_atelier.jpeg");
-  background-repeat: no-repeat;
-  background-position: center, center;
-  background-size: cover, cover;
-  background-attachment: scroll, scroll;
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.28);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .about-hero__inner {
@@ -6936,7 +7357,7 @@ html.js .home-testimonials {
   color: var(--color-white);
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4.25rem);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.05;
   letter-spacing: var(--tracking-tight);
   text-wrap: balance;
@@ -7003,11 +7424,11 @@ html.js .home-testimonials {
   }
 }
 
-@media (min-width: 64rem) and (max-height: 50rem) {
+/* @media (min-width: 64rem) and (max-height: 50rem) {
   .about-hero {
     min-height: 36rem;
   }
-}
+} */
 
 @media (forced-colors: active) {
   .about-hero {
@@ -7076,7 +7497,7 @@ html.js .home-testimonials {
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 2.4vw, 2rem);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
   text-align: center;
@@ -7125,7 +7546,7 @@ html.js .home-testimonials {
 
 .about-origin__caption {
   margin: var(--space-4) 0 0;
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
@@ -7148,10 +7569,10 @@ html.js .home-testimonials {
 .about-origin__quote p {
   margin: 0;
   color: var(--color-text-strong);
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+    font-family: var(--font-mono);
+		  /* font-size: clamp(1.35rem, 2.4vw, 1.75rem); */
   font-style: italic;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.35;
   letter-spacing: var(--tracking-tight);
   text-wrap: pretty;
@@ -7159,7 +7580,7 @@ html.js .home-testimonials {
 
 .about-origin__text {
   margin: 0;
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -7220,7 +7641,7 @@ html.js .home-testimonials {
 	color: var(--color-text-strong);
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 }
 
@@ -7239,7 +7660,7 @@ html.js .home-testimonials {
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
   line-height: 1.2;
 }
@@ -7411,7 +7832,7 @@ html.js .home-testimonials {
   color: var(--color-accent-text);
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
@@ -7454,7 +7875,7 @@ html.js .home-testimonials {
 
 .about-origin__principles-subtitle {
   margin: 0;
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -7539,7 +7960,7 @@ html.js .home-testimonials {
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: var(--text-xl);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
@@ -7565,7 +7986,7 @@ html.js .home-testimonials {
 .about-origin__values li {
   position: relative;
   padding-left: var(--space-5);
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
@@ -7637,8 +8058,27 @@ html.js .home-testimonials {
 .about-team {
   position: relative;
   isolation: isolate;
-background: var(--color-background-dark);
+  background: var(--color-background-dark);
+
+  /* Local dark token scope */
+  --color-text: #ffffff;
+  --color-text-strong: #ffffff;
+  --color-text-muted: rgb(255 255 255 / 0.82);
+  --color-text-subtle: rgb(255 255 255 / 0.65);
+  --color-text-inverse: #0a0a0a;
+  --color-background: #000000;
+  --color-surface: #111111;
+  --color-surface-raised: #171717;
+  --color-surface-muted: #171717;
+  --color-border: rgb(255 255 255 / 0.12);
+  --color-border-strong: rgb(255 255 255 / 0.28);
+  --color-link: var(--color-gold-300);
+  --color-link-hover: var(--color-gold-200);
+  --color-accent-text: var(--color-gold-300);
+  --color-interactive: var(--color-gold-300);
+  --focus-ring-color: var(--color-gold-300);
 }
+
 
 .about-team > .container {
   width: min(100% - (var(--container-padding-inline) * 2), var(--container-max));
@@ -7779,7 +8219,7 @@ background: var(--color-background-dark);
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
@@ -7826,7 +8266,7 @@ background: var(--color-background-dark);
 
 .about-team__footer .text-link:hover,
 .about-team__footer .text-link:focus-visible {
-  color: var(--color-gold-600);
+  color: var(--color-gold-200);
 }
 
 .about-team__footer .text-link:focus-visible {
@@ -7923,7 +8363,7 @@ background: var(--color-background-dark);
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2vw, 1.5rem);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
   text-wrap: pretty;
@@ -8045,7 +8485,7 @@ background: var(--color-background-dark);
   color: var(--color-text-strong);
   font-family: var(--font-display);
     font-size: var(--text-base);
-		  font-weight: var(--font-weight-medium);
+		  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
   text-wrap: balance;
@@ -8065,7 +8505,7 @@ background: var(--color-background-dark);
   margin: 0;
   padding-top: var(--space-3);
   border-top: var(--border-width-thin) solid var(--color-border);
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
@@ -8099,7 +8539,7 @@ background: var(--color-background-dark);
 
 .about-recognition__source:hover,
 .about-recognition__source:focus-visible {
-  color: var(--color-gold-600);
+  color: var(--color-link-hover);
 }
 
 .about-recognition__source:focus-visible {
@@ -8209,7 +8649,7 @@ background: var(--color-background-dark);
 
 .about-locations__subtitle {
   margin: var(--space-5) auto 0;
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -8316,14 +8756,14 @@ background: var(--color-background-dark);
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
 
 .about-locations__desc {
   margin: 0 0 var(--space-5);
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
@@ -8393,7 +8833,7 @@ background: var(--color-background-dark);
 
 @media (hover: hover) and (pointer: fine) {
   .about-locations__link:hover {
-    color: var(--color-gold-600);
+    color: var(--color-link-hover);
   }
 
   .about-locations__link:hover svg {
@@ -8462,14 +8902,14 @@ background: var(--color-background-dark);
   color: var(--color-text-strong);
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
 
 .about-locations__tour-text {
   margin: 0 0 var(--space-6);
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
@@ -8607,7 +9047,22 @@ background: var(--color-background-dark);
   isolation: isolate;
   background: var(--color-background-dark);
   color: var(--color-white);
+
+  /* Local dark token scope */
+  --color-text: #ffffff;
+  --color-text-strong: #ffffff;
+  --color-text-muted: rgb(255 255 255 / 0.82);
+  --color-text-subtle: rgb(255 255 255 / 0.65);
+  --color-text-inverse: #0a0a0a;
+  --color-border: rgb(255 255 255 / 0.12);
+  --color-border-strong: rgb(255 255 255 / 0.28);
+  --color-link: var(--color-gold-300);
+  --color-link-hover: var(--color-gold-200);
+  --color-accent-text: var(--color-gold-300);
+  --color-interactive: var(--color-gold-300);
+  --focus-ring-color: var(--color-gold-300);
 }
+
 
 .about-cta > .container {
   width: min(100% - (var(--container-padding-inline) * 2), var(--container-max));
@@ -8733,7 +9188,7 @@ background: var(--color-background-dark);
   color: var(--color-white);
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
@@ -8850,8 +9305,13 @@ background: var(--color-background-dark);
 .academy-hero {
 	position: relative;
 	isolation: isolate;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	min-height: 100svh;
+	min-height: 100dvh;
 	background: var(--color-background);
-	/* Compact padding to prevent full-screen height */
 	padding-top: calc(var(--header-height) + var(--space-6));
 	padding-bottom: clamp(2.5rem, 5vw, 4rem);
 }
@@ -8898,8 +9358,7 @@ background: var(--color-background-dark);
 	margin: 0 0 var(--space-4);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
-	/* font-size: clamp(2.25rem, 5vw, 4rem); */
-	font-weight: var(--font-weight-medium);
+font-size: clamp(2.25rem, 3.5vw, 4rem);	font-weight: var(--font-weight-semibold);
 	line-height: 1.05;
 	letter-spacing: var(--tracking-tight);
 }
@@ -8912,7 +9371,7 @@ background: var(--color-background-dark);
 
 .academy-hero__description {
 	margin: 0 0 var(--space-5);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -8941,7 +9400,7 @@ background: var(--color-background-dark);
 	color: var(--color-text-strong);
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	text-align: left;
 }
 
@@ -9084,12 +9543,28 @@ background: var(--color-background-dark);
 .academy-philosophy {
 	position: relative;
 	isolation: isolate;
-	/* Distinct dark background to separate from Section 1 (Hero) */
 	background: var(--color-background-dark);
 	color: var(--color-white);
-	 /* padding-block: clamp(4rem, 8vw, 7rem);*/
 	border-top: var(--border-width-thin) solid rgb(255 255 255 / 0.05);
 	border-bottom: var(--border-width-thin) solid rgb(255 255 255 / 0.05);
+
+	/* Local dark token scope */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-background: #000000;
+	--color-surface: #111111;
+	--color-surface-raised: #171717;
+	--color-surface-muted: #171717;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.28);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .academy-philosophy > .container {
@@ -9203,7 +9678,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.5rem, 5vw, 3.5rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -9217,7 +9692,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 
 .academy-philosophy__text {
 	margin: 0 0 var(--space-8);
-	color: rgb(255 255 255 / 0.85);
+	/* color: rgb(255 255 255 / 0.85); */
 	/* font-family: var(--font-sans);
 	font-size: var(--text-lg); */
 	line-height: var(--leading-relaxed);
@@ -9281,14 +9756,14 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 }
 
 .academy-philosophy__truth-text {
 	margin: 0;
-	color: rgb(255 255 255 / 0.75);
+	/* color: rgb(255 255 255 / 0.75); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -9371,7 +9846,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.25rem, 5vw, 3.5rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -9385,7 +9860,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 
 .academy-pathways__desc {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -9456,6 +9931,25 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	background: var(--color-surface-dark);
 	border-color: var(--color-surface-dark);
 	color: var(--color-white);
+
+	/* Local dark token scope — featured card is always dark by design.
+	   Any nested component reading semantic tokens now resolves to on-dark
+	   values automatically. */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.75);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-surface: var(--color-surface-dark);
+	--color-surface-muted: rgb(255 255 255 / 0.1);
+	--color-surface-raised: var(--color-surface-dark);
+	--color-border: rgb(255 255 255 / 0.15);
+	--color-border-strong: rgb(255 255 255 / 0.25);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .academy-pathways__card--featured::before {
@@ -9518,7 +10012,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	border-radius: var(--radius-sm);
 	white-space: nowrap;
 }
@@ -9563,7 +10057,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-2xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 	overflow-wrap: break-word;
@@ -9576,7 +10070,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 
 .academy-pathways__intro {
 	margin: 0 0 var(--space-6);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -9684,7 +10178,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 .academy-pathways__outcome-list li {
 	position: relative;
 	padding-left: 1.5rem;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-snug);
@@ -9742,7 +10236,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 }
@@ -9750,7 +10244,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 .academy-pathways__admissions-text {
 	max-width: 60ch;
 	margin: 0 auto;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -9913,7 +10407,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.25rem, 5vw, 3.5rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -9927,7 +10421,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 
 .academy-showcase__desc {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -10099,7 +10593,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .academy-showcase__role {
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
 	line-height: 1.4;
@@ -10200,7 +10694,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.25rem, 4vw, 3rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 }
@@ -10212,7 +10706,7 @@ padding-left: clamp(1.5rem, 3vw, 2.5rem);
 
 .academy-atelier__header-desc {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-lg);
 	line-height: var(--leading-relaxed);
@@ -10281,7 +10775,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-2xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 	text-align: center;
@@ -10289,7 +10783,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .academy-atelier__desc {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -10366,14 +10860,14 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	text-align: center;
 }
 
 .academy-atelier__step-text {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -10399,7 +10893,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .academy-atelier__faq-link {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	text-align: center;
@@ -10407,14 +10901,15 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .academy-atelier__faq-link .text-link {
 	color: var(--color-accent-text);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 	transition: color var(--transition-fast);
 }
 
-.academy-atelier__faq-link .text-link:hover {
-	color: var(--color-gold-600);
+.academy-atelier__faq-link .text-link:hover,
+.academy-atelier__faq-link .text-link:focus-visible {
+	color: var(--color-link-hover);
 }
 
 /* ==========================================================================
@@ -10596,7 +11091,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.25rem, 4vw, 3rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 }
@@ -10608,7 +11103,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .academy-instructor__desc {
 	margin: 0 0 var(--space-6);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -10645,7 +11140,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: 1.2;
 }
@@ -10783,7 +11278,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.25rem, 5vw, 3.5rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -10797,7 +11292,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .academy-faq__desc {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -10907,6 +11402,20 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	padding-block: clamp(5rem, 10vw, 8rem);
 	overflow: hidden;
 	border-top: var(--border-width-thin) solid rgb(255 255 255 / 0.08);
+
+	/* Local dark token scope */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.28);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .academy-final-cta > .container {
@@ -10955,7 +11464,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	/* font-size: clamp(2.5rem, 5vw, 4rem); */
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance; /* Mobile fallback: balanced wrapping */
@@ -11081,6 +11590,12 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .shop-hero {
 	position: relative;
 	isolation: isolate;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 90vh;
+	min-height: 90svh;
+	min-height: 90dvh;
 	padding-top: calc(var(--header-height) + clamp(3rem, 6vw, 5rem));
 	padding-bottom: clamp(3rem, 6vw, 5rem);
 	background-color: var(--color-black-deep);
@@ -11097,6 +11612,19 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	background-position: center, center;
 	background-size: cover, cover;
 	color: var(--color-white);
+
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.28);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .shop-hero > .container {
@@ -11118,6 +11646,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	display: none;
 }
 
 .shop-breadcrumb li {
@@ -11188,7 +11717,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: clamp(2rem, 4.5vw, 3.5rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.08;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -11271,10 +11800,10 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	background: transparent;
 	border: var(--border-width-thin) solid var(--color-border-strong);
 	border-radius: var(--radius-full);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1;
 	white-space: nowrap;
 	cursor: pointer;
@@ -11355,6 +11884,16 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
 }
 
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .shop-sort {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23edc84f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+	}
+}
+
+:root[data-theme="dark"] .shop-sort {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23edc84f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+}
+
 .shop-sort:focus {
 	outline: none;
 	border-color: var(--color-gold-500);
@@ -11416,7 +11955,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-status {
 	margin: 0 0 var(--space-5);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-normal);
@@ -11603,7 +12142,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-grid .product-card__description {
 	margin: var(--space-2) 0 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-size: var(--text-xs);
 	line-height: var(--leading-relaxed);
 	display: -webkit-box;
@@ -11762,7 +12301,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	grid-column: 1 / -1;
 	width: min(100%, 52ch);
 	margin: var(--space-10) auto;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
 	text-align: center;
@@ -11774,8 +12313,10 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	text-underline-offset: 0.2em;
 }
 
-.shop-empty a:hover { color: var(--color-gold-600); }
-
+.shop-empty a:hover,
+.shop-empty a:focus-visible {
+	color: var(--color-link-hover);
+}
 /* ==========================================================================
    8. MOBILE FILTER DRAWER
    ========================================================================== */
@@ -11783,20 +12324,24 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .shop-filter-drawer {
 	position: fixed;
 	inset: 0;
-	z-index: 9999;
+	z-index: var(--z-drawer);
 	display: flex;
 	justify-content: flex-end;
 	visibility: hidden;
 	pointer-events: none;
 	opacity: 0;
-	transition: opacity 220ms ease, visibility 0s linear 220ms;
+	transition:
+		opacity var(--duration-normal) var(--ease-standard),
+		visibility 0s linear var(--duration-normal);
 }
 
 .shop-filter-drawer[aria-hidden="false"] {
 	visibility: visible;
 	pointer-events: auto;
 	opacity: 1;
-	transition: opacity 220ms ease, visibility 0s linear 0s;
+	transition:
+		opacity var(--duration-normal) var(--ease-standard),
+		visibility 0s linear 0s;
 }
 
 .shop-filter-drawer__backdrop {
@@ -11818,7 +12363,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text);
 	box-shadow: -20px 0 50px rgb(0 0 0 / 0.18);
 	transform: translate3d(100%, 0, 0);
-	transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+	transition: transform var(--duration-slow) var(--ease-emphasized);
 	overflow: hidden;
 }
 
@@ -11841,7 +12386,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 }
 
 .shop-filter-drawer__close {
@@ -11877,7 +12422,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-filter-drawer__label {
 	margin: 0 0 var(--space-3);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-semibold);
@@ -11981,7 +12526,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -12056,7 +12601,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-craft__text {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
 	line-height: var(--leading-relaxed);
@@ -12098,7 +12643,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-process__subtitle {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -12167,14 +12712,14 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 }
 
 .shop-process__step-text {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -12221,7 +12766,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(1.75rem, 3vw, 2.5rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -12234,7 +12779,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-custom__text {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -12344,7 +12889,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	margin: var(--space-6) auto 0;
 	padding-top: var(--space-5);
 	border-top: var(--border-width-thin) solid var(--color-border);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -12359,7 +12904,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-sizing__note .text-link:hover,
 .shop-sizing__note .text-link:focus-visible {
-	color: var(--color-gold-600);
+	color: var(--color-link-hover);
 }
 
 /* ==========================================================================
@@ -12396,7 +12941,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .shop-faq__subtitle {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -12463,7 +13008,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .shop-faq__grid .accordion-item__panel p {
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 }
 
 /* ==========================================================================
@@ -12506,7 +13051,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	align-items: center;
 	gap: var(--space-2);
 	min-width: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: 1.4;
@@ -12529,7 +13074,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .product-modal {
 	position: fixed;
 	inset: 0;
-	z-index: 9998;
+	z-index: var(--z-modal);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -12537,14 +13082,18 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	visibility: hidden;
 	pointer-events: none;
 	opacity: 0;
-	transition: opacity 220ms ease, visibility 0s linear 220ms;
+	transition:
+		opacity var(--duration-normal) var(--ease-standard),
+		visibility 0s linear var(--duration-normal);
 }
 
 .product-modal[aria-hidden="false"] {
 	visibility: visible;
 	pointer-events: auto;
 	opacity: 1;
-	transition: opacity 220ms ease, visibility 0s linear 0s;
+	transition:
+		opacity var(--duration-normal) var(--ease-standard),
+		visibility 0s linear 0s;
 }
 
 .product-modal__backdrop {
@@ -12570,7 +13119,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	box-shadow: 0 32px 80px rgb(0 0 0 / 0.24);
 	overflow: hidden;
 	transform: scale(0.96);
-	transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+	transition: transform var(--duration-slow) var(--ease-emphasized);
 }
 
 .product-modal[aria-hidden="false"] .product-modal__panel {
@@ -12673,7 +13222,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 }
 
 .product-modal__breadcrumb a {
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	text-decoration: none;
 }
 
@@ -12684,7 +13233,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .product-modal__breadcrumb span {
 	color: var(--color-text);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 }
 
 .product-modal__category {
@@ -12705,7 +13254,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.15;
 	letter-spacing: var(--tracking-tight);
 }
@@ -12722,7 +13271,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .product-modal__description {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
 	line-height: var(--leading-relaxed);
@@ -12766,7 +13315,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text);
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	cursor: pointer;
 	transition:
 		color var(--duration-fast) var(--ease-standard),
@@ -12854,7 +13403,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .product-modal__actions .btn-primary.is-added:focus-visible {
 	background: var(--color-success);
 	border-color: var(--color-success);
-	color: var(--color-white);
+	color: var(--color-text-inverse);
 	box-shadow: 0 3px 0 rgb(0 0 0 / 0.18);
 	transform: none;
 	cursor: default;
@@ -12879,7 +13428,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .product-modal__custom-note {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
 	line-height: var(--leading-relaxed);
@@ -13030,10 +13579,10 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	background: transparent;
 	border: var(--border-width-thin) solid transparent;
 	border-radius: var(--radius-sm);
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	cursor: pointer;
 	transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
 }
@@ -13393,6 +13942,8 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	}
 }
 
+
+
 /* ==========================================================================
    End of shop.css
    ========================================================================== */
@@ -13436,13 +13987,28 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: clamp(24rem, 55vh, 34rem);
+	min-height: 100vh;
+	min-height: 100svh;
+	min-height: 100dvh;
 	padding-top: calc(var(--header-height) + clamp(2rem, 4vw, 3rem));
 	padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
 	overflow: hidden;
 	color: var(--color-white);
 	text-align: center;
 	background: var(--color-black-deep);
+
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.28);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .gallery-hero__background {
@@ -13522,7 +14088,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: clamp(2.5rem, 6vw, 4.25rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.05;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -13682,7 +14248,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -13697,7 +14263,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .gallery-hub__description {
 	/* width: min(100%, 60ch); */
 	margin: var(--space-4) auto 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -13761,6 +14327,18 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 		border-color var(--duration-base) var(--ease-standard),
 		box-shadow var(--duration-base) var(--ease-standard),
 		transform var(--duration-base) var(--ease-standard);
+
+	/* Local dark token scope */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-border: rgb(255 255 255 / 0.2);
+	--color-border-strong: rgb(255 255 255 / 0.35);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
 }
 
 .gallery-box__media {
@@ -13820,7 +14398,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -13880,7 +14458,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 }
 
 .gallery-box__trigger:focus-visible {
-	outline: var(--focus-ring-width) solid var(--color-focus, var(--color-gold-300));
+	outline: var(--focus-ring-width) solid var(--color-accent-on-dark);
 	outline-offset: var(--focus-ring-offset);
 	border-color: var(--color-gold-400);
 }
@@ -13960,7 +14538,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(1.5rem, 2.5vw, 2rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.15;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -13968,7 +14546,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .gallery-box__panel-title p:not(.eyebrow) {
 	margin: var(--space-3) 0 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -14224,7 +14802,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-base);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.25;
 	letter-spacing: -0.005em;
 	text-wrap: balance;
@@ -14232,7 +14810,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .gallery-item-card__caption p {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
 	line-height: 1.4;
@@ -14369,7 +14947,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .gallery-viewer__counter {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	font-weight: var(--font-weight-semibold);
@@ -14467,7 +15045,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.2;
 	letter-spacing: -0.005em;
 	text-wrap: balance;
@@ -14479,7 +15057,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .gallery-viewer__description {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -14540,24 +15118,6 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 /* Responsive — tighter on small screens */
 @media (max-width: 40rem) {
-	.gallery-viewer__panel {
-		border-radius: var(--radius-sm);
-	}
-
-	.gallery-viewer__content {
-		flex-direction: column;
-		gap: var(--space-3);
-		padding: var(--space-3);
-	}
-
-	.gallery-viewer__picture {
-		max-height: 48vh;
-	}
-
-	.gallery-viewer__image {
-		max-height: 48vh;
-	}
-
 	.gallery-viewer__nav {
 		position: absolute;
 		top: 50%;
@@ -14565,7 +15125,11 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 		width: 2.5rem;
 		height: 2.5rem;
 		z-index: 2;
-		background: rgb(255 255 255 / 0.9);
+		/* Mobile buttons float over the enlarged dark backdrop. Use solid
+		   white in both themes so the icon is always legible. */
+		background: rgb(255 255 255 / 0.92);
+		color: var(--color-black);  /* ← dark icon, fixed */
+		border-color: rgb(0 0 0 / 0.15);
 	}
 
 	.gallery-viewer__nav--prev {
@@ -14579,6 +15143,15 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	.gallery-viewer__nav--prev:hover,
 	.gallery-viewer__nav--next:hover {
 		transform: translateY(-50%);
+		background: var(--color-gold-400);
+		color: var(--color-black);
+		border-color: var(--color-gold-400);
+	}
+
+	.gallery-viewer__nav:disabled {
+		/* Keep the mobile positioning even when disabled. */
+		transform: translateY(-50%);
+		opacity: 0.35;
 	}
 }
 
@@ -14671,7 +15244,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -14686,7 +15259,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .gallery-cta__description {
 	width: min(100%, 50ch);
 	margin: var(--space-4) auto 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -14762,7 +15335,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-2xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.15;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -14770,7 +15343,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 
 .gallery-cta__card-text {
 	margin: 0;
-	color: var(--color-text-muted);
+	/* color: var(--color-text-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--text-sm);
 	line-height: var(--leading-relaxed);
@@ -14866,7 +15439,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
    10. ULTRAWIDE
    ========================================================================== */
 
-@media (min-width: 160rem) {
+/* @media (min-width: 160rem) {
 	.gallery-hub,
 	.gallery-cta {
 		padding-block: clamp(5rem, 7vw, 8rem);
@@ -14877,7 +15450,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 		padding-bottom: 4rem;
 		min-height: 40rem;
 	}
-}
+} */
 
 
 /* ==========================================================================
@@ -15034,6 +15607,38 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	background: linear-gradient(180deg,
 			var(--color-black) 0,
 			var(--color-black-soft) 100%);
+
+	/* -----------------------------------------------------------------------
+	   Local dark token scope
+	   -----------------------------------------------------------------------
+	   The footer is ALWAYS a dark surface. Reset semantic tokens inside
+	   the footer so any nested component (btn-secondary in the CTA,
+	   any future card, any text using var(--color-text)) resolves to
+	   on-dark values automatically in BOTH themes.
+
+	   This mirrors .section--dark in layout.css and
+	   .mobile-navigation__drawer in the header.
+	   ----------------------------------------------------------------------- */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.75);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+	--color-background: #080808;
+	--color-surface: #111111;
+	--color-surface-raised: #1a1a1a;
+	--color-surface-muted: #1a1a1a;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.28);
+	--color-border-subtle: rgb(255 255 255 / 0.06);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-link-active: var(--color-gold-100);
+	--color-interactive: var(--color-gold-300);
+	--color-interactive-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
+	--color-focus: var(--focus-ring-color);
 }
 .site-footer a {
 	color: inherit;
@@ -15082,7 +15687,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: clamp(1.5rem, 2.5vw, 2rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: var(--leading-tight);
 	text-align: center;
@@ -15391,7 +15996,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	height: 2.5rem;
 	border-radius: 50%;
 	background: color-mix(in srgb, var(--color-white) 3%, transparent);
-	color: var(--color-text-on-dark-muted);
+	/* color: var(--color-text-on-dark-muted); */
 	border: var(--border-width-thin) solid color-mix(in srgb, var(--color-white) 10%, transparent);
 	transition: 
 		background-color var(--transition-fast),
@@ -15436,7 +16041,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: clamp(2rem, 8vw, 2.75rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: var(--leading-tight);
 }
@@ -15444,7 +16049,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
    Brand description
    --------------------------------------------------------- */
 .site-footer__description {
-	color: var(--color-text-on-dark-muted);
+	/* color: var(--color-text-on-dark-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular, 400);
@@ -15462,10 +16067,10 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	margin-top: var(--space-6, 1.5rem);
 	padding-top: var(--space-4, 1rem);
 	border-top: var(--border-width-thin) solid var(--color-border);
-	color: var(--color-text-on-dark-secondary);
+	/* color: var(--color-text-on-dark-secondary); */
 	font-family: var(--font-sans);
 	font-size: var(--font-size-xs);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-wide);
 	line-height: var(--leading-tight);
 	text-transform: uppercase;
@@ -15539,7 +16144,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	width: fit-content;
 	min-height: 2.35rem;
 	padding: 0.25rem 0;
-	color: var(--color-text-on-dark-muted);
+	/* color: var(--color-text-on-dark-muted); */
 	font-family: var(--font-sans);
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular, 400);
@@ -15608,7 +16213,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
 	font-size: clamp(2rem, 9vw, 2.75rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tighter);
 	line-height: 1.05;
 	text-align: center;
@@ -15657,7 +16262,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 		0 0 var(--text-space-sm, 0.625rem);
 	color: var(--color-white);
 	font-family: var(--font-display);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: var(--leading-tight);
 }
@@ -15764,7 +16369,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: color-mix(in srgb, var(--color-white) 55%, transparent);
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-normal);
 	line-height: var(--leading-relaxed);
 	transition: color var(--transition-fast);
@@ -16302,7 +16907,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
    Reusable heading pattern for content sections.
    Used by: about, academy, shop, portfolio, contact pages.
    ========================================================= */
-.section-header {
+/* .section-header {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-4);
@@ -16344,7 +16949,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	color: var(--color-text);
 	font-family: var(--font-display);
 	font-size: clamp(2rem, 4.5vw, 3.5rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.05;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
@@ -16378,7 +16983,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	.section-header--split .section-header__right {
 		justify-self: end;
 	}
-}
+} */
 /* =========================================================
    10. FORM CONTROLS
    ========================================================= */
@@ -16410,12 +17015,19 @@ select {
 	-moz-appearance: none;
 	appearance: none;
 	padding-right: calc(var(--space-10));
-	/* Chevron indicator */
-	background-image:
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2385620b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2385620b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right var(--space-4) center;
 	background-size: 1.1rem;
+}
+/* NEW — dark-mode chevron so it's visible on the dark select bg */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) select {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9ad2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+	}
+}
+:root[data-theme="dark"] select {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9ad2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
 }
 input:hover,
 textarea:hover,
@@ -16426,8 +17038,8 @@ input:focus,
 textarea:focus,
 select:focus {
 	outline: none;
-	border-color: var(--color-gold-500);
-	box-shadow: 0 0 0 3px rgb(197 154 24 / 0.12);
+	border-color: var(--color-interactive);
+	box-shadow: 0 0 0 3px rgb(197 154 24 / 0.15);
 }
 input:disabled,
 textarea:disabled,
@@ -16441,7 +17053,7 @@ label {
 	margin-bottom: var(--space-2);
 	color: var(--color-text);
 	font-size: var(--text-sm);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-wide);
 }
 fieldset {
@@ -16461,8 +17073,8 @@ legend {
 input,
 textarea,
 select {
-	accent-color: var(--color-gold-500);
-	caret-color: var(--color-gold-600);
+	accent-color: var(--color-interactive);
+	caret-color: var(--color-interactive);
 }
 /* =========================================================
    11. FORM STATES
@@ -16477,6 +17089,7 @@ select.error {
 	border-color: var(--color-error);
 	background: var(--color-error-soft);
 }
+/* FIX — theme-aware error shadow */
 input[aria-invalid="true"]:focus,
 textarea[aria-invalid="true"]:focus,
 select[aria-invalid="true"]:focus,
@@ -16484,8 +17097,13 @@ input.error:focus,
 textarea.error:focus,
 select.error:focus {
 	border-color: var(--color-error);
-	box-shadow: 0 0 0 3px rgb(180 35 24 / 0.12);
+	box-shadow: 0 0 0 3px rgb(from var(--color-error) r g b / 0.15);
 }
+/* If rgb(from ...) is unsupported in your targets, fall back to:
+   box-shadow: 0 0 0 3px rgb(180 35 24 / 0.15);
+   — that's the light-mode value; dark mode shadow stays readable
+   because --color-error itself flips to #fca5a5.
+*/
 /* Field-level error message */
 .field-error,
 .form-error-message {
@@ -16573,6 +17191,14 @@ select.error:focus {
 	background: var(--color-info-soft);
 	border: 1px solid var(--color-info);
 }
+@media (prefers-reduced-motion: reduce) {
+	.field-error,
+	.form-error-message,
+	.form-success,
+	.form-error {
+		animation: none;
+	}
+}
 /* =========================================================
    12. LOADING INDICATORS
    ========================================================= */
@@ -16589,14 +17215,15 @@ select.error:focus {
 	vertical-align: middle;
 }
 /* Larger standalone spinner */
+/* FIX — spinner-lg: gold-500 → interactive; hardcoded duration → token */
 .spinner-lg {
 	display: inline-block;
 	width: 2.5rem;
 	height: 2.5rem;
 	border: 3px solid var(--color-border);
-	border-top-color: var(--color-gold-500);
+	border-top-color: var(--color-interactive);
 	border-radius: 50%;
-	animation: modeinfinity-spin 0.9s linear infinite;
+	animation: modeinfinity-spin calc(0.9s * var(--motion-scale)) linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
 	.loading-spinner,
@@ -16710,7 +17337,7 @@ select.error:focus {
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-xl);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	letter-spacing: var(--tracking-tight);
 	line-height: var(--leading-tight);
 }
@@ -16730,9 +17357,10 @@ select.error:focus {
 		color var(--duration-fast) var(--ease-standard),
 		transform var(--duration-fast) var(--ease-standard);
 }
+/* FIX — close button hover: gold-500 (2.3:1 in light) → interactive */
 .modal-close-btn:hover,
 .modal-close-btn:focus-visible {
-	color: var(--color-gold-500);
+	color: var(--color-interactive);
 	transform: scale(1.1);
 }
 .modal-close-btn:focus-visible {
@@ -16756,7 +17384,7 @@ select.error:focus {
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
 	font-size: var(--text-lg);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 }
 .modal-body h3:first-child {
 	margin-top: 0;
@@ -16832,11 +17460,13 @@ select.error:focus {
    Position-fixed button. Visibility is controlled by JS
    via the `.is-visible` class.
    ========================================================= */
+/* FIX — z-index: --z-toast (1400) sits above modals (1300). Should be below.
+   Using --z-header (1000) — same layer as header, above content, below overlays. */
 .scroll-to-top {
 	position: fixed;
 	right: var(--space-5);
 	bottom: var(--space-5);
-	z-index: var(--z-toast);
+	z-index: var(--z-header);  /* was: var(--z-toast) */
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -16929,7 +17559,7 @@ select.error:focus {
 	border: 0;
 	font-family: var(--font-display);
 	font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: var(--leading-snug);
 	text-align: left;
 	letter-spacing: var(--tracking-tight);
@@ -16939,7 +17569,7 @@ select.error:focus {
 }
 .accordion-item__trigger:hover,
 .accordion-item__trigger:focus-visible {
-	color: var(--color-gold-600);
+	color: var(--color-interactive);
 }
 .accordion-item__trigger:focus-visible {
 	outline: var(--focus-ring-width) solid var(--focus-ring-color);
@@ -16957,7 +17587,7 @@ select.error:focus {
 	width: 2rem;
 	height: 2rem;
 	flex: 0 0 auto;
-	color: var(--color-gold-500);
+	color: var(--color-interactive);
 	transition: transform var(--duration-base) var(--ease-emphasized);
 }
 .accordion-item[open] .accordion-item__icon,
@@ -17022,12 +17652,13 @@ select.error:focus {
 	font-size: var(--text-sm);
 	letter-spacing: 0.1em;
 }
+/* FIX — restore font-family and size (uncomment), use role tokens */
 .testimonial-card__quote {
 	margin: 0;
 	padding: 0;
 	color: var(--color-text);
-	font-family: var(--font-display);
-	font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+	font-family: var(--font-mono);
+	font-size: var(--text-lg);
 	font-style: italic;
 	font-weight: var(--font-weight-regular);
 	line-height: var(--leading-relaxed);
@@ -17289,120 +17920,95 @@ select.error:focus {
 /* ==========================================================================
    TOAST — CONTAINER, POSITIONING & SHELL
    ========================================================================== */
-
 .toast-container,
 .toast-region {
 	position: fixed;
-	bottom: 1.5rem;
-	right: 1.5rem;
-	z-index: 10000;
+	bottom: var(--space-6);
+	right: var(--space-6);
+	z-index: var(--z-toast);  /* was: 10000 */
 	display: flex;
 	flex-direction: column;
-	gap: 0.75rem;
+	gap: var(--space-3);
 	pointer-events: none;
-	max-width: min(26rem, calc(100vw - 2rem));
+	max-width: min(26rem, calc(100vw - var(--space-8)));
 }
-
 .toast-container > *,
 .toast-region > * {
 	pointer-events: auto;
 }
 
 .toast {
-	background: var(--color-surface, #ffffff);
-	color: var(--color-text, #171717);
-	border: 1px solid var(--color-border, #e5e5e5);
-	border-left: 4px solid var(--color-gold-500, #c59a18);
-	border-radius: var(--radius-md, 0.5rem);
-	box-shadow: 0 12px 32px rgb(0 0 0 / 0.14), 0 2px 6px rgb(0 0 0 / 0.06);
-	padding: 1rem 1rem 1rem 1.125rem;
+	display: flex;
+	align-items: flex-start;
+	gap: var(--space-3);
+	background: var(--color-surface);
+	color: var(--color-text);
+	border: var(--border-width-thin) solid var(--color-border);
+	border-left: 4px solid var(--color-gold-500);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-xl);
+	padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
 	opacity: 0;
 	transform: translateY(0.75rem);
-	transition: opacity 220ms ease, transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+	transition:
+		opacity var(--duration-normal) var(--ease-standard),
+		transform var(--duration-slow) var(--ease-emphasized);
 }
-
 .toast.is-visible {
 	opacity: 1;
 	transform: translateY(0);
 }
 
-.toast--success { border-left-color: var(--color-success, #166534); }
-.toast--error   { border-left-color: var(--color-error,   #b42318); }
-.toast--warning { border-left-color: var(--color-warning, #8a5600); }
-.toast--info    { border-left-color: var(--color-info,    #155eef); }
+.toast--success { border-left-color: var(--color-success); }
+.toast--error   { border-left-color: var(--color-error); }
+.toast--warning { border-left-color: var(--color-warning); }
+.toast--info    { border-left-color: var(--color-info); }
 
-
-
-/* ==========================================================================
-   TOAST — INNER LAYOUT
-   ==========================================================================
-   The shell (position, background, border, shadow, opacity, entry
-   transform) is defined ABOVE in "TOAST — CONTAINER, POSITIONING &
-   SHELL". This block defines only:
-
-     - the internal flex direction of the toast (icon | content | close)
-     - icon sizing
-     - title / message typography
-     - close-button states
-
-   No positioning, no colours of the shell — those live above.
-   ========================================================================== */
-
-.toast {
-	display: flex;
-	align-items: flex-start;
-	gap: 0.75rem;
-}
-
-/* -------- Icon -------- */
+/* Icon */
 .toast__icon {
 	flex: 0 0 auto;
 	display: grid;
 	place-items: center;
 	width: 1.5rem;
 	height: 1.5rem;
-	font-size: 1rem;
+	font-size: var(--text-base);
 	line-height: 1;
-	color: var(--color-text-muted, #737373);
+	color: var(--color-text-muted);
 }
-
 .toast__icon svg {
 	display: block;
 	width: 1.25rem;
 	height: 1.25rem;
 }
+.toast--success .toast__icon { color: var(--color-success); }
+.toast--error   .toast__icon { color: var(--color-error); }
+.toast--warning .toast__icon { color: var(--color-warning); }
+.toast--info    .toast__icon { color: var(--color-info); }
 
-.toast--success .toast__icon { color: var(--color-success, #166534); }
-.toast--error   .toast__icon { color: var(--color-error,   #b42318); }
-.toast--warning .toast__icon { color: var(--color-warning, #8a5600); }
-.toast--info    .toast__icon { color: var(--color-info,    #155eef); }
-
-/* -------- Content -------- */
+/* Content */
 .toast__content {
 	flex: 1 1 auto;
 	min-width: 0;
 }
-
 .toast__title {
 	margin: 0;
-	color: var(--color-text, #171717);
-	font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
-	font-size: 0.875rem;
-	font-weight: 600;
-	line-height: 1.4;
-	letter-spacing: -0.005em;
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--leading-snug);
+	letter-spacing: var(--tracking-tight);
 }
-
 .toast__message {
-	margin: 0.2rem 0 0;
-	color: var(--color-text-muted, #737373);
-	font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
-	font-size: 0.8125rem;
-	line-height: 1.5;
+	margin: var(--space-1) 0 0;
+	color: var(--color-text-muted);
+	font-family: var(--font-sans);
+	font-size: var(--text-xs);
+	line-height: var(--leading-normal);
 	overflow-wrap: anywhere;
 }
 
-/* -------- Close -------- */
+/* Close */
 .toast__close {
 	flex: 0 0 auto;
 	display: inline-flex;
@@ -17414,32 +18020,33 @@ select.error:focus {
 	border: 0;
 	border-radius: 50%;
 	background: transparent;
-	color: var(--color-text-muted, #737373);
+	color: var(--color-text-muted);
 	cursor: pointer;
 	transition:
-		background-color 150ms ease,
-		color 150ms ease;
+		background-color var(--duration-fast) var(--ease-standard),
+		color var(--duration-fast) var(--ease-standard);
 }
-
 .toast__close:hover,
 .toast__close:focus-visible {
-	background: rgb(0 0 0 / 0.06);
-	color: var(--color-text, #171717);
+	/* Was rgb(0 0 0 / 0.06) — invisible in dark mode */
+	background: var(--color-surface-muted);
+	color: var(--color-text);
 }
-
 .toast__close:focus-visible {
-	outline: 2px solid var(--focus-ring-color, #d4af37);
-	outline-offset: 2px;
+	outline: var(--focus-ring-width) solid var(--focus-ring-color);
+	outline-offset: var(--focus-ring-offset);
 }
-
 .toast__close-icon {
 	display: block;
 	width: 0.875rem;
 	height: 0.875rem;
 }
 
-
-
+@media (prefers-reduced-motion: reduce) {
+	.toast {
+		transition: none;
+	}
+}
 
 
 
@@ -17451,41 +18058,41 @@ select.error:focus {
    and their intros. Mirrors the Academy styling exactly.
    ========================================================== */
 
-.home-section-title {
+/* .home-section-title {
 	width: 100%;
 	max-width: none;
 	margin: 0;
 	color: var(--color-text);
 	font-family: var(--font-display);
 	font-size: clamp(2.2rem, 5vw, 4rem);
-	font-weight: var(--font-weight-medium);
+	font-weight: var(--font-weight-semibold);
 	line-height: 1.08;
 	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
-}
+} */
 
-.home-section-title em {
+/* .home-section-title em {
 	color: var(--color-accent-text);
 	font-style: italic;
 	letter-spacing: -0.01em;
-}
+} */
 
-@media (min-width: 64rem) {
+/* @media (min-width: 64rem) {
 	.home-section-title {
 		font-size: clamp(1.9rem, 1rem + 1.8vw, 2.6rem);
 		white-space: nowrap;
 	}
-}
+} */
 
 .home-section-intro {
 	/* width: min(100%, 62ch); */
     /* margin: 0 auto; */
-    color: var(--color-text-muted);
-    font-family: var(--font-sans);
+    /* color: var(--color-text-muted); */
+    /* font-family: var(--font-sans); */
     /* font-size: var(--text-base); */
-    line-height: var(--leading-relaxed);
+    /* line-height: var(--leading-relaxed); */
     /* text-align: center; */
-    text-wrap: pretty;
+    /* text-wrap: pretty; */
 }
 
 

@@ -773,8 +773,7 @@ export function initCraftCarousel(carousel) {
 	 *
 	 * Five seconds between stages.
 	 */
-	state.autoplay = true;
-	state.interval = positiveNumber(carousel.dataset.carouselInterval, CONFIG.defaultInterval);
+state.autoplay = parseBoolean(carousel.dataset.craftAutoplay, true);	state.interval = positiveNumber(carousel.dataset.carouselInterval, CONFIG.defaultInterval);
 	setupCraftAccessibility(state);
 	/*
 	 * Set the first slide immediately.

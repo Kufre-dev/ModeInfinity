@@ -47,7 +47,62 @@
    5. Added aspect-ratio utilities:
         .aspect-video, .aspect-square, .aspect-portrait,
         .aspect-landscape, .aspect-auto
+
+   PATCH ROUND — LIGHT-MODE FIXES
+   ------------------------------
+   A. Renamed --container-inline-padding → --container-padding-inline
+      (7 occurrences). Previous name was undefined; containers resolved
+      to width:auto → no max-width on desktop.
+   B. .section--dark converted to a LOCAL TOKEN SCOPE. Nested components
+      that read semantic tokens (--color-text, --color-surface, etc.)
+      now automatically receive the correct on-dark values without any
+      element-level overrides. This eliminates the class of bug where a
+      new component dropped inside a dark section renders near-black text
+      in light mode.
+   C. .section-header__eyebrow / .eyebrow / .section-label now consume
+      --type-label-* role tokens (was mixing primitives and --tracking-wide).
+      VISIBLE CHANGE: label tracking widens 0.04em → 0.08em.
+   D. .section--divider rewritten with ::after + gradient background
+      instead of single-side border-image (Safari/Firefox parity).
+   E. .split--wide base track corrected from minmax(0, 1.2fr) to
+      minmax(0, 1fr) — 1.2fr single-track is equivalent to 1fr, but was
+      misleading.
+
+   PATCH ROUND — SECTION RHYTHM
+   ----------------------------
+   F. .section default padding-block corrected from --section-space-sm
+      to --section-space-md. Previously .section and .section--compact
+      used identical values, making the "compact" modifier a no-op and
+      leaving .section with no distinct "medium" rhythm.
+
+      NEW BEHAVIOUR:
+        .section             → --section-space-md  (medium — the default)
+        .section--compact    → --section-space-sm  (compact — smaller)
+        .section--large      → --section-space-lg  (large — bigger)
+
+      VISIBLE IMPACT: every `.section` without a size modifier becomes
+      more spacious. See the warning at the bottom of this file's header
+      for the alternative if the current visual density is preferred.
+
+   PATCH ROUND — CROSS-PAGE HEADING
+   --------------------------------
+   G. Added `.section-title` and its historical alias
+      `.home-section-title` to section 4 (SECTION HEADERS).
+
+      Previously this rule lived in components.css (partially commented
+      out). It is now the canonical cross-page display heading used by
+      home, about, academy, shop, and gallery pages. Consumes the
+      --type-h2-size role token instead of a hardcoded clamp so it
+      scales fluidly and consistently with every other h2 on the site.
+
+      Related cleanup (performed outside this file):
+        - Removed the leftover @media (min-width: 64rem) override from
+          components.css that was forcing `white-space: nowrap` and a
+          smaller hardcoded font-size on desktop.
+        - Removed `.home-section-intro` from components.css (was an
+          empty no-op rule with all properties commented out).
    ========================================================================== */
+
 /* ==========================================================================
    1. BASE LAYOUT SAFETY
    ========================================================================== */
@@ -58,16 +113,17 @@ body {
 body {
 	position: relative;
 }
+
 /* ==========================================================================
    2. CONTAINERS
    ========================================================================== */
 .container {
-	width: min(100% - (var(--container-inline-padding) * 2),
+	width: min(100% - (var(--container-padding-inline) * 2),
 			var(--container-max));
 	margin-inline: auto;
 }
 .container--wide {
-	width: min(100% - (var(--container-inline-padding) * 2),
+	width: min(100% - (var(--container-padding-inline) * 2),
 			var(--container-wide));
 	margin-inline: auto;
 }
@@ -76,7 +132,7 @@ body {
 	margin-inline: auto;
 }
 .container--readable {
-	width: min(100% - (var(--container-inline-padding) * 2),
+	width: min(100% - (var(--container-padding-inline) * 2),
 			var(--content-readable));
 	margin-inline: auto;
 }
@@ -87,12 +143,12 @@ body {
    don't need editing.
    -------------------------------------------------------------------------- */
 .container-wide {
-	width: min(100% - (var(--container-inline-padding) * 2),
+	width: min(100% - (var(--container-padding-inline) * 2),
 			var(--container-wide));
 	margin-inline: auto;
 }
 .container-narrow {
-	width: min(100% - (var(--container-inline-padding) * 2),
+	width: min(100% - (var(--container-padding-inline) * 2),
 			var(--content-narrow));
 	margin-inline: auto;
 }
@@ -100,15 +156,19 @@ body {
 	width: 100%;
 	margin-inline: auto;
 }
+
 /* ==========================================================================
    3. SECTIONS
    ========================================================================== */
 .section {
 	position: relative;
 	isolation: isolate;
-	padding-block: var(--section-space-sm);
+	/* Default is now the medium tier. --section-space-md → the standard
+	   rhythm for a content section. */
+	padding-block: var(--section-space-md);
 }
 .section--compact {
+	/* Compact modifier — smaller than the default. */
 	padding-block: var(--section-space-sm);
 }
 .section--large {
@@ -129,26 +189,74 @@ body {
 .section--surface {
 	background: var(--color-surface);
 }
+
+/* --------------------------------------------------------------------------
+   Dark section — LOCAL TOKEN SCOPE
+   --------------------------------------------------------------------------
+   Every nested element that reads a semantic colour token inside this
+   section automatically gets the on-dark value. No element-level overrides
+   are required for headings, links, body text, borders, cards, inputs, or
+   any component using the design system.
+
+   The element rules that follow exist only to document intent for the
+   common cases. Everything works even if they are removed.
+
+   Section backgrounds (unchanged):
+     --color-background-dark = #111111  (light theme)
+                             = #000000  (dark theme)
+
+   Cards inside a dark section (--color-surface) are set to #171717 so they
+   sit visibly above both the #111 (light theme) and #000 (dark theme)
+   section backgrounds. Paired with --shadow-sm if desired.
+   -------------------------------------------------------------------------- */
 .section--dark {
+	/* Backgrounds */
+	--color-background: #000000;
+	--color-background-muted: #171717;
+
+	/* Surfaces — always lighter than the section background */
+	--color-surface: #171717;
+	--color-surface-raised: #262626;
+	--color-surface-muted: #262626;
+
+	/* Text */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.65);
+	--color-text-inverse: #0a0a0a;
+
+	/* Borders */
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.24);
+	--color-border-subtle: rgb(255 255 255 / 0.06);
+
+	/* Links & accents */
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-link-active: var(--color-gold-100);
+	--color-interactive: var(--color-gold-300);
+	--color-interactive-hover: var(--color-gold-200);
+	--color-interactive-active: var(--color-gold-100);
+	--color-accent-text: var(--color-gold-300);
+
+	/* Focus */
+	--focus-ring-color: var(--color-gold-300);
+	--color-focus: var(--focus-ring-color);
+
 	background: var(--color-background-dark);
-	color: var(--color-white);
+	color: var(--color-text);
 }
-.section--dark :where(h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6) {
-	color: #ffffff;
+
+/*
+ * Paragraphs and list items default to slightly muted white inside dark
+ * sections — headings and interactive elements stay at full strength.
+ * (figcaption is already 0.82 via global.css → --color-text-muted.)
+ */
+.section--dark :where(p, li, figcaption) {
+	color: var(--color-text-muted);
 }
-.section--dark :where(p,
-	li,
-	figcaption) {
-	color: rgb(255 255 255 / 0.82);
-}
-.section--dark a {
-	color: var(--color-accent-on-dark);
-}
+
 /* --------------------------------------------------------------------------
    Section background tier modifiers
    --------------------------------------------------------------------------
@@ -164,6 +272,7 @@ body {
 .section--tertiary {
 	background: var(--section-tertiary);
 }
+
 /* --------------------------------------------------------------------------
    Section gold divider
    --------------------------------------------------------------------------
@@ -171,16 +280,30 @@ body {
    Opt-in so it doesn't compete with section-specific top hairlines
    (e.g. .home-academy::before, .home-introduction__rule).
 
+   Rendered via ::after so it behaves consistently across browsers
+   (border-image on a single-side border is unreliable in Safari/Firefox).
+
    Usage: <section class="section section--divider">
    -------------------------------------------------------------------------- */
 .section--divider {
-	border-bottom: 2px solid;
-	border-image: linear-gradient(90deg,
-			transparent 0%,
-			var(--color-gold-500) 20%,
-			var(--color-gold-500) 80%,
-			transparent 100%) 1;
+	position: relative;
 }
+.section--divider::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	height: 2px;
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		var(--color-gold-500) 20%,
+		var(--color-gold-500) 80%,
+		transparent 100%
+	);
+	pointer-events: none;
+}
+
 /* ==========================================================================
    4. SECTION HEADERS
    ========================================================================== */
@@ -194,17 +317,12 @@ body {
 .section-label {
 	margin: 0;
 	color: var(--color-accent-text);
-	font-family: var(--font-sans);
+	font-family: var(--type-label-family);
 	font-size: var(--type-label-size);
-	font-weight: var(--font-weight-semibold);
-	line-height: var(--leading-normal);
-	letter-spacing: var(--tracking-wide);
+	font-weight: var(--type-label-weight);
+	line-height: var(--type-label-leading);
+	letter-spacing: var(--type-label-tracking);
 	text-transform: uppercase;
-}
-.section--dark :where(.section-header__eyebrow,
-	.eyebrow,
-	.section-label) {
-	color: var(--color-accent-on-dark);
 }
 .section-header__title {
 	max-width: var(--content-wide);
@@ -215,9 +333,6 @@ body {
 	margin: 0;
 	color: var(--color-text-muted);
 }
-.section--dark .section-header__intro {
-	color: rgb(255 255 255 / 0.82);
-}
 .section-header--center {
 	justify-items: center;
 	text-align: center;
@@ -225,6 +340,39 @@ body {
 .section-header--center .section-header__intro {
 	margin-inline: auto;
 }
+
+/* --------------------------------------------------------------------------
+   Cross-page display heading
+   --------------------------------------------------------------------------
+   `.home-section-title` is the historical name (kept for compatibility).
+   `.section-title` is the canonical name going forward.
+
+   Used by: home.html, about.html, academy.html, shop.html, gallery.html —
+   despite "home" in the name, it's a site-wide heading class.
+
+   Consumes --type-h2-size so it scales fluidly with every other h2.
+   Emphasised <em> inside the title inherits the accent token.
+   -------------------------------------------------------------------------- */
+.section-title,
+.home-section-title {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	color: var(--color-text-strong);
+	font-family: var(--font-display);
+	font-size: var(--type-h2-size);
+	font-weight: var(--font-weight-semibold);
+	line-height: 1.08;
+	letter-spacing: var(--tracking-tight);
+	text-wrap: balance;
+}
+.section-title em,
+.home-section-title em {
+	color: var(--color-accent-text);
+	font-style: italic;
+	letter-spacing: -0.01em;
+}
+
 /* ==========================================================================
    5. GENERIC GRID
    ========================================================================== */
@@ -255,6 +403,7 @@ body {
 	grid-template-columns: repeat(auto-fit,
 			minmax(min(100%, 13rem), 1fr));
 }
+
 /* ==========================================================================
    6. GRID GAPS
    ========================================================================== */
@@ -297,6 +446,7 @@ body {
 .gap-24 {
 	gap: var(--space-24);
 }
+
 /* ==========================================================================
    7. SPLIT LAYOUTS
    ========================================================================== */
@@ -309,7 +459,7 @@ body {
 .split--wide {
 	display: grid;
 	min-width: 0;
-	grid-template-columns: minmax(0, 1.2fr);
+	grid-template-columns: minmax(0, 1fr);
 	gap: var(--space-8);
 }
 .split--reverse {
@@ -318,6 +468,7 @@ body {
 .split--reverse > * {
 	direction: ltr;
 }
+
 /* ==========================================================================
    8. FLEX UTILITIES
    ========================================================================== */
@@ -381,6 +532,7 @@ body {
 .min-width-0 {
 	min-width: 0;
 }
+
 /* ==========================================================================
    9. STACKS
    ========================================================================== */
@@ -405,6 +557,7 @@ body {
 .stack--section {
 	--stack-gap: var(--space-16);
 }
+
 /* ==========================================================================
    10. COMMON FLOW SPACING
    ========================================================================== */
@@ -423,6 +576,7 @@ body {
 .flow--large {
 	--flow-space: var(--space-12);
 }
+
 /* ==========================================================================
    11. CONTENT WIDTHS
    ========================================================================== */
@@ -438,6 +592,7 @@ body {
 .full-width {
 	width: 100%;
 }
+
 /* ==========================================================================
    12. MARGIN AUTO / CENTERING
    ========================================================================== */
@@ -450,6 +605,7 @@ body {
 .mr-auto {
 	margin-inline-end: auto;
 }
+
 /* ==========================================================================
    13. TEXT ALIGNMENT
    ========================================================================== */
@@ -462,6 +618,7 @@ body {
 .text-end {
 	text-align: end;
 }
+
 /* ==========================================================================
    14. MEDIA FRAMES
    ========================================================================== */
@@ -501,6 +658,7 @@ body {
 .media-frame--tall {
 	aspect-ratio: 3 / 4;
 }
+
 /* ==========================================================================
    15. ASPECT RATIO UTILITIES
    ==========================================================================
@@ -522,6 +680,7 @@ body {
 .aspect-auto {
 	aspect-ratio: auto;
 }
+
 /* ==========================================================================
    16. POSITIONING
    ========================================================================== */
@@ -552,6 +711,7 @@ body {
 .left-0 {
 	left: 0;
 }
+
 /* ==========================================================================
    17. Z-INDEX
    ========================================================================== */
@@ -561,6 +721,7 @@ body {
 .z-decorative {
 	z-index: var(--z-decorative);
 }
+
 /* ==========================================================================
    18. OVERFLOW
    ========================================================================== */
@@ -581,6 +742,7 @@ body {
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 }
+
 /* ==========================================================================
    19. VISIBILITY
    ========================================================================== */
@@ -593,12 +755,14 @@ body {
 .visible {
 	visibility: visible !important;
 }
+
 /* ==========================================================================
    20. SECTION ISOLATION
    ========================================================================== */
 .section-isolate {
 	isolation: isolate;
 }
+
 /* ==========================================================================
    21. DECORATIVE LAYERS
    ========================================================================== */
@@ -611,6 +775,7 @@ body {
 	position: relative;
 	z-index: var(--z-content);
 }
+
 /* ==========================================================================
    22. VIEWPORT SECTIONS
    ========================================================================== */
@@ -623,19 +788,21 @@ body {
 	min-height: 100svh;
 	min-height: 100dvh;
 }
+
 /* ==========================================================================
    23. SAFE-AREA SUPPORT
    ========================================================================== */
 .safe-area {
 	padding-top: max(var(--space-4),
 			env(safe-area-inset-top));
-	padding-right: max(var(--container-inline-padding),
+	padding-right: max(var(--container-padding-inline),
 			env(safe-area-inset-right));
 	padding-bottom: max(var(--space-4),
 			env(safe-area-inset-bottom));
-	padding-left: max(var(--container-inline-padding),
+	padding-left: max(var(--container-padding-inline),
 			env(safe-area-inset-left));
 }
+
 /* ==========================================================================
    24. FLOW / CONTENT CONTAINMENT
    ========================================================================== */
@@ -652,6 +819,7 @@ body {
 .contain-content {
 	contain: content;
 }
+
 /* ==========================================================================
    25. MOBILE-FIRST GRID ENHANCEMENTS
    ========================================================================== */
@@ -688,6 +856,7 @@ body {
 			minmax(0, 1.4fr) minmax(0, 0.6fr);
 	}
 }
+
 /* ==========================================================================
    26. REDUCED CONTENT MOTION / ACCESSIBILITY
    ========================================================================== */
@@ -696,6 +865,38 @@ body {
 		contain-intrinsic-size: auto 20rem;
 	}
 }
+
 /* ==========================================================================
    End of layout.css
+
+   ⚠️ VISUAL IMPACT NOTICE — Patch F
+   ==========================================================================
+   The `.section` default padding-block changed from --section-space-sm
+   to --section-space-md. Every `<section class="section">` (without a
+   size modifier) is now more spacious:
+
+     Viewport      Old (sm)     New (md)     Δ
+     ──────────    ────────     ────────     ────
+     320px         48px         72px         +50%
+     768px         ~46px        ~61px        +33%
+     1440px        80px         ~115px       +44%
+     1920px+       80px         128px        +60%
+
+   Which pages change:
+   - Every `.section` on home, about, academy, shop, contact, gallery
+   - Sections with `.section--compact` keep their old spacing (rare)
+   - Sections with `.section--large` keep their old spacing
+   - Page-specific classes with own `padding-block` (e.g. .home-hero,
+     .legal-layout, .legal-hero) are unaffected
+
+   If the current visual density is preferred, revert by changing one
+   line in `.section` (this file):
+
+     padding-block: var(--section-space-md);   →   padding-block: var(--section-space-sm);
+
+   Alternatively, adjust `--section-space-md` in variables.css:
+	--section-space-md: clamp(3.5rem, 7vw, 6rem);  (was clamp(4.5rem, 8vw, 8rem))
+
+   /* That second option keeps the semantic fix (section/compact distinction)
+   while tightening the spacing globally. */
    ========================================================================== */

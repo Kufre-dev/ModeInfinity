@@ -55,8 +55,9 @@
 	<meta name="twitter:image" content="https://kufre-dev.github.io/ModeInfinity/assets/images/about%20picture.webp">
 	<meta name="twitter:image:alt" content="ModeInfinity workshop and academy">
 
-	<meta name="theme-color" content="#111111">
-	<meta name="color-scheme" content="light">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
+<meta name="color-scheme" content="light dark">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -68,7 +69,7 @@
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 	<link rel="preconnect" href="https://formspree.io">
 	<link rel="dns-prefetch" href="https://formspree.io">
@@ -133,6 +134,7 @@
 		]
 	}
 	</script>
+	<script src="scripts/theme-switcher.js"></script>
 </head>
 
 <body>
@@ -270,13 +272,14 @@
 
 		<div class="contact-form-wrap">
 
-		<form
+	<form
     id="modernContactForm"
     class="modern-form"
     method="POST"
-    action="https://formspree.io/f/xgaawbez"
+    action="https://formspree.io/f/xzdyrrlo"
     data-form="contact"
-    data-endpoint="https://formspree.io/f/xgaawbez"
+    data-endpoint="https://formspree.io/f/xzdyrrlo"
+    data-whatsapp="true"
     novalidate
 >
 
@@ -558,7 +561,7 @@
 	<!-- ============================================================
 	     4. FAQ — 16 questions, responsive grid
 	     ============================================================ -->
-	<section class="contact-faq section" id="faq" aria-labelledby="contact-faq-title">
+	<section class="contact-faq section --color-background-muted" id="faq" aria-labelledby="contact-faq-title">
 		<div class="container">
 			<header class="contact-faq__header">
 				<p class="eyebrow">FAQ</p>
@@ -772,8 +775,18 @@
 			<p>Thanks — your message is on its way to the ModeInfinity workshop. We'll reply within one business day.</p>
 		</div>
 		<div class="contact-success__actions">
-			<button class="btn btn-primary" type="button" data-contact-success-close>Return to form</button>
-		</div>
+    <button class="btn btn-primary" type="button" data-contact-success-close>
+        Return to form
+    </button>
+    <a class="btn btn-secondary"
+       data-success-whatsapp
+       href="#"
+       target="_blank"
+       rel="noopener noreferrer"
+       hidden>
+        Open WhatsApp <span aria-hidden="true">↗</span>
+    </a>
+</div>
 	</div>
 </div>
 

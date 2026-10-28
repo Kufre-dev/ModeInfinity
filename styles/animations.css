@@ -27,8 +27,8 @@
 
    CHANGES (final)
    ---------------
-   1. --motion-scale ownership moved to variables.css (section 22B there).
-      Removed duplicate :root block at section 1 and section 23.
+   1. --motion-scale ownership moved to variables.css (§23 in that file).
+      Removed duplicate :root block at section 1 and section 23 here.
    2. Added pop-in, slide-in-left/right, glow-in, gold-pulse,
       progress-fill, text-shimmer keyframes.
    3. Added .pop-in, .slide-in-left, .slide-in-right, .glow-in,
@@ -40,18 +40,77 @@
    7. Added .text-gold-gradient.
    8. Added performance helpers: .animate-gpu, .transform-optimized,
       .opacity-optimized, .will-change-transform, .will-change-opacity.
-   9. All hardcoded gold values replaced with --color-gold-* tokens.
+   9. Hardcoded gold values in decorative glows/sweeps (glow-in,
+      gold-pulse, hover-glow, hover-fill-gold) retained as literal
+      rgb(197 154 24 / …) — that is exactly --color-gold-500 and is
+      identical in both themes, so keeping literals avoids color-mix
+      interpolation issues inside @keyframes. All *readable* gold
+      usages now go through theme-aware tokens.
   10. Reduced-motion and forced-colors blocks cover the new utilities.
+
+   PATCH ROUND — LIGHT-MODE / CONSISTENCY
+   --------------------------------------
+   L1. .hover-gold:hover text colour changed from --color-gold-300 to
+       --color-interactive. gold-300 fails AA on white (≈1.5:1); the
+       semantic --color-interactive token resolves to gold-700 in light
+       and gold-300 in dark, so hover text is readable in both themes.
+
+   L2. .text-gold-gradient gradient stops changed from
+       gold-300 → gold-500 → gold-300 (fixed) to
+       --color-interactive → --color-link-hover → --color-interactive
+       (theme-aware). Light resolves to gold-700 → gold-800 → gold-700
+       (all readable on white); dark resolves to gold-300 → gold-200 →
+       gold-300 (all readable on dark).
+
+   L3. .loading-spinner ring/top colours: ring now uses --color-border
+       (theme-aware), top uses --color-interactive. Was --color-gold-500
+       (≈2.3:1 on white).
+
+   L4. --motion-scale applied to animations that were hardcoding duration:
+       .glow-in, .gold-pulse, .spinner, .pulse, .shimmer, .loading-spinner,
+       .skeleton, .progress-fill, .text-gold-gradient.
+
+   L5. Documentation reference for --motion-scale corrected from §22B to
+       §23 of variables.css.
+
+   PATCH ROUND — ACCORDION SELECTOR FIX
+   ------------------------------------
+   A1. Section 13 renamed .accordion-content / .accordion-content__inner
+       to .accordion-item__panel / .accordion-item__content so the motion
+       rules actually match the markup in components/accordion-item.html
+       and the base styles in components.css. Before this fix, the panel
+       was just toggled via the `hidden` attribute (display: none) with
+       no smooth open/close transition.
+
+   JS REQUIREMENT (documented here because CSS alone cannot animate a
+   `hidden` panel from display:none → display:grid):
+
+     OPEN:
+       panel.hidden = false;            // panel becomes display:grid, 0fr
+       // (allow one frame to paint)
+       requestAnimationFrame(() => {
+         item.classList.add('is-open');  // transitions 0fr → 1fr
+       });
+
+     CLOSE:
+       item.classList.remove('is-open'); // transitions 1fr → 0fr
+       panel.addEventListener('transitionend', () => {
+         panel.hidden = true;
+       }, { once: true });
+
+   For accessibility, also toggle aria-hidden="true" on the panel when
+   collapsed. That is not done in CSS — the JS layer must handle it.
    ========================================================================== */
+
 /* ==========================================================================
    1. MOTION ROOT
    ========================================================================== */
 /*
- * --motion-scale is owned by variables.css.
- * See section 22B.MOTION SCALE there.
+ * --motion-scale is owned by variables.css (see §23 there).
  *
  * This file consumes the token but does not define it.
  */
+
 /* ==========================================================================
    2. BASE TRANSITIONS
    ========================================================================== */
@@ -68,6 +127,7 @@
 	transition: none !important;
 	animation: none !important;
 }
+
 /* ==========================================================================
    3. KEYFRAMES — BASIC
    ========================================================================== */
@@ -191,6 +251,12 @@
 	}
 	100% {
 		opacity: 1;
+		/*
+		 * Gold halo — decorative only. Kept as literal rgb because
+		 * color-mix() interpolation inside @keyframes is unreliable
+		 * across browsers. 197,154,24 = --color-gold-500, identical
+		 * in both themes.
+		 */
 		filter: drop-shadow(0 0 20px rgb(197 154 24 / 0.3));
 	}
 }
@@ -217,6 +283,7 @@
 		background-position: 200% center;
 	}
 }
+
 /* ==========================================================================
    4. HERO ENTRANCE
    ========================================================================== */
@@ -236,6 +303,7 @@
 	animation:
 		modeinfinity-hero-enter calc(var(--duration-slow) * var(--motion-scale)) var(--ease-emphasized) both;
 }
+
 /* ==========================================================================
    5. REVEAL SYSTEM
    ========================================================================== */
@@ -292,6 +360,7 @@ html.js .reveal-right.is-visible {
 	opacity: 1;
 	transform: translate3d(0, 0, 0);
 }
+
 /* ==========================================================================
    6. REVEAL TRANSITION
    ========================================================================== */
@@ -304,6 +373,7 @@ html.js .reveal-right {
 		opacity var(--duration-slow) var(--ease-emphasized),
 		transform var(--duration-slow) var(--ease-emphasized);
 }
+
 /* ==========================================================================
    7. REVEAL / ANIMATION ALIASES
    ========================================================================== */
@@ -352,13 +422,14 @@ html.js .reveal-right {
 }
 .glow-in {
 	animation:
-		modeinfinity-glow-in 1.2s var(--ease-standard) both;
+		modeinfinity-glow-in calc(1.2s * var(--motion-scale)) var(--ease-standard) both;
 }
 .gold-pulse {
 	animation:
-		modeinfinity-gold-pulse 3s var(--ease-standard) infinite;
+		modeinfinity-gold-pulse calc(3s * var(--motion-scale)) var(--ease-standard) infinite;
 	transform: translateZ(0);
 }
+
 /* ==========================================================================
    8. ANIMATION DELAYS
    ========================================================================== */
@@ -401,6 +472,7 @@ html.js .reveal-right {
 .animate-both {
 	animation-fill-mode: both;
 }
+
 /* ==========================================================================
    9. STAGGERED REVEALS
    ========================================================================== */
@@ -454,6 +526,7 @@ html.js .stagger > .reveal-right:not(.is-visible) {
 html.js .stagger > .is-visible {
 	transition-delay: 0ms;
 }
+
 /* ==========================================================================
    10. IMAGE REVEAL
    ========================================================================== */
@@ -469,6 +542,7 @@ html.js .stagger > .is-visible {
 .image-reveal.is-visible img {
 	transform: scale(1);
 }
+
 /* ==========================================================================
    11. HOVER IMAGE MOTION
    ========================================================================== */
@@ -502,6 +576,7 @@ html.js .stagger > .is-visible {
 		transform: scale(1.015);
 	}
 }
+
 /* ==========================================================================
    12. MOTION UNDERLINE
    ========================================================================== */
@@ -528,6 +603,7 @@ html.js .stagger > .is-visible {
 	transform: scaleX(1);
 	transform-origin: left center;
 }
+
 /* ==========================================================================
    12B. LEGACY HOVER UTILITIES
    ==========================================================================
@@ -539,6 +615,7 @@ html.js .stagger > .is-visible {
 	}
 	.hover-glow:hover,
 	.hover-glow:focus-visible {
+		/* Literal gold-500 at 35% — decorative halo, theme-agnostic. */
 		box-shadow: 0 0 28px rgb(197 154 24 / 0.35);
 	}
 	.hover-gold {
@@ -548,7 +625,12 @@ html.js .stagger > .is-visible {
 	}
 	.hover-gold:hover,
 	.hover-gold:focus-visible {
-		color: var(--color-gold-300);
+		/*
+		 * --color-interactive resolves to gold-700 in light (≈5:1 on white,
+		 * passes AA) and gold-300 in dark (≈11:1 on #080808, passes AAA).
+		 * Previous --color-gold-300 failed light-mode contrast badly.
+		 */
+		color: var(--color-interactive);
 		transform: translateY(-2px);
 	}
 	.card-lift {
@@ -626,6 +708,7 @@ html.js .stagger > .is-visible {
 	left: -100%;
 	width: 100%;
 	height: 100%;
+	/* Literal gold-500 at 10% — decorative sweep, theme-agnostic. */
 	background: linear-gradient(90deg,
 			transparent,
 			rgb(197 154 24 / 0.1),
@@ -638,31 +721,54 @@ html.js .stagger > .is-visible {
 .hover-fill-gold:focus-visible::before {
 	left: 100%;
 }
+
 /* ==========================================================================
    13. ACCORDION MOTION
+   ==========================================================================
+   Target markup (components/accordion-item.html):
+
+     <div class="accordion-item">
+       <h3 class="accordion-item__heading">
+         <button class="accordion-item__trigger" aria-expanded="false" …>
+           …
+         </button>
+       </h3>
+       <div class="accordion-item__panel" hidden role="region">
+         <div class="accordion-item__content">
+           …
+         </div>
+       </div>
+     </div>
+
+   The panel is a grid container whose row track animates between
+   0fr (collapsed) and 1fr (expanded). The inner content element
+   provides `min-height: 0; overflow: hidden` so the grid track can
+   actually shrink to zero without content forcing height.
+
+   JS sequencing (see file header):
+     - On open: remove `hidden` (so the panel enters layout at 0fr),
+                then on the next frame add `.is-open`.
+     - On close: remove `.is-open` (transitions 1fr → 0fr), then
+                add `hidden` back after transitionend.
+
+   CSS alone cannot animate from display: none → display: grid because
+   display is a discrete property. The one-frame handoff is required.
    ========================================================================== */
-/*
- * Recommended structure:
-
-   .accordion-content
-     .accordion-content__inner
-
- * The inner element prevents the classic max-height animation problem.
- */
-.accordion-content {
+.accordion-item__panel {
 	display: grid;
 	grid-template-rows: 0fr;
 	transition:
 		grid-template-rows var(--duration-base) var(--ease-emphasized);
 }
-.accordion-content__inner {
+.accordion-item__content {
 	min-height: 0;
 	overflow: hidden;
 }
-.accordion-item.is-open .accordion-content,
-.accordion-item[open] .accordion-content {
+.accordion-item.is-open .accordion-item__panel,
+.accordion-item[open] .accordion-item__panel {
 	grid-template-rows: 1fr;
 }
+
 /* ==========================================================================
    14. HEADER SURFACE MOTION
    ========================================================================== */
@@ -677,6 +783,7 @@ html.js .stagger > .is-visible {
 .site-header[data-scrolled="true"] {
 	box-shadow: var(--shadow-sm);
 }
+
 /* ==========================================================================
    15. DRAWER MOTION
    ========================================================================== */
@@ -705,6 +812,7 @@ html.js .stagger > .is-visible {
 .drawer.is-open .drawer-backdrop {
 	opacity: 1;
 }
+
 /* ==========================================================================
    16. MODAL MOTION
    ========================================================================== */
@@ -729,6 +837,7 @@ html.js .stagger > .is-visible {
 .modal.is-open .modal-backdrop {
 	opacity: 1;
 }
+
 /* ==========================================================================
    17. LIGHTBOX MOTION
    ========================================================================== */
@@ -753,6 +862,7 @@ html.js .stagger > .is-visible {
 .lightbox.is-open .lightbox-backdrop {
 	opacity: 1;
 }
+
 /* ==========================================================================
    18. TOAST MOTION
    ========================================================================== */
@@ -786,6 +896,7 @@ html.js .stagger > .is-visible {
 	animation:
 		modeinfinity-toast-out calc(var(--duration-fast) * var(--motion-scale)) var(--ease-standard) both;
 }
+
 /* ==========================================================================
    19. CART COUNT MOTION
    ========================================================================== */
@@ -803,6 +914,7 @@ html.js .stagger > .is-visible {
 	animation:
 		modeinfinity-cart-bump calc(var(--duration-fast) * var(--motion-scale)) var(--ease-emphasized);
 }
+
 /* ==========================================================================
    20. LOADING / STATUS MOTION
    ========================================================================== */
@@ -830,11 +942,11 @@ html.js .stagger > .is-visible {
 }
 .spinner {
 	animation:
-		modeinfinity-spin 0.8s linear infinite;
+		modeinfinity-spin calc(0.8s * var(--motion-scale)) linear infinite;
 }
 .pulse {
 	animation:
-		modeinfinity-pulse 1.5s var(--ease-standard) infinite;
+		modeinfinity-pulse calc(1.5s * var(--motion-scale)) var(--ease-standard) infinite;
 }
 .shimmer {
 	background:
@@ -844,7 +956,7 @@ html.js .stagger > .is-visible {
 			transparent 100%);
 	background-size: 200% 100%;
 	animation:
-		modeinfinity-shimmer 1.5s linear infinite;
+		modeinfinity-shimmer calc(1.5s * var(--motion-scale)) linear infinite;
 }
 /* --------------------------------------------------------------------------
    Legacy loading aliases
@@ -852,11 +964,16 @@ html.js .stagger > .is-visible {
 .loading-spinner {
 	width: 2.5rem;
 	height: 2.5rem;
-	border: 3px solid rgb(197 154 24 / 0.3);
-	border-top-color: var(--color-gold-500);
+	/*
+	 * Ring uses --color-border (subtle, theme-aware).
+	 * Active arc uses --color-interactive (gold-700 light / gold-300 dark)
+	 * so it stays visible against both white and black backgrounds.
+	 */
+	border: 3px solid var(--color-border);
+	border-top-color: var(--color-interactive);
 	border-radius: 50%;
 	animation:
-		modeinfinity-spin 1s linear infinite;
+		modeinfinity-spin calc(1s * var(--motion-scale)) linear infinite;
 	transform: translateZ(0);
 }
 .skeleton {
@@ -867,7 +984,7 @@ html.js .stagger > .is-visible {
 			var(--color-surface) 75%);
 	background-size: 200% 100%;
 	animation:
-		modeinfinity-shimmer 1.5s linear infinite;
+		modeinfinity-shimmer calc(1.5s * var(--motion-scale)) linear infinite;
 }
 .progress-fill {
 	width: 0;
@@ -878,8 +995,9 @@ html.js .stagger > .is-visible {
 			var(--color-gold-500));
 	border-radius: inherit;
 	animation:
-		modeinfinity-progress-fill 2s var(--ease-out-back) forwards;
+		modeinfinity-progress-fill calc(2s * var(--motion-scale)) var(--ease-out-back) forwards;
 }
+
 /* ==========================================================================
    21. FOCUS MOTION
    ========================================================================== */
@@ -891,6 +1009,7 @@ html.js .stagger > .is-visible {
 .motion-focus:focus-visible {
 	outline-offset: calc(var(--focus-ring-offset) + 1px);
 }
+
 /* ==========================================================================
    22. SLIDE MOTION UTILITY
    ========================================================================== */
@@ -898,26 +1017,37 @@ html.js .stagger > .is-visible {
 	transition:
 		transform var(--duration-base) var(--ease-emphasized);
 }
+
 /* ==========================================================================
    22B. TEXT EFFECTS
    ==========================================================================
    Animated gold gradient text — a subtle shimmer across the glyphs.
    Use sparingly: reserve for high-impact headings.
+
+   Gradient stops use theme-aware tokens:
+     Light: --color-interactive (gold-700) → --color-link-hover (gold-800)
+            → --color-interactive (gold-700). All ≈5–7:1 on white — AA.
+     Dark:  --color-interactive (gold-300) → --color-link-hover (gold-200)
+            → --color-interactive (gold-300). All ≈8–11:1 on #080808 — AAA.
+
+   Previous version used gold-300 → gold-500 which failed light-mode
+   contrast on half the gradient.
    ========================================================================== */
 .text-gold-gradient {
 	background:
 		linear-gradient(135deg,
-			var(--color-gold-300),
-			var(--color-gold-500),
-			var(--color-gold-300));
+			var(--color-interactive),
+			var(--color-link-hover),
+			var(--color-interactive));
 	background-size: 200% auto;
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	color: transparent;
 	animation:
-		modeinfinity-text-shimmer 3s ease-in-out infinite;
+		modeinfinity-text-shimmer calc(3s * var(--motion-scale)) ease-in-out infinite;
 }
+
 /* ==========================================================================
    22C. PERFORMANCE HELPERS
    ==========================================================================
@@ -942,6 +1072,7 @@ html.js .stagger > .is-visible {
 .will-change-opacity {
 	will-change: opacity;
 }
+
 /* ==========================================================================
    23. REDUCED MOTION
    ========================================================================== */
@@ -966,7 +1097,7 @@ html.js .stagger > .is-visible {
 	.hover-fill-gold::before,
 	.card-lift,
 	.card-lift::before,
-	.accordion-content,
+	.accordion-item__panel,
 	.header-surface,
 	.drawer-panel,
 	.drawer-backdrop,
@@ -1051,7 +1182,13 @@ html.js .stagger > .is-visible {
 		-webkit-text-fill-color: currentColor;
 		color: currentColor;
 	}
+	/* Accordion snaps open/closed — no animation needed when motion
+	   is reduced. Panel state changes instantly between 0fr and 1fr. */
+	.accordion-item__panel {
+		transition: none !important;
+	}
 }
+
 /* ==========================================================================
    24. FORCED COLORS
    ========================================================================== */
@@ -1081,6 +1218,7 @@ html.js .stagger > .is-visible {
 		color: CanvasText;
 	}
 }
+
 /* ==========================================================================
    25. PRINT
    ========================================================================== */
@@ -1097,6 +1235,7 @@ html.js .stagger > .is-visible {
 		color: #000;
 	}
 }
+
 /* ==========================================================================
    End of animations.css
    ========================================================================== */

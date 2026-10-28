@@ -255,13 +255,19 @@ function cacheElements() {
 /**
  * Collect all gallery items currently present in the document.
  *
+ * Skips items inside `[data-gallery-panel]` because those are owned
+ * by gallery-viewer.js (the 4-box hub on gallery.html). Without this
+ * filter, clicking a panel item opens BOTH the lightbox and the
+ * gallery viewer simultaneously.
+ *
  * @returns {HTMLElement[]}
  */
 function collectGalleryItems() {
 	return $$(SELECTORS.galleryItems)
 		.filter(
 			(element) =>
-			element instanceof HTMLElement
+			element instanceof HTMLElement &&
+			!element.closest("[data-gallery-panel]")
 		);
 }
 

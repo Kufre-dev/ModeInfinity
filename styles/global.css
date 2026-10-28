@@ -115,43 +115,74 @@ dl,
 dd {
 	margin-block: 0;
 }
+
+/*
+ * Typography roles — every heading draws entirely from its role token in
+ * variables.css (family, size, weight, leading, tracking). Role tokens
+ * are the single source of truth; do not re-declare values here.
+ *
+ * ON-DARK SECTIONS:
+ *   --color-text-strong resolves to near-black in light mode and near-white
+ *   in dark mode. Inside any dark section, the local token reset from
+ *   layout.css (.section--dark) or the component (contact.css .contact-hero,
+ *   lightbox, etc.) provides the correct on-dark resolution automatically.
+ */
 h1,
 h2,
 h3,
-h4 {
-	color: var(--color-text-strong);
-	font-family: var(--font-display);
-	font-weight: var(--font-weight-semibold);
-	line-height: var(--leading-tight);
-	letter-spacing: var(--tracking-tight);
-	text-wrap: balance;
-}
+h4,
 h5,
 h6 {
 	color: var(--color-text-strong);
-	font-family: var(--font-sans);
-	font-weight: var(--font-weight-semibold);
-	line-height: var(--leading-tight);
-	letter-spacing: var(--tracking-tight);
 	text-wrap: balance;
 }
+
 h1 {
+	font-family: var(--type-h1-family);
 	font-size: var(--type-h1-size);
+	font-weight: var(--type-h1-weight);
+	line-height: var(--type-h1-leading);
+	letter-spacing: var(--type-h1-tracking);
 }
+
 h2 {
+	font-family: var(--type-h2-family);
 	font-size: var(--type-h2-size);
+	font-weight: var(--type-h2-weight);
+	line-height: var(--type-h2-leading);
+	letter-spacing: var(--type-h2-tracking);
 }
+
 h3 {
+	font-family: var(--type-h3-family);
 	font-size: var(--type-h3-size);
+	font-weight: var(--type-h3-weight);
+	line-height: var(--type-h3-leading);
+	letter-spacing: var(--type-h3-tracking);
 }
+
 h4 {
+	font-family: var(--type-h4-family);
 	font-size: var(--type-h4-size);
+	font-weight: var(--type-h4-weight);
+	line-height: var(--type-h4-leading);
+	letter-spacing: var(--type-h4-tracking);
 }
+
 h5 {
+	font-family: var(--type-h5-family);
 	font-size: var(--type-h5-size);
+	font-weight: var(--type-h5-weight);
+	line-height: var(--type-h5-leading);
+	letter-spacing: var(--type-h5-tracking);
 }
+
 h6 {
+	font-family: var(--type-h6-family);
 	font-size: var(--type-h6-size);
+	font-weight: var(--type-h6-weight);
+	line-height: var(--type-h6-leading);
+	letter-spacing: var(--type-h6-tracking);
 }
 p {
 	max-width: var(--content-readable);
@@ -278,7 +309,7 @@ input,
 select,
 textarea,
 button {
-	font-size: 1rem;
+	font-size: var(--text-base);
 }
 textarea {
 	min-height: 8rem;
@@ -305,7 +336,7 @@ label {
 input,
 select,
 textarea {
-	accent-color: var(--color-accent);
+	accent-color: var(--color-interactive);
 	caret-color: var(--color-interactive);
 }
 /* ==========================================================================
@@ -346,7 +377,7 @@ nav ol {
    ========================================================================== */
 blockquote {
 	margin-inline: 0;
-	padding-inline-start: var(--space-5);
+	/* padding-inline-start: var(--space-5); */
 	/* border-inline-start: var(--border-width-medium) solid var(--color-accent); */
 	color: var(--color-text-muted);
 }

@@ -34,7 +34,7 @@
 class Navbar {
   constructor(options = {}) {
     this.options = {
-      breakpoint: 1024,
+breakpoint: 1088,
       selectors: {
         header: ".site-header",
         toggle: "[data-mobile-nav-toggle]",

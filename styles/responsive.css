@@ -13,7 +13,6 @@
    - Responsive text alignment
    - Print utilities
    - Reduced-data optimization
-   - Mobile/desktop component sizing
 
    Ownership:
    - variables.css  → tokens and themes
@@ -36,7 +35,35 @@
    4. Added §29 — Print utilities
         .no-print, .print-only
    5. Added §30 — Reduced-data optimization
+
+   PATCH ROUND — LIGHT-MODE / LAYOUT FIXES
+   ---------------------------------------
+   A. Renamed --container-inline-padding → --container-padding-inline
+      throughout (8 occurrences). Previous name was defined only inside
+      the <30rem media query and undefined everywhere else → containers
+      resolved to width:auto at every viewport ≥30rem. Because
+      responsive.css loads after layout.css and redeclares .container at
+      each breakpoint, this bug silently overrode the layout.css fix.
+
+   B. Removed .container--readable from the grouped responsive rules in
+      §2, §4, §5. It was being forced to --container-max (90rem ≈ 1440px),
+      which is 3× wider than --content-readable (70ch ≈ 550px) and
+      defeats the purpose of a readable container. It now inherits its
+      base rule from layout.css correctly.
+
+   C. §17 high-contrast eyebrow tracking changed from --tracking-wide
+      (0.04em) → --tracking-widest (0.14em). The previous value was a
+      no-op under the old eyebrow base (0.04em) and became a regression
+      after the layout.css patch widened the base to 0.08em. High
+      contrast should WIDEN tracking, not narrow it.
+
+   NOTE (not patched, flagged for review):
+   - .container--wide is progressively staged from --container-max
+     (48–80rem) up to --container-wide (80rem+). This makes
+     .container--wide equivalent to .container on mid-size tablet.
+   - .hover-device-only sets display:block; consider display:revert.
    ========================================================================== */
+
 /* ==========================================================================
    1. BASELINE — 320PX+
    ========================================================================== */
@@ -49,19 +76,19 @@ html {
 body {
 	min-width: 20rem;
 }
+
 /* ==========================================================================
    2. SMALL PHONES — UP TO 29.999REM
    ========================================================================== */
 @media (max-width: 29.999rem) {
 	:root {
-		--container-inline-padding: clamp(1rem,
+		--container-padding-inline: clamp(1rem,
 				5vw,
 				1.25rem);
 	}
 	.container,
-	.container--wide,
-	.container--readable {
-		width: min(100% - (var(--container-inline-padding) * 2),
+	.container--wide {
+		width: min(100% - (var(--container-padding-inline) * 2),
 				var(--container-max));
 	}
 	.section-header {
@@ -100,6 +127,7 @@ body {
 		overflow: hidden;
 	}
 }
+
 /* ==========================================================================
    3. LARGE PHONES — 30REM / 480PX+
    ========================================================================== */
@@ -124,6 +152,7 @@ body {
 		justify-content: space-between;
 	}
 }
+
 /* ==========================================================================
    4. TABLETS — 48REM / 768PX+
    ========================================================================== */
@@ -132,9 +161,8 @@ body {
 		--responsive-scale: 1;
 	}
 	.container,
-	.container--wide,
-	.container--readable {
-		width: min(100% - (var(--container-inline-padding) * 2),
+	.container--wide {
+		width: min(100% - (var(--container-padding-inline) * 2),
 				var(--container-max));
 	}
 	.section-header {
@@ -162,6 +190,7 @@ body {
 		height: 100%;
 	}
 }
+
 /* ==========================================================================
    5. DESKTOP — 64REM / 1024PX+
    ========================================================================== */
@@ -170,9 +199,8 @@ body {
 		--responsive-scale: 1;
 	}
 	.container,
-	.container--wide,
-	.container--readable {
-		width: min(100% - (var(--container-inline-padding) * 2),
+	.container--wide {
+		width: min(100% - (var(--container-padding-inline) * 2),
 				var(--container-max));
 	}
 	.section-header {
@@ -185,6 +213,7 @@ body {
 		gap: var(--space-4);
 	}
 }
+
 /* ==========================================================================
    6. LARGE DESKTOP — 80REM / 1280PX+
    ========================================================================== */
@@ -193,7 +222,7 @@ body {
 		--responsive-scale: 1;
 	}
 	.container--wide {
-		width: min(100% - (var(--container-inline-padding) * 2),
+		width: min(100% - (var(--container-padding-inline) * 2),
 				var(--container-wide));
 	}
 	.section-header--split {
@@ -202,6 +231,7 @@ body {
 		column-gap: var(--space-20);
 	}
 }
+
 /* ==========================================================================
    7. LARGE DESKTOP — 120REM / 1920PX+
    ========================================================================== */
@@ -211,10 +241,11 @@ body {
 	}
 	.container,
 	.container--wide {
-		width: min(100% - (var(--container-inline-padding) * 2),
+		width: min(100% - (var(--container-padding-inline) * 2),
 				var(--container-wide));
 	}
 }
+
 /* ==========================================================================
    8. ULTRAWIDE / 2K — 160REM / 2560PX+
    ========================================================================== */
@@ -239,6 +270,7 @@ body {
 		column-gap: var(--space-24);
 	}
 }
+
 /* ==========================================================================
    9. ULTRAWIDE / 4K — 240REM / 3840PX+
    ========================================================================== */
@@ -257,6 +289,7 @@ body {
 				var(--container-wide));
 	}
 }
+
 /* ==========================================================================
    10. LANDSCAPE PHONES
    ========================================================================== */
@@ -266,6 +299,7 @@ body {
 		min-height: auto;
 	}
 }
+
 /* ==========================================================================
    11. SHORT VIEWPORTS
    ========================================================================== */
@@ -275,6 +309,7 @@ body {
 		min-height: auto;
 	}
 }
+
 /* ==========================================================================
    12. VERY SHORT LANDSCAPE VIEWPORTS
    ========================================================================== */
@@ -286,6 +321,7 @@ body {
 		padding-block: var(--space-16);
 	}
 }
+
 /* ==========================================================================
    13. TOUCH / COARSE POINTER
    ========================================================================== */
@@ -302,6 +338,7 @@ body {
 		min-height: var(--control-height-md);
 	}
 }
+
 /* ==========================================================================
    14. FINE POINTER / MOUSE
    ========================================================================== */
@@ -311,6 +348,7 @@ body {
    * This layer only establishes the responsive input context.
    */
 }
+
 /* ==========================================================================
    15. HOVER CAPABILITY
    ========================================================================== */
@@ -324,6 +362,7 @@ body {
 		display: none !important;
 	}
 }
+
 /* ==========================================================================
    16. REDUCED MOTION
    ========================================================================== */
@@ -332,16 +371,26 @@ body {
 		scroll-behavior: auto;
 	}
 }
+
 /* ==========================================================================
    17. HIGH CONTRAST
+   ==========================================================================
+   Widen label tracking for improved letterform separation under low-vision
+   conditions. Base tracking for eyebrow/label is --type-label-tracking
+   (0.08em, from layout.css). Here we widen further to --tracking-widest
+   (0.14em).
+
+   NOTE: previous value was --tracking-wide (0.04em), which narrowed the
+   base and was a regression against the intended high-contrast direction.
    ========================================================================== */
 @media (prefers-contrast: more) {
 	.section-header__eyebrow,
 	.eyebrow,
 	.section-label {
-		letter-spacing: var(--tracking-wide);
+		letter-spacing: var(--tracking-widest);
 	}
 }
+
 /* ==========================================================================
    18. FORCED COLORS
    ========================================================================== */
@@ -353,6 +402,7 @@ body {
 		forced-color-adjust: auto;
 	}
 }
+
 /* ==========================================================================
    19. PRINT
    ========================================================================== */
@@ -360,6 +410,7 @@ body {
  * Base print rules are owned by global.css.
  * Additional print utilities appear in §29 below.
  */
+
 /* ==========================================================================
    20. RESPONSIVE HELPERS
    ========================================================================== */
@@ -395,6 +446,7 @@ body {
 		display: block;
 	}
 }
+
 /* ==========================================================================
    21. RESPONSIVE TEXT HELPERS
    ========================================================================== */
@@ -422,6 +474,7 @@ body {
 		display: none !important;
 	}
 }
+
 /* ==========================================================================
    22. RESPONSIVE ACTION GROUPS
    ========================================================================== */
@@ -439,6 +492,7 @@ body {
 		gap: var(--space-3);
 	}
 }
+
 /* ==========================================================================
    23. RESPONSIVE TABLES
    ========================================================================== */
@@ -451,6 +505,7 @@ body {
 .table-responsive > table {
 	min-width: 42rem;
 }
+
 /* ==========================================================================
    24. RESPONSIVE EMBEDS
    ========================================================================== */
@@ -467,6 +522,7 @@ body {
 	width: 100%;
 	max-width: 100%;
 }
+
 /* ==========================================================================
    25. FOLDABLE / SEGMENTED VIEWPORT SUPPORT
    ========================================================================== */
@@ -486,19 +542,21 @@ body {
 		gap: env(viewport-segment-top 0 1);
 	}
 }
+
 /* ==========================================================================
    26. SAFE AREA
    ========================================================================== */
 @media (max-width: 64rem) {
 	.mobile-safe-area {
-		padding-inline-start: max(var(--container-inline-padding),
+		padding-inline-start: max(var(--container-padding-inline),
 				env(safe-area-inset-left));
-		padding-inline-end: max(var(--container-inline-padding),
+		padding-inline-end: max(var(--container-padding-inline),
 				env(safe-area-inset-right));
 		padding-bottom: max(var(--space-4),
 				env(safe-area-inset-bottom));
 	}
 }
+
 /* ==========================================================================
    27. RESPONSIVE MEDIA HELPERS
    ==========================================================================
@@ -548,6 +606,7 @@ body {
 .aspect-ratio-4-3 {
 	aspect-ratio: 4 / 3;
 }
+
 /* ==========================================================================
    28. RESPONSIVE TEXT ALIGNMENT
    ==========================================================================
@@ -587,6 +646,7 @@ body {
 		text-align: right;
 	}
 }
+
 /* ==========================================================================
    29. PRINT UTILITIES
    ==========================================================================
@@ -607,6 +667,7 @@ body {
 		display: block !important;
 	}
 }
+
 /* ==========================================================================
    30. REDUCED-DATA OPTIMIZATION
    ==========================================================================
@@ -627,6 +688,7 @@ body {
 		background-image: none !important;
 	}
 }
+
 /* ==========================================================================
    End of responsive.css
    ========================================================================== */

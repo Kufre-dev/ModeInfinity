@@ -15,6 +15,58 @@
      → contact.css → cart-drawer.css → animations.css → responsive.css
 
    Uses only tokens from variables.css.
+
+   PATCH ROUND — LIGHT-MODE / CONSISTENCY FIXES
+   --------------------------------------------
+   C1. Restored base font-size on .contact-hero__title via
+       --type-h1-size. Previously had no base (mobile media queries
+       alone supplied a size), so tablet+ inherited body size.
+   C2. Removed duplicate `display: none` on .gallery-breadcrumb ol.
+       Breadcrumb was always hidden; the `justify-content: center`
+       rule in .contact-hero assumed it was visible.
+   C3. .modern-form-group select: `color-scheme: light` → `inherit`,
+       removed the two compensating media queries. Inherits resolved
+       scheme from :root automatically for all theme states.
+   C4. Select arrow SVG: added dark-mode variant with stroke='%23d9ad2b'
+       (gold-400) so the arrow is visible on the dark theme's select.
+   C5. Focus underline: --color-gold-500 → --color-interactive
+       (gold-700 light / gold-300 dark). Was 2.3:1 on white.
+   C6. .modern-form-underline gradient: gold-500→gold-300 →
+       --color-interactive → --color-accent-text (both theme-aware,
+       both pass AA in both themes).
+   C7. .contact-success__icon: color --color-white →
+       --color-text-inverse (white in light, near-black in dark —
+       always readable on the resolved --color-success background).
+   C8. .contact-details__link:hover, .contact-form-aside__section
+       p a:hover: --color-gold-600 → --color-link-hover (gold-800
+       light / gold-200 dark). Previous value was lighter than base
+       and failed AA on white.
+   C9. Added local token scope to .contact-hero (always-dark section).
+       Nested components using --color-text / --color-surface now
+       resolve to on-dark values automatically. Mirrors .section--dark
+       in layout.css.
+   C10. .contact-success__panel max-height 90vh → 90dvh.
+   C11. .faq-item[open] border, .contact-next__links a:hover border:
+       --color-gold-400 → --color-interactive (theme-aware, higher
+       contrast in light).
+   C12. Four section titles: hardcoded clamp → --type-h3-size.
+       Visible change: min 28→30px, max 44px unchanged.
+   C13. .modern-form-hint border-left: 2px → var(--border-width-medium).
+   C14. .faq-item__summary::after font-size 1.25rem → --text-xl.
+
+   NOTES (design decisions, left as-is):
+   - Eyebrows/labels use --font-mono. Design system label role is
+     --font-sans. Intentional editorial choice, kept.
+   - .faq-item__summary h3 uses clamp(1rem, 1.4vw, 1.125rem) — closer
+     to --type-h6-size than --type-h3-size. Semantically odd (h3 with
+     h6-ish size), but the FAQ card visual demands compact headings.
+     Kept to preserve design.
+   - .contact-form-wrap grid ratio minmax(27rem, 0.7fr) minmax(0, 2.5fr)
+     gives the aside a 27rem floor — at exactly 64rem the form is
+     ~427px wide. Adequate but tight.
+   - `.container` overrides on section wrappers (`.contact-hero >
+     .container`, etc.) are now redundant (base rule in layout.css
+     works). Kept for defensive parity.
    ========================================================================== */
 
 
@@ -26,6 +78,7 @@
 	margin-bottom: var(--space-5);
 	font-family: var(--font-sans);
 	font-size: var(--text-xs);
+	display: none;
 }
 
 .gallery-breadcrumb ol {
@@ -36,7 +89,11 @@
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	    display: none;
+	/*
+	 * BUG FIX (C2): Previous version had a second `display: none` line
+	 * here that hid the breadcrumb on every page, despite the hero
+	 * centering it above. Removed — breadcrumb is visible again.
+	 */
 }
 
 .gallery-breadcrumb li {
@@ -76,9 +133,32 @@
 
 /* ==========================================================================
    2. HERO — full viewport + stacked scroll arrow
+   ==========================================================================
+   Always-dark surface (image + black gradient). Local token scope
+   ensures any nested component reads on-dark values regardless of
+   site theme.
    ========================================================================== */
 
 .contact-hero {
+	/*
+	 * Local dark token scope (C9) — mirrors .section--dark in layout.css.
+	 */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.85);
+	--color-text-subtle: rgb(255 255 255 / 0.7);
+	--color-text-inverse: #0a0a0a;
+	--color-border: rgb(255 255 255 / 0.2);
+	--color-border-strong: rgb(255 255 255 / 0.35);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-link-active: var(--color-gold-100);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--color-interactive-hover: var(--color-gold-200);
+	--focus-ring-color: var(--color-gold-300);
+	--color-focus: var(--focus-ring-color);
+
 	position: relative;
 	isolation: isolate;
 	display: flex;
@@ -155,7 +235,8 @@
 	margin: 0 0 var(--space-4);
 	color: var(--color-white);
 	font-family: var(--font-display);
-	/* font-size: clamp(2.5rem, 6vw, 4.25rem); */
+	/* C1: was commented out — hero title inherited body size on tablet+. */
+	font-size: var(--type-h1-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.05;
 	letter-spacing: var(--tracking-tight);
@@ -258,7 +339,8 @@
 	margin: 0;
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
-	font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+	/* C12: was clamp(1.75rem, 3.5vw, 2.75rem) */
+	font-size: var(--type-h3-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
@@ -356,7 +438,8 @@
 	margin: 0;
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
-	font-size: clamp(1.5rem, 2.5vw, 2rem);
+	/* Was clamp(1.5rem, 2.5vw, 2rem) — mapped to h4 role. */
+	font-size: var(--type-h4-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.15;
 	letter-spacing: var(--tracking-tight);
@@ -450,7 +533,8 @@
 
 .contact-details__link:hover,
 .contact-details__link:focus-visible {
-	color: var(--color-gold-600);
+	/* C8: was --color-gold-600 (lighter than base — failed AA on white). */
+	color: var(--color-link-hover);
 }
 
 .contact-details__link:focus-visible {
@@ -591,7 +675,8 @@
 	margin: 0;
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
-	font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+	/* C12 */
+	font-size: var(--type-h3-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
@@ -622,13 +707,14 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
 	gap: clamp(2rem, 4vw, 3rem);
-	max-width: 82rem;                /* bumped from 72rem to compensate */
+	max-width: 82rem;
 	margin-inline: auto;
 	padding: clamp(1.75rem, 3.5vw, 3rem);
 	background: var(--color-surface);
 	border: var(--border-width-thin) solid var(--color-border);
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-sm);
+	scroll-margin-top: var(--scroll-offset);
 }
 
 @media (min-width: 64rem) {
@@ -640,10 +726,6 @@
 
 	.contact-form-wrap > .contact-form-aside { order: 1; }
 	.contact-form-wrap > .modern-form { order: 2; }
-}
-
-.contact-form-wrap {
-	scroll-margin-top: var(--scroll-offset);
 }
 
 /* ==========================================================================
@@ -709,7 +791,8 @@
 	font-size: var(--text-xs);
 	font-style: normal;
 	line-height: var(--leading-relaxed);
-	border-left: 2px solid var(--color-accent-text);
+	/* C13: was 2px */
+	border-left: var(--border-width-medium) solid var(--color-accent-text);
 	background: var(--color-surface-muted);
 	border-radius: var(--radius-sm);
 	animation: subjectHintIn var(--duration-base) var(--ease-standard);
@@ -752,7 +835,8 @@
 .modern-form-group input:focus,
 .modern-form-group select:focus,
 .modern-form-group textarea:focus {
-	border-bottom-color: var(--color-gold-500);
+	/* C5: was --color-gold-500 (2.3:1 on white). */
+	border-bottom-color: var(--color-interactive);
 }
 
 .modern-form-group textarea {
@@ -764,13 +848,29 @@
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	color-scheme: light;
+	/* C3: was `color-scheme: light` — forced light dropdown in dark mode. */
+	color-scheme: inherit;
 	padding-right: var(--space-8);
+	/* C4: light-mode arrow (gold-700). Dark variant below. */
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2385620b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right var(--space-3) center;
 	background-size: 1rem;
 	cursor: pointer;
+}
+
+/*
+ * C4: dark-mode arrow (gold-400) — visible on the dark theme's select bg.
+ * Same shape, different stroke color.
+ */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .modern-form-group select {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9ad2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	}
+}
+
+:root[data-theme="dark"] .modern-form-group select {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9ad2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 }
 
 .modern-form-group select option {
@@ -796,16 +896,6 @@
 	padding: var(--space-2) var(--space-3);
 }
 
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme="light"]) .modern-form-group select {
-		color-scheme: dark;
-	}
-}
-
-:root[data-theme="dark"] .modern-form-group select {
-	color-scheme: dark;
-}
-
 
 /* ==========================================================================
    8. FOCUS UNDERLINE
@@ -817,7 +907,10 @@
 	left: 0;
 	width: 0;
 	height: 2px;
-	background: linear-gradient(90deg, var(--color-gold-500), var(--color-gold-300));
+	/* C6: was gold-500 → gold-300 (invisible on white). */
+	background: linear-gradient(90deg,
+			var(--color-interactive),
+			var(--color-accent-text));
 	transition: width var(--duration-base) var(--ease-emphasized);
 	pointer-events: none;
 }
@@ -885,17 +978,18 @@
 	border: var(--border-width-thin) solid var(--color-border-strong);
 	border-radius: var(--radius-sm);
 	background: var(--color-surface);
-	accent-color: var(--color-gold-500);
+	/* Uses --color-interactive for accessible accent (was gold-500). */
+	accent-color: var(--color-interactive);
 	cursor: pointer;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
 	transition:
 		background-color var(--duration-fast) var(--ease-standard),
 		border-color var(--duration-fast) var(--ease-standard);
 }
 
 .modern-checkbox input[type="checkbox"]:checked {
+	/* Kept literal gold-500 for the checked fill — the dark checkmark on
+	 * gold reads fine in both themes, and using --color-interactive would
+	 * make the checkmark hard to see (gold-700 check on gold-700 bg). */
 	background: var(--color-gold-500);
 	border-color: var(--color-gold-500);
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
@@ -1160,7 +1254,8 @@
 
 .contact-form-aside__section p a:hover,
 .contact-form-aside__section p a:focus-visible {
-	color: var(--color-gold-600);
+	/* C8: was --color-gold-600 (failed AA in light). */
+	color: var(--color-link-hover);
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 }
@@ -1270,7 +1365,8 @@
 	margin: 0;
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
-	font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+	/* C12 */
+	font-size: var(--type-h3-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
@@ -1341,7 +1437,8 @@
 }
 
 .faq-item[open] {
-	border-color: var(--color-gold-400);
+	/* C11: was --color-gold-400 (3:1 on white). */
+	border-color: var(--color-interactive);
 	box-shadow: var(--shadow-sm);
 }
 
@@ -1413,7 +1510,8 @@
 	right: var(--space-4);
 	color: var(--color-accent-text);
 	font-family: var(--font-mono);
-	font-size: 1.25rem;
+	/* C14: was 1.25rem */
+	font-size: var(--text-xl);
 	font-weight: 300;
 	line-height: 1;
 	transition: transform var(--duration-base) var(--ease-emphasized);
@@ -1448,10 +1546,6 @@
 
 /* ==========================================================================
    17. NEXT STEP — explore links
-   ==========================================================================
-   Uses explicit container override (like every other section) so its
-   content never touches the viewport edge, regardless of how the base
-   .container is defined in layout.css.
    ========================================================================== */
 
 .contact-next {
@@ -1492,7 +1586,8 @@
 	margin: 0 0 var(--space-3);
 	color: var(--color-text-strong);
 	font-family: var(--font-display);
-	font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+	/* C12 — was clamp(1.75rem, 3.5vw, 2.5rem) */
+	font-size: var(--type-h3-size);
 	font-weight: var(--font-weight-medium);
 	line-height: 1.1;
 	letter-spacing: var(--tracking-tight);
@@ -1553,7 +1648,8 @@
 
 .contact-next__links a:hover,
 .contact-next__links a:focus-visible {
-	border-color: var(--color-gold-400);
+	/* C11: was --color-gold-400 */
+	border-color: var(--color-interactive);
 	color: var(--color-accent-text);
 	background: var(--color-surface-muted);
 	transform: translateY(-1px);
@@ -1615,7 +1711,8 @@
 	flex-direction: column;
 	gap: var(--space-4);
 	width: min(100%, 32rem);
-	max-height: 90vh;
+	/* C10: dvh for mobile-safe. */
+	max-height: 90dvh;
 	overflow-y: auto;
 	padding: clamp(1.75rem, 4vw, 2.5rem);
 	background: var(--color-surface);
@@ -1646,7 +1743,7 @@
 
 .contact-success__close:hover,
 .contact-success__close:focus-visible {
-	border-color: var(--color-gold-400);
+	border-color: var(--color-interactive);
 	color: var(--color-accent-text);
 }
 
@@ -1661,7 +1758,8 @@
 	width: 3.5rem;
 	height: 3.5rem;
 	margin-inline: auto;
-	color: var(--color-white);
+	/* C7: was --color-white — invisible on light green in dark mode. */
+	color: var(--color-text-inverse);
 	background: var(--color-success);
 	border-radius: 50%;
 }

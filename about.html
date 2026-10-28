@@ -54,13 +54,13 @@
 	<meta name="twitter:image" content="https://kufre-dev.github.io/ModeInfinity/assets/images/about%20picture.webp">
 	<meta name="twitter:image:alt" content="ModeInfinity shoemaking and footwear craftsmanship">
 	<!-- ================= BRAND / MOBILE / BROWSER ================= -->
-	<meta name="theme-color" content="#111111">
-	<meta name="color-scheme" content="light">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
+<meta name="color-scheme" content="light dark">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<meta name="apple-mobile-web-app-title" content="ModeInfinity">
-	<meta name="referrer" content="strict-origin-when-cross-origin">
 	<!-- ================= FAVICON + MANIFEST ================= -->
 	<link rel="icon" href="public/favicon.ico" sizes="any">
 	<link rel="apple-touch-icon" href="assets/images/logo.png">
@@ -68,7 +68,7 @@
 	<!-- ================= FONT HINTS + FONTS ================= -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<!-- ================= STYLESHEETS ================= -->
 	<link rel="stylesheet" href="styles/variables.css">
 	<link rel="stylesheet" href="styles/global.css">
@@ -256,6 +256,7 @@
 		}
 
 	</script>
+	<script src="scripts/theme-switcher.js"></script>
 </head>
 
 	<body>
@@ -294,7 +295,7 @@
 					<a class="primary-navigation__link" href="shop.html" data-nav-page="shop">Shop</a>
 				</li>
 				<li class="primary-navigation__item">
-					<a class="primary-navigation__link" href="gallery.html" data-nav-page="Gallery">Gallery</a>
+					<a class="primary-navigation__link" href="gallery.html" data-nav-page="gallery">Gallery</a>
 				</li>
 				<li class="primary-navigation__item">
 					<a class="primary-navigation__link" href="contact.html" data-nav-page="contact">Contact</a>
@@ -389,7 +390,7 @@
 							</a>
 						</li>
 						<li class="mobile-navigation__item">
-							<a class="mobile-navigation__link" href="gallery.html" data-nav-page="Gallery">
+							<a class="mobile-navigation__link" href="gallery.html" data-nav-page="gallery">
 								<span>Gallery</span>
 								<svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18">
 									<path d="M5 12h14"></path>
@@ -464,11 +465,15 @@
 				<figcaption class="about-origin__caption"> Jennifer I. Omomia · Founder </figcaption>
 			</figure>
 			<div class="about-origin__narrative">
-				<blockquote class="about-origin__quote">
+				
+				<p class="about-origin__text"> ModeInfinity was birthed in 2016 by Jennifer I. Omomia, starting humbly under a tree in my father’s compound with just myself and my gateman. Named in honor of my late father, the brand emerged during a period of uncertainty when, as a young graduate, I was terrified about my future and the prospect of not finding a job. Feeling like my world was spinning out of control, my father urged me to pause and think critically about what I truly wanted.</p>
+
+<blockquote class="about-origin__quote">
 					<p>There is always an alternative. There is always a way. It just takes time, patience, consistency, and the determination to see it through.</p>
 				</blockquote>
-				<p class="about-origin__text"> ModeInfinity was birthed in 2016 by Jennifer I. Omomia, starting humbly under a tree in my father’s compound with just myself and my gateman. Named in honor of my late father, the brand emerged during a period of uncertainty when, as a young graduate, I was terrified about my future and the prospect of not finding a job. Feeling like my world was spinning out of control, my father urged me to pause and think critically about what I truly wanted.</p>
+
 				<p class="about-origin__text">Deep down, I knew I was not meant for the conventional corporate rat race; I wanted to build something that brought me genuine joy. Drawing on the shoemaking skills I had acquired while studying in Ghana, I made a defining choice at that moment: to become the very best female shoemaker from this part of the world. Today, that vision has grown into a team of five, supported by a showroom at Tejuosho Shopping Complex and a workshop at the Mushin leather market.</p>
+				
 			<dl class="about-origin__facts">
 	<div class="about-origin__fact">
 		<dt>Founder</dt>

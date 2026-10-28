@@ -28,8 +28,9 @@
 	<link rel="apple-touch-icon" href="assets/images/logo.png">
 	<link rel="manifest" href="public/manifest.json">
 
-	<meta name="theme-color" content="#111111">
-	<meta name="color-scheme" content="light">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111">
+<meta name="color-scheme" content="light dark">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -37,7 +38,7 @@
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" href="styles/variables.css">
 	<link rel="stylesheet" href="styles/global.css">
@@ -47,24 +48,25 @@
 	<link rel="stylesheet" href="styles/lightbox.css">
 	<link rel="stylesheet" href="styles/animations.css">
 	<link rel="stylesheet" href="styles/responsive.css">
-
+<script src="scripts/theme-switcher.js"></script>
 	<style>
 		/* ======================================================================
 		   DRAFT NOTICE
 		   ====================================================================== */
-		.legal-draft {
-			width: min(100% - (var(--container-padding-inline) * 2), 72rem);
-			margin: var(--space-6) auto 0;
-			padding: var(--space-4) var(--space-5);
-			background: var(--color-gold-100);
-			border: 1px solid rgb(197 154 24 / 0.4);
-			border-left: 4px solid var(--color-gold-500);
-			border-radius: var(--radius-sm);
-			color: var(--color-text-strong);
-			font-family: var(--font-sans);
-			font-size: var(--text-sm);
-			line-height: var(--leading-relaxed);
-		}
+.legal-draft {
+	width: min(100% - (var(--container-padding-inline) * 2), 72rem);
+	margin: var(--space-6) auto 0;
+	padding: var(--space-4) var(--space-5);
+	background: var(--color-gold-100);
+	border: 1px solid rgb(197 154 24 / 0.4);
+	border-left: 4px solid var(--color-gold-500);
+	border-radius: var(--radius-sm);
+	/* Fixed dark brown — readable on fixed cream bg in both themes. */
+	color: var(--color-gold-900);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+}
 		.legal-draft strong {
 			display: block;
 			margin-bottom: var(--space-1);
@@ -75,15 +77,33 @@
 		/* ======================================================================
 		   HERO
 		   ====================================================================== */
-		.legal-hero {
-			background: var(--color-background-dark);
-			color: var(--color-white);
-			padding-block:
-				calc(var(--header-height) + var(--space-10))
-				var(--space-10);
-			padding-inline: var(--container-padding-inline);
-			text-align: left;
-		}
+.legal-hero {
+	/* Local dark token scope — hero is always dark by design.
+	   Makes .btn-secondary (Print button) visible in both themes. */
+	--color-text: #ffffff;
+	--color-text-strong: #ffffff;
+	--color-text-muted: rgb(255 255 255 / 0.82);
+	--color-text-subtle: rgb(255 255 255 / 0.7);
+	--color-text-inverse: #0a0a0a;
+	--color-background: #000000;
+	--color-surface: #111111;
+	--color-surface-muted: #171717;
+	--color-border: rgb(255 255 255 / 0.12);
+	--color-border-strong: rgb(255 255 255 / 0.35);
+	--color-link: var(--color-gold-300);
+	--color-link-hover: var(--color-gold-200);
+	--color-accent-text: var(--color-gold-300);
+	--color-interactive: var(--color-gold-300);
+	--focus-ring-color: var(--color-gold-300);
+
+	background: var(--color-background-dark);
+	color: var(--color-white);
+	padding-block:
+		calc(var(--header-height) + var(--space-10))
+		var(--space-10);
+	padding-inline: var(--container-padding-inline);
+	text-align: left;
+}
 		.legal-hero__inner {
 			width: min(100%, 72rem);
 			margin-inline: auto;
@@ -103,7 +123,7 @@
 			color: var(--color-white);
 			font-family: var(--font-display);
 			font-size: clamp(2.2rem, 6vw, 3.5rem);
-			font-weight: var(--font-weight-medium);
+			font-weight: var(--font-weight-semibold);
 			line-height: 1.1;
 			letter-spacing: var(--tracking-tight);
 			text-wrap: balance;
@@ -275,7 +295,7 @@
 			color: var(--color-text-strong);
 			font-family: var(--font-display);
 			font-size: clamp(1.35rem, 3vw, 1.8rem);
-			font-weight: var(--font-weight-medium);
+			font-weight: var(--font-weight-semibold);
 			line-height: var(--leading-snug);
 			letter-spacing: var(--tracking-tight);
 		}
@@ -312,10 +332,10 @@
 			text-underline-offset: 0.2em;
 			overflow-wrap: anywhere;
 		}
-		.legal-content a:hover,
-		.legal-content a:focus-visible {
-			color: var(--color-gold-600);
-		}
+.legal-content a:hover,
+.legal-content a:focus-visible {
+	color: var(--color-link-hover);  /* gold-800 light / gold-200 dark — AA pass */
+}
 		.legal-content a:focus-visible {
 			outline: var(--focus-ring-width) solid var(--focus-ring-color);
 			outline-offset: var(--focus-ring-offset);
@@ -421,13 +441,22 @@
 			background-position: right var(--space-3) center;
 			background-size: 1rem;
 		}
-		.legal-field input:focus,
-		.legal-field textarea:focus,
-		.legal-field select:focus {
-			outline: none;
-			border-color: var(--color-gold-500);
-			box-shadow: 0 0 0 3px rgb(197 154 24 / 0.12);
-		}
+		/* Dark-mode select arrow (gold-300) */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .legal-field select {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23edc84f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+	}
+}
+:root[data-theme="dark"] .legal-field select {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23edc84f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+}
+	.legal-field input:focus,
+.legal-field textarea:focus,
+.legal-field select:focus {
+	outline: none;
+	border-color: var(--color-interactive);  /* gold-700 light, gold-300 dark */
+	box-shadow: 0 0 0 3px rgb(197 154 24 / 0.15);
+}
 		.legal-field-note {
 			margin: var(--space-4) 0 0;
 			padding: var(--space-3) var(--space-4);
@@ -487,65 +516,65 @@
 		/* ======================================================================
 		   INTERNAL CHECKLIST PANEL — clearly marked as internal
 		   ====================================================================== */
-		.legal-internal {
-			margin-top: var(--space-10);
-			padding: var(--space-6);
-			background: #fff9f7;
-			border: 2px dashed var(--color-warning, #8a5600);
-			border-radius: var(--radius-md);
-		}
-		.legal-internal__kicker {
-			margin: 0 0 var(--space-2);
-			color: var(--color-warning, #8a5600);
-			font-family: var(--font-mono);
-			font-size: var(--text-xs);
-			font-weight: var(--font-weight-semibold);
-			letter-spacing: var(--tracking-widest);
-			text-transform: uppercase;
-		}
-		.legal-internal > h2 {
-			margin-top: 0;
-			color: var(--color-warning, #8a5600);
-		}
-		.legal-internal__checklist {
-			margin: var(--space-4) 0;
-			padding: 0;
-			list-style: none;
-		}
-		.legal-internal__checklist li {
-			position: relative;
-			padding-left: var(--space-8);
-			margin: 0 0 var(--space-3);
-			color: var(--color-text);
-			font-family: var(--font-sans);
-			font-size: var(--text-sm);
-			line-height: var(--leading-relaxed);
-		}
-		.legal-internal__checklist li::before {
-			position: absolute;
-			left: 0;
-			top: 0;
-			content: "□";
-			color: var(--color-warning, #8a5600);
-			font-size: 1.25rem;
-			line-height: 1.2;
-		}
-		.legal-internal__warning {
-			margin: var(--space-5) 0 0;
-			padding: var(--space-4) var(--space-5);
-			background: #fff0ed;
-			border-left: 4px solid var(--color-warning, #8a5600);
-			border-radius: var(--radius-sm);
-			color: #5f211b;
-			font-family: var(--font-sans);
-			font-size: var(--text-sm);
-			line-height: var(--leading-relaxed);
-		}
-		.legal-internal__warning strong {
-			display: block;
-			margin-bottom: var(--space-1);
-			color: #5f211b;
-		}
+.legal-internal {
+	margin-top: var(--space-10);
+	padding: var(--space-6);
+	background: var(--color-warning-soft);
+	border: 2px dashed var(--color-warning);
+	border-radius: var(--radius-md);
+}
+.legal-internal__kicker {
+	margin: 0 0 var(--space-2);
+	color: var(--color-warning);
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: var(--tracking-widest);
+	text-transform: uppercase;
+}
+.legal-internal > h2 {
+	margin-top: 0;
+	color: var(--color-warning);
+}
+.legal-internal__checklist {
+	margin: var(--space-4) 0;
+	padding: 0;
+	list-style: none;
+}
+.legal-internal__checklist li {
+	position: relative;
+	padding-left: var(--space-8);
+	margin: 0 0 var(--space-3);
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+}
+.legal-internal__checklist li::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	content: "□";
+	color: var(--color-warning);
+	font-size: 1.25rem;
+	line-height: 1.2;
+}
+.legal-internal__warning {
+	margin: var(--space-5) 0 0;
+	padding: var(--space-4) var(--space-5);
+	background: var(--color-error-soft);
+	border-left: 4px solid var(--color-warning);
+	border-radius: var(--radius-sm);
+	color: var(--color-warning);
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	line-height: var(--leading-relaxed);
+}
+.legal-internal__warning strong {
+	display: block;
+	margin-bottom: var(--space-1);
+	color: var(--color-warning);
+}
 
 		/* ======================================================================
 		   PLACEHOLDER HIGHLIGHT
@@ -678,7 +707,7 @@
 					<li class="primary-navigation__item"><a class="primary-navigation__link" href="about.html" data-nav-page="about">About</a></li>
 					<li class="primary-navigation__item"><a class="primary-navigation__link" href="academy.html" data-nav-page="academy">ModeInfinity Academy</a></li>
 					<li class="primary-navigation__item"><a class="primary-navigation__link" href="shop.html" data-nav-page="shop">Shop</a></li>
-					<li class="primary-navigation__item"><a class="primary-navigation__link" href="gallery.html" data-nav-page="Gallery">Gallery</a></li>
+					<li class="primary-navigation__item"><a class="primary-navigation__link" href="gallery.html" data-nav-page="gallery">Gallery</a></li>
 					<li class="primary-navigation__item"><a class="primary-navigation__link" href="contact.html" data-nav-page="contact">Contact</a></li>
 				</ul>
 			</nav>
@@ -724,7 +753,7 @@
 							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="about.html" data-nav-page="about"><span>About</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
 							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="academy.html" data-nav-page="academy"><span>ModeInfinity Academy</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
 							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="shop.html" data-nav-page="shop"><span>Shop</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
-							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="gallery.html" data-nav-page="Gallery"><span>Gallery</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
+							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="gallery.html" data-nav-page="gallery"><span>Gallery</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
 							<li class="mobile-navigation__item"><a class="mobile-navigation__link" href="contact.html" data-nav-page="contact"><span>Contact</span><svg aria-hidden="true" fill="none" focusable="false" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewBox="0 0 24 24" width="18"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></a></li>
 						</ul>
 					</nav>
@@ -1470,8 +1499,8 @@
 						</div>
 						<ul class="site-footer__links">
 							<li><a href="academy.html"> Learn Shoemaking </a></li>
-							<li><a href="academy.html#courses"> Our Courses </a></li>
-							<li><a href="academy.html#process"> Training Process </a></li>
+							<li><a href="academy.html#pathways"> Our Courses </a></li>
+<li><a href="academy.html#atelier"> Training Process </a></li>
 							<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
 						</ul>
 					</nav>
@@ -1483,8 +1512,7 @@
 						<ul class="site-footer__links">
 							<li><a href="shop.html"> Shop Footwear </a></li>
 							<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
-							<li><a href="contact.html#custom-orders"> Custom Orders </a></li>
-						</ul>
+<li><a href="contact.html#contact-form"> Custom Orders </a></li>						</ul>
 					</nav>
 				</div>
 			</div>

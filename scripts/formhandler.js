@@ -17,6 +17,8 @@
    - Accessible status announcements
    - Floating-label state (for <select>)
    - Cross-module events (success / invalid / error)
+   - Formspree magic fields (_replyto / _cc / _subject)
+   - Optional WhatsApp handoff (data-whatsapp="true")
 
    Intended forms:
    - Contact form
@@ -41,9 +43,24 @@
      stored in this frontend module.
    - No external form service is assumed.
 
+   Form configuration (via data attributes):
+   - data-form="contact"                 → form name in events
+   - data-endpoint="https://..."         → POST target (Formspree)
+   - data-whatsapp="true"                → open WhatsApp on success
+   - data-sender-copy="cc" | "none"      → _cc sender on owner email
+                                           (default "cc"; set "none"
+                                           when Formspree Autoresponse
+                                           is enabled to avoid double
+                                           emails to the sender)
+
+   WhatsApp number is set once in WHATSAPP_NUMBER below.
+   Format: international, no +, no spaces, no leading 0.
+   Example: +2348050424000 → "2348050424000"
+
    Events dispatched on document:
    - "modeinfinity:toast"         → { type, title, message }
-   - "modeinfinity:form:success"  → { form, formName, message, response }
+   - "modeinfinity:form:success"  → { form, formName, message, response,
+                                     payload, whatsappUrl? }
    - "modeinfinity:form:invalid"  → { form, formName, errors }
    - "modeinfinity:form:error"    → { form, formName, error }
 
@@ -71,6 +88,14 @@ import {
 /* ============================================================
    2. CONFIGURATION
    ============================================================ */
+
+/*
+ * Receiving WhatsApp number.
+ *
+ * Example: +2348050424000 → "2348050424000"
+ * Change this one line if the business WhatsApp changes.
+ */
+const WHATSAPP_NUMBER = "2348050424000";
 
 const CONFIG = Object.freeze({
 	formSelector: "form[data-form]",
@@ -840,7 +865,181 @@ function getEndpoint(form) {
 
 
 /* ============================================================
-   15. NETWORK SUBMISSION
+   15. WHATSAPP HANDOFF
+   ============================================================
+   On successful submission, if the form has
+   data-whatsapp="true", we open a pre-filled WhatsApp chat
+   in a new tab. The visitor must still tap Send inside
+   WhatsApp — no API-less way to bypass that.
+
+   The success URL is also exposed via the "form:success"
+   event so the page controller can render an "Open
+   WhatsApp" button as a fallback if the tab was blocked.
+   ============================================================ */
+
+/**
+ * Turn a form payload into a readable WhatsApp message.
+ *
+ * @param {Object} payload
+ * @returns {string}
+ */
+function formatWhatsAppMessage(payload) {
+	const now = new Date();
+
+	const timestamp = now.toLocaleString("en-GB", {
+		timeZone: "Africa/Lagos",
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+		hour: "2-digit",
+		minute: "2-digit"
+	}).replace(",", "");
+
+	const lines = [
+		"*NEW MODEINFINITY INQUIRY*",
+		"",
+		`*Name:*  ${payload.name || "\u2014"}`,
+		`*Email:* ${payload.email || "\u2014"}`
+	];
+
+	if (payload.telephone) {
+		lines.push(`*Phone:* ${payload.telephone}`);
+	}
+
+	if (payload.inquiry_type) {
+		lines.push(`*Enquiry type:* ${payload.inquiry_type}`);
+	}
+
+	if (payload.program_type && String(payload.program_type).trim()) {
+		lines.push(`*Program interest:* ${payload.program_type}`);
+	}
+
+	if (payload.custom_subject && String(payload.custom_subject).trim()) {
+		lines.push(`*Reference code:* ${payload.custom_subject}`);
+	}
+
+	if (payload.order_reference && String(payload.order_reference).trim()) {
+		lines.push(`*Order reference:* ${payload.order_reference}`);
+	}
+
+	if (payload.message) {
+		lines.push("", "*Message:*", payload.message);
+	}
+
+	lines.push(
+		"",
+		"---",
+		`*Submitted:* ${timestamp}`,
+		`*Email to ModeInfinity:* yes`,
+		`*Sender copy:* ${payload.email || "sender"} (check spam if missing)`,
+		`*WhatsApp:* +${WHATSAPP_NUMBER}`
+	);
+
+	return lines.join("\n");
+}
+
+
+/**
+ * Build a wa.me URL for a form payload.
+ *
+ * @param {Object} payload
+ * @returns {string}
+ */
+function buildWhatsAppUrl(payload) {
+	return (
+		"https://wa.me/" +
+		WHATSAPP_NUMBER +
+		"?text=" +
+		encodeURIComponent(formatWhatsAppMessage(payload))
+	);
+}
+
+
+/**
+ * Open the WhatsApp URL in a new tab.
+ *
+ * Uses a temporary anchor element rather than window.open()
+ * because anchor.click() survives most popup blockers when
+ * called from an async callback.
+ *
+ * @param {string} url
+ * @returns {boolean} true if the click was dispatched
+ */
+function openWhatsAppHandoff(url) {
+	if (typeof url !== "string" || !url) {
+		return false;
+	}
+
+	try {
+		const link = document.createElement("a");
+
+		link.href = url;
+		link.target = "_blank";
+		link.rel = "noopener noreferrer";
+		link.style.display = "none";
+
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+
+		return true;
+	} catch (error) {
+		console.error(
+			"[ModeInfinity] WhatsApp handoff failed:",
+			error
+		);
+
+		return false;
+	}
+}
+
+
+/* ============================================================
+   16. EMAIL PAYLOAD
+   ============================================================
+   Formspree magic fields:
+     _replyto  → owner's "Reply" button goes to the sender
+     _cc       → sender receives a copy of the notification
+     _subject  → nice subject in the owner inbox
+
+   data-sender-copy attribute:
+     "cc"   (default) → add _cc (works on free plan)
+     "none"            → omit _cc (use when Formspree
+                         Autoresponse is enabled, to avoid
+                         sending the sender two emails)
+   ============================================================ */
+
+/**
+ * Wrap a raw payload with Formspree magic fields.
+ *
+ * @param {HTMLFormElement} form
+ * @param {Object} payload
+ * @returns {Object}
+ */
+function buildEmailBody(form, payload) {
+	const body = {
+		...payload,
+		_subject:
+			"ModeInfinity \u2014 " +
+			(payload.inquiry_type || "Website enquiry")
+	};
+
+	if (payload.email) {
+		body._replyto = payload.email;
+
+		const senderCopyMode = form.dataset.senderCopy || "cc";
+
+		if (senderCopyMode === "cc") {
+			body._cc = payload.email;
+		}
+	}
+
+	return body;
+}
+
+
+/* ============================================================
+   17. NETWORK SUBMISSION
    ============================================================ */
 
 /**
@@ -939,7 +1138,7 @@ async function submitToEndpoint(
 					},
 
 					body: JSON.stringify(
-						payload
+						buildEmailBody(form, payload)
 					),
 
 					credentials: "same-origin",
@@ -991,7 +1190,7 @@ async function submitToEndpoint(
 
 
 /* ============================================================
-   16. FORM VALIDATION
+   18. FORM VALIDATION
    ============================================================ */
 
 /**
@@ -1027,18 +1226,32 @@ function validateCurrentForm(form) {
 
 
 /* ============================================================
-   17. SUCCESS HANDLING
+   19. SUCCESS HANDLING
    ============================================================ */
 
 /**
  * Handle successful form submission.
  *
+ * Order of operations:
+ *   1. Set form status + toast.
+ *   2. Reset the form and its field state.
+ *   3. Dispatch "form:success" with payload + whatsappUrl.
+ *      The page controller uses this to open the success
+ *      modal and render the "Open WhatsApp" button.
+ *   4. If the form opted into WhatsApp (data-whatsapp="true"),
+ *      open the pre-filled WhatsApp chat in a new tab. This
+ *      happens AFTER dispatch so the modal DOM is already
+ *      visible when the new tab appears — the visitor's
+ *      current tab keeps focus.
+ *
  * @param {HTMLFormElement} form
  * @param {Object} response
+ * @param {Object|null} payload
  */
 function handleSuccess(
 	form,
-	response
+	response,
+	payload = null
 ) {
 	const message =
 		response?.data &&
@@ -1083,15 +1296,45 @@ function handleSuccess(
 		}
 	);
 
-	dispatchFormEvent("success", form, {
+	const detail = {
 		message,
-		response
-	});
+		response,
+		payload
+	};
+
+	/*
+	 * Build the WhatsApp URL only when:
+	 *   - the form opted in via data-whatsapp="true"
+	 *   - we actually have the sender's email (needed in
+	 *     the pre-filled message)
+	 */
+	const wantsWhatsApp =
+		form.dataset.whatsapp === "true";
+
+	if (
+		wantsWhatsApp &&
+		payload &&
+		typeof payload === "object" &&
+		payload.email
+	) {
+		detail.whatsappUrl = buildWhatsAppUrl(payload);
+	}
+
+	dispatchFormEvent("success", form, detail);
+
+	/*
+	 * Open WhatsApp after the event, so the page controller
+	 * has already shown the success modal. The visitor stays
+	 * on the modal tab; WhatsApp opens in a background tab.
+	 */
+	if (detail.whatsappUrl) {
+		openWhatsAppHandoff(detail.whatsappUrl);
+	}
 }
 
 
 /* ============================================================
-   18. ERROR HANDLING
+   20. ERROR HANDLING
    ============================================================ */
 
 /**
@@ -1134,7 +1377,7 @@ function handleError(
 
 
 /* ============================================================
-   19. LOCAL / UNCONFIGURED FORMS
+   21. LOCAL / UNCONFIGURED FORMS
    ============================================================ */
 
 /**
@@ -1180,7 +1423,7 @@ function handleUnconfiguredForm(
 
 
 /* ============================================================
-   20. FORM SUBMISSION
+   22. FORM SUBMISSION
    ============================================================ */
 
 /**
@@ -1283,7 +1526,8 @@ async function handleSubmit(
 
 		handleSuccess(
 			form,
-			response
+			response,
+			payload
 		);
 	} catch (error) {
 		handleError(
@@ -1302,7 +1546,7 @@ async function handleSubmit(
 
 
 /* ============================================================
-   21. LIVE VALIDATION
+   23. LIVE VALIDATION
    ============================================================ */
 
 /**
@@ -1373,7 +1617,7 @@ function handleFieldBlur(event) {
 
 
 /* ============================================================
-   22. CLEAR VALIDATION ERROR ON INPUT
+   24. CLEAR VALIDATION ERROR ON INPUT
    ============================================================ */
 
 /**
@@ -1407,7 +1651,7 @@ function handleFieldInput(event) {
 
 
 /* ============================================================
-   23. FORM EVENT BINDING
+   25. FORM EVENT BINDING
    ============================================================ */
 
 /**
@@ -1463,7 +1707,7 @@ function bindForm(form) {
 
 
 /* ============================================================
-   24. INITIALIZATION
+   26. INITIALIZATION
    ============================================================ */
 
 /**
@@ -1490,7 +1734,7 @@ export function initFormHandler() {
 
 
 /* ============================================================
-   25. PUBLIC API
+   27. PUBLIC API
    ============================================================ */
 
 export const formHandler =
@@ -1505,7 +1749,7 @@ export default formHandler;
 
 
 /* ============================================================
-   26. AUTOMATIC INITIALIZATION
+   28. AUTOMATIC INITIALIZATION
    ============================================================ */
 
 // onDOMReady(

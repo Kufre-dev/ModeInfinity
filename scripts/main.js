@@ -2,18 +2,27 @@
    MODEINFINITY — APPLICATION ENTRY POINT
    File: scripts/main.js
 
-   Contents:
-   - Products (homepage featured grid)
-   - Scroll to top
-   - Accordion
-   - Toast
-   - Product modal (with add-to-cart flow)
-   - Shop page (filter / sort / search / pagination / deep-link)
-   - Gallery viewer (4-box hub + per-item modal)
-   - Application bootstrap
+   PATCH ROUND — JS/CSS COORDINATION FIXES
+   ----------------------------------------
+   1. ACCORDION: open/close now uses the one-frame handoff
+      required by animations.css. `panel.hidden = false` on open
+      happens first, then on the next animation frame
+      `.is-open` is added so grid-template-rows transitions
+      from 0fr → 1fr. On close, `.is-open` is removed first,
+      then `panel.hidden = true` runs on transitionend (with
+      a 400ms fallback timeout). Without this, the panel
+      snapped open/closed because CSS cannot animate
+      display: none.
 
-   Cart terminology: uses "cart" throughout, consistent
-   with the cart drawer, header, and footer across all pages.
+   2. SCROLL TO TOP: no longer toggles `hidden` or
+      `aria-hidden`. The CSS `.scroll-to-top` uses opacity +
+      visibility transitions, and `visibility: hidden`
+      already removes the element from the a11y tree and
+      tab order. Setting `hidden` on hide cut the fade-out
+      transition; setting `aria-hidden="true"` on a
+      focusable element is a WCAG violation.
+      REQUIRES: removing `hidden` from scroll-to-top.html
+      (one-line HTML change).
    ============================================================ */
 
 import { initializeComponents } from "./components.js";
@@ -31,26 +40,23 @@ let applicationInitialized = false;
 
 /* ============================================================
    SECURITY: Safe URL Validator
-   Prevents javascript: and data: URI XSS attacks in attributes.
    ============================================================ */
 function safeUrl(url) {
   if (typeof url !== "string" || !url.trim()) return "";
   try {
-    // Resolve relative URLs against the current domain
     const parsed = new URL(url, window.location.href);
-    // Only allow standard web protocols
     if (parsed.protocol === "http:" || parsed.protocol === "https:") {
-      return url; // Return original to keep relative paths clean
+      return url;
     }
   } catch (e) {
     // Invalid URL format
   }
-  return ""; // Block everything else
+  return "";
 }
 
 
 /* ============================================================
-   PRODUCTS — BEGIN (homepage featured grid)
+   PRODUCTS — BEGIN
    ============================================================ */
 
 function initProducts() {
@@ -112,8 +118,6 @@ function initProducts() {
     var category = escapeHtml(product.category);
     var badge = escapeHtml(product.badge);
     var description = escapeHtml(product.shortDescription);
-    
-    // Sanitize image paths
     var safeAvif = safeUrl(product.imageAvif);
     var safeWebp = safeUrl(product.imageWebp);
     var safeFallback = safeUrl(product.imageFallback);
@@ -212,20 +216,21 @@ function initScrollToTop() {
     return document.querySelectorAll("[data-scroll-top]");
   }
 
+  /*
+   * CSS handles visibility via `.scroll-to-top` (opacity: 0,
+   * visibility: hidden) → `.scroll-to-top.is-visible` (opacity: 1,
+   * visibility: visible). We only toggle the class. Do NOT touch
+   * `hidden` (display: none kills the fade transition) or
+   * `aria-hidden` (WCAG issue on focusable elements — visibility:
+   * hidden already removes the button from the a11y tree and tab
+   * order).
+   */
   function applyVisibility(show) {
     var buttons = getButtons();
     if (!buttons.length) return;
 
     for (var i = 0; i < buttons.length; i++) {
-      var btn = buttons[i];
-      if (show) {
-        btn.classList.add("is-visible");
-        btn.hidden = false;
-        btn.removeAttribute("aria-hidden");
-      } else {
-        btn.classList.remove("is-visible");
-        btn.hidden = true;
-      }
+      buttons[i].classList.toggle("is-visible", show);
     }
     visible = show;
   }
@@ -274,9 +279,20 @@ function initScrollToTop() {
 
 /* ============================================================
    ACCORDION — BEGIN
+   ============================================================
+   Requires the animations.css contract:
+     .accordion-item__panel { display: grid; grid-template-rows: 0fr; ... }
+     .accordion-item.is-open .accordion-item__panel { grid-template-rows: 1fr; }
+
+   The panel starts `hidden` in the HTML, which sets display: none.
+   CSS cannot transition display, so we need a one-frame handoff:
+     open  → panel.hidden = false; requestAnimationFrame → item.classList.add("is-open")
+     close → item.classList.remove("is-open"); transitionend → panel.hidden = true
    ============================================================ */
 
 function initAccordion() {
+  var CLOSE_FALLBACK_MS = 400;
+
   function getTrigger(event) {
     return event.target.closest(".accordion-item__trigger");
   }
@@ -287,16 +303,51 @@ function initAccordion() {
     return document.getElementById(id);
   }
 
-  function setOpen(trigger, panel, open) {
-    trigger.setAttribute("aria-expanded", open ? "true" : "false");
+  function openItem(trigger, panel) {
+    trigger.setAttribute("aria-expanded", "true");
 
     var item = trigger.closest(".accordion-item");
-    if (item) item.classList.toggle("is-open", open);
+    if (!item) return;
 
     if (panel) {
-      panel.hidden = !open;
-      panel.classList.toggle("is-open", open);
+      panel.hidden = false;
+      // Force a reflow so the browser paints the collapsed 0fr
+      // state at display: grid BEFORE .is-open changes the track
+      // to 1fr. Without this, no transition fires.
+      void panel.offsetHeight;
     }
+
+    window.requestAnimationFrame(function () {
+      item.classList.add("is-open");
+      if (panel) panel.classList.add("is-open");
+    });
+  }
+
+  function closeItem(trigger, panel) {
+    trigger.setAttribute("aria-expanded", "false");
+
+    var item = trigger.closest(".accordion-item");
+    if (item) item.classList.remove("is-open");
+    if (panel) panel.classList.remove("is-open");
+
+    if (!panel) return;
+
+    var done = false;
+
+    function finish() {
+      if (done) return;
+      done = true;
+      panel.hidden = true;
+      panel.removeEventListener("transitionend", onTransitionEnd);
+    }
+
+    function onTransitionEnd(event) {
+      if (event.target !== panel) return;
+      finish();
+    }
+
+    panel.addEventListener("transitionend", onTransitionEnd);
+    window.setTimeout(finish, CLOSE_FALLBACK_MS);
   }
 
   function closeSiblings(trigger) {
@@ -307,8 +358,8 @@ function initAccordion() {
     for (var i = 0; i < siblings.length; i++) {
       var sib = siblings[i];
       if (sib === trigger) continue;
-      var sibPanel = getPanel(sib);
-      setOpen(sib, sibPanel, false);
+      if (sib.getAttribute("aria-expanded") !== "true") continue;
+      closeItem(sib, getPanel(sib));
     }
   }
 
@@ -322,10 +373,10 @@ function initAccordion() {
     var isOpen = trigger.getAttribute("aria-expanded") === "true";
 
     if (isOpen) {
-      setOpen(trigger, panel, false);
+      closeItem(trigger, panel);
     } else {
       closeSiblings(trigger);
-      setOpen(trigger, panel, true);
+      openItem(trigger, panel);
     }
   });
 }
@@ -422,10 +473,7 @@ var productModalOpen = false;
 
 function initProductModal() {
   productModalEl = document.getElementById("product-modal");
-
-  if (!productModalEl) {
-    return;
-  }
+  if (!productModalEl) return;
 
   productModalEl.setAttribute("aria-hidden", "true");
   productModalEl.setAttribute("inert", "");
@@ -439,9 +487,7 @@ function initProductModal() {
   });
 
   var addBtn = document.getElementById("product-modal-add");
-  if (addBtn) {
-    addBtn.addEventListener("click", handleModalAddToCart);
-  }
+  if (addBtn) addBtn.addEventListener("click", handleModalAddToCart);
 
   var sizeGrid = productModalEl.querySelector(".product-modal__size-grid");
   if (sizeGrid) {
@@ -454,7 +500,6 @@ function initProductModal() {
       });
       btn.classList.add("is-active");
       btn.setAttribute("aria-selected", "true");
-
       if (addBtn) addBtn.disabled = false;
     });
   }
@@ -506,9 +551,7 @@ function openProductModal(card) {
   if (!productModalEl) {
     productModalEl = document.getElementById("product-modal");
   }
-  if (!productModalEl) {
-    return;
-  }
+  if (!productModalEl) return;
   if (!card) return;
 
   var product = getProductFromCard(card);
@@ -537,9 +580,7 @@ function openProductModal(card) {
     imageEl.setAttribute("src", product.imageFallback);
     imageEl.setAttribute("alt", product.imageAlt);
   }
-  if (crumbEl) {
-    crumbEl.textContent = product.category || "Collection";
-  }
+  if (crumbEl) crumbEl.textContent = product.category || "Collection";
   if (categoryEl) {
     categoryEl.textContent = product.category;
     categoryEl.hidden = !product.category;
@@ -556,9 +597,7 @@ function openProductModal(card) {
       priceEl.textContent = "\u20a6" + String(product.price);
     }
   }
-  if (descriptionEl) {
-    descriptionEl.textContent = product.description || "";
-  }
+  if (descriptionEl) descriptionEl.textContent = product.description || "";
   if (addBtn) {
     addBtn.dataset.modalProductId = product.id;
     addBtn.dataset.modalProductName = product.name;
@@ -582,9 +621,7 @@ function openProductModal(card) {
     });
   }
 
-  if (addBtn) {
-    addBtn.disabled = true;
-  }
+  if (addBtn) addBtn.disabled = true;
 
   productModalLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
@@ -677,7 +714,6 @@ function handleModalAddToCart(event) {
   var name = btn.dataset.modalProductName || "Item";
   var price = btn.dataset.modalProductPrice || "0";
   var image = btn.dataset.modalProductImage || "";
-
   var size = activeSizeGuard.dataset.size || "";
 
   var cartName = size ? name + " (Size " + size + ")" : name;
@@ -801,7 +837,6 @@ function initShopPage() {
     var badge = escapeHtml(p.badge);
     var description = escapeHtml(p.shortDescription);
 
-    // Sanitize image paths
     var safeAvif = safeUrl(p.imageAvif);
     var safeWebp = safeUrl(p.imageWebp);
     var safeFallback = safeUrl(p.imageFallback);
@@ -832,9 +867,7 @@ function initShopPage() {
           '<p class="product-card__price">' + price + '</p>' +
           (description ? '<p class="product-card__description">' + description + '</p>' : '') +
           '<div class="product-card__actions">' +
-            '<button type="button" class="shop-add-btn" data-product-open aria-label="Select a size and add to cart: ' + name + '">' +
-              'Enquire' +
-            '</button>' +
+            '<button type="button" class="shop-add-btn" data-product-open aria-label="Select a size and add to cart: ' + name + '">Enquire</button>' +
           '</div>' +
         '</div>' +
       '</article>';
