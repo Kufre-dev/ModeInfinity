@@ -261,12 +261,9 @@
 		const cards = items.slice(0, limit).map(buildCard);
 		list.replaceChildren(...cards);
 
-		const reducedMotion = window
-			.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-		if (viewport && cards.length >= loopFrom && !reducedMotion) {
-			startLoop(cards);
-		}
+	if (viewport && cards.length >= loopFrom) {
+	startLoop(cards);
+}
 
 		if (viewport) {
 			updateFocusable();

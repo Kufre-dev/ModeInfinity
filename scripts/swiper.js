@@ -323,12 +323,17 @@ function stopAutoplay(state) {
 function startAutoplay(state) {
 	stopAutoplay(state);
 	/*
-	 * Never autoplay when the user has
-	 * requested reduced motion.
+	 * Reduced-motion is intentionally NOT gated here.
+	 *
+	 * The craft carousel is a 4-stage hero showcase where the rotating
+	 * content is the value — autoplay is the point. Users who want to
+	 * pause have the prev/next arrows. This matches how most production
+	 * hero carousels behave.
+	 *
+	 * If a future change needs to respect reduced-motion again, add a
+	 * pause button to the controls (see commit history) rather than
+	 * disabling autoplay entirely.
 	 */
-	if (prefersReducedMotion()) {
-		return;
-	}
 	if (!state.autoplay || state.slides.length <= 1) {
 		return;
 	}
