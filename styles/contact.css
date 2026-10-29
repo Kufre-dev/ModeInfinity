@@ -2217,6 +2217,31 @@
 	margin-left: 0.25em;
 }
 
+
+
+/* Closing note under the contact form section */
+.contact-form-footer {
+	margin-top: var(--space-8, 2.5rem);
+	padding-top: var(--space-6, 1.5rem);
+	border-top: 1px solid var(--color-border, rgba(0, 0, 0, .1));
+	display: grid;
+	gap: var(--space-3, .75rem);
+	text-align: center;
+}
+
+.contact-form-footer__text {
+	font-size: var(--font-size-sm, .9375rem);
+	line-height: 1.6;
+	color: var(--color-text-muted, #555);
+	margin: 0;
+	max-width: 72ch;
+	margin-inline: auto;
+}
+
+/* Phone number stays intact regardless of viewport */
+.contact-form-footer__text a {
+	white-space: nowrap;
+}
 /* ==========================================================================
    End of contact.css
    ========================================================================== */

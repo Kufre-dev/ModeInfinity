@@ -57,7 +57,7 @@ html {
 	text-size-adjust: 100%;
 }
 body {
-	min-width: 20rem;
+	/* min-width: 20rem; */
 	min-height: 100vh;
 	margin: 0;
 	background: var(--color-background);

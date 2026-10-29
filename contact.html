@@ -256,7 +256,7 @@
 	     2. CONTACT FORM — stacked header, aside left, form right,
 	        "What happens next" horizontally below
 	     ============================================================ -->
-<section class="contact-form-section section section--surface" id="contact-form" aria-labelledby="contact-form-title">
+<section class="contact-form-section section section--surface" aria-labelledby="contact-form-title">
 	<div class="container">
 
 		<header class="contact-form-section__header">
@@ -272,8 +272,7 @@
 			</p>
 		</header>
 
-		<div class="contact-form-wrap">
-
+		<div class="contact-form-wrap" id="contact-form">
 	<form
     id="modernContactForm"
     class="modern-form"
@@ -460,8 +459,16 @@
 					<p class="contact-form-next__step-text">Expect a reply within one business day.</p>
 				</li>
 			</ol>
+			
 		</div>
-
+<footer class="contact-form-footer">
+	<p class="contact-form-footer__text">
+		Once you submit your message, a member of our team will review it and respond personally, usually within one business day. If your enquiry is urgent, please call us directly at <a class="text-link" href="tel:+2348050424000">+234 805 042 4000</a>.
+	</p>
+	<p class="contact-form-footer__text">
+		We look forward to connecting with you and helping you take the next step in your journey with ModeInfinity.
+	</p>
+</footer>
 	</div>
 </section>
 
@@ -496,7 +503,7 @@
 							Abuja, FCT, Nigeria
 						</address>
 						<dl class="contact-details__hours">
-							<div><dt>Mon–Fri</dt><dd>9:00–18:00</dd></div>
+							<div><dt>Mon–Fri</dt><dd>9:00am–06:00pm</dd></div>
 							<div><dt>Saturday</dt><dd>By appointment</dd></div>
 							<div><dt>Sunday</dt><dd>Closed</dd></div>
 						</dl>
@@ -563,7 +570,7 @@
 	<!-- ============================================================
 	     4. FAQ — 16 questions, responsive grid
 	     ============================================================ -->
-	<section class="contact-faq section --color-background-muted" id="faq" aria-labelledby="contact-faq-title">
+	<section class="contact-faq section" id="faq" aria-labelledby="contact-faq-title">
 		<div class="container">
 			<header class="contact-faq__header">
 				<p class="eyebrow">FAQ</p>
@@ -752,11 +759,11 @@
 					<h2 id="contact-next-title" class="contact-next__title">Find your <em>next step.</em></h2>
 					<p class="contact-next__subtitle">Discover the work, explore training, or browse the footwear collection.</p>
 				</div>
-				<nav class="contact-next__links" aria-label="Explore ModeInfinity">
-					<a href="shop.html">Explore the collection <span aria-hidden="true">↗</span></a>
-					<a href="academy.html">Explore the academy <span aria-hidden="true">↗</span></a>
-					<a href="gallery.html">View the gallery <span aria-hidden="true">↗</span></a>
-				</nav>
+			<nav class="contact-next__links" aria-label="Explore ModeInfinity">
+	<a href="shop.html#collection">Explore the collection <span aria-hidden="true">↗</span></a>
+	<a href="academy.html#pathways">Explore the academy <span aria-hidden="true">↗</span></a>
+	<a href="gallery.html">View the gallery <span aria-hidden="true">↗</span></a>
+</nav>
 			</div>
 		</div>
 	</section>
@@ -948,7 +955,7 @@
 					<h2 class="site-footer__brand-title" id="footer-brand-title"> Learn. Create. Build. </h2>
 					<p class="site-footer__description"> ModeInfinity brings together handcrafted footwear, practical shoemaking education and purposeful design. </p>
 					<div class="site-footer__socials">
-						<a href="https://www.instagram.com/officialmodeinfinityw" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+						<a href="https://www.instagram.com/officialmodeinfinity" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
 							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
 								<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -994,7 +1001,7 @@
 							<li><a href="academy.html"> Learn Shoemaking </a></li>
 							<li><a href="academy.html#pathways"> Our Courses </a></li>
 <li><a href="academy.html#atelier"> Training Process </a></li>
-							<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
+							<li><a href="gallery.html#galleries"> Student &amp; Craft Gallery </a></li>
 						</ul>
 					</nav>
 					<nav class="site-footer__column" aria-labelledby="footer-collection-title">
@@ -1003,9 +1010,9 @@
 							<h2 id="footer-collection-title"> Shop </h2>
 						</div>
 						<ul class="site-footer__links">
-							<li><a href="shop.html"> Shop Footwear </a></li>
+							<li><a href="shop.html#collection"> Shop Footwear </a></li>
 							<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
-							<li><a href="#contact-form"> Custom Orders </a></li>
+							<li><a href="contact.html#contact-form"> Custom Orders </a></li>
 						</ul>
 					</nav>
 				</div>
@@ -1019,10 +1026,10 @@
 					<h2> Choose your path. </h2>
 					<p> Discover the collection or learn the craft behind every pair. </p>
 				</div>
-				<div class="site-footer__cta-actions">
-					<a class="btn btn-primary" href="shop.html"> Browse the Shop </a>
-					<a class="btn btn-secondary" href="academy.html"> Explore the Academy </a>
-				</div>
+			<div class="site-footer__cta-actions">
+	<a class="btn btn-primary" href="shop.html#collection"> Browse the Shop </a>
+	<a class="btn btn-secondary" href="academy.html#pathways"> Explore the Academy </a>
+</div>
 			</div>
 		</div>
 	</div>

@@ -865,7 +865,8 @@ body {
 		contain-intrinsic-size: auto 20rem;
 	}
 }
-
+[id] { scroll-margin-top: 6rem; }
+@media (max-width: 768px) { [id] { scroll-margin-top: 5rem; } }
 /* ==========================================================================
    End of layout.css
 

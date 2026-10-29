@@ -4371,7 +4371,7 @@ html.js .home-collection .product-card--skeleton {
 /* ---------- Desktop: 64rem+ ---------- */
 @media (min-width: 64rem) {
 	.home-collection__title {
-		font-size: clamp(2.2rem, 1rem + 2.6vw, 3.5rem);
+	font-size: clamp(1.9rem, 1rem + 1.8vw, 2.6rem);
 	}
 }
 
@@ -6615,6 +6615,7 @@ html.js .home-testimonials {
 	}
 	.home-testimonials__title {
 		/* font-size: clamp(2.2rem, 1rem + 2.6vw, 3.5rem); */
+		        font-size: clamp(1.9rem, 1rem + 1.8vw, 2.6rem);
 	}
 	/* .home-testimonials__cta {
 		margin-top: clamp(2.5rem, 4vw, 3.5rem);
@@ -7356,7 +7357,9 @@ html.js .home-testimonials {
   margin: 0;
   color: var(--color-white);
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  /* font-size: clamp(2.5rem, 6vw, 4.25rem); */
+	font-size: clamp(2.5rem, 4.5vw, 4rem);
+
   font-weight: var(--font-weight-semibold);
   line-height: 1.05;
   letter-spacing: var(--tracking-tight);
@@ -8108,7 +8111,7 @@ html.js .home-testimonials {
 
 .about-team__subtitle {
   margin: var(--space-5) auto 0;
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -9100,7 +9103,7 @@ html.js .home-testimonials {
 
 .about-cta__subtitle {
   margin: var(--space-5) auto 0;
-  color: rgb(255 255 255 / 0.8);
+  /* color: rgb(255 255 255 / 0.8); */
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -11735,7 +11738,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .shop-hero__description {
 	width: min(100%, 56ch);
 	margin: 0 auto;
-	color: rgb(255 255 255 / 0.85);
+	/* color: rgb(255 255 255 / 0.85); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);
@@ -14095,7 +14098,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 	margin: 0 0 var(--space-4);
 	color: var(--color-white);
 	font-family: var(--font-display);
-	font-size: clamp(2.5rem, 6vw, 4.25rem);
+font-size: clamp(2.5rem, 4vw, 4rem);
 	font-weight: var(--font-weight-semibold);
 	line-height: 1.05;
 	letter-spacing: var(--tracking-tight);
@@ -14112,7 +14115,7 @@ margin-bottom: clamp(4rem, 4vw, 3rem);
 .gallery-hero__description {
 	width: min(100%, 56ch);
 	margin: 0 auto;
-	color: rgb(255 255 255 / 0.85);
+	/* color: rgb(255 255 255 / 0.85); */
 	font-family: var(--font-sans);
 	font-size: var(--text-base);
 	line-height: var(--leading-relaxed);

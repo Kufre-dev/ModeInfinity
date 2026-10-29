@@ -689,6 +689,137 @@ body {
 	}
 }
 
+
+
+
+
+
+
+/* ==========================================================================
+   31. HOME HERO — MOBILE
+   ==========================================================================
+   Content strategy: desktop shows the full description; mobile shows a
+   2-line version. This is the single biggest win — one content decision
+   frees ~70px for the portrait, letting us keep 100svh without hiding
+   anything the reader needs.
+
+   Portrait sizing: min() of three independent caps — viewport width,
+   absolute px, and viewport-height-derived — so it self-corrects on
+   every aspect ratio without per-device patches.
+
+   Sizing map (portrait W × H | hero height):
+     375×667  →  ~250 × 312  |  ~740px  (small scroll, SE-class only)
+     375×812  →  ~300 × 375  |  ~810px  ✅ fits
+     390×844  →  ~325 × 406  |  ~840px  ✅ fits
+     414×896  →  ~345 × 431  |  ~890px  ✅ fits
+     430×932  →  ~360 × 450  |  ~925px  ✅ fits
+   ========================================================================== */
+
+@media (max-width: 47.999rem) {
+	.home-hero {
+		min-height: 100svh;
+		padding-block:
+			calc(var(--header-height-compact, 4.25rem) + var(--space-3))
+			max(var(--space-4), env(safe-area-inset-bottom));
+	}
+
+	.home-hero__inner {
+		flex: 1 1 auto;
+		min-height: 0;
+		justify-content: center;
+		gap: clamp(16px, 2.5svh, 28px);
+	}
+
+	.home-hero__visual {
+		flex: 0 0 auto;
+		width: auto;
+	}
+
+	.home-hero__visual-frame {
+		/* Smallest of: full-width portrait | absolute cap | height-derived cap */
+		width: min(85vw, 380px, calc(50svh * 0.8));
+		max-width: 100%;
+		aspect-ratio: 4 / 5;
+	}
+
+	/* ---------- Content rhythm ---------- */
+	.home-hero__eyebrow {
+		margin-bottom: var(--space-3);
+	}
+	.home-hero__title {
+		font-size: clamp(2rem, 9vw, 3rem);
+		line-height: 0.98;
+	}
+	.home-hero__description {
+		margin-top: var(--space-4);
+		font-size: var(--text-sm);
+		line-height: 1.55;
+	}
+	.home-hero__actions {
+		gap: var(--space-2);
+		margin-top: var(--space-5);
+	}
+
+	.home-hero__visual-line {
+		right: -0.5rem;
+		bottom: 6%;
+		height: 22%;
+	}
+}
+
+/* Mobile-only description visible; desktop-only hidden */
+.home-hero__description--short {
+	display: none;
+}
+
+@media (max-width: 47.999rem) {
+	.home-hero__description--full {
+		display: none;
+	}
+	.home-hero__description--short {
+		display: block;
+	}
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   32. SHORT LANDSCAPE — FORCE STACKING
+   ==========================================================================
+   At landscape phone dimensions (480×320, 568×320, 667×375, 844×390),
+   there isn't enough vertical room for two-column layouts to be readable.
+   Force single column across all common multi-column patterns.
+
+   Trigger: landscape AND height ≤ 30rem (480px) — catches all phone
+   landscape but NOT tablet landscape (768px height minimum).
+
+   Targets the standard layout utilities (.split, .grid-*) plus the
+   BEM components that build on them.
+   ========================================================================== */
+@media (orientation: landscape) and (max-height: 30rem) {
+	.split,
+	.split--wide,
+	.grid-2,
+	.grid-3,
+	.grid-4,
+	.grid-auto,
+	.grid-auto-compact {
+		grid-template-columns: 1fr;
+	}
+	.home-hero__inner {
+		flex-direction: column;
+	}
+}
+
+
+
+
 /* ==========================================================================
    End of responsive.css
    ========================================================================== */

@@ -18,7 +18,7 @@
     base-uri 'self';
     object-src 'none';
     upgrade-insecure-requests;
-">bject-src 'none';
+
 	">
 	<meta http-equiv="X-Content-Type-Options" content="nosniff">
 	<meta name="referrer" content="strict-origin-when-cross-origin">
@@ -102,7 +102,7 @@
 			"founder": { "@type": "Person", "name": "Jennifer I. Omomia" },
 			"areaServed": { "@type": "Country", "name": "Nigeria" },
 			"knowsAbout": ["Shoemaking", "Footwear craftsmanship", "Shoe design", "Leather craftsmanship", "Footwear education", "Handcrafted footwear"],
-			"sameAs": ["https://www.instagram.com/officialmodeinfinityw", "https://www.facebook.com/modeinfinity", "https://www.tiktok.com/@modeinfinity2"],
+			"sameAs": ["https://www.instagram.com/officialmodeinfinity", "https://www.facebook.com/modeinfinity", "https://www.tiktok.com/@modeinfinity2"],
 			"contactPoint": [{
 				"@type": "ContactPoint",
 				"telephone": "+2348050424000",
@@ -470,14 +470,14 @@
 					Handcrafted footwear, <em>made to order.</em>
 				</h1>
 				<p class="shop-hero__description">
-					Each pair is cut, stitched, and finished by hand in our Abuja workshop — one at a time, to order. Browse the collection below, or enquire about a custom commission.
+					Each pair is cut, stitched, and finished by hand in our Abuja workshop, one at a time, to order. Browse the collection below, or enquire about a custom commission.
 				</p>
 			</div>
 		</div>
 	</section>
 
 	<!-- ================== SHOP GRID ================== -->
-	<section class="shop" aria-labelledby="shop-grid-title">
+	<section class="shop" id="collection" aria-labelledby="shop-grid-title">
 		<div class="container">
 			<h2 id="shop-grid-title" class="sr-only">Products</h2>
 
@@ -561,7 +561,7 @@
 			</nav>
 
 			<noscript>
-				<p class="shop-empty">Turn on JavaScript to browse the collection, or <a href="contact.html">contact us</a> to enquire about any pair.</p>
+				<p class="shop-empty">Turn on JavaScript to browse the collection, or <a href="contact.html#contact-form">contact us</a> to enquire about any pair.</p>
 			</noscript>
 
 		</div>
@@ -608,7 +608,7 @@
 	</section>
 
 	<!-- ================== CRAFTSMANSHIP STANDARD ================== -->
-	<section class="shop-craft section" aria-labelledby="shop-craft-title">
+<section class="shop-craft section" id="standard" aria-labelledby="shop-craft-title">
 		<div class="container">
 			<header class="shop-craft__header">
 				<p class="eyebrow shop-craft__eyebrow">The Standard</p>
@@ -632,7 +632,7 @@
 						</svg>
 					</span>
 					<h3 class="shop-craft__label">Hand construction</h3>
-					<p class="shop-craft__text">Cut, stitched, and lasted by hand — not assembled on a line.</p>
+					<p class="shop-craft__text">Cut, stitched, and lasted by hand, not assembled on a line.</p>
 				</li>
 				<li class="shop-craft__item">
 					<span class="shop-craft__icon" aria-hidden="true">
@@ -651,14 +651,14 @@
 						</svg>
 					</span>
 					<h3 class="shop-craft__label">Made in Nigeria</h3>
-					<p class="shop-craft__text">Every pair is made in our Abuja workshop — no overseas assembly.</p>
+					<p class="shop-craft__text">Every pair is made in our Abuja workshop, no overseas assembly.</p>
 				</li>
 			</ul>
 		</div>
 	</section>
 
 	<!-- ================== MADE-TO-ORDER PROCESS ================== -->
-	<section class="shop-process section" aria-labelledby="shop-process-title">
+	<section class="shop-process section" id="process" aria-labelledby="shop-process-title">
 		<div class="container">
 			<header class="shop-process__header">
 				<p class="eyebrow shop-process__eyebrow">The Process</p>
@@ -697,7 +697,7 @@
 	</section>
 
 	<!-- ================== MADE-TO-ORDER CTA ================== -->
-	<section class="shop-custom section section--surface" aria-labelledby="shop-custom-title">
+	<section class="shop-custom section section--surface" id="custom" aria-labelledby="shop-custom-title">
 		<div class="container">
 			<div class="shop-custom__inner">
 				<div class="shop-custom__copy">
@@ -717,7 +717,7 @@
 	</section>
 
 	<!-- ================== SIZING, FIT & CARE ================== -->
-	<section class="shop-sizing section section--soft" aria-labelledby="shop-sizing-title">
+	<section class="shop-sizing section section--soft" id="sizing" aria-labelledby="shop-sizing-title">
 		<div class="container">
 			<header class="shop-sizing__header">
 				<p class="eyebrow shop-sizing__eyebrow">Size, fit &amp; care</p>
@@ -750,7 +750,7 @@
 	</section>
 
 	<!-- ================== FAQ ================== -->
-	<section class="shop-faq section" aria-labelledby="shop-faq-title">
+	<section class="shop-faq section" id="faq" aria-labelledby="shop-faq-title">
 		<div class="container">
 			<header class="shop-faq__header">
 				<p class="eyebrow shop-faq__eyebrow">Questions</p>
@@ -888,7 +888,7 @@
 	</section>
 
 	<!-- ================== CONFIDENCE STRIP ================== -->
-	<section class="shop-confidence" aria-labelledby="shop-confidence-title">
+	<section class="shop-confidence" id="confidence" aria-labelledby="shop-confidence-title">
 		<div class="container">
 			<h2 id="shop-confidence-title" class="sr-only">Shopping with ModeInfinity</h2>
 			<ul class="shop-confidence__grid">
@@ -1084,7 +1084,7 @@
 					<h2 class="site-footer__brand-title" id="footer-brand-title"> Learn. Create. Build. </h2>
 					<p class="site-footer__description"> ModeInfinity brings together handcrafted footwear, practical shoemaking education and purposeful design, all rooted in the craft of making. </p>
 					<div class="site-footer__socials">
-						<a href="https://www.instagram.com/officialmodeinfinityw" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+						<a href="https://www.instagram.com/officialmodeinfinity" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
 							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
 								<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -1130,7 +1130,8 @@
 							<li><a href="academy.html"> Learn Shoemaking </a></li>
 							<li><a href="academy.html#pathways"> Our Courses </a></li>
 <li><a href="academy.html#atelier"> Training Process </a></li>
-							<li><a href="gallery.html"> Student &amp; Craft Gallery </a></li>
+							<li><a href="gallery.html#galleries"> Student &amp; Craft Gallery </a></li>
+
 						</ul>
 					</nav>
 					<nav class="site-footer__column" aria-labelledby="footer-collection-title">
@@ -1139,7 +1140,8 @@
 							<h2 id="footer-collection-title"> Shop </h2>
 						</div>
 						<ul class="site-footer__links">
-							<li><a href="shop.html"> Shop Footwear </a></li>
+							<li><a href="shop.html#collection"> Shop Footwear </a></li>
+
 							<li><button type="button" class="site-footer__cart-link" aria-controls="mi-cart" aria-expanded="false" data-mi-cart-open> View Shopping Cart </button></li>
 							<li><a href="contact.html#contact-form"> Custom Orders </a></li>
 						</ul>
@@ -1156,8 +1158,10 @@
 					<p> Discover the collection or learn the craft behind every pair. </p>
 				</div>
 				<div class="site-footer__cta-actions">
-					<a class="btn btn-primary" href="shop.html"> Browse the Shop </a>
-					<a class="btn btn-secondary" href="academy.html"> Explore the Academy </a>
+					<a class="btn btn-primary" href="shop.html#collection"> Browse the Shop </a>
+
+					<a class="btn btn-secondary" href="academy.html#pathways"> Explore the Academy </a>
+
 				</div>
 			</div>
 		</div>
