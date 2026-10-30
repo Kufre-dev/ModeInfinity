@@ -4,8 +4,5 @@
 User-agent: *
 Allow: /
 
-# Custom error page — no value in indexing a 404
-Disallow: /404.html
-
 # XML sitemap
 Sitemap: https://kufre-dev.github.io/ModeInfinity/sitemap.xml

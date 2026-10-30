@@ -34,7 +34,7 @@
 class Navbar {
   constructor(options = {}) {
     this.options = {
-breakpoint: 1088,
+      breakpoint: 1088,
       selectors: {
         header: ".site-header",
         toggle: "[data-mobile-nav-toggle]",
@@ -471,6 +471,21 @@ breakpoint: 1088,
     }
   }
 
+  /*
+   * Normalize a pathname for comparison.
+   *
+   * Strips query, hash, duplicate slashes, and a trailing slash
+   * (except for the root). Lowercases the result. This is what
+   * makes ./ , / , and a full URL pointing at the homepage all
+   * compare equal.
+   *
+   * Note: this intentionally does NOT special-case ".html"
+   * suffixes. Every internal link on the site is extensionless,
+   * so no link resolves to a name containing ".html". If a
+   * visitor lands on a legacy URL from an old bookmark, the
+   * active-page indicator will simply not highlight that page —
+   * a graceful degradation, not a functional failure.
+   */
   normalizePath(path) {
     if (!path) {
       return "/";
@@ -478,10 +493,6 @@ breakpoint: 1088,
 
     let normalized = path.trim();
     normalized = normalized.split("?")[0].split("#")[0].replace(/\/+/g, "/");
-
-    if (normalized === "/index.html") {
-      return "/";
-    }
 
     if (normalized.length > 1 && normalized.endsWith("/")) {
       normalized = normalized.slice(0, -1);
@@ -543,7 +554,7 @@ let navbarInstance = null;
 
 function initializeNavbar() {
   if (!document.querySelector(".site-header")) {
-    console.warn("[ModeInfinity Navbar] Cannot initialize: header.html has not been loaded.");
+    console.warn("[ModeInfinity Navbar] Cannot initialize: no .site-header element found in the DOM.");
     return null;
   }
 

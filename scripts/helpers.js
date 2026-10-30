@@ -806,7 +806,19 @@ export function formatDate(
    ============================================================ */
 
 /**
- * Return the current page filename.
+ * Return the current page identifier (extensionless).
+ *
+ * Heuristic:
+ *   - If the pathname ends with "/", we're at a directory root
+ *     (project homepage, subdirectory index). Returns "index".
+ *   - Otherwise, return the last path segment, with any legacy
+ *     ".html" suffix stripped defensively.
+ *
+ * Works for:
+ *   - GitHub Pages project sites: "/ModeInfinity/" → "index"
+ *   - Custom domains / local:     "/"             → "index"
+ *   - Named pages:                "/ModeInfinity/about" → "about"
+ *   - Legacy URLs:                "/ModeInfinity/about.html" → "about"
  *
  * @returns {string}
  */
@@ -814,18 +826,40 @@ export function getCurrentPage() {
 	const pathname =
 		window.location.pathname;
 
-	const filename =
-		pathname
-		.split("/")
-		.filter(Boolean)
-		.pop() || "index.html";
+	// Directory root (with or without a project subpath) → index
+	if (pathname === "/" || pathname.endsWith("/")) {
+		return "index";
+	}
 
-	return filename.toLowerCase();
+	// Last path segment
+	const segments =
+		pathname.split("/").filter(Boolean);
+
+	if (!segments.length) {
+		return "index";
+	}
+
+	let filename =
+		segments[segments.length - 1].toLowerCase();
+
+	// Strip legacy .html suffix defensively
+	if (filename.endsWith(".html")) {
+		filename = filename.slice(0, -5);
+	}
+
+	return filename;
 }
 
 
 /**
  * Compare the current page with a target page.
+ *
+ * Accepts:
+ *   - Bare slugs:   "about", "shop"
+ *   - Homepage:     "./", "/", "."
+ *   - Paths:        "/ModeInfinity/about"
+ *   - Legacy:       "about.html"
+ *   - Query/hash:   "shop?product=…" (stripped)
  *
  * @param {string} targetPage
  * @returns {boolean}
@@ -838,19 +872,35 @@ export function isCurrentPage(targetPage) {
 		return false;
 	}
 
-	const normalizedTarget =
-		targetPage
-		.split("/")
-		.filter(Boolean)
-		.pop()
-		?.toLowerCase();
+	// Strip query/hash before inspecting the path
+	let normalized =
+		targetPage.trim().split(/[?#]/)[0];
 
-	const currentPage =
-		getCurrentPage();
+	// Homepage aliases
+	if (
+		normalized === "" ||
+		normalized === "/" ||
+		normalized === "." ||
+		normalized === "./"
+	) {
+		normalized = "index";
+	} else {
+		const segments =
+			normalized.split("/").filter(Boolean);
 
-	return (
-		normalizedTarget === currentPage
-	);
+		normalized = segments.length ?
+			segments[segments.length - 1] :
+			"index";
+
+		// Strip legacy .html suffix defensively
+		if (normalized.toLowerCase().endsWith(".html")) {
+			normalized = normalized.slice(0, -5);
+		}
+
+		normalized = normalized.toLowerCase();
+	}
+
+	return normalized === getCurrentPage();
 }
 
 

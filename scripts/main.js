@@ -113,7 +113,7 @@ function initProducts() {
   function productCard(product) {
     var id = escapeHtml(product.id);
     var name = escapeHtml(product.name);
-    var href = "shop.html?product=" + encodeURIComponent(product.id);
+    var href = "shop?product=" + encodeURIComponent(product.id);
     var price = escapeHtml(formatNaira(product.price));
     var category = escapeHtml(product.category);
     var badge = escapeHtml(product.badge);
@@ -604,14 +604,14 @@ function openProductModal(card) {
     addBtn.dataset.modalProductPrice = product.price;
     addBtn.dataset.modalProductImage = product.imageFallback;
   }
-  if (customBtn) {
-    var customUrl = "contact.html?custom=" +
-      encodeURIComponent(product.name) +
-      "&shoe=" +
-      encodeURIComponent(product.id) +
-      "#custom-orders";
-    customBtn.setAttribute("href", customUrl);
-  }
+if (customBtn) {
+  var customUrl = "contact?custom=" +
+    encodeURIComponent(product.name) +
+    "&shoe=" +
+    encodeURIComponent(product.id) +
+    "#contact-form";
+  customBtn.setAttribute("href", customUrl);
+}
 
   var sizeGrid = productModalEl.querySelector(".product-modal__size-grid");
   if (sizeGrid) {
