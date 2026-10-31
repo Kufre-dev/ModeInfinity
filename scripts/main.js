@@ -33,7 +33,7 @@ import {
   initCraftCarousels
 } from "./swiper.js";
 import { initFormHandler } from "./formhandler.js";
-import { initGallery } from "./gallery.js";
+// import { initGallery } from "./gallery.js";
 import { initGalleryViewer } from "./gallery-viewer.js";
 
 let applicationInitialized = false;

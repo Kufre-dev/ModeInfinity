@@ -19,3 +19,28 @@
     <loc>https://kufre-dev.github.io/ModeInfinity/contact</loc>
   </url>
 </urlset>
+
+<!-- delete the one above when the site goes live -->
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.modeinfinity.com/</loc>
+  </url>
+  <url>
+    <loc>https://www.modeinfinity.com/about</loc>
+  </url>
+  <url>
+    <loc>https://www.modeinfinity.com/academy</loc>
+  </url>
+  <url>
+    <loc>https://www.modeinfinity.com/shop</loc>
+  </url>
+  <url>
+    <loc>https://www.modeinfinity.com/gallery</loc>
+  </url>
+  <url>
+    <loc>https://www.modeinfinity.com/contact</loc>
+  </url>
+</urlset>

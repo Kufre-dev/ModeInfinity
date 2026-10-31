@@ -1,6 +1,6 @@
 Contact: mailto:officialmodeinfinity11@gmail.com
-Contact: https://kufre-dev.github.io/ModeInfinity/contact
+Contact: https://www.modeinfinity.com/contact
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://kufre-dev.github.io/ModeInfinity/.well-known/security.txt
-Policy: https://kufre-dev.github.io/ModeInfinity/privacy
+Canonical: https://www.modeinfinity.com/.well-known/security.txt
+Policy: https://www.modeinfinity.com/privacy

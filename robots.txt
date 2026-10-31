@@ -1,8 +1,8 @@
 ﻿# ModeInfinity — robots.txt
-# https://kufre-dev.github.io/ModeInfinity/robots.txt
+# https://www.modeinfinity.com/robots.txt
 
 User-agent: *
 Allow: /
 
 # XML sitemap
-Sitemap: https://kufre-dev.github.io/ModeInfinity/sitemap.xml
+Sitemap: https://www.modeinfinity.com/sitemap.xml
