@@ -70,12 +70,12 @@
 :root {
 	--responsive-scale: 1;
 }
-html {
+/* html {
 	min-width: 20rem;
 }
 body {
 	min-width: 20rem;
-}
+} */
 
 /* ==========================================================================
    2. SMALL PHONES — UP TO 29.999REM
@@ -113,9 +113,9 @@ body {
 	.form-actions--full-mobile > * {
 		width: 100%;
 	}
-	table {
+	/* table {
 		min-width: 42rem;
-	}
+	} */
 	.table-responsive {
 		width: 100%;
 		overflow-x: auto;
@@ -506,6 +506,7 @@ body {
 	min-width: 42rem;
 }
 
+
 /* ==========================================================================
    24. RESPONSIVE EMBEDS
    ========================================================================== */
@@ -737,7 +738,7 @@ body {
 
 	.home-hero__visual-frame {
 		/* Smallest of: full-width portrait | absolute cap | height-derived cap */
-		width: min(85vw, 380px, calc(50svh * 0.8));
+		width: min(85vw, 320px, calc(50svh * 0.8));
 		max-width: 100%;
 		aspect-ratio: 4 / 5;
 	}

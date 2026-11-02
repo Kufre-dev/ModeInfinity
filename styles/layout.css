@@ -106,10 +106,10 @@
 /* ==========================================================================
    1. BASE LAYOUT SAFETY
    ========================================================================== */
-html,
+/* html,
 body {
 	min-width: 20rem;
-}
+} */
 body {
 	position: relative;
 }
@@ -865,8 +865,13 @@ body {
 		contain-intrinsic-size: auto 20rem;
 	}
 }
-[id] { scroll-margin-top: var(--scroll-offset); }
-@media (max-width: 768px) { [id] { scroll-margin-top: var(--scroll-offset); } }
+[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+/* [id] { scroll-margin-top: var(--scroll-offset); }
+@media (max-width: 768px) {
+	 [id] { scroll-margin-top: var(--scroll-offset); } 
+	} */
 /* ==========================================================================
    End of layout.css
 

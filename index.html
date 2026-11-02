@@ -251,7 +251,7 @@
 			<picture class="site-brand__picture">
 				<source srcset="assets/images/logo.avif" type="image/avif">
 				<source srcset="assets/images/logo.webp" type="image/webp">
-				<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56" loading="eager" decoding="async" fetchpriority="high">
+				<img class="site-brand__logo" src="assets/images/logo.png" alt="ModeInfinity" width="200" height="56" loading="lazy" decoding="async">
 			</picture>
 		</a>
 		<!-- DESKTOP PRIMARY NAVIGATION -->
@@ -371,7 +371,7 @@
 						alt=""
 						width="800"
 						height="1000"
-						fetchpriority="high"
+						loading="lazy"
 						decoding="async"
 					>
 				</picture>
@@ -812,8 +812,7 @@
               src="assets/images/materials selections.jpg"
               alt="Selected leather and footwear materials being prepared for handcrafted shoemaking"
               decoding="async"
-              loading="eager"
-              fetchpriority="high"
+              loading="lazy"
             >
           </picture>
         </div>
@@ -1454,8 +1453,9 @@
 							<div class="mi-working-hours-single-line">
 								<span class="mi-hours-combined">
 									<strong>Monday - Friday, 9:00 AM - 6:00 PM</strong>
-									<span class="mi-status-badge closed" data-status="closed" title="We're closed. Current Nigeria time: 6:29 PM WAT. Opens Monday at 9:00 AM"><strong>CLOSED</strong></span>
-								</span>
+									<span class="mi-status-badge">
+    <strong>Opening hours</strong>
+</span>
 							</div>
 							<div class="mi-hours-note-container">
 								<p class="mi-hours-note"><strong>Note:</strong> Hours may vary on each day. Please call ahead to confirm.</p>
@@ -1579,18 +1579,17 @@
 </footer>
 
 
-<!-- ======================================================
-     REUSABLE FUNCTIONAL COMPONENTS
-     ====================================================== -->
-<div data-component="cart-drawer" data-component-path="components/cart-drawer.html"></div>
+<!-- Dynamic components -->
+<div data-component="cart-drawer"
+     data-component-path="components/cart-drawer.html"></div>
 
-<div data-component="toast" data-component-path="components/toast.html"></div>
-<div data-component="scroll-to-top" data-component-path="components/scroll-to-top.html"></div>
+<div data-component="toast"
+     data-component-path="components/toast.html"></div>
 
-<!-- ======================================================
-     APPLICATION SCRIPTS
-     ====================================================== -->
-		 <!-- <script src="scripts/theme.js" defer></script> -->
+<div data-component="scroll-to-top"
+     data-component-path="components/scroll-to-top.html"></div>
+
+<!-- Application scripts -->
 <script src="scripts/cart-drawer.js" defer></script>
 <script type="module" src="scripts/main.js"></script>
 <script src="scripts/testimonials.js" defer></script>

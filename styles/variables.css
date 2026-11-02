@@ -1180,52 +1180,63 @@
  * semantic system colours rather than relying on the brand palette.
  */
 @media (forced-colors: active) {
-	:root {
-		--color-background: Canvas;
-		--color-background-muted: Canvas;
-		--color-background-soft: Canvas;
-		--color-background-dark: Canvas;
-		--color-background-dark-deep: Canvas;
-		--color-surface: Canvas;
-		--color-surface-raised: Canvas;
-		--color-surface-muted: Canvas;
-		--color-surface-soft: Canvas;
-		--color-surface-dark: Canvas;
-		--color-surface-dark-deep: Canvas;
-		--color-text: CanvasText;
-		--color-text-strong: CanvasText;
-		--color-text-muted: CanvasText;
-		--color-text-subtle: GrayText;
-		--color-text-inverse: Canvas;
-		--color-border: ButtonText;
-		--color-border-strong: ButtonText;
-		--color-border-subtle: ButtonText;
-		--color-border-dark: ButtonText;
-		--color-border-dark-subtle: ButtonText;
-		--color-link: LinkText;
-		--color-link-hover: LinkText;
-		--color-link-active: LinkText;
-		--color-interactive: Highlight;
-		--color-interactive-hover: Highlight;
-		--color-interactive-active: Highlight;
-		--color-accent-text: LinkText;
-		--color-accent-on-dark: Highlight;
-		--focus-ring-color: Highlight;
-		--color-focus: Highlight;
-		--focus-ring: var(--focus-ring-width) solid Highlight;
-		--section-primary: Canvas;
-		--section-secondary: Canvas;
-		--section-tertiary: Canvas;
-		--nav-bg: Canvas;
-		--nav-bg-scrolled: Canvas;
-		--nav-border: CanvasText;
-		--nav-text: CanvasText;
-		--nav-text-hover: Highlight;
-		--nav-text-active: Highlight;
-		--mobile-nav-bg: Canvas;
-		--mobile-nav-backdrop: Canvas;
-		color-scheme: light dark;
-	}
+  :root {
+    --color-background: Canvas;
+    --color-background-muted: Canvas;
+    --color-background-soft: Canvas;
+    --color-background-dark: Canvas;
+    --color-background-dark-deep: Canvas;
+
+    --color-surface: Canvas;
+    --color-surface-raised: Canvas;
+    --color-surface-muted: Canvas;
+    --color-surface-soft: Canvas;
+    --color-surface-dark: Canvas;
+    --color-surface-dark-deep: Canvas;
+
+    --color-text: CanvasText;
+    --color-text-strong: CanvasText;
+    --color-text-muted: CanvasText;
+    --color-text-subtle: GrayText;
+    --color-text-inverse: Canvas;
+
+    --color-border: ButtonText;
+    --color-border-strong: ButtonText;
+    --color-border-subtle: ButtonText;
+    --color-border-dark: ButtonText;
+    --color-border-dark-subtle: ButtonText;
+
+    --color-link: LinkText;
+    --color-link-hover: LinkText;
+    --color-link-active: LinkText;
+
+    --color-interactive: Highlight;
+    --color-interactive-hover: Highlight;
+    --color-interactive-active: Highlight;
+
+    --color-accent-text: LinkText;
+    --color-accent-on-dark: Highlight;
+
+    --focus-ring-color: Highlight;
+    --color-focus: Highlight;
+    --focus-ring: var(--focus-ring-width) solid Highlight;
+
+    --section-primary: Canvas;
+    --section-secondary: Canvas;
+    --section-tertiary: Canvas;
+
+    --nav-bg: Canvas;
+    --nav-bg-scrolled: Canvas;
+    --nav-border: CanvasText;
+    --nav-text: CanvasText;
+    --nav-text-hover: Highlight;
+    --nav-text-active: Highlight;
+
+    --mobile-nav-bg: Canvas;
+    --mobile-nav-backdrop: Canvas;
+
+    color-scheme: light dark;
+  }
 }
 
 /* ==========================================================================

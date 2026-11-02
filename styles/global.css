@@ -49,7 +49,7 @@
 	box-sizing: border-box;
 }
 html {
-	min-width: 20rem;
+	/* min-width: 20rem; */
 	scroll-behavior: smooth;
 	scroll-padding-top: var(--scroll-offset);
 	scrollbar-gutter: stable;
@@ -613,52 +613,72 @@ summary::marker {
    whatever surface the element sits on.
    -------------------------------------------------------------------------- */
 @media (prefers-contrast: high) {
-	:root {
-		--color-border: var(--color-neutral-400);
-	}
-	* {
-		text-shadow: 0 0 0.5px currentColor;
-	}
-	button,
-	input,
-	select,
-	textarea,
-	.btn {
-		border: var(--border-width-medium) solid currentColor;
-	}
+  :root {
+    --color-border: var(--color-neutral-400);
+  }
+
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary
+  ):focus-visible {
+    outline-width: 4px;
+  }
+
+  button,
+  input,
+  select,
+  textarea,
+  .btn {
+    border: var(--border-width-medium) solid currentColor;
+  }
 }
+/* ==========================================================================
+   Forced Colours — Windows High Contrast Mode
+   ========================================================================== */
+
 @media (forced-colors: active) {
-	:root {
-		forced-color-adjust: auto;
-	}
-	a {
-		color: LinkText;
-	}
-	button,
-	input,
-	select,
-	textarea {
-		border-color: ButtonText;
-	}
-	:where(a,
-		button,
-		input,
-		select,
-		textarea,
-		summary,
-		[tabindex]:not([tabindex="-1"])):focus-visible {
-		outline: 2px solid Highlight;
-		outline-offset: 3px;
-	}
-	mark {
-		background: Highlight;
-		color: HighlightText;
-	}
-	.skip-link {
-		border-color: ButtonText;
-		background: Canvas;
-		color: CanvasText;
-	}
+  :root {
+    forced-color-adjust: auto;
+  }
+
+  a {
+    color: LinkText;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    border-color: ButtonText;
+  }
+
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex="-1"])
+  ):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+  }
+
+  mark {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .skip-link {
+    border-color: ButtonText;
+    background: Canvas;
+    color: CanvasText;
+  }
 }
 /* ==========================================================================
    19. PRINT
